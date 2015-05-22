@@ -5,23 +5,51 @@
     var outputField = $("#output-marker").next();
     var httpRequestField = $("#request-http-marker").next();
     var curlRequestField = $("#request-curl-marker").next();
+    var highlight = function(elem) {
+      elem.each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    };
     var requestTypes = {
       search: {
         queryInput: $('form.search #test-search-query'),
+        countsInput: $('form.search #search-counts'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
           'sorting': {query: ''},
           default: {query: 'author:John'}
         },
+        buildUrl: function() {
+          var url = '/docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val();
+          var counts = requestTypes.search.countsInput.val();
+          if (counts != '') {
+            url += '&counts=' + counts;
+          }
+          return url;
+        },
         renderHttpRequest: function() {
-          return 'GET /docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val() + ' HTTP/1.1';
+          return 'GET ' + this.buildUrl() + ' HTTP/1.1';
         },
         renderCurlRequest: function() {
-          return 'curl "https://examples.cloudant.com/docs-examples/_design/ddoc/_search/books?q= \\\n' + this.queryInput.val() + '"';
+          return 'curl "https://examples.cloudant.com' + this.buildUrl() + '"';
         },
         doAjaxRequest: function() {
         
+        },
+        submitForm: function(event) {
+          var query = requestTypes.search.queryInput.val();
+          var url = '//examples.cloudant.com' + requestTypes.search.buildUrl();
+          jQuery.ajax({
+            url: url,
+            type: 'GET',
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+            },
+            error: function(one, two) {},
+            complete: displayResult
+          });
+          event.preventDefault();
         }
       },
       cq: {
@@ -29,7 +57,8 @@
         form: cqForm,
         queries: {
           'actor-is-zoe-saldana': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'},
-          'sorting': {query: ''},
+          'sorting': {query: '{ "selector": { "Movie_year": {"$gte": 2000, "$lte": 2001}}, "sort": ["Movie_year"]}'},
+          'pg2010': {query: '{ "selector": { "Movie_year": 2010, "Movie_rating": {"$in": ["PG", "PG-13"]} } }'},
           default: {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'}
         },
         renderHttpRequest: function() {
@@ -37,21 +66,41 @@
         },
         renderCurlRequest: function() {
           return "curl 'https://examples.cloudant.com/movies-demo-with-indexes/_find' -X POST -d '" + this.queryInput.val() + "'";
+        },
+        submitForm: function(event){
+          var query = requestTypes.cq.queryInput.val();
+          jQuery.ajax({
+            url: '//examples.cloudant.com/movies-demo-with-indexes/_find',
+            type: 'POST',
+            data: query,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+            },
+            error: function(one, two) {},
+            complete: displayResult
+          });
+          event.preventDefault();
         }
+    
       }
     };
-        
-    var highlight = function(elem) {
-      elem.each(function(i, block) {
-        hljs.highlightBlock(block);
-      });
-    };
+    
+    var displayResult = function(jqXHR, textStatus) {
+      var result = JSON.stringify(jQuery.parseJSON(jqXHR.responseText), null, '    ');
+      outputField.show();
+      outputField.text(result);
+      highlight(outputField);
+    }
+    
+    requestTypes.search.form.submit(requestTypes.search.submitForm);
+    requestTypes.cq.form.submit(requestTypes.cq.submitForm);
     
     var requestChanged = function(formName) {
       httpRequestField.text(requestTypes[formName].renderHttpRequest());
       highlight(httpRequestField);
       curlRequestField.text(requestTypes[formName].renderCurlRequest());
       highlight(curlRequestField);
+      requestTypes[formName].submitForm({preventDefault:function(){}});
     }
     
     var requestTypeSelect = $('div.test-form-container select.request-type');
@@ -64,8 +113,7 @@
       requestChanged(type);
     };
     requestTypeSelect.on("change", showSelectedType);
-    showSelectedType();
-
+    
     var initForm = function(formName, request) {
       for (field in request) {
         $('form.' + formName + ' .' + field).val(request[field]);
@@ -85,45 +133,8 @@
     for (rt in requestTypes) {
       initForm(rt, requestTypes[rt].queries.default);
     }
-    requestChanged('search');
-    highlight(outputField);
-    highlight(httpRequestField);
-    highlight(curlRequestField);
-    requestTypes.search.queryInput.on('change keyup keypress', function() {requestChanged('search');});
-    requestTypes.cq.queryInput.on('change keyup keypress', function() {requestChanged('cq');});
-    var displayResult = function(jqXHR, textStatus) {
-      var result = JSON.stringify(jQuery.parseJSON(jqXHR.responseText), null, '    ');
-      outputField.show();
-      outputField.text(result);
-      highlight(outputField);
-    }
-    requestTypes.search.form.submit(function(event) {
-      var query = requestTypes.search.queryInput.val();
-      jQuery.ajax({
-        url: '//examples.cloudant.com/docs-examples/_design/ddoc/_search/books?q=' + query,
-        type: 'GET',
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
-        },
-        error: function(one, two) {},
-        complete: displayResult
-      });
-      event.preventDefault();
-    });
-    requestTypes.cq.form.submit(function(event){
-      var query = requestTypes.cq.queryInput.val();
-      jQuery.ajax({
-        url: '//examples.cloudant.com/movies-demo-with-indexes/_find',
-        type: 'POST',
-        data: query,
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
-        },
-        error: function(one, two) {},
-        complete: displayResult
-      });
-      event.preventDefault();
-    });
+    requestTypes.search.form.on('keyup keypress', function() {requestChanged('search');});
+    requestTypes.cq.queryInput.on('keyup keypress', function() {requestChanged('cq');});
     //init form from query param values
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -133,12 +144,18 @@
     var requestType = getParameterByName('requestType');
     var predefinedQuery = getParameterByName('predefinedQuery');
     if (requestType) {
-      requestTypeSelect.val(requestType);
-      showSelectedType(requestType);
       if (predefinedQuery) {
         $('form.' + requestType + ' .predefined').val(predefinedQuery);
       }
+      requestTypeSelect.val(requestType);
+      showSelectedType(requestType);
       requestChanged(requestType);
+    } else {
+      showSelectedType();
+      highlight(outputField);
+      highlight(httpRequestField);
+      highlight(curlRequestField);
+    
     }
   });
   
@@ -202,6 +219,8 @@ You can try out requests and output will be shown in the code column to the righ
     </select>
     <label for="query">Search query (q)</label>
     <input size="100" type="text" name="query" class="query" id="test-search-query">
+    <label for="counts">Counts</label>
+    <input size="100" type="text" name="counts" id="search-counts">
     <input type="submit" value="search" class="submit-button"></input>
   </form>
   
@@ -210,6 +229,7 @@ You can try out requests and output will be shown in the code column to the righ
     <select name="predefined" class="predefined">
       <option selected="selected" value="actor-is-zoe-saldana">Movies with Zoe Saldana</option>
       <option value="sorting">Query with sorting</option>
+      <option value="pg2010">2010 Movies rated PG or PG-13</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
     <input class="submit-button" type="submit" value="query"></input>
