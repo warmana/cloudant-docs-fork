@@ -134,7 +134,7 @@
       initForm(rt, requestTypes[rt].queries.default);
     }
     requestTypes.search.form.on('keyup keypress', function() {requestChanged('search');});
-    requestTypes.cq.queryInput.on('keyup keypress', function() {requestChanged('cq');});
+    requestTypes.cq.form.on('keyup keypress', function() {requestChanged('cq');});
     //init form from query param values
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
