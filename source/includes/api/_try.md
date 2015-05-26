@@ -17,6 +17,7 @@
         drilldownInput: $('form.search #search-drilldown'),
         groupFieldInput: $('form.search #search-group-field'),
         groupLimitInput: $('form.search #search-group-limit'),
+        groupSortInput: $('form.search #search-group-sort'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -40,6 +41,10 @@
           var groupLimit = this.groupLimitInput.val();
           if (groupLimit != '') {
             url += '&group_limit=' + encodeURIComponent(groupLimit);
+          }
+          var groupSort = this.groupSortInput.val();
+          if (groupSort != '') {
+            url += '&group_sort=' + encodeURIComponent(groupSort);
           }
           return url;
         },
@@ -242,7 +247,8 @@ You can try out requests and output will be shown in the code column to the righ
     <input size="100" type="text" name="groupfield" id="search-group-field">
     <label for="group-limit">Group limit</label>
     <input size="100" type="text" name="group-limit" id="search-group-limit">
-    
+    <label for="group-sort">Group sort</label>
+    <input size="100" type="text" name="group-sort" id="search-group-sort">
   </form>
   
   <form action="#" class="cq">
