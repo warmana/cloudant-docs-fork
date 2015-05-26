@@ -160,11 +160,15 @@ under the License.
             attr_reader :link
           end
           [
-            Page.new('Overview', 'index.html', []),
+            Page.new('Overview', 'index.html', [
+              Page.new('Contents', 'index.html#contents', []),
+              Page.new('Contribute', 'index.html#contribute', [])
+            ]),
             Page.new('Cloudant Basics', 'basics.html', [
               Page.new('Database as a Service', 'basics.html#database-as-a-service', []),
               Page.new('HTTP API', 'basics.html#http-api', []),
               Page.new('JSON', 'basics.html#json', []),
+              Page.new('How do I find data?', 'basics.html#how-do-i-find-data?', []),
               Page.new('Distributed', 'basics.html#distributed', []),
               Page.new('Replication', 'basics.html#replication', []),
               Page.new('Cloudant Local', 'basics.html#cloudant-local', [])
@@ -184,28 +188,25 @@ under the License.
               Page.new('Documents', 'document.html', []),
               Page.new('Attachments', 'attachments.html', []),
               Page.new('Query', 'cloudant_query.html', []),
-              Page.new('Query Search', 'cqsearch.html', []),
               Page.new('Design Documents', 'design_documents.html', []),
-              Page.new('Creating views', 'creating_views.html', []),
-              Page.new('Using views', 'using_views.html', []),
-              Page.new('Full text search', 'search.html', []),
+              Page.new('Views (MapReduce)', 'creating_views.html', []),
+              Page.new('Search', 'search.html', []),
+              Page.new('Cloudant Geospatial', 'geo.html', []),
               Page.new('Replication', 'replication.html', []),
               Page.new('Advanced Replication', 'advanced_replication.html', []),
               Page.new('Active tasks', 'active_tasks.html', []),
-              Page.new('Advanced', 'advanced.html', []),
-              Page.new('Backup', 'backup.html', [])
+              Page.new('Advanced', 'advanced.html', [])
             ]),
             Page.new('Guides', 'guides.html', [
               Page.new('JSON', 'json.html', []),
               Page.new('Replication', 'replication_guide.html', []),
               Page.new('Managing tasks', 'managing_tasks.html', []),
               Page.new('Document versioning and conflicts', 'mvcc.html', []),
-              Page.new('Event Sourcing', 'transactions.html', []),
+              Page.new('Transactions in Cloudant', 'transactions.html', []),
               Page.new('CAP theorem', 'cap_theorem.html', []),
               Page.new('AcID', 'acid.html', []),
-              Page.new('Backups', 'backup-guide.html', []),
-              Page.new('Couchapps', 'couchapps.html', []),
-              Page.new('Geospatial', 'geo.html', []),
+              Page.new('Back up your data', 'backup-guide.html', []),
+              Page.new('CouchApps', 'couchapps.html', []),
               Page.new('Design document management', 'design_document_management.html', [])
             ])
           ].each { |page|

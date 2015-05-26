@@ -48,17 +48,10 @@ fragments = {
   '#analyzers': 'search.html#analyzers',
   '#cloudant-query': 'query.html',
   '#http-status-codes': 'http.html#http-status-codes',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  '': '.html',
-  
-  
+  '#replication': 'replication.html',
+  '#advanced-replication': 'advanced_replication.html',
+  '#active_tasks': 'active_tasks.html',
+  '#advanced': 'advanced.html'
 }
 fragment = window.location.hash;
 dest = fragments[fragment];
