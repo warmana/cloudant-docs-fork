@@ -15,7 +15,8 @@
         queryInput: $('form.search #test-search-query'),
         countsInput: $('form.search #search-counts'),
         drilldownInput: $('form.search #search-drilldown'),
-        groupfieldInput: $('form.search #search-groupfield'),
+        groupFieldInput: $('form.search #search-group-field'),
+        groupLimitInput: $('form.search #search-group-limit'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -32,9 +33,13 @@
           if (drilldown != '') {
             url += '&drilldown=' + encodeURIComponent(drilldown);
           }
-          var groupfield = this.groupfieldInput.val();
-          if (groupfield != '') {
-            url += '&group_field=' + encodeURIComponent(groupfield);
+          var groupField = this.groupFieldInput.val();
+          if (groupField != '') {
+            url += '&group_field=' + encodeURIComponent(groupField);
+          }
+          var groupLimit = this.groupLimitInput.val();
+          if (groupLimit != '') {
+            url += '&group_limit=' + encodeURIComponent(groupLimit);
           }
           return url;
         },
@@ -234,7 +239,10 @@ You can try out requests and output will be shown in the code column to the righ
     <label for="drilldown">Drilldown</label>
     <input size="100" type="text" name="drilldown" id="search-drilldown">
     <label for="groupfield">Group field</label>
-    <input size="100" type="text" name="groupfield" id="search-groupfield">
+    <input size="100" type="text" name="groupfield" id="search-group-field">
+    <label for="group-limit">Group limit</label>
+    <input size="100" type="text" name="group-limit" id="search-group-limit">
+    
   </form>
   
   <form action="#" class="cq">
