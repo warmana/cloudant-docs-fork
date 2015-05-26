@@ -14,6 +14,7 @@
       search: {
         queryInput: $('form.search #test-search-query'),
         countsInput: $('form.search #search-counts'),
+        drilldownInput: $('form.search #search-drilldown'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -22,9 +23,13 @@
         },
         buildUrl: function() {
           var url = '/docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val();
-          var counts = requestTypes.search.countsInput.val();
+          var counts = this.countsInput.val();
           if (counts != '') {
-            url += '&counts=' + counts;
+            url += '&counts=' + encodeURIComponent(counts);
+          }
+          var drilldown = this.drilldownInput.val();
+          if (drilldown != '') {
+            url += '&drilldown=' + encodeURIComponent(drilldown);
           }
           return url;
         },
@@ -39,7 +44,7 @@
         },
         submitForm: function(event) {
           var query = requestTypes.search.queryInput.val();
-          var url = '//examples.cloudant.com' + requestTypes.search.buildUrl();
+          var url = '//examples.cloudant.com' + this.buildUrl();
           jQuery.ajax({
             url: url,
             type: 'GET',
@@ -221,6 +226,8 @@ You can try out requests and output will be shown in the code column to the righ
     <input size="100" type="text" name="query" class="query" id="test-search-query">
     <label for="counts">Counts</label>
     <input size="100" type="text" name="counts" id="search-counts">
+    <label for="drilldown">Drilldown</label>
+    <input size="100" type="text" name="drilldown" id="search-drilldown">
     <input type="submit" value="search" class="submit-button"></input>
   </form>
   
