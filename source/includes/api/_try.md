@@ -18,6 +18,7 @@
         groupFieldInput: $('form.search #search-group-field'),
         groupLimitInput: $('form.search #search-group-limit'),
         groupSortInput: $('form.search #search-group-sort'),
+        includeDocsInput: $('form.search #search-include-docs'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -45,6 +46,10 @@
           var groupSort = this.groupSortInput.val();
           if (groupSort != '') {
             url += '&group_sort=' + encodeURIComponent(groupSort);
+          }
+          var includeDocs = this.includeDocsInput.is(':checked');
+          if (includeDocs) {
+            url += '&include_docs=' + encodeURIComponent(includeDocs);
           }
           return url;
         },
@@ -153,8 +158,9 @@
     for (rt in requestTypes) {
       initForm(rt, requestTypes[rt].queries.default);
     }
-    requestTypes.search.form.on('keyup keypress', function() {requestChanged('search');});
-    requestTypes.cq.form.on('keyup keypress', function() {requestChanged('cq');});
+    requestTypes.search.form.on('keyup', function() {requestChanged('search');});
+    requestTypes.search.includeDocsInput.on('change', function() {requestChanged('search');});
+    requestTypes.cq.form.on('keyup', function() {requestChanged('cq');});
     //init form from query param values
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -249,6 +255,9 @@ You can try out requests and output will be shown in the code column to the righ
     <input size="100" type="text" name="group-limit" id="search-group-limit">
     <label for="group-sort">Group sort</label>
     <input size="100" type="text" name="group-sort" id="search-group-sort">
+    <input type="checkbox" name="include-docs" id="search-include-docs">
+    <label style="margin-left: 0px;display: inline" for="include-docs">Include docs</label>
+    
   </form>
   
   <form action="#" class="cq">
@@ -275,11 +284,11 @@ You can try out requests and output will be shown in the code column to the righ
     margin: 0;
     padding: 0;
   }
-  .test-form-container textarea, div.test-form-container input, div.test-form-container select, div.test-form-container label {
+  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container select, div.test-form-container label {
     margin-left: 40px;
     display: block;
   }
-  .test-form-container textarea, div.test-form-container input, div.test-form-container select {
+  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container select {
     margin-bottom: 12px;
     width: 40%;
     height: 24px;
@@ -294,13 +303,14 @@ You can try out requests and output will be shown in the code column to the righ
     display: block;
   }
   
-  .test-form-container input {
+  .test-form-container input[type=text] {
     padding-left: 5px;
   }
   
-  .test-form-container .submit-button {
-    width: 100px;
-    padding: 0;
+  .test-form-container input[type=checkbox] {
+    display: inline;
+    margin-left: 40px;
+    width: 20px;
   }
-  
+    
 </style>
