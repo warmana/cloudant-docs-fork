@@ -15,6 +15,7 @@
         queryInput: $('form.search #test-search-query'),
         countsInput: $('form.search #search-counts'),
         drilldownInput: $('form.search #search-drilldown'),
+        groupfieldInput: $('form.search #search-groupfield'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -30,6 +31,10 @@
           var drilldown = this.drilldownInput.val();
           if (drilldown != '') {
             url += '&drilldown=' + encodeURIComponent(drilldown);
+          }
+          var groupfield = this.groupfieldInput.val();
+          if (groupfield != '') {
+            url += '&group_field=' + encodeURIComponent(groupfield);
           }
           return url;
         },
@@ -228,7 +233,8 @@ You can try out requests and output will be shown in the code column to the righ
     <input size="100" type="text" name="counts" id="search-counts">
     <label for="drilldown">Drilldown</label>
     <input size="100" type="text" name="drilldown" id="search-drilldown">
-    <input type="submit" value="search" class="submit-button"></input>
+    <label for="groupfield">Group field</label>
+    <input size="100" type="text" name="groupfield" id="search-groupfield">
   </form>
   
   <form action="#" class="cq">
@@ -239,7 +245,6 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="pg2010">2010 Movies rated PG or PG-13</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
-    <input class="submit-button" type="submit" value="query"></input>
   </form>
     
 </div>
