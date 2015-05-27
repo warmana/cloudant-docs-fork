@@ -11,7 +11,7 @@
     var requestTypes = {
       analyzers: {
         queries: {
-          'email-address': {query: '{"analyzer": "email", "text":"Jane`s email address is jane.smith@example.com."}'},
+          'email-address': {query: '{"analyzer": "email", "text":"Jane\'s email address is jane.smith@example.com."}'},
           'english': {query: '{"analyzer": "english", "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"}'},
           'german': {query: '{"analyzer": "german", "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."}'},
           'default': {query: '{"analyzer": "email", "text":"Jane`s email address is jane.smith@example.com."}'},
@@ -27,7 +27,7 @@
         submitForm: function(event) {
           var query = this.queryInput.val();
           jQuery.ajax({
-            url: '//examples.cloudant.com/_search_analyze',
+            url: 'https://examples.cloudant.com/_search_analyze',
             type: 'POST',
             data: query,
             beforeSend: function(xhr) {
@@ -120,8 +120,8 @@
         
         },
         submitForm: function(event) {
-          var query = requestTypes.search.queryInput.val();
-          var url = '//examples.cloudant.com' + this.buildUrl();
+          var query = this.queryInput.val();
+          var url = 'https://examples.cloudant.com' + this.buildUrl();
           jQuery.ajax({
             url: url,
             type: 'GET',
@@ -141,7 +141,7 @@
           'actor-is-zoe-saldana': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'},
           'sorting': {query: '{ "selector": { "Movie_year": {"$gte": 2000, "$lte": 2001}}, "sort": ["Movie_year"]}'},
           'pg2010': {query: '{ "selector": { "Movie_year": 2010, "Movie_rating": {"$in": ["PG", "PG-13"]} } }'},
-          default: {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'}
+          'default': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'}
         },
         renderHttpRequest: function() {
           return 'POST /movies-demo-with-indexes/_find HTTP/1.1\nHost: examples.cloudant.com\n\n' + this.queryInput.val();
@@ -150,9 +150,9 @@
           return "curl 'https://examples.cloudant.com/movies-demo-with-indexes/_find' -X POST -d '" + this.queryInput.val() + "'";
         },
         submitForm: function(event){
-          var query = requestTypes.cq.queryInput.val();
+          var query = this.queryInput.val();
           jQuery.ajax({
-            url: '//examples.cloudant.com/movies-demo-with-indexes/_find',
+            url: 'https://examples.cloudant.com/movies-demo-with-indexes/_find',
             type: 'POST',
             data: query,
             beforeSend: function(xhr) {
@@ -174,7 +174,7 @@
       highlight(outputField);
     }
     
-    for (rt in requestTypes) {
+    for (var rt in requestTypes) {
       requestTypes[rt].form.submit(requestTypes[rt].submitForm);
     }
     
@@ -188,7 +188,7 @@
     
     var requestTypeSelect = $('div.test-form-container select.request-type');
     var showSelectedType = function() {
-      for (requestType in requestTypes) {
+      for (var requestType in requestTypes) {
         requestTypes[requestType].form.hide();
       }
       var type = requestTypeSelect.val();
@@ -198,8 +198,10 @@
     requestTypeSelect.on("change", showSelectedType);
     
     var initForm = function(formName, request) {
+      console.log(formName);
+      console.log(request);
       $('form.' + formName + ' input[type=text]').val('');
-      for (field in request) {
+      for (var field in request) {
         $('form.' + formName + ' .' + field).val(request[field]);
       }
     };
@@ -211,15 +213,15 @@
         requestChanged(formName);
       });
     };
-    for (requestType in requestTypes) {
-      initPredefinedSelect(requestType);
+    for (var rt in requestTypes) {
+      initPredefinedSelect(rt);
+      initForm(rt, requestTypes[rt].queries['default']);
     }
-    for (rt in requestTypes) {
-      initForm(rt, requestTypes[rt].queries.default);
-    }
-    requestTypes.search.form.on('keyup', function() {requestChanged('search');});
     requestTypes.search.includeDocsInput.on('change', function() {requestChanged('search');});
-    requestTypes.cq.form.on('keyup', function() {requestChanged('cq');});
+    for (var rt in requestTypes) {
+      var createFunc = function(rtp) { return function(){requestChanged(rtp)}}
+      requestTypes[rt].form.on('keyup', createFunc(rt));
+    }
     //init form from query param values
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -227,21 +229,16 @@
       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     var requestType = getParameterByName('requestType');
+    if (!requestType) { requestType = 'search'; }
     var predefinedQuery = getParameterByName('predefinedQuery');
-    if (requestType) {
-      if (predefinedQuery) {
-        $('form.' + requestType + ' .predefined').val(predefinedQuery);
-      }
-      requestTypeSelect.val(requestType);
-      showSelectedType(requestType);
-      requestChanged(requestType);
-    } else {
-      showSelectedType();
-      highlight(outputField);
-      highlight(httpRequestField);
-      highlight(curlRequestField);
-    
-    }
+    if (!predefinedQuery) { predefinedQuery = 'default'; }
+    requestTypeSelect.val(requestType);
+    $('form.' + requestType + ' .predefined').val(predefinedQuery);
+    console.log(requestType);
+    showSelectedType();
+    console.log(requestType);
+    initForm(requestType, requestTypes[requestType].queries[predefinedQuery]);
+    requestChanged(requestType);
   });
   
 </script>
