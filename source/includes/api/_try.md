@@ -1,7 +1,5 @@
 <script type="text/javascript">
   $(document).ready(function() {
-    var searchForm = $('form.search');
-    var cqForm = $('form.cq');
     var outputField = $("#output-marker").next();
     var httpRequestField = $("#request-http-marker").next();
     var curlRequestField = $("#request-curl-marker").next();
@@ -11,6 +9,37 @@
       });
     };
     var requestTypes = {
+      analyzers: {
+        queries: {
+          'email-address': {query: '{"analyzer": "email", "text":"Jane`s email address is jane.smith@example.com."}'},
+          'english': {query: '{"analyzer": "english", "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"}'},
+          'german': {query: '{"analyzer": "german", "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."}'},
+          'default': {query: '{"analyzer": "email", "text":"Jane`s email address is jane.smith@example.com."}'},
+        },
+        form: $('form.analyzers'),
+        queryInput: $('form.analyzers .query'),
+        renderHttpRequest: function() {
+          return 'POST /_search_analyze HTTP/1.1\nHost: examples.cloudant.com\nContent-Type: application/json\n\n' + this.queryInput.val();
+        },
+        renderCurlRequest: function() {
+          return "curl 'https://examples.cloudant.com/_search_analyze' -H 'Content-Type: application/json' -X POST -d '" + this.queryInput.val() + "'";
+        },
+        submitForm: function(event) {
+          var query = this.queryInput.val();
+          jQuery.ajax({
+            url: '//examples.cloudant.com/_search_analyze',
+            type: 'POST',
+            data: query,
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader("Content-Type", "application/json");
+              xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+            },
+            error: function(one, two) {},
+            complete: displayResult
+          });
+          event.preventDefault();
+        }
+      },
       search: {
         queryInput: $('form.search #test-search-query'),
         countsInput: $('form.search #search-counts'),
@@ -22,11 +51,24 @@
         limitInput: $('form.search #search-limit'),
         rangesInput: $('form.search #search-ranges'),
         sortInput: $('form.search #search-sort'),
-        form: searchForm,
+        form: $('form.search'),
         queries: {
-          'author-is-john': {query: 'author:John'},
-          'sorting': {query: ''},
-          default: {query: 'author:John'}
+          'author-is-john': { query: 'author:John' },
+          'sorting': { query: 'author:J*', sort: '"-year"' },
+          'default': { query: 'author:John' },
+          'drilldown': { query: 'year:[2000 TO 2010]', drilldown: '["author","J. K. Rowling"]' },
+          'counts': { query: 'year:[2000 TO 2010]', counts: '["author"]', limit: 0 },
+          'ranges': { query: 'author:J*', ranges: '{"year":{"21st century":"[2000 TO 2099]","20th century":"[1900 TO 1999]"}}', limit: 0 },
+          
+          
+          
+      /*     <option selected="selected" value="author-is-john">Books written by John</option>
+      <option value="sorting">Sorting by year</option>
+      <option value="ranges">Year ranges</option>
+      <option value="counts">Count authors</option>
+      <option value="drilldown">Drilldown</option>    */  
+          
+          
         },
         buildUrl: function() {
           var url = '/docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val();
@@ -94,7 +136,7 @@
       },
       cq: {
         queryInput: $('form.cq .query'),
-        form: cqForm,
+        form: $('form.cq'),
         queries: {
           'actor-is-zoe-saldana': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'},
           'sorting': {query: '{ "selector": { "Movie_year": {"$gte": 2000, "$lte": 2001}}, "sort": ["Movie_year"]}'},
@@ -132,8 +174,9 @@
       highlight(outputField);
     }
     
-    requestTypes.search.form.submit(requestTypes.search.submitForm);
-    requestTypes.cq.form.submit(requestTypes.cq.submitForm);
+    for (rt in requestTypes) {
+      requestTypes[rt].form.submit(requestTypes[rt].submitForm);
+    }
     
     var requestChanged = function(formName) {
       httpRequestField.text(requestTypes[formName].renderHttpRequest());
@@ -155,6 +198,7 @@
     requestTypeSelect.on("change", showSelectedType);
     
     var initForm = function(formName, request) {
+      $('form.' + formName + ' input[type=text]').val('');
       for (field in request) {
         $('form.' + formName + ' .' + field).val(request[field]);
       }
@@ -249,6 +293,7 @@ You can try out requests and output will be shown in the code column to the righ
   <label for="request-type">Type of request</label>
   <select name="request-type" class="request-type">
     <option selected="selected" value="search">Search</option>
+    <option value="analyzers">Search analyzers</option>
     <option value="cq">Cloudant Query</option>
   </select>
   <br>
@@ -256,28 +301,31 @@ You can try out requests and output will be shown in the code column to the righ
     <label for="predefined">Predefined queries</label>
     <select name="predefined" class="predefined">
       <option selected="selected" value="author-is-john">Books written by John</option>
-      <option value="sorting">Search with sorting</option>
+      <option value="sorting">Sorting by year</option>
+      <option value="ranges">Year ranges</option>
+      <option value="counts">Count authors</option>
+      <option value="drilldown">Drilldown</option>      
     </select>
     <label for="query">Search query (q)</label>
     <input size="100" type="text" name="query" class="query" id="test-search-query">
     <label for="counts">Counts</label>
-    <input size="100" type="text" name="counts" id="search-counts">
+    <input size="100" type="text" name="counts" class="counts" id="search-counts">
     <label for="drilldown">Drilldown</label>
-    <input size="100" type="text" name="drilldown" id="search-drilldown">
+    <input size="100" type="text" name="drilldown" class="drilldown" id="search-drilldown">
     <label for="groupfield">Group field</label>
-    <input size="100" type="text" name="groupfield" id="search-group-field">
+    <input size="100" type="text" name="groupfield" class="groupField" id="search-group-field">
     <label for="group-limit">Group limit</label>
-    <input size="100" type="text" name="group-limit" id="search-group-limit">
+    <input size="100" type="text" name="group-limit" class="groupLimit" id="search-group-limit">
     <label for="group-sort">Group sort</label>
-    <input size="100" type="text" name="group-sort" id="search-group-sort">
+    <input size="100" type="text" name="group-sort" class="groupSort" id="search-group-sort">
     <label for="limit">Limit</label>
-    <input size="100" type="text" name="limit" id="search-limit">
+    <input size="100" type="text" name="limit" class="limit" id="search-limit">
     <label for="ranges">Ranges</label>
-    <input size="100" type="text" name="ranges" id="search-ranges">
+    <input size="100" type="text" name="ranges" class="ranges" id="search-ranges">
     <label for="sort">Sort</label>
-    <input size="100" type="text" name="sort" id="search-sort">
+    <input size="100" type="text" name="sort" class="sort" id="search-sort">
     
-    <input type="checkbox" name="include-docs" id="search-include-docs">
+    <input type="checkbox" name="include-docs" class="includeDocs" id="search-include-docs">
     <label style="margin-left: 0px;display: inline" for="include-docs">Include docs</label>
   </form>
   
@@ -289,6 +337,16 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="pg2010">2010 Movies rated PG or PG-13</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
+  </form>
+  
+  <form action="#" class="analyzers">
+    <label for="predefined">Predefined queries</label>
+    <select name="predefined" class="predefined">
+      <option selected="selected" value="email-address">Email address analyzer</option>
+      <option value="english">English analyzer</option>
+      <option value="german">German analyzer</option>
+    </select>
+    <textarea rows="10" class="query" cols="80" id="analyzersRequestBody"></textarea><br /><br />
   </form>
     
 </div>
