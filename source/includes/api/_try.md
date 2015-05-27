@@ -19,6 +19,9 @@
         groupLimitInput: $('form.search #search-group-limit'),
         groupSortInput: $('form.search #search-group-sort'),
         includeDocsInput: $('form.search #search-include-docs'),
+        limitInput: $('form.search #search-limit'),
+        rangesInput: $('form.search #search-ranges'),
+        sortInput: $('form.search #search-sort'),
         form: searchForm,
         queries: {
           'author-is-john': {query: 'author:John'},
@@ -46,6 +49,18 @@
           var groupSort = this.groupSortInput.val();
           if (groupSort != '') {
             url += '&group_sort=' + encodeURIComponent(groupSort);
+          }
+          var limit = this.limitInput.val();
+          if (limit != '') {
+            url += '&limit=' + encodeURIComponent(limit);
+          }
+          var ranges = this.rangesInput.val();
+          if (ranges != '') {
+            url += '&ranges=' + encodeURIComponent(ranges);
+          }
+          var sort = this.sortInput.val();
+          if (sort != '') {
+            url += '&sort=' + encodeURIComponent(sort);
           }
           var includeDocs = this.includeDocsInput.is(':checked');
           if (includeDocs) {
@@ -255,9 +270,15 @@ You can try out requests and output will be shown in the code column to the righ
     <input size="100" type="text" name="group-limit" id="search-group-limit">
     <label for="group-sort">Group sort</label>
     <input size="100" type="text" name="group-sort" id="search-group-sort">
+    <label for="limit">Limit</label>
+    <input size="100" type="text" name="limit" id="search-limit">
+    <label for="ranges">Ranges</label>
+    <input size="100" type="text" name="ranges" id="search-ranges">
+    <label for="sort">Sort</label>
+    <input size="100" type="text" name="sort" id="search-sort">
+    
     <input type="checkbox" name="include-docs" id="search-include-docs">
     <label style="margin-left: 0px;display: inline" for="include-docs">Include docs</label>
-    
   </form>
   
   <form action="#" class="cq">
