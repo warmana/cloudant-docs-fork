@@ -47,7 +47,7 @@ account.request({
 });
 ```
 
-To see who has permissions to read, write, and manage the database, make a GET request against `https://$USERNAME.cloudant.com/$DB/_security`.
+To see who has permissions to read, write, and manage the database, make a GET request against `https://$USERNAME.cloudant.com/_api/v2/db/$DATABASE/_security`.
 
 <div></div>
 
