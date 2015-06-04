@@ -12,6 +12,13 @@ Signing up for a Cloudant account is free and easy:<br/>
 Working with Cloudant to create databases and store information is simplified through the user-friendly dashboard, as this overview explains:<br/>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/zESROlotu-g?rel=0" frameborder="0" allowfullscreen title="Dashboard overview video"></iframe>
 
+## IBM Bluemix
+
+Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/services/Cloudant/index.html).
+Bluemix is an open-standards, cloud platform for building, running, and managing applications.
+Find out more about Bluemix at the [Information Center](https://www.ng.bluemix.net/docs/),
+and get started with Bluemix at the [home page](https://console.ng.bluemix.net/home/).
+
 ## HTTP API
 All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
 
