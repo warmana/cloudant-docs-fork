@@ -101,6 +101,58 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 <aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
+## Quorum - writing and reading
+
+When you store data in a distributed database,
+where content is stored in more than one node,
+how do you know that all nodes have the most current copy of the data?
+When you are reading data,
+how do you know that you have the most current copy?
+
+Cloudant uses the idea of a '[Quorum](http://en.wikipedia.org/wiki/Quorum_%28distributed_computing%29)' to answer these questions.
+
+### The write quorum
+
+Within a group of '`n`' nodes having copies of the data,
+a 'write quorum' of '`w`' nodes is identified,
+where '`w`' <= '`n`'.
+When you write data,
+and at least '`w`' nodes have acknowledged the data _and_ recorded it in non-volatile storage,
+the write quorum is satisfied and the data is deemed to have been written successfully and sufficiently.
+In other words,
+'`w`' is the number of document copies that must be saved before a document is considered to be 'written',
+resulting in a [201](http.html#201) HTTP response.
+
+If '`w`' is much smaller than '`n`',
+you maximize throughput but run the risk of reduced consistency.
+If '`w`' is much closer or identical to '`n`',
+you maximize consistency but reduce throughput.
+
+### The read quorum
+
+Within a group of '`n`' nodes having copies of the data,
+a 'read quorum' of '`r`' nodes is identified,
+where '`r`' <= '`n`'.
+When you read data,
+and at least '`r`' nodes have replied with the data _and_ the data is the same from each of them,
+the read quorum is satisfied and the data is deemed to have been read successfully and consistently.
+In other words,
+'`r`' is the number of document copies that must be read from different nodes,
+and in agreement with each other,
+before a document is considered to be an accurate 'read'.
+
+If '`r`' is much smaller than '`n`',
+you minimize latency but run the risk of reduced consistency.
+If '`r`' is much closer or identical to '`n`',
+you maximize consistency but increase latency.
+
+### 'Sloppy' quorum
+
+Cloudant implements a 'sloppy quorum' mechanism.
+This means data is still written or read even if the quorum is not met.
+
+For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
+
 ## Cloudant Local
 
 <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
