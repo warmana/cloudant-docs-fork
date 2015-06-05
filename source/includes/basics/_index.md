@@ -12,6 +12,13 @@ Signing up for a Cloudant account is free and easy:<br/>
 Working with Cloudant to create databases and store information is simplified through the user-friendly dashboard, as this overview explains:<br/>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/zESROlotu-g?rel=0" frameborder="0" allowfullscreen title="Dashboard overview video"></iframe>
 
+## IBM Bluemix
+
+Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/services/Cloudant/index.html).
+Bluemix is an open-standards, cloud platform for building, running, and managing applications.
+Find out more about Bluemix at the [Information Center](https://www.ng.bluemix.net/docs/),
+and get started with Bluemix at the [home page](https://console.ng.bluemix.net/home/).
+
 ## HTTP API
 All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
 
@@ -93,6 +100,60 @@ You can continuously replicate. This means that a target database updates every 
 Continuous replication can be used for backups of data, aggregation across multiple databases, or for sharing data.
 
 <aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
+
+## Quorum - writing and reading
+
+When you store data in a distributed database,
+where content is stored in more than one node,
+how do you know that all nodes have the most current copy of the data?
+When you are reading data,
+how do you know that you have the most current copy?
+
+Cloudant uses the idea of a '[Quorum](http://en.wikipedia.org/wiki/Quorum_%28distributed_computing%29)' to answer these questions.
+
+### The write quorum
+
+Within a group of '`n`' nodes having copies of the data,
+a 'write quorum' of '`w`' nodes is identified,
+where '`w`' <= '`n`'.
+When you write data,
+and at least '`w`' nodes have acknowledged the data _and_ recorded it in non-volatile storage,
+the write quorum is satisfied and the data is deemed to have been written successfully and sufficiently.
+In other words,
+'`w`' is the number of document copies that must be saved before a document is considered to be 'written',
+resulting in a [201](http.html#201) HTTP response.
+
+If '`w`' is much smaller than '`n`',
+you maximize throughput but run the risk of reduced consistency.
+If '`w`' is much closer or identical to '`n`',
+you maximize consistency but reduce throughput.
+
+### The read quorum
+
+Within a group of '`n`' nodes having copies of the data,
+a 'read quorum' of '`r`' nodes is identified,
+where '`r`' <= '`n`'.
+When you read data,
+and at least '`r`' nodes have replied with the data _and_ the data is the same from each of them,
+the read quorum is satisfied and the data is deemed to have been read successfully and consistently.
+In other words,
+'`r`' is the number of document copies that must be read from different nodes,
+and in agreement with each other,
+before a document is considered to be an accurate 'read'.
+
+If '`r`' is much smaller than '`n`',
+you minimize latency but run the risk of reduced consistency.
+If '`r`' is much closer or identical to '`n`',
+you maximize consistency but increase latency.
+
+### 'Sloppy' quorum
+
+Cloudant implements a 'sloppy quorum' mechanism.
+This means data is still written or read,
+because if a primary node (one that would normally be used for the write or read) is not available,
+another available node accepts and responds to the request.
+
+For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
 
 ## Cloudant Local
 

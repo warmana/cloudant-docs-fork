@@ -117,6 +117,8 @@ A list of the error codes returned by Cloudant and generic descriptions of the r
 
     Request completed successfully.
 
+<div id="201"></div>
+
 -   `201 - Created`
 
     Resource created or updated successfully. The resource could be a database or a document, for example.
