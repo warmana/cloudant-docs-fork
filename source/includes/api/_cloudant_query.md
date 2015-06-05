@@ -314,15 +314,15 @@ and $name is the name of the index.
 
 #### Request body
 
-> Example request body for finding documents using an index:
+> [Example request body for finding documents using an index](try.html?requestType=cq&predefinedQuery=year2010ascending):
 
 ```json
 {
     "selector": {
-        "bar": {"$gt": 1000000}
+        "year": {"$gt": 2010}
     },
-    "fields": ["_id", "_rev", "foo", "bar"],
-    "sort": [{"bar": "asc"}],
+    "fields": ["_id", "_rev", "year", "title"],
+    "sort": [{"year": "asc"}],
     "limit": 10,
     "skip": 0
 }

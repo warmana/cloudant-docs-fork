@@ -141,6 +141,7 @@
           'actor-is-zoe-saldana': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'},
           'sorting': {query: '{ "selector": {"year": {"$gte": 2000, "$lte": 2001}}, "limit": 10, "sort": ["year"]}'},
           'pg2010': {query: '{ "selector": { "year": 2010, "rating": {"$in": ["PG", "PG-13"]} } }'},
+          'year2010ascending': { query: '{ "selector": { "year": {"$gt": 2010} }, "fields": ["_id", "_rev", "year", "title"], "sort": [{"year": "asc"}], "limit": 10, "skip": 0}' },
           'default': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'}
         },
         renderHttpRequest: function() {
@@ -332,6 +333,7 @@ You can try out requests and output will be shown in the code column to the righ
       <option selected="selected" value="actor-is-zoe-saldana">Movies with Zoe Saldana</option>
       <option value="sorting">Query with sorting</option>
       <option value="pg2010">2010 Movies rated PG or PG-13</option>
+      <option value="year2010ascending">Movies released after 2010 sorted by year</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
   </form>
