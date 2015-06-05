@@ -138,21 +138,21 @@
         queryInput: $('form.cq .query'),
         form: $('form.cq'),
         queries: {
-          'actor-is-zoe-saldana': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'},
-          'sorting': {query: '{ "selector": { "Movie_year": {"$gte": 2000, "$lte": 2001}}, "sort": ["Movie_year"]}'},
-          'pg2010': {query: '{ "selector": { "Movie_year": 2010, "Movie_rating": {"$in": ["PG", "PG-13"]} } }'},
-          'default': {query: '{ "selector": { "Person_name": "Zoe Saldana" } }'}
+          'actor-is-zoe-saldana': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'},
+          'sorting': {query: '{ "selector": {"year": {"$gte": 2000, "$lte": 2001}}, "limit": 10, "sort": ["year"]}'},
+          'pg2010': {query: '{ "selector": { "year": 2010, "rating": {"$in": ["PG", "PG-13"]} } }'},
+          'default': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'}
         },
         renderHttpRequest: function() {
-          return 'POST /movies-demo-with-indexes/_find HTTP/1.1\nHost: examples.cloudant.com\n\n' + this.queryInput.val();
+          return 'POST /query-movies-with-indexes/_find HTTP/1.1\nHost: examples.cloudant.com\n\n' + this.queryInput.val();
         },
         renderCurlRequest: function() {
-          return "curl 'https://examples.cloudant.com/movies-demo-with-indexes/_find' -X POST -d '" + this.queryInput.val() + "'";
+          return "curl 'https://examples.cloudant.com/query-movies-with-indexes/_find' -X POST -d '" + this.queryInput.val() + "'";
         },
         submitForm: function(event){
           var query = this.queryInput.val();
           jQuery.ajax({
-            url: 'https://examples.cloudant.com/movies-demo-with-indexes/_find',
+            url: 'https://examples.cloudant.com/query-movies-with-indexes/_find',
             type: 'POST',
             data: query,
             beforeSend: function(xhr) {
