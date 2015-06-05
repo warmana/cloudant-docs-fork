@@ -150,7 +150,9 @@ you maximize consistency but increase latency.
 ### 'Sloppy' quorum
 
 Cloudant implements a 'sloppy quorum' mechanism.
-This means data is still written or read even if the quorum is not met.
+This means data is still written or read,
+because if a primary node (one that would normally be used for the write or read) is not available,
+another available node accepts and responds to the request.
 
 For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
 
