@@ -167,7 +167,11 @@
     
       }
     };
-    
+    var saveFormState = function() {
+      var requestType = requestTypeSelect.val();
+      var predefinedQuery = $('form.' + requestType + ' .predefined').val();
+      window.location.hash = '#requestType=' + requestType + '&predefinedQuery=' + predefinedQuery;
+    };
     var displayResult = function(jqXHR, textStatus) {
       var result = JSON.stringify(jQuery.parseJSON(jqXHR.responseText), null, '    ');
       outputField.show();
@@ -197,6 +201,7 @@
       requestChanged(type);
     };
     requestTypeSelect.on("change", showSelectedType);
+    requestTypeSelect.on("change", saveFormState);
     
     var initForm = function(formName, request) {
       console.log(formName);
@@ -212,6 +217,7 @@
         var request = predefinedSelect.val();
         initForm(formName, requestTypes[formName].queries[request]);
         requestChanged(formName);
+        saveFormState();
       });
     };
     for (var rt in requestTypes) {
@@ -226,7 +232,7 @@
     //init form from query param values
     function getParameterByName(name) {
       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+      var regex = new RegExp("[\\#&]" + name + "=([^&#]*)"), results = regex.exec(window.location.hash);
       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     var requestType = getParameterByName('requestType');
@@ -235,9 +241,7 @@
     if (!predefinedQuery) { predefinedQuery = 'default'; }
     requestTypeSelect.val(requestType);
     $('form.' + requestType + ' .predefined').val(predefinedQuery);
-    console.log(requestType);
     showSelectedType();
-    console.log(requestType);
     initForm(requestType, requestTypes[requestType].queries[predefinedQuery]);
     requestChanged(requestType);
   });
