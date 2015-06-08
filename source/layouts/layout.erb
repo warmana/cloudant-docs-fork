@@ -114,16 +114,17 @@ under the License.
             <% end %>
           <% end %>
         ]);
+      
+        var languageInit = $('#lang-selector li.active').text();
+        $('#selected-language').text(languageInit);
+        $('#selected-language').click(langDropdown);
+          
+        function langDropdown() {
+          $('#lang-selector ul').show();
+        }
+          
+        $('blockquote a').attr('title', 'Change this request!');
       });
-      
-      var languageInit = $('#lang-selector li.active').text();
-      $('#selected-language').text(languageInit);
-      $('#selected-language').click(langDropdown);
-        
-      function langDropdown() {
-        $('#lang-selector ul').show();
-      }
-      
     </script>
     
   </head>
