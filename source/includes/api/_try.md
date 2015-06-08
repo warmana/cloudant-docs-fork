@@ -204,8 +204,6 @@
     requestTypeSelect.on("change", saveFormState);
     
     var initForm = function(formName, request) {
-      console.log(formName);
-      console.log(request);
       $('form.' + formName + ' input[type=text]').val('');
       for (var field in request) {
         $('form.' + formName + ' .' + field).val(request[field]);
@@ -245,6 +243,26 @@
     initForm(requestType, requestTypes[requestType].queries[predefinedQuery]);
     requestChanged(requestType);
   });
+  setTimeout(function() {
+    $("#lang-selector a").unbind("click");
+    $("#lang-selector a").bind("click", function(event) {
+      var language = $(this).data("language-name");
+      var displayLanguage = language;
+      if (language == 'shell') {
+        displayLanguage = 'curl';
+      };
+      activateLanguage(language);
+      $("#lang-selector-icon").removeClass('open');
+      $("#lang-selector ul").hide();
+      $("#selected-language-value").text(displayLanguage);
+      /*$("pre").hide();
+      $("pre.json").show();
+      $("pre." + language).show();*/
+      event.preventDefault();
+    });
+  },1000);
+  
+  
   
 </script>
 
