@@ -225,7 +225,7 @@
     requestTypes.search.includeDocsInput.on('change', function() {requestChanged('search');});
     for (var rt in requestTypes) {
       var createFunc = function(rtp) { return function(){requestChanged(rtp)}}
-      requestTypes[rt].form.on('keyup', createFunc(rt));
+      requestTypes[rt].form.on('keyup', $.debounce(createFunc(rt), 300));
     }
     //init form from query param values
     function getParameterByName(name) {
