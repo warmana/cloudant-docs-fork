@@ -282,7 +282,7 @@ Stop words are words that do not get indexed. You define them within a design do
 <div></div>
 #### Testing analyzer tokenization
 
-> Example test of the `keyword` analyzer
+> [Example test of the `keyword` analyzer](try.html#requestType=analyzers&predefinedQuery=keyword)
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -306,7 +306,7 @@ Content-Type: application/json
 }
 ```
 
-> Example test of the `standard` analyzer
+> [Example test of the `standard` analyzer](try.html#requestType=analyzers&predefinedQuery=standard)
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -331,7 +331,7 @@ Content-Type: application/json
 }
 ```
 
-You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint.
+You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint or using our [analyzer test form](try.html#requestType=analyzers).
 
 ### Queries
 
