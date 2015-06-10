@@ -186,28 +186,17 @@ see the [note about `text` indexes](#note-about-text-indexes).
 
 ### Query Parameters
 
-> Example using all available query parameters
+> [Example using all available query parameters](try.html#requestType=cq&predefinedQuery=year2010ascending)
 
 ```json
 {
   "selector": {
-    "query": "here"
-  },
-  "fields": [
-    "_id",
-    "_rev",
-    "foo",
-    "bar"
-  ],
-  "sort": [
-    {
-      "bar:number": "asc"
-    },
-    {
-      "foo:string": "asc"
+    "year": {
+      "$gt": 2010
     }
-  ],
-  "bookmark": "opaque string",
+  },
+  "fields": ["_id", "_rev", "year", "title"],
+  "sort": [{"year": "asc"}],
   "limit": 10,
   "skip": 0
 }
@@ -314,7 +303,7 @@ and $name is the name of the index.
 
 #### Request body
 
-> [Example request body for finding documents using an index](try.html?requestType=cq&predefinedQuery=year2010ascending):
+> [Example request body for finding documents using an index](try.html#requestType=cq&predefinedQuery=year2010ascending):
 
 ```json
 {
@@ -380,23 +369,27 @@ these arise from a similarity of purpose and do not necessarily extend to common
 
 #### Selector basics
 
-> A simple selector
+> [A simple selector](try.html#requestType=cq&predefinedQuery=simple)
 
 ```json
-"selector": {
-  "name": "Paul"
+{
+  "selector": {
+    "director": "Lars von Trier"
+  }
 }
 ```
 
-Elementary selector syntax requires you to specify one or more fields, and the corresponding values required for those fields. This selector matches all documents whose `"name"` field has the value `"Paul"`.
+Elementary selector syntax requires you to specify one or more fields, and the corresponding values required for those fields. This selector matches all documents whose `"director"` field has the value `"Lars von Trier"`.
 
 <div></div>
 
-> A simple selector for a full text index
+> [A simple selector for a full text index](try.html#requestType=cq&predefinedQuery=bond)
 
 ```json
-"selector": {
-  "$text": "Bond"
+{
+  "selector": {
+    "$text": "Bond"
+  }
 }
 ```
 
@@ -407,7 +400,7 @@ the full text index is inspected to find any document that includes the word "Bo
 
 <div></div>
 
-> A simple selector, inspecting specific fields
+> [A simple selector, inspecting specific fields](try.html#requestType=cq&predefinedQuery=bond-title-cast)
 
 ```json
 "selector": {
@@ -415,12 +408,12 @@ the full text index is inspected to find any document that includes the word "Bo
 },
 "fields": [
   "title",
-  "character"
+  "cast"
 ]
 ```
 
 In this example,
-the full text index is inspected to find any document that includes the word "Bond" in the fields `title` or `character`.
+the full text index is inspected to find any document that includes the word "Bond". In the response, the fields `title` or `cast` are returned for every matching object.
 
 <div></div>
 You can create more complex selector expressions by combining operators.
@@ -432,7 +425,7 @@ For more information about creating complex selector expressions, see [Creating 
 <div></div>
 #### Selector with two fields
 
-> A more complex selector
+> [A more complex selector](try.html#requestType=cq&predefinedQuery=trier2003)
 
 ```json
 "selector": {
@@ -446,12 +439,12 @@ _and_ that also has a `location` field with the value "Boston".
 
 ### Subfields
 
-> Example of a field and subfield selector, using a standard JSON structure:
+> [Example of a field and subfield selector, using a standard JSON structure:](try.html#requestType=cq&predefinedQuery=imdb-rating-8)
 
 ```json
 "selector": {
-  "location": {
-    "city": "Omaha"
+  "imdb": {
+    "rating": 8
   }
 }
 ```
@@ -465,7 +458,7 @@ For example, you might use a standard JSON structure for specifying a field and 
 
 ```json
 "selector": {
-  "location.city": "Omaha"
+  "imdb.rating": 8
 }
 ```
 
@@ -473,13 +466,12 @@ An abbreviated equivalent uses a dot notation to combine the field and subfield 
 
 ### Operators
 
-> Example selector using an operator to match any document,
-where the `age` field has a value greater than 20:
+> [Example selector using an operator to match any document, where the `age` field has a value greater than 20:](try.html#requestType=cq&predefinedQuery=after2010)
 
 ```json
-{
-  "age": {
-    "$gt": 20
+"selector": {
+  "year": {
+    "$gt": 2010
   }
 }
 ```
@@ -515,15 +507,15 @@ Any JSON object that is not the argument to a condition operator is an implicit 
 
 <div></div>
 
-> Example of the implicit equality operator
+> [Example of the implicit equality operator](/try.html#requestType=cq&predefinedQuery=simple)
 
 ```json
 {
-  "foo": "bar"
+  "director": "Lars von Trier"
 }
 ```
 
-In this example, there must be a field `foo` in a matching document, *and* the field must have a value exactly equal to "bar".
+In this example, there must be a field `director` in a matching document, *and* the field must have a value exactly equal to "Lars von Trier".
 
 <div></div>
 
@@ -531,8 +523,8 @@ In this example, there must be a field `foo` in a matching document, *and* the f
 
 ```json
 {
-  "foo": {
-    "$eq": "bar"
+  "director": {
+    "$eq": "Lars von Trier"
   }
 }
 ```
@@ -541,34 +533,32 @@ You can also make the equality operator explicit.
 
 <div></div>
 
-> Example of implicit operator applied to a subfield test
+> [Example of implicit operator applied to a subfield test](/try.html#requestType=cq&predefinedQuery=imdb-rating-8)
 
 ```json
 {
-  "foo": {
-    "bar": "baz"
+  "imdb": {
+    "rating": 8
   }
 }
 ```
 
 In the example using subfields,
-the required field `foo` in a matching document *must* also have a subfield `bar` *and* the subfield *must* have a value exactly equal to "baz".
+the required field `imdb` in a matching document *must* also have a subfield `rating` *and* the subfield *must* have a value equal to 8.
 
 <div></div>
 
 > Example of an explicit equality operator
 
 ```json
-{
-  "foo": {
-    "$eq": {
-      "bar": "baz"
-    }
+"selector": {
+  "imdb": {
+    "rating": { "$eq": 8 }
   }
 }
 ```
 
-> `$eq` operator used with full text indexing
+> [`$eq` operator used with full text indexing](try.html#requestType=cq&predefinedQuery=2010-by-title)
 
 ```json
 {
@@ -608,16 +598,16 @@ Again, you can make the equality operator explicit.
 
 <div></div>
 
-> Example of an implicit `$and` operator
+> [Example of an implicit `$and` operator](try.html#requestType=cq&predefinedQuery=trier2003)
 
 ```json
 {
-  "foo": "bar",
-  "baz": true
+  "director": "Lars von Trier",
+  "year": 2003
 }
 ```
 
-In this example, the field `foo` must be present and contain the value `bar` _and_ the field `baz` must exist and have the value `true`.
+In this example, the field `director` must be present and contain the value `"Lars von Trier"` _and_ the field `year` must exist and have the value `2003`.
 
 <div id="combined-expressions"></div>
 
@@ -627,13 +617,13 @@ In this example, the field `foo` must be present and contain the value `bar` _an
 {
   "$and": [
     {
-      "foo": {
-        "$eq": "bar"
+      "director": {
+        "$eq": "Lars von Trier"
       }
     },
     {
-      "baz": {
-        "$eq": true
+      "year": {
+        "$eq": 2003
       }
     }
   ]
@@ -674,18 +664,18 @@ Operator | Argument | Purpose
 <div></div>
 ##### The `$and` operator
 
-> `$and` operator used with full text indexing
+> [`$and` operator used with full text indexing](try.html#requestType=cq&predefinedQuery=schwarzenegger)
 
 ```json
 {
   "selector": {
     "$and": [
       {
-        "$text": "schwarzenegger"
+        "$text": "Schwarzenegger"
       },
       {
         "year": {
-          "$in": [2005, 2010, 2015]
+          "$in": [1984, 1991]
         }
       }
     ]

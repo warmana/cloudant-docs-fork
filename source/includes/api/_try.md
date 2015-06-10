@@ -134,6 +134,14 @@
           'sorting': {query: '{\n  "selector": {\n    "year": {\n      "$gte": 2000,\n      "$lte": 2001\n    }\n  },\n  "limit": 10,\n  "sort": ["year"]\n}'},
           'pg2010': {query: '{\n  "selector": {\n    "year": 2010,\n    "rating": {\n      "$in": ["PG", "PG-13"]\n    }\n  }\n}'},
           'year2010ascending': { query: '{\n  "selector": {\n    "year": {\n      "$gt": 2010\n    }\n  },\n  "fields": ["_id", "_rev", "year", "title"],\n  "sort": [{"year": "asc"}],\n  "limit": 10,\n  "skip": 0\n}' },
+          'simple': { query: '{\n  "selector": {\n    "director": "Lars von Trier"\n  }\n}' },
+          'bond': { query: '{\n  "selector": {\n    "$text": "Bond"\n  }\n}' },
+          'bond-title-cast': { query: '{\n  "selector": {\n    "$text": "Bond"\n  },\n  "fields": [\n    "title",\n    "cast"\n  ]\n}' },
+          'trier2003': { query: '{\n  "selector": {\n    "director": "Lars von Trier",\n    "year": 2003\n  }\n}' },
+          'imdb-rating-8': { query: '{\n  "selector": {\n    "imdb": {\n      "rating": 8\n    }\n  }\n}' },
+          'after2010': { query: '{\n  "selector": {\n    "year": {\n      "$gt": 2010\n    }\n  }\n}' },
+          '2010-by-title': { query: '{\n  "selector": {\n    "year": {\n      "$eq": 2001\n    }\n  },\n  "sort": [\n    "title:string"\n  ],\n  "fields": [\n    "title"\n  ]\n}' },
+          'schwarzenegger': { query: '{\n  "selector": {\n    "$and": [\n      {\n        "$text": "Schwarzenegger"\n      },\n      {\n        "year": {\n          "$in": [1984, 1991]\n        }\n      }\n    ]\n  },\n  "fields": [\n    "year",\n    "title",\n    "cast"\n  ]\n}' },
           'default': 'actor-is-zoe-saldana'
         },
         renderHttpRequest: function() {
@@ -339,6 +347,15 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="sorting">Query with sorting</option>
       <option value="pg2010">2010 Movies rated PG or PG-13</option>
       <option value="year2010ascending">Movies released after 2010 sorted by year</option>
+      <option value="simple">Simple selector</option>
+      <option value="bond">Find the word Bond anywhere</option>
+      <option value="bond-title-cast">Find Bond anywhere, only return title and cast</option>
+      <option value="trier2003">Movies directed by Lars von Trier and released in 2003</option>
+      <option value="imdb-rating-8">Movies rated 8 on IMDB</option>
+      <option value="after2010">Movies released after 2010</option>
+      <option value="2010-by-title">2010 movies sorted by title</option>
+      <option value="schwarzenegger">Schwarzenegger movies</option>
+      
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
     <p style="margin-left: 40px;">The sample database contains 9,000 movie documents in the following format:</p>
