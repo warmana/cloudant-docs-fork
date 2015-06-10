@@ -334,6 +334,40 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="year2010ascending">Movies released after 2010 sorted by year</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
+    <p style="margin-left: 40px;">The sample database contains 9,000 movie documents in the following format:</p>
+
+    <code style="white-space: pre; color: black; background-color: inherit; display: block; margin-left: 40px;">
+{
+    "_id": "71562",
+    "_rev": "1-72726eda3b8b2973ef259dd0c7410a83",
+    "title": "The Godfather: Part II",
+    "year": 1974,
+    "rating": "R",
+    "runtime": "200 min",
+    "genre": [
+        "Crime",
+        "Drama"
+    ],
+    "director": "Francis Ford Coppola",
+    "writer": [
+        "Francis Ford Coppola (screenplay)",
+        "Mario Puzo (screenplay)",
+        "Mario Puzo (based on the novel \"The Godfather\")"
+    ],
+    "cast": [
+        "Al Pacino",
+        "Robert Duvall",
+        "Diane Keaton",
+        "Robert De Niro"
+    ],
+    "poster": "http://ia.media-imdb.com/images/M/..._V1_SX300.jpg",
+    "imdb": {
+        "rating": 9.1,
+        "votes": 656,
+        "id": "tt0071562"
+    }
+}
+    </code>
   </form>
   
   <form action="#" class="analyzers">
