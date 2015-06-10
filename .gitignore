@@ -4,6 +4,7 @@ target
 *.rbc
 .bundle
 .config
+.project
 coverage
 InstalledFiles
 lib/bundler/man
