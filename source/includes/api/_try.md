@@ -11,10 +11,12 @@
     var requestTypes = {
       analyzers: {
         queries: {
-          'email-address': {query: '{"analyzer": "email", "text":"Jane\'s email address is jane.smith@example.com."}'},
-          'english': {query: '{"analyzer": "english", "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"}'},
-          'german': {query: '{"analyzer": "german", "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."}'},
+          'email-address': {query: '{\n  "analyzer": "email",\n  "text":"Jane\'s email address is jane.smith@example.com."\n}'},
+          'english': {query: '{\n  "analyzer": "english",\n  "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"\n}'},
+          'german': {query: '{\n  "analyzer": "german",\n  "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."\n}'},
           'default': 'email-address',
+          'keyword': {query: '{\n  "analyzer":"keyword",\n  "text":"ablanks@renovations.com"\n}' },
+          'standard': {query: '{\n  "analyzer":"standard",\n  "text":"ablanks@renovations.com"\n}' }
         },
         form: $('form.analyzers'),
         queryInput: $('form.analyzers .query'),
@@ -128,10 +130,10 @@
         queryInput: $('form.cq .query'),
         form: $('form.cq'),
         queries: {
-          'actor-is-zoe-saldana': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'},
-          'sorting': {query: '{ "selector": {"year": {"$gte": 2000, "$lte": 2001}}, "limit": 10, "sort": ["year"]}'},
-          'pg2010': {query: '{ "selector": { "year": 2010, "rating": {"$in": ["PG", "PG-13"]} } }'},
-          'year2010ascending': { query: '{ "selector": { "year": {"$gt": 2010} }, "fields": ["_id", "_rev", "year", "title"], "sort": [{"year": "asc"}], "limit": 10, "skip": 0}' },
+          'actor-is-zoe-saldana': {query: '{\n  "selector": {\n    "cast": {\n      "$in": ["Zoe Saldana"]\n    }\n  },\n  "limit": 10\n}'},
+          'sorting': {query: '{\n  "selector": {\n    "year": {\n      "$gte": 2000,\n      "$lte": 2001\n    }\n  },\n  "limit": 10,\n  "sort": ["year"]\n}'},
+          'pg2010': {query: '{\n  "selector": {\n    "year": 2010,\n    "rating": {\n      "$in": ["PG", "PG-13"]\n    }\n  }\n}'},
+          'year2010ascending': { query: '{\n  "selector": {\n    "year": {\n      "$gt": 2010\n    }\n  },\n  "fields": ["_id", "_rev", "year", "title"],\n  "sort": [{"year": "asc"}],\n  "limit": 10,\n  "skip": 0\n}' },
           'default': 'actor-is-zoe-saldana'
         },
         renderHttpRequest: function() {
@@ -376,6 +378,8 @@ You can try out requests and output will be shown in the code column to the righ
       <option selected="selected" value="email-address">Email address analyzer</option>
       <option value="english">English analyzer</option>
       <option value="german">German analyzer</option>
+      <option value="keyword">Keyword analyzer</option>
+      <option value="standard">Standard analyzer</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="analyzersRequestBody"></textarea><br /><br />
   </form>
@@ -405,6 +409,7 @@ You can try out requests and output will be shown in the code column to the righ
   }
   .test-form-container textarea {
     height: 300px;
+    font-family: monospace;
   }
   .test-form-container form {
     display: none;
