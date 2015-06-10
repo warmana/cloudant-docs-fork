@@ -300,12 +300,12 @@ html, body {
       }
       #selected-language-icon {
         display: inline-block;
-        width: 12px;
-        height: 8px;
+        width: 19px;
+        height: 13px;
         background: url("../images/language_down_arrow.png") no-repeat;
         position: absolute;
-        right: 24px;
-        top: 16px;
+        right: 20px;
+        top: 12px;
         &.open {
           background: url("../images/language_up_arrow.png") no-repeat;
         }
@@ -342,7 +342,7 @@ html, body {
         background-color: #d1d2d4;
         color: #333;
         background-image: url("../images/language_check.png");
-        background-position: right 22px bottom 12px;
+        background-position: right 22px bottom 8px;
         background-repeat: no-repeat;
       }
 
