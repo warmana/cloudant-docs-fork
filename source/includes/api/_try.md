@@ -14,7 +14,7 @@
           'email-address': {query: '{"analyzer": "email", "text":"Jane\'s email address is jane.smith@example.com."}'},
           'english': {query: '{"analyzer": "english", "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"}'},
           'german': {query: '{"analyzer": "german", "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."}'},
-          'default': {query: '{"analyzer": "email", "text":"Jane`s email address is jane.smith@example.com."}'},
+          'default': 'email-address',
         },
         form: $('form.analyzers'),
         queryInput: $('form.analyzers .query'),
@@ -55,20 +55,10 @@
         queries: {
           'author-is-john': { query: 'author:John' },
           'sorting': { query: 'author:J*', sort: '"-year"' },
-          'default': { query: 'author:John' },
+          'default': 'author-is-john',
           'drilldown': { query: 'year:[2000 TO 2010]', drilldown: '["author","J. K. Rowling"]' },
           'counts': { query: 'year:[2000 TO 2010]', counts: '["author"]', limit: 0 },
           'ranges': { query: 'author:J*', ranges: '{"year":{"21st century":"[2000 TO 2099]","20th century":"[1900 TO 1999]"}}', limit: 0 },
-          
-          
-          
-      /*     <option selected="selected" value="author-is-john">Books written by John</option>
-      <option value="sorting">Sorting by year</option>
-      <option value="ranges">Year ranges</option>
-      <option value="counts">Count authors</option>
-      <option value="drilldown">Drilldown</option>    */  
-          
-          
         },
         buildUrl: function() {
           var url = '/docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val();
@@ -142,7 +132,7 @@
           'sorting': {query: '{ "selector": {"year": {"$gte": 2000, "$lte": 2001}}, "limit": 10, "sort": ["year"]}'},
           'pg2010': {query: '{ "selector": { "year": 2010, "rating": {"$in": ["PG", "PG-13"]} } }'},
           'year2010ascending': { query: '{ "selector": { "year": {"$gt": 2010} }, "fields": ["_id", "_rev", "year", "title"], "sort": [{"year": "asc"}], "limit": 10, "skip": 0}' },
-          'default': {query: '{ "selector": {"cast": {"$in": ["Zoe Saldana"]}}, "limit": 10}'}
+          'default': 'actor-is-zoe-saldana'
         },
         renderHttpRequest: function() {
           return 'POST /query-movies-with-indexes/_find HTTP/1.1\nHost: examples.cloudant.com\n\n' + this.queryInput.val();
@@ -236,34 +226,20 @@
     var requestType = getParameterByName('requestType');
     if (!requestType) { requestType = 'search'; }
     var predefinedQuery = getParameterByName('predefinedQuery');
-    if (!predefinedQuery) { predefinedQuery = 'default'; }
+    if (!predefinedQuery) { predefinedQuery = requestTypes[requestType].queries['default']; }
     requestTypeSelect.val(requestType);
     $('form.' + requestType + ' .predefined').val(predefinedQuery);
     showSelectedType();
     initForm(requestType, requestTypes[requestType].queries[predefinedQuery]);
     requestChanged(requestType);
-  });
-  setTimeout(function() {
     $("#lang-selector a").unbind("click");
     $("#lang-selector a").bind("click", function(event) {
       var language = $(this).data("language-name");
-      var displayLanguage = language;
-      if (language == 'shell') {
-        displayLanguage = 'curl';
-      };
       activateLanguage(language);
-      $("#lang-selector-icon").removeClass('open');
-      $("#lang-selector ul").hide();
-      $("#selected-language-value").text(displayLanguage);
-      /*$("pre").hide();
-      $("pre.json").show();
-      $("pre." + language).show();*/
       event.preventDefault();
     });
-  },1000);
   
-  
-  
+  });
 </script>
 
 ## Try it!
