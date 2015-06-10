@@ -190,10 +190,15 @@
       }
       var type = requestTypeSelect.val();
       requestTypes[type].form.show();
-      requestChanged(type);
     };
     requestTypeSelect.on("change", showSelectedType);
     requestTypeSelect.on("change", saveFormState);
+    requestTypeSelect.on("change", function() {
+      var rt = requestTypeSelect.val();
+      var defaultQuery = requestTypes[rt].queries['default']
+      initForm(rt, requestTypes[rt].queries[defaultQuery]);
+      requestChanged(rt);
+    });
     
     var initForm = function(formName, request) {
       $('form.' + formName + ' input[type=text]').val('');
@@ -302,7 +307,7 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="sorting">Sorting by year</option>
       <option value="ranges">Year ranges</option>
       <option value="counts">Count authors</option>
-      <option value="drilldown">Drilldown</option>      
+      <option value="drilldown">Drilldown</option>
     </select>
     <label for="query">Search query (q)</label>
     <input size="100" type="text" name="query" class="query" id="test-search-query">
