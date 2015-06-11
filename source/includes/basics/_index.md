@@ -14,10 +14,11 @@ Working with Cloudant to create databases and store information is simplified th
 
 ## IBM Bluemix
 
-Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/services/Cloudant/index.html).
+Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
 Bluemix is an open-standards, cloud platform for building, running, and managing applications.
-Find out more about Bluemix at the [Information Center](https://www.ng.bluemix.net/docs/),
-and get started with Bluemix at the [home page](https://console.ng.bluemix.net/home/).
+Find out more,
+and get started with Bluemix,
+at the [home page](https://console.ng.bluemix.net/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
 
 ## HTTP API
 All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
