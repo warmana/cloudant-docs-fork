@@ -449,5 +449,17 @@ You can try out requests and output will be shown in the code column to the righ
     margin-left: 40px;
     width: 20px;
   }
+  pre span.hljs-string {
+    color: #00a69f;
+  }
+  pre span.hljs-number {
+    color: #90a959;
+  }
+  pre.hljs span.hljs-title {
+    color: #fff;
+  }
+  
+  
+  
     
 </style>
