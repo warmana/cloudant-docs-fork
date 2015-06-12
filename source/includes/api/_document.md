@@ -96,7 +96,7 @@ db.get($JSON._id, function (err, body, headers) {
 
 To retrieve a document, make a GET request to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 If you do not know the `_id` for a particular document,
-you can [query the database](#get-documents) for all documents.
+you can [query the database](database.html#get-documents) for all documents.
 
 <div></div>
 
@@ -123,7 +123,7 @@ Due to the distributed, eventually consistent nature of Cloudant, reads might re
 
 ### Read Many
 
-To fetch many documents at once, [query the database](#get-documents).
+To fetch many documents at once, [query the database](database.html#get-documents).
 
 ### Update
 
