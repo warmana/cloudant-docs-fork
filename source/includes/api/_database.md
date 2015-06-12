@@ -1,7 +1,7 @@
 ## Databases
 
 Cloudant databases contain JSON objects.
-These JSON objects are called [documents](#documents).
+These JSON objects are called [documents](document.html#documents).
 All documents must be contained in a database.
 
 You interact with Cloudant databases and documents using API commands, as this overview explains:<br/>
@@ -368,7 +368,7 @@ you should be aware that:
 
 -	If a `since` value is specified, only changes that have arrived in the specified replicas of the shards are returned in the response.
 -	If the specified replicas of the shards in any given `since` value are unavailable, alternative replicas are selected, and the last known checkpoint between them is used. If this happens, you might see changes again that you have previously seen. Therefore, an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)', that is, able to receive the same data multiple times, safely.
--	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
+-	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
 
 <div></div>
 
