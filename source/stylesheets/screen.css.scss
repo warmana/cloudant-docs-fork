@@ -585,6 +585,12 @@ body, html {
       //border-top: 1px solid #000;
       //border-bottom: 2px solid #404040;
     }
+    a:first-child:before {
+      content: url('../images/lab.png');
+      position: relative;
+      top: 10px;
+      left: -6px;
+    }
   }
 }
 
