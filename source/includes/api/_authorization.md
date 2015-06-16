@@ -15,8 +15,6 @@ Role               | Description
 `_design`          | Gives the user access to views and design documents.
 `_shards`          | Gives the user access to the `/$DB/_shards` endpoint.
 `_security`        | Gives the user access to the `/$DB/_security` endpoint, letting them change roles of users.
-`_search_analyze`  | Gives the user access to the `/_search_analyze` endpoint
-
 
 The credentials you use to log in to the dashboard automatically have `_admin` permissions to all databases you create. Everyone and everything else, from users you share databases with to API keys you create, must be given a permission level explicitly.
 
