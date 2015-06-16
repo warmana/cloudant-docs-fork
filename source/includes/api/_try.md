@@ -16,7 +16,8 @@
           'german': {query: '{\n  "analyzer": "german",\n  "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."\n}'},
           'default': 'email-address',
           'keyword': {query: '{\n  "analyzer":"keyword",\n  "text":"ablanks@renovations.com"\n}' },
-          'standard': {query: '{\n  "analyzer":"standard",\n  "text":"ablanks@renovations.com"\n}' }
+          'standard': {query: '{\n  "analyzer":"standard",\n  "text":"ablanks@renovations.com"\n}' },
+          'whitespace': {query: '{\n  "analyzer":"whitespace",\n  "text":"Jane\'s email address is jane.smith@example.com."\n}' }
         },
         form: $('form.analyzers'),
         queryInput: $('form.analyzers .query'),
@@ -402,6 +403,7 @@ You can try out requests and output will be shown in the code column to the righ
       <option value="german">German analyzer</option>
       <option value="keyword">Keyword analyzer</option>
       <option value="standard">Standard analyzer</option>
+      <option value="whitespace">Whitespace analyzer</option>
     </select>
     <textarea rows="10" class="query" cols="80" id="analyzersRequestBody"></textarea><br /><br />
   </form>
