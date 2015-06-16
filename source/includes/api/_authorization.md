@@ -7,12 +7,12 @@ are permitted to perform certain tasks. This is called authorization.
 
 Role               | Description
 -------------------|------------
-`_reader`          | Gives the user permission to read documents from the database.
-`_writer`          | Gives the user permission to create and modify documents in the database.
+`_reader`          | Gives the user permission to read documents (except design documents) from the database.
+`_writer`          | Gives the user permission to create, update, and delete documents (except design documents) in the database.
 `_admin`           | Gives the user all permissions, including setting permissions.
 `_replicator`      | Gives the user permission to replicate a database, including creating checkpoints.
 `_db_updates`      | Gives the user permission to use the global changes feed.
-`_design`          | Gives the user access to views and design documents.
+`_design`          | Gives the user permission to read, create, and update design documents.
 `_shards`          | Gives the user access to the `/$DB/_shards` endpoint.
 `_security`        | Gives the user access to the `/$DB/_security` endpoint, letting them change roles of users.
 
