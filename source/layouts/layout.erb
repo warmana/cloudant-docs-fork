@@ -80,27 +80,29 @@ under the License.
         $('#showCodeButton').click(showCode);
         
         var headerSelectors = "h3";
-        var toc = $("#toc").tocify({
-          selectors: headerSelectors,
-          extendPage: false,
-          theme: "none",
-          smoothScroll: false,
-          showEffectSpeed: 0,
-          hideEffectSpeed: 180,
-          ignoreSelector: ".toc-ignore",
-          hashGenerator: 'pretty',
-          highlightOffset: 60,
-          scrollTo: 55,
-          scrollHistory: true,
-          hashGenerator: function(text, element) {
-            return element[0].getAttribute('id');
-          }
-        }).data("toc-tocify");
-        // Hack to make already open sections to start opened,
-        // instead of displaying an ugly animation
-        setTimeout(function() {
-          toc.setOption("showEffectSpeed", 180);
-        },50);
+        if ($('h3').length !== 0) { 
+          var toc = $("#toc").tocify({
+            selectors: headerSelectors,
+            extendPage: false,
+            theme: "none",
+            smoothScroll: false,
+            showEffectSpeed: 0,
+            hideEffectSpeed: 180,
+            ignoreSelector: ".toc-ignore",
+            hashGenerator: 'pretty',
+            highlightOffset: 60,
+            scrollTo: 55,
+            scrollHistory: true,
+            hashGenerator: function(text, element) {
+              return element[0].getAttribute('id');
+            }
+          }).data("toc-tocify");
+          // Hack to make already open sections to start opened,
+          // instead of displaying an ugly animation
+          setTimeout(function() {
+            toc.setOption("showEffectSpeed", 180);
+          },50);
+        }
         setupLanguages([
           <% if current_page.data.language_tabs %>
             <% current_page.data.language_tabs.each do |lang| %>
@@ -112,16 +114,19 @@ under the License.
             <% end %>
           <% end %>
         ]);
-      });
       
-      var languageInit = $('#lang-selector li.active').text();
-      $('#selected-language').text(languageInit);
-      $('#selected-language').click(langDropdown);
+        var languageInit = $('#lang-selector li.active').text();
+        $('#selected-language').text(languageInit);
+        $('#selected-language').click(langDropdown);
+          
+        function langDropdown() {
+          $('#lang-selector ul').show();
+        }
+          
+        $('blockquote a').attr('title', 'Click here to try out interactive examples!');
+        $('blockquote a').attr('target', '_blank');
         
-      function langDropdown() {
-        $('#lang-selector ul').show();
-      }
-      
+      });
     </script>
     
   </head>
@@ -193,7 +198,9 @@ under the License.
               Page.new('Replication', 'replication.html', []),
               Page.new('Advanced Replication', 'advanced_replication.html', []),
               Page.new('Active tasks', 'active_tasks.html', []),
-              Page.new('Advanced', 'advanced.html', [])
+              Page.new('Advanced', 'advanced.html', []),
+              Page.new('Backup', 'backup.html', []),
+              Page.new('Try it', 'try.html', [])
             ]),
             Page.new('Guides', 'guides.html', [
               Page.new('JSON', 'json.html', []),

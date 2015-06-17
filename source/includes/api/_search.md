@@ -282,7 +282,7 @@ Stop words are words that do not get indexed. You define them within a design do
 <div></div>
 #### Testing analyzer tokenization
 
-> Example test of the `keyword` analyzer
+> [Example test of the `keyword` analyzer](try.html#requestType=analyzers&predefinedQuery=keyword)
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -306,7 +306,7 @@ Content-Type: application/json
 }
 ```
 
-> Example test of the `standard` analyzer
+> [Example test of the `standard` analyzer](try.html#requestType=analyzers&predefinedQuery=standard)
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -331,7 +331,7 @@ Content-Type: application/json
 }
 ```
 
-You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint.
+You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint or using our [analyzer test form](try.html#requestType=analyzers).
 
 ### Queries
 
@@ -433,6 +433,8 @@ class:mammal AND min_length:[1.5 TO Infinity]
 latin_name:"Meles meles"
 // Mammals who are herbivore or carnivore
 diet:(herbivore OR omnivore) AND class:mammal
+// Return all results
+*:*
 ```
 
 The Cloudant search query syntax is based on the [Lucene syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search queries take the form of name:value (unless the name is omitted, in which case they hit the default field, demonstrated in the example to your right).
@@ -443,13 +445,24 @@ If you want a fuzzy search you can run a query with `~` to find terms like the s
 
 You can alter the importance of a search term by adding `^` + a positive number. This makes matches containing the term more or less relevant to the power of the boost value, with 1 as the default. Any decimal between 0 and 1 will reduce importance while anything over 1 will increase it.
 
-Wild card searches are supported, for both single (`?`) and multiple (`*`) character searches. `dat?` would match date and data, `dat*` would match date, data, database, dates etc. Wildcards must come after the search term.
+Wild card searches are supported, for both single (`?`) and multiple (`*`) character searches. `dat?` would match date and data, `dat*` would match date, data, database, and dates.
+Wildcards must come after the search term.
+Use `*:*` to return all results.
 
 Result sets from searches are limited to 200 rows, and return 25 rows by default. The number of rows returned can be changed via the limit parameter. The response contains a bookmark. If the bookmark is passed back as a URL parameter you'll skip through the rows you've already seen and get the next set of results.
 
 The following characters require escaping if you want to search on them: `+ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /`
 
 Escape these with a preceding backslash character.
+
+The response to a search query contains an order field for each of the results.
+The order field is an array where the first element is the field or fields specified in the sort parameter.
+If no sort parameter is included in the query, then the order field contains the lucene relevance score.
+If using the 'sort by distance' feature as described in [Geographical Searches](search.html#geographical-searches),
+then the first element is the distance from a point,
+measured using either kilometers or miles.
+
+<aside class="notify">The second element in the order array can be ignored. It is used for troubleshooting purposes only.</aside>
 
 ### Faceting
 

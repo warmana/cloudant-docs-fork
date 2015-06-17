@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - Try 
+title: Cloudant Documentation - Try it!
 
 language_tabs:
   - http 
