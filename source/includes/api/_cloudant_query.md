@@ -88,7 +88,7 @@ Code | Description
       "enabled": true,
       "analyzer": "german"
     }
-    "selector": {}
+    "selector": {},
     "fields": [
       {"name": "married", "type": "boolean"},
       {"name": "lastname", "type": "string"},
