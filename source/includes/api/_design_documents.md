@@ -10,10 +10,10 @@ Design documents are used to [build indexes](#indexes), [validate updates](#upda
 
 ### Creating or updating a design document
 
--   **Method**: `GET /$DATABASE/_design/design-doc`
+-   **Method**: `PUT /$DATABASE/_design/design-doc`
 -   **Request**: JSON of the design document information
 -   **Response**: JSON status
--   **Roles permitted**: \_writer
+-   **Roles permitted**: \_admin
 
 To create a design document, upload it to the specified database.
 
