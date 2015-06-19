@@ -38,9 +38,9 @@ Field&nbsp;Name | Required | Description
 `continuous` | no | Continuously syncs state from the `source` to the `target`, only stopping when deleted.
 `create_target` | no | A value of `true` tells the replicator to create the `target` database if it does not exist.
 `doc_ids` | no | Array of document IDs; if given, only these documents are replicated.
-`filter` | no | Name of a [filter function](#filter-functions) that can choose which documents get replicated.
+`filter` | no | Name of a [filter function](design_documents.html#filter-functions) that can choose which documents get replicated.
 `proxy` | no | Proxy server URL.
-`query_params` | no | Object containing properties that are passed to the filter function.
+`query_params` | no | Object containing properties that are passed to the [filter function](design_documents.html#filter-functions).
 <div id="checkpoints">`use_checkpoints`</div> | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
 `user_ctx` | no | An object containing the username and optionally an array of roles, e.g.: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
 
