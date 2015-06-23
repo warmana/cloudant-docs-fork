@@ -67,7 +67,7 @@ Content-Type: application/json
   "_id":"_design/metadata",
   "schemas": {
     "allAnimals": {
-      "filter":"function(doc){{return true};}"
+      "filter":"function(doc) { return true; }"
     },
     "omnivores": {
       "filter":"function(doc) { return doc.diet == 'omnivore'; }"
