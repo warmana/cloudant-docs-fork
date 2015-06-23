@@ -98,7 +98,7 @@ curl -X GET "https://examples.cloudant.com/animaldb/_design/metadata/_schema/omn
 ```
 
 ```http
-GET /animaldb/_design/metadata/_schema/allAnimals HTTP/1.1
+GET /animaldb/_design/metadata/_schema/omnivores HTTP/1.1
 HOST examples.cloudant.com
 ```
 
