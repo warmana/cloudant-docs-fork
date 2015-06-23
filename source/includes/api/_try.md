@@ -2,6 +2,31 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
+    var getOr = function(fieldName, defaultValue) {
+      var checkbox = $('input[name=use-your-own]');
+      var value = $('div#user-database-form input[name='+fieldName+']').val();
+      if (checkbox.is(':checked') && value !== '') {
+        return value;
+      } else {
+        return defaultValue;
+      }
+    };
+    var userAndPassword = function() {
+      var up = getOr('user-username', '');
+      if (up !== '') {
+        up += ':' + getOr('user-password', '') + '@';
+      }
+      return up;
+    }
+    var dbUrl = function(defaultValue, withAuth) {
+      if ($('input[name=use-your-own]').is(':checked')) {
+        var auth = '';
+        if (withAuth) { auth = userAndPassword(); }
+        return 'https://' + auth + getOr('user-host', 'your-account.cloudant.com') + '/' + getOr('user-database', 'db');
+      } else {
+        return defaultValue;
+      }
+    };
     var outputField = $("#output-marker").next();
     var httpRequestField = $("#request-http-marker").next();
     var curlRequestField = $("#request-curl-marker").next();
@@ -66,7 +91,7 @@
           'ranges': { query: 'author:J*', ranges: '{"year":{"21st century":"[2000 TO 2099]","20th century":"[1900 TO 1999]"}}', limit: 0 },
         },
         buildUrl: function() {
-          var url = '/docs-examples/_design/ddoc/_search/books?q=' + this.queryInput.val();
+          var url = '/_design/ddoc/_search/books?q=' + this.queryInput.val();
           var counts = this.countsInput.val();
           if (counts != '') {
             url += '&counts=' + encodeURIComponent(counts);
@@ -106,26 +131,36 @@
           return url;
         },
         renderHttpRequest: function() {
-          return 'GET ' + this.buildUrl() + ' HTTP/1.1';
+          var auth = userAndPassword();
+          if (auth !== '') {
+            auth = '\nAuthorization: Basic ' + btoa(auth.substring(0, auth.length - 1))
+          }
+          return 'GET /' + getOr('user-database', 'docs-examples') + this.buildUrl() + ' HTTP/1.1\nHost: ' + getOr('user-host', 'examples.cloudant.com') + auth;
         },
         renderCurlRequest: function() {
-          return 'curl "https://examples.cloudant.com' + this.buildUrl() + '"';
+          return 'curl "' + dbUrl('https://examples.cloudant.com/docs-examples') + this.buildUrl() + '"';
         },
         doAjaxRequest: function() {
         
         },
         submitForm: function(event) {
           var query = this.queryInput.val();
-          var url = 'https://examples.cloudant.com' + this.buildUrl();
-          jQuery.ajax({
-            url: url,
+          var user = getOr('user-username', '');
+          var password = getOr('user-password', '');
+          var request = {
+            url: dbUrl('https://examples.cloudant.com/docs-examples', false) + this.buildUrl(),
             type: 'GET',
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+            error: function() {},
+            beforeSend: function(xhr){
+              if (user !== '') {
+                xhr.setRequestHeader ("Authorization", "Basic " + btoa(user + ":" + password));
+              }
+              
             },
-            error: function(one, two) {},
             complete: displayResult
-          });
+          };
+          console.log(request);
+          jQuery.ajax(request);
           event.preventDefault();
         }
       },
@@ -155,14 +190,20 @@
         },
         submitForm: function(event){
           var query = this.queryInput.val();
+          var auth = userAndPassword();
+          if (auth !== '') {
+            auth = 'Authorization: Basic ' + btoa(auth.substring(0, auth.length - 1))
+          }
           jQuery.ajax({
-            url: 'https://examples.cloudant.com/query-movies-with-indexes/_find',
+            url: dbUrl('https://examples.cloudant.com/query-movies-with-indexes/_find'),
             type: 'POST',
             data: query,
             beforeSend: function(xhr) {
-              xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+              if (auth !== '') {
+                xhr.setRequestHeader(auth);
+              }
             },
-            error: function(one, two) {},
+            error: function() {},
             complete: displayResult
           });
           event.preventDefault();
@@ -187,6 +228,7 @@
     }
     
     var requestChanged = function(formName) {
+      var formName = requestTypeSelect.val();
       httpRequestField.text(requestTypes[formName].renderHttpRequest());
       highlight(httpRequestField);
       curlRequestField.text(requestTypes[formName].renderCurlRequest());
@@ -256,7 +298,17 @@
       activateLanguage(language);
       event.preventDefault();
     });
-  
+    $('input[name=use-your-own]').on('change', function() {
+      var div = $('div#user-database-form');
+      if ($(this).is(":checked")) {
+        div.show();
+      } else {
+        div.hide();
+      }
+    });
+    $('div#user-database-form input').on('keyup', $.debounce(function() {
+      requestChanged();
+    }, 300));
   });
 </script>
 
@@ -310,6 +362,20 @@ You can try out requests and output will be shown in the code column to the righ
     <option value="analyzers">Search analyzers</option>
     <option value="cq">Cloudant Query</option>
   </select>
+  <br>
+  <input name="use-your-own" type="checkbox"></input>
+  <label style="margin-left: 0px;display: inline" for="use-your-own">Use your own database</label>
+  <div id="user-database-form">
+    <label for="user-username">Username</label>
+    <input size="100" type="text" name="user-username" placeholder="username"></input>
+    <label for="user-password">Password</label>
+    <input size="100" type="password" name="user-password"></input>
+    <label for="user-username">Host name</label>
+    <input size="100" type="text" name="user-host" placeholder="your-account.cloudant.com"></input>
+    <label for="user-database">Database name</label>
+    <input size="100" type="text" name="user-database" placeholder="database"></input>
+  </div>
+  <br>
   <br>
   <form action="#" class="search">
     <label for="predefined">Predefined queries</label>
@@ -414,9 +480,6 @@ You can try out requests and output will be shown in the code column to the righ
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <style type="text/css">
-  .test-form-container textarea {
-  
-  }
   div.test-form-container {
     clear:none;
   }
@@ -424,11 +487,11 @@ You can try out requests and output will be shown in the code column to the righ
     margin: 0;
     padding: 0;
   }
-  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container select, div.test-form-container label {
+  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container input[type=password], div.test-form-container select, div.test-form-container label {
     margin-left: 40px;
     display: block;
   }
-  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container select {
+  .test-form-container textarea, div.test-form-container input[type=text], div.test-form-container input[type=password], div.test-form-container select {
     margin-bottom: 12px;
     width: 40%;
     height: 24px;
@@ -462,7 +525,10 @@ You can try out requests and output will be shown in the code column to the righ
   pre.hljs span.hljs-title {
     color: #fff;
   }
-  
+  div#user-database-form {
+    margin: 14px 0;
+    display: none;
+  }
   
   
     
