@@ -175,7 +175,7 @@ This returns any active tasks, including replications. To filter for replication
 This overview explains how to check replication status:<br/>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/TIXpJmmqP6Y?rel=0" frameborder="0" allowfullscreen title="Replication status check video"></iframe>
 
-For details about the information provided by `_active_tasks`, see [Active tasks](#active-tasks).
+For details about the information provided by `_active_tasks`, see [Active tasks](active_tasks.html).
 
 <h3></h3>
 
