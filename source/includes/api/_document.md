@@ -686,66 +686,21 @@ Entries with this error type indicate that the validation routine applied to the
 ### Quorum - writing and reading data
 
 In a distributed system,
-it is possible that a transaction might take some time to complete.
-A quorum is used to help determine whether a given transaction,
+it is possible that a request might take some time to complete.
+A quorum is used to help determine when a given request,
 such as a write or read,
-is deemed to have completed successfully.
+has completed successfully.
 
 Cloudant implements a 'sloppy quorum' mechanism.
 This means data is still written or read,
 because if a primary node (one that would normally be used for the write or read) is not available,
 another available node accepts and responds to the request.
 
-In the discussion that follows,
-for a collection of `n` nodes that might store or return data,
-`w` is the quorum for writing,
-and `r` is the quorum for reading.
-The default values are:
+For more information about Cloudant and distributed system concepts,
+see the [CAP Theorem](cap_theorem.html) guide,
+or contact Cloudant support.
 
--	n = 3
--	w = 2
--	r = 2
-
-For a query,
-you can supply `r` or `w` as parameters.
-
-For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
-
-#### The write quorum
-
-Within a group of '`n`' nodes having copies of the data,
-a 'write quorum' of '`w`' nodes is identified,
-where '`w`' <= '`n`'.
-When you write data,
-and at least '`w`' nodes have acknowledged the data _and_ recorded it in non-volatile storage,
-the write quorum is satisfied and the data is deemed to have been written successfully and sufficiently.
-In other words,
-'`w`' is the number of document copies that must be saved before a document is considered to be 'written',
-resulting in a [201](http.html#201) HTTP response.
-
-If '`w`' is much smaller than '`n`',
-you reduce latency but run the risk of reduced consistency.
-The latency is improved because a response can be returned to the client more quickly.
-If '`w`' is much closer or identical to '`n`',
-you maximize consistency but also increase latency.
-If possible,
-you should avoid setting `w` close to or equal to `n`.
-
-#### The read quorum
-
-Within a group of '`n`' nodes having copies of the data,
-a 'read quorum' of '`r`' nodes is identified,
-where '`r`' <= '`n`'.
-When you read data,
-and at least '`r`' nodes have replied with the data _and_ the data is the same from each of them,
-the read quorum is satisfied and the data is deemed to have been read successfully and consistently.
-In other words,
-'`r`' is the number of document copies that must be read from different nodes,
-and in agreement with each other,
-before a document is considered to be an accurate 'read'.
-
-If '`r`' is much smaller than '`n`',
-you minimize latency but run the risk of reduced consistency.
-If '`r`' is much closer or identical to '`n`',
-you maximize consistency but increase latency.
-
+<aside class="warning">Quorum settings are fixed for multi-tenant systems,
+and cannot be changed.
+For help understanding quorum settings and their implications on dedicated Cloudant systems,
+contact Cloudant support.</aside>
