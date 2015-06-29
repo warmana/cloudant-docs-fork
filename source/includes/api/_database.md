@@ -369,6 +369,12 @@ you should be aware that:
 -	If a `since` value is specified, only changes that have arrived in the specified replicas of the shards are returned in the response.
 -	If the specified replicas of the shards in any given `since` value are unavailable, alternative replicas are selected, and the last known checkpoint between them is used. If this happens, you might see changes again that you have previously seen. Therefore, an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)', that is, able to receive the same data multiple times, safely.
 -	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
+-	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that seem to be 'before' the specified `since` value.
+
+`_changes` from each shard are always presented in order.
+But the ordering between all the contributing shards might appear to be different.
+For more information,
+see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
 
 <div></div>
 
