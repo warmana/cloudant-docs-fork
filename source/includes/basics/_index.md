@@ -1,13 +1,10 @@
 # ![alt tag](images/cloudantbasics_icon.png) Cloudant Basics
 
-If it's your first time here, scan this section before you scroll further.
-The sections on [Client Libraries](libraries.html#-client-libraries),
-[API Reference](api.html#-api-reference),
-and [Guides](guides.html#-guides) assume you know basic things about Cloudant.
+If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know basic things about Cloudant.
 
 ## Database as a Service
 As a hosted and managed database-as-a-service (DBaaS),
-Cloudant provides an [HTTP API](#http_api) to your [JSON](#json) data,
+Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
 and 24-hour operational support and maintenance.
 Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
 and is delivered as a multi-tenant, dedicated, and installed service.
@@ -124,7 +121,7 @@ where the number of nodes that confirm and agree on the data written or read mus
 A more detailed discussion on the quorum is available [here](document.html#quorum).
 
 <aside class="warning">Quorum settings are fixed for multi-tenant systems,
-and cannot be changed.<aside>
+and cannot be changed.</aside>
 
 ## Cloudant Local
 

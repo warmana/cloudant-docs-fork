@@ -2,7 +2,6 @@
 *.rbc
 .bundle
 .config
-.project
 coverage
 InstalledFiles
 lib/bundler/man
@@ -25,3 +24,6 @@ couchapp/_attachments
 
 # build artifacts
 build/
+/Gemfile.lock
+/.externalToolBuilders/
+/.project
