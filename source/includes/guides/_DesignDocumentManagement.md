@@ -78,7 +78,7 @@ If we define several views in the same design document, then they are built effi
 
 If MapReduce views must be altered independently of each other, place their definitions in separate design documents. 
 
-<aside class="note">This behaviour does not apply to Lucene search indexes. They can be altered within the same design document without invalidating other unchanged indexes in the same document.</aside>
+<aside class="warning">This behaviour does not apply to Lucene search indexes. They can be altered within the same design document without invalidating other unchanged indexes in the same document.</aside>
 
 ![Illustration of Design Document version change](images/DesDocMan02.png)
 

@@ -452,7 +452,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 The `$text` operator is based on a Lucene search with a standard analyzer. This means the operator is not case sensitive, and matches on any words.
 
-<aside class="note">The `$text` operator does not support full Lucene syntax, such as wildcards, fuzzy matches, or proximity detection.
+<aside class="warning">The `$text` operator does not support full Lucene syntax, such as wildcards, fuzzy matches, or proximity detection.
 For more information on the available Lucene syntax, have a look at the [Cloudant Search documentation](search.html).</aside>
 
 The resulting query is `AND`'ed with the rest of the selector.

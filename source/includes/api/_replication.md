@@ -52,7 +52,7 @@ Replication documents can have a user defined `_id`.
 
 The names of the source and target databases do not have to be the same.
 
-<aside class="notify">All design documents and `_local` documents added to the `/_replicator` database are ignored.</aside>
+<aside class="warning">All design documents and `_local` documents added to the `/_replicator` database are ignored.</aside>
 
 #### Creating a replication
 

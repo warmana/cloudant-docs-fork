@@ -462,7 +462,8 @@ If using the 'sort by distance' feature as described in [Geographical Searches](
 then the first element is the distance from a point,
 measured using either kilometers or miles.
 
-<aside class="notify">The second element in the order array can be ignored. It is used for troubleshooting purposes only.</aside>
+<aside class="warning">The second element in the order array can be ignored.
+It is used for troubleshooting purposes only.</aside>
 
 ### Faceting
 
