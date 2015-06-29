@@ -109,19 +109,20 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 When you store data in a distributed database,
 where content is stored in more than one node,
-how do you know that all nodes have the most recent copy of the data?
-When you are reading data,
-how do you know that you have the most recent copy?
+how do you know when all nodes have received the data?
+Similarly,
+when you are reading data,
+how do you know that the data from the node replying to your request is the same as a copy of the data stored on other nodes?
 
 Cloudant uses the idea of a '[Quorum](http://en.wikipedia.org/wiki/Quorum_%28distributed_computing%29)' to answer these questions.
-
-In simplistic terms,
-a quorum is used to determine whether data has been successfully written or retrieved,
+A quorum is used to determine whether data has been successfully written or retrieved,
 where the number of nodes that confirm and agree on the data written or read must be at least the number specified as 'quorum'.
-A more detailed discussion on the quorum is available [here](document.html#quorum).
+A more detailed discussion is available [here](document.html#quorum).
 
 <aside class="warning">Quorum settings are fixed for multi-tenant systems,
-and cannot be changed.</aside>
+and cannot be changed.
+For help understanding quorum settings and their implications on dedicated Cloudant systems,
+contact Cloudant support.</aside>
 
 ## Cloudant Local
 
