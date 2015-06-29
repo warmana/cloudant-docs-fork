@@ -1481,7 +1481,16 @@ The `$size` operator matches the length of an array field in a document.
 }
 ```
 
-The `$mod` operator matches documents where (field % Divisor == Remainder) is true. Always evaluates to false for any non-integer field.
+The `$mod` operator matches documents where (`field % Divisor == Remainder`) is true.
+The Divisor and the Remainder must be integers,
+and can be positive or negative.
+
+Document values that are non-integer are never returned by `$mod`.
+
+<aside class="notice">When using negative integer values for the Divisor or Remainder,
+you should note that the Cloudant `$mod` operator is similar to the [Erlang `rem` modulo operator](http://erlang.org/doc/reference_manual/expressions.html),
+or the [`%` operator in C](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B),
+and uses [truncated division](https://en.wikipedia.org/wiki/Modulo_operation).</aside>
 
 <div></div>
 ##### The `$regex` operator
