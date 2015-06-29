@@ -4,7 +4,6 @@ target
 *.rbc
 .bundle
 .config
-.project
 coverage
 InstalledFiles
 lib/bundler/man
@@ -32,3 +31,5 @@ build/
 /.project
 /.DS_Store
 vendor
+/.externalToolBuilders/
+/.project
