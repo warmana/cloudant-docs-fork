@@ -3,8 +3,11 @@
 If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know basic things about Cloudant.
 
 ## Database as a Service
-As a hosted and managed database-as-a-service (DBaaS), Cloudant provides an [HTTP API](#http_api) to your [JSON](#json) data, and 24-hour operational support and maintenance.
-Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/), and is delivered as a multi-tenant, dedicated, and installed service.
+As a hosted and managed database-as-a-service (DBaaS),
+Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
+and 24-hour operational support and maintenance.
+Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
+and is delivered as a multi-tenant, dedicated, and installed service.
 
 Signing up for a Cloudant account is free and easy:<br/>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/GDIiV_wdIJY?rel=0" frameborder="0" allowfullscreen title="Signing up for Cloudant, overview video"></iframe>
@@ -106,55 +109,20 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 When you store data in a distributed database,
 where content is stored in more than one node,
-how do you know that all nodes have the most current copy of the data?
-When you are reading data,
-how do you know that you have the most current copy?
+how do you know when all nodes have received the data?
+Similarly,
+when you are reading data,
+how do you know that the data from the node replying to your request is the same as a copy of the data stored on other nodes?
 
 Cloudant uses the idea of a '[Quorum](http://en.wikipedia.org/wiki/Quorum_%28distributed_computing%29)' to answer these questions.
+A quorum is used to determine whether data has been successfully written or retrieved,
+where the number of nodes that confirm and agree on the data written or read must be at least the number specified as 'quorum'.
+A more detailed discussion is available [here](document.html#quorum).
 
-### The write quorum
-
-Within a group of '`n`' nodes having copies of the data,
-a 'write quorum' of '`w`' nodes is identified,
-where '`w`' <= '`n`'.
-When you write data,
-and at least '`w`' nodes have acknowledged the data _and_ recorded it in non-volatile storage,
-the write quorum is satisfied and the data is deemed to have been written successfully and sufficiently.
-In other words,
-'`w`' is the number of document copies that must be saved before a document is considered to be 'written',
-resulting in a [201](http.html#201) HTTP response.
-
-If '`w`' is much smaller than '`n`',
-you maximize throughput but run the risk of reduced consistency.
-If '`w`' is much closer or identical to '`n`',
-you maximize consistency but reduce throughput.
-
-### The read quorum
-
-Within a group of '`n`' nodes having copies of the data,
-a 'read quorum' of '`r`' nodes is identified,
-where '`r`' <= '`n`'.
-When you read data,
-and at least '`r`' nodes have replied with the data _and_ the data is the same from each of them,
-the read quorum is satisfied and the data is deemed to have been read successfully and consistently.
-In other words,
-'`r`' is the number of document copies that must be read from different nodes,
-and in agreement with each other,
-before a document is considered to be an accurate 'read'.
-
-If '`r`' is much smaller than '`n`',
-you minimize latency but run the risk of reduced consistency.
-If '`r`' is much closer or identical to '`n`',
-you maximize consistency but increase latency.
-
-### 'Sloppy' quorum
-
-Cloudant implements a 'sloppy quorum' mechanism.
-This means data is still written or read,
-because if a primary node (one that would normally be used for the write or read) is not available,
-another available node accepts and responds to the request.
-
-For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
+<aside class="warning">Quorum settings are fixed for multi-tenant systems,
+and cannot be changed.
+For help understanding quorum settings and their implications on dedicated Cloudant systems,
+contact Cloudant support.</aside>
 
 ## Cloudant Local
 

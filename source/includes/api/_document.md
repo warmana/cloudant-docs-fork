@@ -681,3 +681,26 @@ throw({forbidden: 'invalid recipe ingredient'});
 ```
 
 Entries with this error type indicate that the validation routine applied to the document during submission has returned an error.
+
+<div id="quorum"></div>
+### Quorum - writing and reading data
+
+In a distributed system,
+it is possible that a request might take some time to complete.
+A quorum is used to help determine when a given request,
+such as a write or read,
+has completed successfully.
+
+Cloudant implements a 'sloppy quorum' mechanism.
+This means data is still written or read,
+because if a primary node (one that would normally be used for the write or read) is not available,
+another available node accepts and responds to the request.
+
+For more information about Cloudant and distributed system concepts,
+see the [CAP Theorem](cap_theorem.html) guide,
+or contact Cloudant support.
+
+<aside class="warning">Quorum settings are fixed for multi-tenant systems,
+and cannot be changed.
+For help understanding quorum settings and their implications on dedicated Cloudant systems,
+contact Cloudant support.</aside>

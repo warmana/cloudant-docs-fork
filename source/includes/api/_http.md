@@ -12,9 +12,9 @@ Where possible, you should be as specific as possible.
 
 The supported HTTP request headers include:
 
-*	[`Accept`](#accept)
-*	[`Content-Type`](#content-type)
-*	[`If-None-Match`](#if-none-match)
+*	[`Accept`](http.html#accept)
+*	[`Content-Type`](http.html#content-type)
+*	[`If-None-Match`](http.html#if-none-match)
 
 ##### Accept
 
@@ -81,10 +81,10 @@ Response headers are returned by the server when sending back content and includ
 
 The supported HTTP response headers include:
 
-*	[`Cache-Control`](#cache-control)
-*	[`Content-Length`](#content-length)
-*	[`Content-Type`](#content-type-response)
-*	[`Etag`](#etag)
+*	[`Cache-Control`](http.html#cache-control)
+*	[`Content-Length`](http.html#content-length)
+*	[`Content-Type`](http.html#content-type-response)
+*	[`Etag`](http.html#etag)
 
 The Cloudant design document API and the functions when returning HTML (for example as part of a show or list) enable you to include custom HTTP headers through the `headers` field of the return object.
 
@@ -103,7 +103,7 @@ Specifies the MIME type of the returned data. For most request, the returned MIM
 
 ##### Etag
 
-The `Etag` HTTP header field is used to show the revision for a document or the response from a show function. For documents, the value is identical to the revision of the document. The value can be used with an `If-None-Match` request header to get a [`304 Not Modified`](#304) response if the revision is still current.
+The `Etag` HTTP header field is used to show the revision for a document or the response from a show function. For documents, the value is identical to the revision of the document. The value can be used with an `If-None-Match` request header to get a [`304 Not Modified`](http.html#304) response if the revision is still current.
 
 ETags cannot currently be used with views or lists, since the ETags returned from those requests are just random numbers that change on every request.
 
