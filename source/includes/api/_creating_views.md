@@ -244,7 +244,7 @@ If the `dbcopy` field of a view is set, the view contents will be written to a d
 </tbody>
 </table>
 
-<aside>
+<aside class="warning">
 Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
 
  1. It creates a new database, so it can use a lot of disk space.
