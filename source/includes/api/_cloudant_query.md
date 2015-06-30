@@ -143,7 +143,7 @@ use the simple syntax:
   
 The indexing process traverses all of the fields in all the documents in the database.
 
-An example of creating a text index for all fields in all documents in a database is [available](#example:-movies-demo-database).
+An example of creating a text index for all fields in all documents in a database is [available](cloudant-query.html#example:-movies-demo-database).
 
 <aside class="warning">Caution should be taken when indexing all fields in all documents for large data sets,
 as it might be a very resource-consuming activity.</aside>
@@ -213,7 +213,7 @@ such as wildcards,
 fuzzy matches,
 or proximity detection.
 For more information on the available Lucene syntax,
-see [Cloudant Search documentation](#search).
+see [Cloudant Search documentation](search.html#search).
 The `$text` operator applies to all strings found in the document.
 It is invalid to place this operator in the context of a field name.
 
@@ -965,7 +965,7 @@ Object | `$exists` | Boolean | Check whether the field exists or not, regardless
 Array | `$in` | Array of JSON values | The document field must exist in the list provided.
  | `$nin` | Array of JSON values | The document field must not exist in the list provided.
  | `$size` | Integer | Special condition to match the length of an array field in a document. Non-array fields cannot match this condition.
-Miscellaneous | `$mod` | [Divisor, Remainder] | Divisor and Remainder are both positive integers greater than 0. Matches documents where (field % Divisor == Remainder) is true. This is false for any non-integer field.
+Miscellaneous | `$mod` | [Divisor, Remainder] | Divisor and Remainder are both positive or negative integers. Non-integer values result in a [404 status](http.html#404). Matches documents where (`field % Divisor == Remainder`) is true, and only when the document field is an integer.
  | `$regex` | String | A regular expression pattern to match against the document field. Only matches when the field is a string value and matches the supplied regular expression.
 
 <aside class="warning">Regular expressions do not work with indexes, so they should not be used to filter large data sets.</aside>
@@ -1481,14 +1481,15 @@ The `$size` operator matches the length of an array field in a document.
 }
 ```
 
-The `$mod` operator matches documents where (`field % Divisor == Remainder`) is true.
-The Divisor and the Remainder must be integers,
-and can be positive or negative.
-
-Document values that are non-integer are never returned by `$mod`.
+The `$mod` operator matches documents where (`field % Divisor == Remainder`) is true,
+and only when the document field is an integer.
+The Divisor and Remainder must be integers.
+They can be positive or negative integers.
+A query where the Divisor or Remainder is a non-integer returns a [404 status](http.html#404).
 
 <aside class="notice">When using negative integer values for the Divisor or Remainder,
-you should note that the Cloudant `$mod` operator is similar to the [Erlang `rem` modulo operator](http://erlang.org/doc/reference_manual/expressions.html),
+you should note that the Cloudant `$mod` operator is similar to the
+[Erlang `rem` modulo operator](http://erlang.org/doc/reference_manual/expressions.html),
 or the [`%` operator in C](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B),
 and uses [truncated division](https://en.wikipedia.org/wiki/Modulo_operation).</aside>
 
@@ -1541,7 +1542,7 @@ The `$regex` operator matches when the field is a string value _and_ matches the
 ### Creating selector expressions
 
 We have seen examples of combining selector expressions,
-such as [using explicit `$and` and `$eq` operators](#combined-expressions).
+such as [using explicit `$and` and `$eq` operators](cloudant-query.html#combined-expressions).
 In general,
 whenever you have an operator that takes an argument,
 that argument can itself be another operator with arguments of its own.
