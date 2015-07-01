@@ -283,7 +283,7 @@ Each view is a Javascript function.
 Views are stored in design documents.
 So,
 to store a view,
-we simply store the function definition within a design document. A design document can be [created or updated just like any other document](#update).   
+we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).   
 
 Do this by `PUT`ting the view definition content into a `_design` document.
 In this example,
@@ -595,9 +595,9 @@ curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DD
 }
 ```
 
-This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](#querying-a-view) method,
+This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](using_views.html#querying-a-view) method,
 the `POST` method allows you to specify the keys to use when retrieving the view results.
-In all other aspects, the `POST` method is identical to the [`GET`](#querying-a-view) API request, in particular, you can use any of its query parameters.
+In all other aspects, the `POST` method is identical to the [`GET`](using_views.html#querying-a-view) API request, in particular, you can use any of its query parameters.
 
 <div></div>
 
@@ -733,10 +733,29 @@ Content-Type: application/json
 ```
 
 Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
-This technique is more efficient than using multiple [`GET`](#querying-a-view) API requests.
+For a client application,
+this technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
 However,
-`include_docs=true` adds a slight overhead compared to accessing the view on its own.
+`include_docs=true` might incur an overhead compared to accessing the view on its own.
 
+The reason is that by using `include_docs=true` in a search,
+all of the result documents must be retrieved to construct the response back to the client application.
+In effect,
+a whole series of document `GET` requests are performed,
+each of which competes for resources with other application requests.
+
+One way to mitigate this effect is by retrieving results directly from the Lucene index files.
+You can do this by not specifying `include_docs=true`.
+Instead,
+in your design document specify `store=true` and `index=false` on the fields you want retrieved by your query.
+
+For example,
+in your index function,
+you might use:
+
+<tt>index("name", doc.name, {"store": true, "index": false});</tt>
+
+You could use the same approach for view indexes.
 ### Sending several queries to a view
 
 > Example request:
