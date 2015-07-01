@@ -52,7 +52,12 @@ PUT /$DATABASE?n=2&q=32 HTTP/1.1
 HOST: $ACCOUNT.cloudant.com
 ```
 
-There are two configuration parameters that control the sharding topology of a database. The defaults are specified in the server configuration and may be overridden at database creation time on dedicated database clusters. N specifies the number of replicas of each document, while Q fixes the number of partitions of the database. On multi-tenant clusters, the default can not be overwritten.
+There are two configuration parameters that control the sharding topology of a database.
+The defaults are specified in the server configuration and may be overridden at database creation time on dedicated database clusters.
+`n` specifies the number of replicas of each document,
+while `q` fixes the number of partitions of the database.
+On multi-tenant clusters,
+the defaults can not be overwritten.
 
 Parameter | Description | Default
 ----------|-------------|----------
@@ -71,7 +76,9 @@ HTTP/1.1 201 Created
 }
 ```
 
-If creation succeeds, you get a 201 or 202 response. In case of an error, the HTTP status code tells you what went wrong.
+If creation succeeds, you get a [201 or 202 response](http.html#201).
+In case of an error,
+the HTTP status code tells you what went wrong.
 
 Code | Description
 -----|--------------
