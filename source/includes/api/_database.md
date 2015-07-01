@@ -76,7 +76,9 @@ HTTP/1.1 201 Created
 }
 ```
 
-If creation succeeds, you get a 201 or 202 response. In case of an error, the HTTP status code tells you what went wrong.
+If creation succeeds, you get a [201 or 202 response](http.html#201).
+In case of an error,
+the HTTP status code tells you what went wrong.
 
 Code | Description
 -----|--------------
