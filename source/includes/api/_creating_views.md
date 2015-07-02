@@ -136,7 +136,8 @@ function(doc) {
 }
 ```
 
-If the object passed to `emit` has an `_id` field, a view query with `include_docs` set to `true` will contain the document with the given ID.
+If the object passed to `emit` has an `_id` field,
+a view query with `include_docs` set to `true` contains the document with the given ID.
 
 #### Complex Keys
 
@@ -383,6 +384,8 @@ Argument | Description | Optional | Type | Default | Supported values
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | | 
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | | 
 
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+
 ### Indexes
 
 When a view is defined in a design document,
@@ -628,6 +631,8 @@ The response contains the standard view information, but only where the keys mat
 }
 ```
 
+<div id="include_docs_caveat"></div>
+
 ### Multi-document Fetching
 
 > Example request to obtain the full documents that match the listed keys:
@@ -642,6 +647,13 @@ Content-Type: application/json
       "clear apple juice"
    ]
 }
+```
+
+```shell
+curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view/by_ingredient?include_docs=true"
+     -X POST \
+     -H "Content-Type: application/json" \
+     -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
 
 > Example response, returning the full document for each recipe:
@@ -732,7 +744,9 @@ Content-Type: application/json
 }
 ```
 
-Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
+Combining a `POST` request to a given view,
+with the `include_docs=true` query argument,
+enables you to retrieve multiple documents from a database.
 For a client application,
 this technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
 However,
@@ -753,9 +767,10 @@ For example,
 in your index function,
 you might use:
 
-<tt>index("name", doc.name, {"store": true, "index": false});</tt>
+	`index("name", doc.name, {"store": true, "index": false});`
 
 You could use the same approach for view indexes.
+
 ### Sending several queries to a view
 
 > Example request:
