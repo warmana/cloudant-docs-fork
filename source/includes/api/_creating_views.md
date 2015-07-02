@@ -136,7 +136,8 @@ function(doc) {
 }
 ```
 
-If the object passed to `emit` has an `_id` field, a view query with `include_docs` set to `true` will contain the document with the given ID.
+If the object passed to `emit` has an `_id` field,
+a view query with `include_docs` set to `true` contains the document with the given ID.
 
 #### Complex Keys
 
@@ -283,7 +284,7 @@ Each view is a Javascript function.
 Views are stored in design documents.
 So,
 to store a view,
-we simply store the function definition within a design document. A design document can be [created or updated just like any other document](#update).   
+we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).   
 
 Do this by `PUT`ting the view definition content into a `_design` document.
 In this example,
@@ -382,6 +383,8 @@ Argument | Description | Optional | Type | Default | Supported values
 `stale` | Allow the results from a stale view to be used. This makes the request return immediately, even if the view has not been completely built yet. If this parameter is not given, a response is returned only after the view has been built. | yes | String | false | `ok`: Allow stale views.<br/>`update_after`: Allow stale views, but update them immediately after the request.
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | | 
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | | 
+
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 ### Indexes
 
@@ -595,9 +598,9 @@ curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DD
 }
 ```
 
-This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](#querying-a-view) method,
+This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](using_views.html#querying-a-view) method,
 the `POST` method allows you to specify the keys to use when retrieving the view results.
-In all other aspects, the `POST` method is identical to the [`GET`](#querying-a-view) API request, in particular, you can use any of its query parameters.
+In all other aspects, the `POST` method is identical to the [`GET`](using_views.html#querying-a-view) API request, in particular, you can use any of its query parameters.
 
 <div></div>
 
@@ -628,6 +631,8 @@ The response contains the standard view information, but only where the keys mat
 }
 ```
 
+<div id="include_docs_caveat"></div>
+
 ### Multi-document Fetching
 
 > Example request to obtain the full documents that match the listed keys:
@@ -642,6 +647,13 @@ Content-Type: application/json
       "clear apple juice"
    ]
 }
+```
+
+```shell
+curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view/by_ingredient?include_docs=true"
+     -X POST \
+     -H "Content-Type: application/json" \
+     -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
 
 > Example response, returning the full document for each recipe:
@@ -732,10 +744,32 @@ Content-Type: application/json
 }
 ```
 
-Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
-This technique is more efficient than using multiple [`GET`](#querying-a-view) API requests.
+Combining a `POST` request to a given view,
+with the `include_docs=true` query argument,
+enables you to retrieve multiple documents from a database.
+For a client application,
+this technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
 However,
-`include_docs=true` adds a slight overhead compared to accessing the view on its own.
+`include_docs=true` might incur an overhead compared to accessing the view on its own.
+
+The reason is that by using `include_docs=true` in a search,
+all of the result documents must be retrieved to construct the response back to the client application.
+In effect,
+a whole series of document `GET` requests are performed,
+each of which competes for resources with other application requests.
+
+One way to mitigate this effect is by retrieving results directly from the Lucene index files.
+You can do this by not specifying `include_docs=true`.
+Instead,
+in your design document specify `store=true` and `index=false` on the fields you want retrieved by your query.
+
+For example,
+in your index function,
+you might use:
+
+	`index("name", doc.name, {"store": true, "index": false});`
+
+You could use the same approach for view indexes.
 
 ### Sending several queries to a view
 

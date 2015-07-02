@@ -2,7 +2,7 @@
 
 This section contains details about more advanced replication concepts and tasks.
 
-You might also find it helpful to review details of the underlying [replication protocol](http://dataprotocols.org/couchdb-replication/), as well as reviewing the [Advanced Methods](#advanced) material.
+You might also find it helpful to review details of the underlying [replication protocol](http://dataprotocols.org/couchdb-replication/), as well as reviewing the [Advanced Methods](advanced.html) material.
 
 ### Replication Status
 
@@ -193,7 +193,21 @@ If you want replication to pass through an HTTP proxy, provide the proxy details
 }
 ```
 
-Replication documents can have a custom `user_ctx` property. This property defines the user context under which a replication runs. For the old way of triggering replications (POSTing to `/_replicate/`), this property was not needed (it didn't exist in fact) -this is because at the moment of triggering the replication it has information about the authenticated user. With the replicator database, since it's a regular database, the information about the authenticated user is only present at the moment the replication document is written to the database - the replicator database implementation is like a `_changes` feed consumer (with `?include_docs=true`) that reacts to what was written to the replicator database - in fact this feature could be implemented with an external script/program. This implementation detail implies that for non admin users, a *user\_ctx* property, containing the user's name and a subset of his/her roles, must be defined in the replication document. This is ensured by the document update validation function present in the default design document of the replicator database. This validation function also ensure that a non admin user can set a user name property in the `user_ctx` property that doesn't match his/her own name (same principle applies for the roles).
+Replication documents can have a custom `user_ctx` property.
+This property defines the user context under which a replication runs.
+For the old way of triggering replications (`POST`ing to `/_replicate/`),
+this property was not needed (it didn't exist in fact).
+This is because at the moment of triggering the replication,
+it has information about the authenticated user.
+With the replicator database,
+since it's a regular database,
+the information about the authenticated user is only present at the moment the replication document is written to the database - the replicator database implementation is like a `_changes` feed consumer (with `?include_docs=true`) that reacts to what was written to the replicator database - in fact this feature could be implemented with an external script/program.
+This implementation detail implies that for non admin users,
+a *user\_ctx* property,
+containing the user's name and a subset of his/her roles,
+must be defined in the replication document.
+This is ensured by the document update validation function present in the default design document of the replicator database.
+This validation function also ensures that a non admin user can set a user name property in the `user_ctx` property that doesn't match his/her own name (same principle applies for the roles).
 
 For admins, the `user_ctx` property is optional, and if it's missing it defaults to a user context with name *null* and an empty list of roles - this means design documents will not be written to local targets. If writing design documents to local targets is desired, then a user context with the roles *\_admin* must be set explicitly.
 
