@@ -32,7 +32,8 @@ fragments = {
   '#couchapps': 'couchapps.html',
   '#design-document-management': 'design_document_management.html',
   '#replication': 'replication_guide.html',
-  '#cloudant-geospatial': 'geo.html'
+  '#cloudant-geospatial': 'geo.html',
+  '#monitoring': 'monitoring.html'
 }
 fragment = window.location.hash;
 dest = fragments[fragment];
