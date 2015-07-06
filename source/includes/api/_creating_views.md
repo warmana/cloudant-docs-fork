@@ -283,7 +283,7 @@ Each view is a Javascript function.
 Views are stored in design documents.
 So,
 to store a view,
-we simply store the function definition within a design document. A design document can be [created or updated just like any other document](#update).   
+we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).   
 
 Do this by `PUT`ting the view definition content into a `_design` document.
 In this example,
@@ -595,9 +595,9 @@ curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DD
 }
 ```
 
-This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](#querying-a-view) method,
+This method of requesting information from a database executes the specified `view-name` from the specified `design-doc` design document. Like the `keys` parameter for the [`GET`](using_views.html#querying-a-view) method,
 the `POST` method allows you to specify the keys to use when retrieving the view results.
-In all other aspects, the `POST` method is identical to the [`GET`](#querying-a-view) API request, in particular, you can use any of its query parameters.
+In all other aspects, the `POST` method is identical to the [`GET`](using_views.html#querying-a-view) API request, in particular, you can use any of its query parameters.
 
 <div></div>
 
@@ -733,7 +733,7 @@ Content-Type: application/json
 ```
 
 Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
-This technique is more efficient than using multiple [`GET`](#querying-a-view) API requests.
+This technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
 However,
 `include_docs=true` adds a slight overhead compared to accessing the view on its own.
 
