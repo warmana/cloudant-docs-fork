@@ -320,9 +320,9 @@ It is also possible to change the priority of backup jobs by setting the
 x-cloudant-io-priority field in the headers object of the target and/or
 the source objects of the replication document to "low". For example:
 
-<div> </div>
+<div id="design-documents"> </div>
 
-#### Design documents
+#### Backing up Design documents
 
 If you back up design documents, indexes will be created on the backup
 destination. This slows down the backup process and unnecessarily takes
@@ -340,5 +340,7 @@ same time.
 
 ### Need help?
 
-Replication and backups can be a tricky topic, so if you're having any trouble, have a look at the <a href="http://docs.cloudant.com/guides/repl-index.html">replication guide</a>, talk to us on IRC (#cloudant on freenode), or email <a href="mailto:support@cloudant.com">support</a>.
+Replication and backups can be a tricky topic, so if you're having any trouble,
+have a look at the [replication guide](./replication_guide.html),
+talk to us on IRC (#cloudant on freenode), or email <a href="mailto:support@cloudant.com">support</a>.
 
