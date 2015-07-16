@@ -11,21 +11,21 @@ With Cloudant, a database backup stores your database content to a checkpoint. I
 
 ### Enabling your account for backups
 
-To enable backups with your IBM Cloudant database, you must request a backup task. The Cloudant Support team creates a backup task. You cannot create the backup task on your own. The backup task requires additional processes, and support must enable enough storage capacity to support the backup activities.
+To enable backups with your IBM Cloudant database, you must request a backup task. The Cloudant Support team creates a backup task. You cannot create the backup task on your own. The backup task requires additional processes, and Support must enable enough storage capacity to handle the backup activities.
 
 To enable backups, follow these steps.
 
-1.	Call IBM Cloudant Support to create a database task for enabling backups.
+1.	Call IBM Cloudant Support to create a backup task for enabling backups.
 2.	Provide the following information.
   - Target cluster for backups.
   - Preferred backup task name, for example `towed_vehicles_backup`.
   - List of accounts and databases to backup, `towed_vehicles`. Backup is currently limited to 50 databases per customer.
-  - Frequency for running the backup. Cloudant requires 24 hours between each backup. It is not possible to request a specific time for a backup to begin.
-3.	Support enables backups, schedules backup operations, and verifies the initial backups runs.
+  - Frequency for running backups. Cloudant requires 24 hours between each backup. It is not possible to request a specific time for a backup to begin.
+3.	Support enables backups, schedules backup operations, and verifies the initial backup runs.
 
 ###Incremental backups
 
-At this point, there is no obvious, out-of-the-box solution for backing up a cloud database. You can replicate the database to a dated backup database. This method works and is easy to do. But if the database is big and you need backups for multiple points in time, like seven daily backups and four weekly ones, you end up storing a complete copy in each new backup database, which equals massive disk usage. Incremental backups are a good solution, storing only the documents that have changed since the last backup.
+At this point, there is no obvious, out-of-the-box solution for backing up a cloud database. You can replicate the database to a dated backup database. This method works and is easy to do. But if the database is big and you need backups for multiple points in time, like seven daily backups and four weekly ones, you end up storing a complete copy in each new backup database, which equals massive disk usage. Incremental backups are a good solution for storing only the documents that have changed since the last backup.
 
 Initially, you perform a backup of the entire database. After the first backup, you run daily, incremental backups, backing up only what has changed in the database since the last backup. This replication becomes a daily backup.
 
@@ -48,8 +48,6 @@ The replication process starts with another database with a `since_seq` paramete
 
 A roll up combines daily backups into weekly, rolled up databases. These roll up databases combine the daily deltas into a coarser time slice. Weekly databases roll up into monthly databases, and monthly databases roll up into yearly databases. You manage roll up frequencies and settings via the Backup Task.
 
-To conserve space when databases have been rolled up, you can remove the input databases you use during roll up. You can configure the time period when to remove these databases. You can optimize data retention, with a high level of granularity against the cost of storage, by configuring the time to remove input databases.
-
 You can request the following intervals for roll ups:
 - Daily - Combine daily checkpoints into a weekly checkpoint.
 - Weekly - Combine weekly checkpoints into a monthly checkpoint.
@@ -57,17 +55,16 @@ You can request the following intervals for roll ups:
 
 These requests are one-off requests and do not repeat automatically. If you request a daily roll up to create a weekly checkpoint and you want another weekly checkpoint the following week, you must request a daily roll up again.
 
-<aside class="warning">A roll up does not remove the original checkpoints. If you request a daily roll up, the daily checkpoints still exist. To remove the rolled-up checkpoints and save storage costs, request a backup cleanup.</aside>
+<aside class="warning">A roll up does not remove the original checkpoints. To conserve space when databases are rolled up, remove the input databases that the roll up uses. If you request a daily roll up, the daily checkpoints still exist. To remove the rolled-up checkpoints and save storage costs, request a backup cleanup.</aside>
 
 
 ### Restores
 
-To restore a database from backup, you replicate each incremental backup to a new database starting with the latest increment. Replicating from the latest incremental backup first is faster because updated documents are only written to the target database once. However, this order is not required.
-
+To restore a database from a backup, you replicate each incremental backup to a new database starting with the latest increment. Replicating from the latest incremental backup first is faster because updated documents are only written to the target database once. However, this order is not required.
 
 
 ### An example
-This example shows how to create databases for backup, run a full backup, set up and run an incremental backup, and restore backups.
+This example shows how to create databases to use backup, run a full backup, set up and run an incremental backup, and restore backups.
 
 > Constants used in this guide
 
@@ -77,11 +74,11 @@ $ url='https://<username>:<password>@<username>.cloudant.com'
 $ ct='Content-Type: application-json'
 ```
 
-Let's say you need to backup one database. You want to create a full backup on Monday and an incremental backup on Tuesday. You can use the curl and [jq](http://stedolan.github.io/jq/) commands to run these operations. Of course, any http client will work.
+Let's say you need to back up one database. You want to create a full backup on Monday and an incremental backup on Tuesday. You can use the curl and [jq](http://stedolan.github.io/jq/) commands to run these operations. Of course, any http client will work.
 
 <div> </div>
 
-#### Step 1: Create three databases for backup
+#### Step 1: Create three databases
 
 > Create three databases to use with this example
 
@@ -123,7 +120,7 @@ If it does not exist, create the `_replicator` database.
 
 <div> </div>
 
-#### Step 3: Backup the entire database
+#### Step 3: Back up the entire database
 
 > Run a full backup on Monday
 
@@ -145,7 +142,7 @@ $ curl -X PUT "${url}/_replicator/backup-monday" -H "$ct" -d @backup-monday.json
 }
 ```
 
-On Monday, backup your data for the first time and replicate
+On Monday, back up your data for the first time and replicate
 everything from `original` to `backup-monday`.
 
 
@@ -281,7 +278,7 @@ $ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.js
 }
 ```
 
-If you want to restore Tuesday's state instead, replicate from `backup-tuesday` and from `backup-monday`. If you use this order, documents updated on Tuesday will only need to be written to the target database one time.
+If you want to restore Tuesday's state instead, replicate from `backup-tuesday` and then from `backup-monday`. If you use this order, documents updated on Tuesday will only need to be written to the target database once.
 
 <div> </div>
 
@@ -304,11 +301,11 @@ Cloudant Support can help you with restores, status, and problems with backups.
 
 ### Best practices
 
-While the previous information outlines the basic backup process, each application has its own requirements and strategies for backups. Here are a few best practices you might want to keep in mind.
+While the previous information outlines the basic backup process, each application needs its own requirements and strategies for backups. Here are a few best practices you might want to keep in mind.
 
 #### Scheduling backups
 
-Replication jobs can significantly increase the load on a cluster. If you are backing up several databases, it is best to stagger the replication jobs for different times or when the cluster is less busy.
+Replication jobs can significantly increase the load on a cluster. If you are backing up several databases, it is best to stagger the replication jobs for different times or to a time when the cluster is less busy.
 
 ##### Changing the IO priority of a backup
 
@@ -331,7 +328,7 @@ Replication jobs can significantly increase the load on a cluster. If you are ba
 }
 ```
 
-You can change the priority of backup jobs by adjusting the settings in the `x-cloudant-io-priority` field. You adjust the priority for the target or source.
+You can change the priority of backup jobs by adjusting the settings in the `x-cloudant-io-priority` field.
 1.	In the target, change the `headers` object.
 2.	In the source, change the replication document to "low".
 
@@ -340,7 +337,7 @@ You can change the priority of backup jobs by adjusting the settings in the `x-c
 
 #### Backing up design documents
 
-If you backup design documents, the backup operation creates indexes on the backup destination. This practice slows down the backup process and uses unnecessary amounts of disk space. If you don't require indexes on your backup system, use a filter function with your replications that will filter out design documents. You can use this filter function to filter out other documents that are not required.
+If you backup design documents, the backup operation creates indexes on the backup destination. This practice slows down the backup process and uses unnecessary amounts of disk space. If you don't require indexes on your backup system, use a filter function with your replications to filter out design documents. You can also use this filter function to filter out other documents that are not required.
 
 #### Backing up multiple databases
 
@@ -348,6 +345,6 @@ If your application uses one database per user, or allows each user to create se
 
 ### Need help?
 
-Replication and backups can be tricky. If you get stuckß,
+Replication and backups can be tricky. If you get stuck,
 check out the [replication guide](./replication_guide.html),
 talk to us on IRC (#cloudant on freenode), or email <a href="mailto:support@cloudant.com">support</a>.
