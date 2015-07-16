@@ -2,7 +2,7 @@
 title: Cloudant Documentation - Backup Guide
 
 language_tabs:
-  - http 
+  - http
   - shell: curl
 #  - javascript: node.js
 #  - python
@@ -15,6 +15,5 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - guides/backup-guide
-
+- guides/backup_guide
 ---
