@@ -1,4 +1,4 @@
-## Backups
+## Back up your data
 
 IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability. This practice is the default for all Cloudant users. Even when your data is replicated in triplicate, it is still  important to back it up.
 
