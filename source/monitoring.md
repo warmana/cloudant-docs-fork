@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - Backups
+title: Cloudant Documentation - Monitoring a Cloudant cluster
 
 language_tabs:
   - http 
@@ -15,9 +15,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - api/backup
+  - guides/monitoring
 
 ---
-
-
-
