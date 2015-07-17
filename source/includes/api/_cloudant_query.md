@@ -12,10 +12,14 @@ by making it of type `json`.
 
 But for maximum possible flexibility when looking for data,
 you would typically create an index of type `text`.
-Indexes of type `text` have a simple mechanism for automatically indexing all the fields in the documents. 
+Indexes of type `text` have a simple mechanism for automatically indexing all the fields in the documents.
 
 <aside class="warning">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
+
+<br>Cloudant offers multiple ways to search for data and retrieve it. This overview explains how to create indexes and queries:</br>
+
+<iframe width="280" height="158" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
 
 ### Creating an index
 
@@ -23,6 +27,10 @@ You can create an index with one of two types:
 
 -	`"type": "json"`
 -	`"type": "text"`
+
+<br>This overview explains how to build and query data using Cloudant Query. </br>
+
+<iframe width="280" height="158" src="https://www.youtube.com/embed/Y-MFcqFHe4I" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
 
 #### Creating a "type=json" index
 
@@ -140,7 +148,7 @@ To index all fields in all documents automatically,
 use the simple syntax:
 
   `"index": {}`
-  
+
 The indexing process traverses all of the fields in all the documents in the database.
 
 An example of creating a text index for all fields in all documents in a database is [available](cloudant-query.html#example:-movies-demo-database).
@@ -1819,7 +1827,7 @@ The details of the index in use are shown in the `index` object within the resul
 {
   "selector": {
     "$text": "Pacino",
-    "year": 2010 
+    "year": 2010
   },
   "use_index": "_design/32372935e14bed00cc6db4fc9efca0f1537d34a8"
 }
@@ -2141,4 +2149,3 @@ curl -X POST -H "Content-Type: application/json" \
   "bookmark": "g2w ... c2o"
 }
 ```
-
