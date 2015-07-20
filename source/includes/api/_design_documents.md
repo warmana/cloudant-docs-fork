@@ -514,7 +514,7 @@ For web and mobile applications, consider whether any computations done in a sho
 
 Show functions receive two arguments: `doc`, and [req](#req). `doc` is the document requested by the show function.
 
-When you have defined a show function, you query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/_show/$SHOW_FUNCTION/$DESIGN_ID`,
+When you have defined a show function, you query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_show/$SHOW_FUNCTION/$DOCUMENT_ID`,
 where `$SHOW_FUNCTION` is the name of the function that is applied to the document that has `$DESIGN_ID` as its `_id`.
 
 ### Update Handlers
@@ -577,7 +577,7 @@ db.atomic($DESIGN_ID, $UPDATE_HANDLER, $DOCUMENT_ID, $JSON, function (err, body)
 ```
 
 Update handlers are custom functions that live on Cloudant's server that will create or update a document.
-This can, for example, provide server-side modification timestamps, and document updates to individual fields without the latest revision. 
+This can, for example, provide server-side modification timestamps, and document updates to individual fields without the latest revision.
 
 Update handlers receive two arguments: `doc` and [req](#req).
 If a document ID is provided in the request to the update handler, then `doc` will be the document corresponding with that ID. If no ID was provided, `doc` will be `null`.
@@ -690,7 +690,7 @@ function(newDoc, oldDoc, userCtx, secObj) {
 ```
 
 Update validators evaluate whether a document should be written to disk when insertions and updates are attempted.
-They do not require a query because they implicitly run during this process. If a change is rejected, the update validator responds with a custom error. 
+They do not require a query because they implicitly run during this process. If a change is rejected, the update validator responds with a custom error.
 
 Update validators get four arguments:
 
