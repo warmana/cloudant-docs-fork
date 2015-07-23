@@ -471,6 +471,9 @@ body, html {
     @extend %break-words;
     @extend %code-font;
   }
+  pre code {
+    background-color: inherit;
+  }
 
   aside {
     padding-top: 1em;
