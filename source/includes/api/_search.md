@@ -514,16 +514,15 @@ and use the returned facets to refine your query.
 To indicate a field should be indexed for faceted queries,
 set `{"facet": true}` in its options.
 
-<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, “dim `field_name` does not exist."
+<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
 
 If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement, such as:
 
-```
-if (typeof doc.town == "string" && typeof doc.name == "string") {
+<pre><code> if (typeof doc.town == "string" && typeof doc.name == "string") {
 
-   index("town", doc.town, {facet: true});
-   index("town", doc.town, {facet: true});
-```
+      index("town", doc.town, {facet: true});
+      index("town", doc.town, {facet: true});
+</pre></code>
 </aside>
 
 
