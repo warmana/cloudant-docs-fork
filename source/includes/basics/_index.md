@@ -1,6 +1,6 @@
 # ![alt tag](images/cloudantbasics_icon.png) Cloudant Basics
 
-If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know basic things about Cloudant.
+If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know some basic things about Cloudant.
 
 ## Database as a Service
 
@@ -95,7 +95,7 @@ Cloudant's API enables you to interact with a collaboration of numerous machines
 
 An advantage of clustering is that when you need more computing capacity, you just add more machines. This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.
 
-For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide. 
+For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide.
 
 ## Replication
 
