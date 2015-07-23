@@ -3,8 +3,9 @@
 If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know basic things about Cloudant.
 
 ## Database as a Service
+
 As a hosted and managed database-as-a-service (DBaaS),
-Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
+Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](#json) data,
 and 24-hour operational support and maintenance.
 Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
 and is delivered as a multi-tenant, dedicated, and installed service.
