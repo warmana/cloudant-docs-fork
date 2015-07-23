@@ -358,11 +358,11 @@ Once you've got an index written, you can query it with a `GET` request to `http
 
 #### Query Parameters
 <aside class="warning">You must enable faceting before you can use the following parameters:
-<p>
-- `counts`
-- `ridges`
-- `drilldown`
-</p>
+<ul>
+<li> `counts`
+<li> `ridges`
+<li> `drilldown`
+</ul>
 </aside>
 
 
@@ -514,16 +514,16 @@ and use the returned facets to refine your query.
 To indicate a field should be indexed for faceted queries,
 set `{"facet": true}` in its options.
 
-<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, “dim <code><field_name></code> does not exist."
+<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, “dim `field_name` does not exist."
 
 If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement, such as:
 
-<code>
+```
 if (typeof doc.town == "string" && typeof doc.name == "string") {
 
    index("town", doc.town, {facet: true});
    index("town", doc.town, {facet: true});
-   </code>
+```
 </aside>
 
 
@@ -572,7 +572,7 @@ and convert using `parseInt`, `parseFloat` and `.toString()` functions.
 
 #### Drilldown
 
-Add `drilldown=["dimension","label"]` to a search query to restrict results to documents with dimension equal to the given label. You can include multiple drilldown parameters to restrict results along multiple dimensions.
+Add `drilldown=["dimension","label"]` to a search query and restrict results to documents with dimension equal to the given label. You can include multiple drilldown parameters to restrict results along multiple dimensions.
 
 Using a drilldown parameter is similar to using `key:value` in the `q` parameter, but the drilldown parameter returns values that the search's analyzer might skip. For example, if the analyzer did not index a stop word like "a", drilldown will return it by `drilldown=["key","a"]`.
 
