@@ -518,7 +518,8 @@ set `{"facet": true}` in its options.
 
 If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement, such as:
 
-```if (typeof doc.town == "string" && typeof doc.name == "string") {
+```
+  if (typeof doc.town == "string" && typeof doc.name == "string") {
 
       index("town", doc.town, {facet: true});
       index("town", doc.town, {facet: true});
