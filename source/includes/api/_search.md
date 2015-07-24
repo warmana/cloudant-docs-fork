@@ -523,6 +523,7 @@ If each document does not contain all the fields for facets, it is recommended t
 
       index("town", doc.town, {facet: true});
       index("town", doc.town, {facet: true});
+    }
 ```
 </aside>
 
