@@ -476,10 +476,6 @@ body, html {
   }
 
   aside {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-top: 1.5em;
-    margin-bottom: 1.5em;
     background: $aside-notice-bg; 
     line-height: 1.7;
     font-weight: 400;
@@ -577,7 +573,7 @@ body, html {
     top: 0px;
     z-index: 1000;
   }
-
+  
   blockquote {
     border-top: 1em solid $examples-bg;
     &>p {
