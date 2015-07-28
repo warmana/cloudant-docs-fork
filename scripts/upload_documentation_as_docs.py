@@ -78,9 +78,7 @@ def index_file(filename):
 
 # TODO replace with automatically generated list of files
 
-for filename in [
-'index'
-]:
+for filename in Dir["source/*.md"].map { |f| f[7,f.length-10] } :
 	index_file(filename)
 
 				
