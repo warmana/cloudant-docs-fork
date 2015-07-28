@@ -2,7 +2,7 @@
 title: Cloudant Documentation
 
 language_tabs:
-  - http 
+  - http
   - shell: curl
 #  - javascript: node.js
 #  - python
@@ -31,4 +31,3 @@ This is the online documentation for the [Cloudant database-as-a-service](https:
 Cloudant is built on best-of-breed open source technologies, and we're heavy committers to the technology we rely on. We're also open about our documentation. If it's not working for you, it's not working for us. Please make contributions or share suggestions on [GitHub](https://github.com/cloudant-labs/slate).
 
 <div id="why_cloudant"></div>
-
