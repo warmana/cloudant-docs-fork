@@ -1,25 +1,30 @@
-rvm:
+rvm: 
 - 1.9.3
 - 2.0.0
-services:
+services: 
 - couchdb
-env:
-  global:
-  - secure: TODO
-  - secure: TODO
-notifications:
-  email:
-    - TODO
+env: 
+  global: 
+  - secure: AdJxKXK1eV/4x9u2LtXAVsqrU6Q/LxjOmR0GT/oQH2oN+bODVygGZ+9keReB/xYCOj15S043jC2YQBjDQq5nX+XYQYmDhFoy0Wjh1bVZ4fFbhqJRJbOJyLKUzkPC8annYFTdB8F7buTFflnKezED2cxscqPa2dGQNgxmKWBaALI=
+  - secure: WR2trMbnJb7ApFlmaGbgOjDTEiezRnvLVEH5jk5oD0LooI+tLvyZEy49R0F14JoL1iwzRhwSYwEXhKGZUUZ2yUOgz4YThgO8uYLlxC6yLQSDz8lDVK/GJfckEqyjUWFOqtGcWYzKnplS5Z2lv/1q7wuQbwFwMP28lz00G75o1p8=
+  - secure: ARLDPH69GdbeWrC17ky1iXemUj3CT6R6QpOOngzqDyt3D9xzc6aYfsZU2zFkUXRB6lKfHSm1WOJgvf5cwh74/hzDVQCTlPV1pDuS1BKPo7Swo5iGVzCycPFgZ8cp2Rtc5GMsX+NL61aBw7BSYoODFoUYfnpl7TWI/MUwG/7Lwj4=
+  - secure: O2AeovQ8zXvE5QgISMjturselw+SLqcu8ekgcQaul3KfWvo6GZD+HjJ1dAHLluciSGJd0k+INMDNSEW7E6BfKhGM+/p7JYgHlFIv2wsLz0AfUGhltztnBkzY50ccHJD/2v/U/527BPPVuwiuV4QXFhUYiFKGJ1hhX6MND6J7qKo=
+notifications: 
+  email: 
+  - kim@cloudant.com
   on_success: always
-before_install:
+before_install: 
 - sudo apt-get update
 - sudo apt-get install python python-pip jq
 - sudo pip install couchapp
-script:
+script: 
 - bundle exec middleman build --verbose
 - mkdir couchapp/_attachments
 - cp -r build/* couchapp/_attachments
 - ./scripts/deploy.sh
-after_success:
+after_success: 
 - sudo pip install cloudant beautifulsoup4
 - ./scripts/deploy-branch.sh "$USERNAME" "$PASSWORD"
+- cf api https://api.ng.bluemix.net
+- cf login -u "$BLUEMIX_USERNAME" -p "$BLUEMIX_PASSWORD" -o Dev-Advocates -s dev
+- ./bluemix-deployment/deploy

@@ -1,0 +1,8 @@
+cd ..
+bundle exec middleman build
+rm -rf bluemix-deployment/public
+mkdir bluemix-deployment/public
+cp -r build/* bluemix-deployment/public/
+cd bluemix-deployment
+cf push cds-documentation
+
