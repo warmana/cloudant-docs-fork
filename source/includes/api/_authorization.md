@@ -5,7 +5,7 @@ are permitted to perform certain tasks. This is called authorization.
 
 ### Roles
 
-Role               | Description
+Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description
 -------------------|------------
 `_reader`          | Gives the user permission to read documents (except design documents) from the database.
 `_writer`          | Gives the user permission to create, update, and delete documents (except design documents) in the database.
