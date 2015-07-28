@@ -1,0 +1,7 @@
+#!/bin/bash
+
+wget -O 'cf.deb' 'https://cli.run.pivotal.io/stable?release=debian64&version=6.12.2&source=github-rel'
+sudo dpkg -i 'cf.deb'
+cf api 'https://api.ng.bluemix.net'
+cf login -u "$BLUEMIX_USERNAME" -p "$BLUEMIX_PASSWORD" -o 'Dev-Advocates' -s 'dev'
+./bluemix-deployment/deploy
