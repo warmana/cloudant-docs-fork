@@ -749,6 +749,7 @@ with the `include_docs=true` query argument,
 enables you to retrieve multiple documents from a database.
 For a client application,
 this technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
+
 However,
 `include_docs=true` might incur an overhead compared to accessing the view on its own.
 

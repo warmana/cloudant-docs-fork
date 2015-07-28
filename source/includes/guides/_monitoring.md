@@ -58,6 +58,9 @@ you can choose to receive the results in `raw` format.
 The results include a text string that identifies the metric stored on the server providing the API capability,
 for example `sumSeries(net.cloudant.mycustomer001.db*.df.srv.used)`.
 
+The information in the results consists of cluster-level data from the last five minutes,
+recorded at 15 second intervals. 
+
 <div></div>
 
 #### With `format=json` (default)
