@@ -78,6 +78,8 @@ def index_file(filename):
 
 # TODO replace with automatically generated list of files
 
-for filename in Dir["source/*.md"].map { |f| f[7,f.length-10] }.each { |filename| index_file(filename) }
+files = [f[0:-3] for f in os.listdir('./source/') if os.path.isfile('source/' + f) & f.endswith('.md')]
+for filename in files:
+  index_file(filename)
 
 				
