@@ -7,10 +7,10 @@ You can create replications between any number of databases, whether continuous 
 Depending on your application requirements, you use replication to share and aggregate state and content.
 
 This overview explains how replication works:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/OPW8bomFcDY?rel=0" frameborder="0" allowfullscreen title="Replication overview video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/OPW8bomFcDY?rel=0" frameborder="0" allowfullscreen title="Replication overview video"></iframe>
 
 This video shows you how to replicate a Cloudant sample database:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/TDvzZ887tGI?rel=0" frameborder="0" allowfullscreen title="Video showing how to replicate a sample database"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/TDvzZ887tGI?rel=0" frameborder="0" allowfullscreen title="Video showing how to replicate a sample database"></iframe>
 
 Replication takes place in one direction only.
 To keep two databases synchronized with each other, you must replicate in both directions.
@@ -82,10 +82,10 @@ Content-Type: application/json
 To start a replication, [add a replication document](#replication-document-format) to the `_replicator` database.
 
 This overview explains how to create a replication job:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/GmZ3HrwMhO4?rel=0" frameborder="0" allowfullscreen title="Replication creation video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/GmZ3HrwMhO4?rel=0" frameborder="0" allowfullscreen title="Replication creation video"></iframe>
 
 You can set up replication using cURL:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/sQ3ldxOhpWM?rel=0" frameborder="0" allowfullscreen title="Replication creation using curl video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/sQ3ldxOhpWM?rel=0" frameborder="0" allowfullscreen title="Replication creation using curl video"></iframe>
 
 <h3></h3>
 
@@ -173,7 +173,7 @@ To monitor replicators currently in process, make a `GET` request to `https://$U
 This returns any active tasks, including replications. To filter for replications, look for documents with `"type": "replication"`.
 
 This overview explains how to check replication status:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/TIXpJmmqP6Y?rel=0" frameborder="0" allowfullscreen title="Replication status check video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/TIXpJmmqP6Y?rel=0" frameborder="0" allowfullscreen title="Replication status check video"></iframe>
 
 For details about the information provided by `_active_tasks`, see [Active tasks](active_tasks.html).
 
