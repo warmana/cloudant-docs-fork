@@ -83,7 +83,7 @@ More information about JSON can be found in the [JSON Guide](json.html).
 There are many ways to search for and retrieve data stored in Cloudant.
 This overview explains the different techniques,
 and how to decide which one to use:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/b0t0uf75WgE?rel=0" frameborder="0" allowfullscreen title="Index and queries overview video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/b0t0uf75WgE?rel=0" frameborder="0" allowfullscreen title="Index and queries overview video"></iframe>
 
 <div id="distributed"></div>
 ## Distributed
