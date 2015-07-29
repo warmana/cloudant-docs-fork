@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo docker run --name nginx -d -p 80:80 -v `pwd`/build:/usr/share/nginx/html:ro nginx
+
