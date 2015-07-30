@@ -8,7 +8,7 @@ Examples of BLObs would be images and multimedia.
 
 The content type corresponds to a [MIME type][mime].
 For example, if you want to attach a `.jpg` image file to a document,
-you would specify the attachment MIME type as `image/jpeg`.
+you specify the attachment MIME type as `image/jpeg`.
 
 
 <aside class="warning">As a best practice, keep attachments small in size and number because attachments can impact performance.</aside>
