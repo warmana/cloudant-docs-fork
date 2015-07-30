@@ -79,7 +79,7 @@ In the example response, for instance, `nobody` has `_reader` permissions, makin
 ### Modifying Permissions
 
 A video overview about changing database permissions is available:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/uxlbbdAvawU?rel=0" frameborder="0" allowfullscreen title="Changing database permissions, video overview"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/uxlbbdAvawU?rel=0" frameborder="0" allowfullscreen title="Changing database permissions, video overview"></iframe>
 
 <div></div>
 

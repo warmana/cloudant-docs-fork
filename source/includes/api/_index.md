@@ -23,4 +23,4 @@ enabling you to enter commands such as:
   `acurl https://$USERNAME.cloudant.com`
 
 A video introduction about `acurl` is also available:<br/>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/n28IWoL1sXQ?rel=0" frameborder="0" allowfullscreen title="Setting up pre authenticated cURL video"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/n28IWoL1sXQ?rel=0" frameborder="0" allowfullscreen title="Setting up pre authenticated cURL video"></iframe>

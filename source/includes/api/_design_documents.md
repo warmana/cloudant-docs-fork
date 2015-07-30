@@ -193,7 +193,7 @@ using the `rev` query argument.
 
 ### Views
 
-An important use of design documents is for creating views. These are discussed in more detail [here](creating-views.html).
+An important use of design documents is for creating views. These are discussed in more detail [here](creating_views.html).
 
 ### Rewrite rules
 
