@@ -1,0 +1,15 @@
+#!/bin/bash
+
+function checkFile {
+  echo `tr '\n' ' ' <$1` | tr '#' ' ' | perl -pe 's|```.*?```||g' | perl -pe 's|<script.*?</script>||g' | perl -pe 's|<code.*?</code>||g' | perl -pe 's|<form.*?</form>||g' | perl -pe 's|<style.*?</style>||g' | perl -pe 's|<[/a-zA-Z].*?>||g' | perl -pe 's|`.*?`||g'  | aspell -a --encoding=utf-8 --lang=en-us --add-extra-dicts "$(pwd)/dictionary" | grep -v '^[\*@]' | grep -v '^$' | cut -f2 -d ' '
+}
+
+checkFile ../source/includes/api/_account.md
+
+
+for file in `find ../source -iname '*.md'`; do
+  echo
+  echo "checking $file"
+  echo
+  checkFile "$file"
+done
