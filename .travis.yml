@@ -15,9 +15,10 @@ notifications:
   on_success: always
 before_install:
 - sudo apt-get update
-- sudo apt-get install python python-pip jq
+- sudo apt-get install python python-pip jq perl
 - sudo pip install couchapp
 script:
+- ./scripts/spelling/spellcheck
 - bundle exec middleman build --verbose
 - mkdir couchapp/_attachments
 - cp -r build/* couchapp/_attachments
