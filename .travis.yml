@@ -15,7 +15,7 @@ notifications:
   on_success: always
 before_install:
 - sudo apt-get update
-- sudo apt-get install python python-pip jq perl
+- sudo apt-get install python python-pip jq perl aspell aspell-en
 - sudo pip install couchapp
 script:
 - ./scripts/spelling/spellcheck
