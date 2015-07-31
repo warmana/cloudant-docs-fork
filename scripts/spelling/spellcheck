@@ -6,12 +6,12 @@ source "$scriptDir/spellcheck-lib"
 
 function check {
   while read file; do
-    echo INFO
-    echo INFO "checking $file"
-    echo INFO
+    echo 
+    echo "checking $file"
+    echo
     for word in `checkFile "$file"`; do
       #echo
-      echo ERROR "$word"
+      echo "$word"
       #cat "$file" | grep -n "$word" |
       #{
       #while read occurance; do
@@ -24,10 +24,16 @@ function check {
   done
 }
 
-report="$(allMdFiles source | check)"
-if [[ "$(echo -n "$report" | grep ERROR)" = '' ]]; then
+report="$(changedFiles source | check | sed 's/$/<br>/' )"
+if [[ "$(echo -n "$report" | grep -v '^<br>$' | grep -v '^checking ')" = '' ]]; then
   echo spell check passed!
 else
   echo "$report"
-  
+  author=`git log | head -n 2 | tail -n 1 | sed 's/Author: //g'`
+  curl -X POST https://api.sendgrid.com/api/mail.send.json \
+     -d "to=$author" \
+     -d "from=3b86d6cd-f285-40e8-b555-4137fa4057f6@appdirect.com" \
+     -d "subject=Spell check" \
+     -d "html=$report" \
+     -H "Authorization: Bearer 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"
 fi

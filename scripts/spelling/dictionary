@@ -1,4 +1,6 @@
 personal_ws-1.1 en 2 utf-8
+schema
+schemas
 Cloudant
 API
 Cloudant's
@@ -75,8 +77,15 @@ datasets
 cURL
 csv
 CouchDB's
+NoSQL
+GeoJSON
+GIS
 tokenized
 tokenization
+versioning
+ETag
+CORS
+login
 TBD
 subdomains
 SQL
