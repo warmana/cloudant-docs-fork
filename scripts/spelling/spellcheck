@@ -1,0 +1,33 @@
+#!/bin/bash
+
+scriptDir="$(dirname $0)"
+
+source "$scriptDir/spellcheck-lib"
+
+function check {
+  while read file; do
+    echo INFO
+    echo INFO "checking $file"
+    echo INFO
+    for word in `checkFile "$file"`; do
+      #echo
+      echo ERROR "$word"
+      #cat "$file" | grep -n "$word" |
+      #{
+      #while read occurance; do
+        #echo "$occurance"
+        #line=`echo $occurance | cut -f1 -d ':'`
+        #echo q | git blame -pL "$line,$line" "$file" | grep 'author '
+      #done
+      #}
+    done
+  done
+}
+
+report="$(allMdFiles source | check)"
+if [[ "$(echo -n "$report" | grep ERROR)" = '' ]]; then
+  echo spell check passed!
+else
+  echo "$report"
+  
+fi
