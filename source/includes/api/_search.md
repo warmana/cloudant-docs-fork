@@ -13,7 +13,7 @@
 }
 ```
 
-Search indexes, defined in design documents, allow databases to be queried using [Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search indexes are defined by an index function, similar to a map function in MapReduce views. The index function decides what data to index and store in the index.
+Search indexes, defined in deisgn documents, allow databases to be queried using [Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search indexes are defined by an index function, similar to a map function in MapReduce views. The index function decides what data to index and store in the index.
 
 This video explains how to create search indexes:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/QWeOQXe_Ofc?rel=0" frameborder="0" allowfullscreen title="Video on creating search indexes"></iframe>
@@ -32,16 +32,16 @@ This video explains how to perform group, facet, and geo searches using search i
 function(doc){
   index("default", doc._id);
   if (doc.min_length){
-    index("min_length", doc.min_length, {"store": "true"});
+    index("min_length", doc.min_length, {"store": true});
   }
   if (doc.diet){
-    index("diet", doc.diet, {"store": "true"});
+    index("diet", doc.diet, {"store": true});
   }
   if (doc.latin_name){
-    index("latin_name", doc.latin_name, {"store": "true"});
+    index("latin_name", doc.latin_name, {"store": true});
   }
   if (doc.class){
-    index("class", doc.class, {"store": "true"});
+    index("class", doc.class, {"store": true});
   }
 }
 ```
@@ -97,7 +97,7 @@ Option | Description | Values | Default
 
 ```
 if (doc.min_length) {
-  index("min_length", doc.min_length, {"store": "true"});
+  index("min_length", doc.min_length, {"store": true});
 }
 ```
 
@@ -115,7 +115,7 @@ _before_ attempting to create the corresponding index.
 
 ```
 if (typeof(doc.min_length) === 'number') {
-  index("min_length", doc.min_length, {"store": "true"});
+  index("min_length", doc.min_length, {"store": true});
 }
 ```
 
@@ -167,7 +167,7 @@ a possible generic guard clause simply tests to ensure that the type of the cand
 }
 ```
 
-Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](#language-specific-analyzers). 
+Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](search.html#language-specific-analyzers). 
 
 Here's the list of generic analyzers supported by Cloudant search:
 
