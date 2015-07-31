@@ -6,9 +6,9 @@ source "$scriptDir/spellcheck-lib"
 
 function check {
   while read file; do
-    echo 
-    echo "checking $file"
-    echo
+    echo INFO
+    echo INFO "checking $file"
+    echo INFO
     for word in `checkFile "$file"`; do
       #echo
       echo "$word"
