@@ -711,7 +711,7 @@ curl "https://user:password@account.cloudant.com/movies/_design/searches/_search
 }
 ```
 
-Sometimes it is useful to get the context in which a search term was mentioned so that you can display more detailed results to a user. To do this, you add the `search_highlights` parameter to the search query, specifying the field names for which you would like excerpts with the highlighted search term to be returned. By defaults, the search term is placed in `<em` tags to highlight it, but this can be overridden using the `highlights_pre_tag` and `highlights_post_tag` parameters. The length of the fragments is 100 characters by default. A different length can be requested with the `hightlights_size` parameter. The `highlights_number` parameter controls the number of fragments returned, which defaults to 1.
+Sometimes it is useful to get the context in which a search term was mentioned so that you can display more detailed results to a user. To do this, you add the `search_highlights` parameter to the search query, specifying the field names for which you would like excerpts with the highlighted search term to be returned. By default, the search term is placed in `<em>` tags to highlight it, but this can be overridden using the `highlights_pre_tag` and `highlights_post_tag` parameters. The length of the fragments is 100 characters by default. A different length can be requested with the `hightlights_size` parameter. The `highlights_number` parameter controls the number of fragments returned, which defaults to 1.
 
 In the response, a `highlights` field will be added with one subfield per field name. For each field, you will receive an array of fragments with the search term highlighted.
 
