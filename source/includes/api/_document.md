@@ -705,6 +705,7 @@ throw({forbidden: 'invalid recipe ingredient'});
 Entries with this error type indicate that the validation routine applied to the document during submission has returned an error.
 
 <div id="quorum"></div>
+
 ### Quorum - writing and reading data
 
 In a distributed system,
