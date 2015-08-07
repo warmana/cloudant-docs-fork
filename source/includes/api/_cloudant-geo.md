@@ -54,7 +54,7 @@ This is a simple key:value pair. It must be present, and must contain the value 
 
 This section must contain two fields.
 
-The `type` field holds a GeoJSON object value such as `Point`, `LineString` or `Polygon`.
+The `type` field holds a GeoJSON object value such as `Point`, `LineString`, or `Polygon`.
 
 The `coordinates` field holds an array of latitude and longitude values.
 
