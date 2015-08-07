@@ -230,8 +230,7 @@ field names can use dotted notation to access subfields.
 
 ### Working with indexes
 
-Cloudant endpoints can be used to create,
-list,
+Cloudant endpoints can be used to create, list,
 update,
 and delete indexes in a database,
 and to query data using these indexes.
