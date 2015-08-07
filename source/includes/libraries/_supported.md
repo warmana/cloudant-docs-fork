@@ -87,7 +87,6 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 <td>
 <ul>
 <li><a target="_blank" href="https://github.com/cloudant/haengematte/tree/master/nodejs">CRUD</a></li>
-<!-- <li><a target="_blank" href="https://cloudant.com/blog/using-cloudant-with-node-js/">Using Cloudant with Node.js</a></li> -->
 <li><a target="_blank" href="https://github.com/garbados/Cloudant-Uploader">Cloudant-Uploader</a> - utility to upload .csv files to Cloudant.</li>
 <li><a target="_blank" href="https://github.com/glynnbird/couchimport">couchimport</a> - utility to import csv or tsv files into CouchDB or Cloudant</li>
 <li><a target="_blank" href="http://thoughtsoncloud.com/2014/07/getting-started-ibm-bluemix-node-js/">Getting started with IBM Bluemix and Node.js</a></li>
