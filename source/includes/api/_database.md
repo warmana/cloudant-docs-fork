@@ -52,7 +52,12 @@ PUT /$DATABASE?n=2&q=32 HTTP/1.1
 HOST: $ACCOUNT.cloudant.com
 ```
 
-There are two configuration parameters that control the sharding topology of a database. The defaults are specified in the server configuration and may be overridden at database creation time on dedicated database clusters. N specifies the number of replicas of each document, while Q fixes the number of partitions of the database. On multi-tenant clusters, the default can not be overwritten.
+There are two configuration parameters that control the sharding topology of a database.
+The defaults are specified in the server configuration and may be overridden at database creation time on dedicated database clusters.
+`n` specifies the number of replicas of each document,
+while `q` fixes the number of partitions of the database.
+On multi-tenant clusters,
+the defaults can not be overwritten.
 
 Parameter | Description | Default
 ----------|-------------|----------
@@ -71,7 +76,9 @@ HTTP/1.1 201 Created
 }
 ```
 
-If creation succeeds, you get a 201 or 202 response. In case of an error, the HTTP status code tells you what went wrong.
+If creation succeeds, you get a [201 or 202 response](http.html#201).
+In case of an error,
+the HTTP status code tells you what went wrong.
 
 Code | Description
 -----|--------------
@@ -228,6 +235,8 @@ Argument | Description | Optional | Type | Default
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+
 <div></div>
 
 > Example response:
@@ -313,6 +322,8 @@ Argument | Description | Supported Values | Default
 `since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. | string | 0 | 
 `style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
 `timeout` | Number of milliseconds to wait for data before terminating the response. If heartbeat supersedes timeout if both are supplied. | any positive number | |
+
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 All arguments are optional.
 

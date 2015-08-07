@@ -68,7 +68,7 @@ To create a document, make a POST request with the document's JSON content to `h
 
 The response is a JSON document containing the ID of the created document, the revision string, and `"ok": true`. If you did not provide an `_id` field, Cloudant generates one automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier). If creation of the document failed, the response contains a description of the error.
 
-<aside>If the write quorum cannot be met, a [`202` response](http.html#http-status-codes) is returned.</aside>
+<aside>If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 ### Read
 
@@ -173,7 +173,7 @@ db.insert($JSON, $JSON._id, function (err, body, headers) {
 To update (or create) a document, make a PUT request with the updated JSON content *and* the latest `_rev` value (not needed for creating new documents) to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 
 <aside>If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
-This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#http-status-codes) is returned.</aside>
+This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 <div></div>
 
@@ -220,7 +220,7 @@ db.destroy($JSON._id, $REV, function (err, body, headers) {
 To delete a document, make a DELETE request with the document's latest `_rev` in the querystring, to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 
 <aside>If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](basics.html#http-status-codes).
-This error prevents you overwriting data changed by other clients. If the write quorum cannot be met, a [`202` response](http.html#http-status-codes) is returned.</aside>
+This error prevents you overwriting data changed by other clients. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 <aside class="warning">
 CouchDB doesn’t completely delete the specified document. Instead, it leaves a tombstone with very basic information about the document. The tombstone is required so that the delete action can be replicated. Since the tombstones stay in the database indefinitely, creating new documents and deleting them increases the disk space usage of a database and the query time for the primary index, which is used to look up documents by their ID.
@@ -398,7 +398,7 @@ The HTTP status code tells you whether the request was fully or partially succes
 </tr>
 <tr class="even">
 <td align="left">202</td>
-<td align="left">For at least one document, the write quorum (specified by w) has not been met.</td>
+<td align="left">For at least one document, the write quorum has not been met.</td>
 </tr>
 </tbody>
 </table>
@@ -468,7 +468,8 @@ x-couch-request-id: e8ff64d5
     }]
 ```
 
-The return code from a successful bulk insertion is 201, with the content of the returned structure indicating specific success or otherwise messages on a per-document basis.
+The return code from a successful bulk insertion is [`201`](http.html#201),
+with the content of the returned structure indicating specific success or otherwise messages on a per-document basis.
 
 The return structure from the example contains a list of the documents created, including their revision and ID values.
 
@@ -545,7 +546,8 @@ The return structure is the JSON of the updated documents, with the new revision
 
 You can optionally delete documents during a bulk update by adding the `_deleted` field with a value of `true` to each document ID/revision combination within the submitted JSON structure.
 
-The return code from a successful bulk update is 201, with the content of the returned structure indicating specific success or otherwise messages on a per-document basis.
+The return code from a successful bulk update is [`201`](http.html#201),
+with the content of the returned structure indicating specific success or otherwise messages on a per-document basis.
 
 The content and structure of the returned JSON depends on the transaction semantics being used for the bulk update; see [Bulk Documents Transaction Semantics](#bulk-documents-transaction-semantics) for more information. Conflicts and validation errors when updating documents in bulk must be handled separately; see [Bulk Document Validation and Conflict Errors](#bulk-document-validation-and-conflict-errors).
 
@@ -573,7 +575,8 @@ The content and structure of the returned JSON depends on the transaction semant
 ]
 ```
 
-Cloudant only guarantees that some of the documents are saved if your request yields a 202 response. The response contains the list of documents successfully inserted or updated during the process.
+Cloudant only guarantees that some of the documents are saved if your request yields a [`202` response](http.html#202).
+The response contains the list of documents successfully inserted or updated during the process.
 
 The response structure indicates whether the document was updated successfully.
 It does this by supplying the new `_rev` parameter,
@@ -681,3 +684,42 @@ throw({forbidden: 'invalid recipe ingredient'});
 ```
 
 Entries with this error type indicate that the validation routine applied to the document during submission has returned an error.
+
+<div id="quorum"></div>
+### Quorum - writing and reading data
+
+In a distributed system,
+it is possible that a request might take some time to complete.
+A quorum is used to help determine when a given request,
+such as a write or read,
+has completed successfully.
+
+The number of systems deemed to represent a quorum for reading and writing have default values based on the [`n`, the number of replicas for each document](database.html#create),
+where `n` defaults to 3.
+By default,
+the number of systems for a quorum for reading is `r`,
+calculated as `n/2+1`.
+Similarly,
+the number of systems for a quorum for writing is `w`,
+calculated as `n/2+1`.
+
+<aside class="warning">It is not possible to specify the `n` value for a database at creation time on a multi-tenant system.
+For help understanding quorum settings and their implications on dedicated Cloudant systems,
+contact Cloudant support.</aside>
+
+Cloudant implements a 'sloppy quorum' mechanism.
+This means data is still written or read,
+because if a primary node (one that would normally be used for the write or read) is not available,
+another available node accepts and responds to the request.
+
+The default quorum values should result in the best overall performance for all users.
+However,
+the default values have some implications:
+
+-	Concurrent updates to the same document are possible and would generate a conflict internally. Avoid making rapid updates to the same document. Have a strategy for handling conflicts, as you might be creating them unwittingly.
+-	There are no "read your writes" guarantees. You might write a document and then have a read request serviced from a shard copy which has not yet received the write. Another scenario would be a write where quorum was not met; immediately reading the same document back might return a different revision.
+-	You should assume that secondary index reads are always eventually consistent. This is because a read request might be serviced by a shard copy that has not yet received the previous write.
+
+For more information about Cloudant and distributed system concepts,
+see the [CAP Theorem](cap_theorem.html) guide,
+or contact Cloudant support.

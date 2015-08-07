@@ -136,13 +136,14 @@ function(doc) {
 }
 ```
 
-If the object passed to `emit` has an `_id` field, a view query with `include_docs` set to `true` will contain the document with the given ID.
+If the object passed to `emit` has an `_id` field,
+a view query with `include_docs` set to `true` contains the document with the given ID.
 
 #### Complex Keys
 
 Keys are not limited to simple values. You can use arbitrary JSON values to influence sorting.
 
-When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See HttpViewApi for more information. 
+When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See HttpViewApi for more information.
 
 ### Reduce functions
 
@@ -249,7 +250,7 @@ Dbcopy should be used carefully, since it can negatively impact the performance 
 
  1. It creates a new database, so it can use a lot of disk space.
  2. Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
- 3. It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views. 
+ 3. It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
 
 </aside>
 
@@ -283,7 +284,7 @@ Each view is a Javascript function.
 Views are stored in design documents.
 So,
 to store a view,
-we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).   
+we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).
 
 Do this by `PUT`ting the view definition content into a `_design` document.
 In this example,
@@ -367,21 +368,23 @@ Content-Type: application/json
 
 Argument | Description | Optional | Type | Default | Supported values
 ---------|-------------|----------|------|---------|-----------------
-`descending` | Return the documents in 'descending by key' order. | yes | Boolean | false | 
-`endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | | 
-`endkey_docid` | Stop returning records when the specified document ID is reached. | yes | String | | 
-`group` | Using the reduce function, group the results to a group or single row. | yes | Boolean | false | 
-`group_level` | Only applicable if the view uses complex keys: keys that are JSON arrays. Groups reduce results for the specified number of array fields. | yes | Numeric | | 
-`include_docs` | Include the full content of the documents in the response. | yes | Boolean | false | 
-`inclusive_end` | Include rows with the specified endkey. | yes | Boolean | true | 
-`key` | Return only documents that match the specified key. Note: Keys are JSON values, and must be URL encoded. | yes | JSON strings or arrays | | 
+`descending` | Return the documents in 'descending by key' order. | yes | Boolean | false |
+`endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | |
+`endkey_docid` | Stop returning records when the specified document ID is reached. | yes | String | |
+`group` | Using the reduce function, group the results to a group or single row. | yes | Boolean | false |
+`group_level` | Only applicable if the view uses complex keys: keys that are JSON arrays. Groups reduce results for the specified number of array fields. | yes | Numeric | |
+`include_docs` | Include the full content of the documents in the response. | yes | Boolean | false |
+`inclusive_end` | Include rows with the specified endkey. | yes | Boolean | true |
+`key` | Return only documents that match the specified key. Note: Keys are JSON values, and must be URL encoded. | yes | JSON strings or arrays | |
 `keys` | Return only documents that match the specified keys. Note: Keys are JSON values and must be URL encoded. | yes | Array of JSON strings or arrays | |
-`limit` | Limit the number of returned documents to the specified count. | yes | Numeric | | 
-`reduce` | Use the reduce function. | yes | Boolean | true | 
-`skip` | Skip this number of rows from the start. | yes | Numeric | 0 | 
+`limit` | Limit the number of returned documents to the specified count. | yes | Numeric | |
+`reduce` | Use the reduce function. | yes | Boolean | true |
+`skip` | Skip this number of rows from the start. | yes | Numeric | 0 |
 `stale` | Allow the results from a stale view to be used. This makes the request return immediately, even if the view has not been completely built yet. If this parameter is not given, a response is returned only after the view has been built. | yes | String | false | `ok`: Allow stale views.<br/>`update_after`: Allow stale views, but update them immediately after the request.
-`startkey` | Return records starting with the specified key. | yes | String or JSON array | | 
-`startkey_docid` | Return records starting with the specified document ID. | yes | String | | 
+`startkey` | Return records starting with the specified key. | yes | String or JSON array | |
+`startkey_docid` | Return records starting with the specified document ID. | yes | String | |
+
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 ### Indexes
 
@@ -628,6 +631,8 @@ The response contains the standard view information, but only where the keys mat
 }
 ```
 
+<div id="include_docs_caveat"></div>
+
 ### Multi-document Fetching
 
 > Example request to obtain the full documents that match the listed keys:
@@ -642,6 +647,13 @@ Content-Type: application/json
       "clear apple juice"
    ]
 }
+```
+
+```shell
+curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view/by_ingredient?include_docs=true"
+     -X POST \
+     -H "Content-Type: application/json" \
+     -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
 
 > Example response, returning the full document for each recipe:
@@ -732,10 +744,38 @@ Content-Type: application/json
 }
 ```
 
+<<<<<<< HEAD
 Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
 This technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
+=======
+Combining a `POST` request to a given view,
+with the `include_docs=true` query argument,
+enables you to retrieve multiple documents from a database.
+For a client application,
+this technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
+
+
 However,
-`include_docs=true` adds a slight overhead compared to accessing the view on its own.
+`include_docs=true` might incur an overhead compared to accessing the view on its own.
+
+The reason is that by using `include_docs=true` in a search,
+all of the result documents must be retrieved to construct the response back to the client application.
+In effect,
+a whole series of document `GET` requests are performed,
+each of which competes for resources with other application requests.
+
+One way to mitigate this effect is by retrieving results directly from the Lucene index files.
+You can do this by not specifying `include_docs=true`.
+Instead,
+in your design document specify `store=true` and `index=false` on the fields you want retrieved by your query.
+
+For example,
+in your index function,
+you might use:
+
+	`index("name", doc.name, {"store": true, "index": false});`
+
+You could use the same approach for view indexes.
 
 ### Sending several queries to a view
 

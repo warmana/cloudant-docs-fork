@@ -67,7 +67,7 @@ The effect is that the query becomes:
 
   `q=red`
 
-The second parameter is the data to be indexed. The third parameter is an object that can contain the fields `store` and `index`. If the `store` field contains the value `true`, the value will be returned in search results, otherwise, it will only be indexed. 
+The second parameter is the data to be indexed. The third parameter is an object that can contain the fields `store` and `index`. If the `store` field contains the value `true`, the value will be returned in search results, otherwise, it will only be indexed.
 
 <!-- Removed next paragraph as part of FB46834.
 
@@ -87,7 +87,7 @@ The `index` function also provides a third 'options' parameter that receives a J
 
 Option | Description | Values | Default
 -------|-------------|--------|---------
-`index` | Whether the data is indexed, and if so, how. If set to `false`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
+`index` | Whether the data is indexed, and if so, how. If set to `false` or `no`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `false`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
 `facet` | Creates a faceted index. See [Faceting](#faceting) for more information. | `true`, `false` | `false`
 `store` | If `true`, the value is returned in the search result; otherwise, the value is not returned. | `true`, `false` | `false`
 
@@ -167,7 +167,11 @@ a possible generic guard clause simply tests to ensure that the type of the cand
 }
 ```
 
-Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](search.html#language-specific-analyzers). 
+<<<<<<< HEAD
+Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](search.html#language-specific-analyzers).
+=======
+Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](#language-specific-analyzers).
+
 
 Here's the list of generic analyzers supported by Cloudant search:
 
@@ -264,8 +268,8 @@ The `perfield` analyzer configures multiple analyzers for different fields.
       "analyzer": {
         "name": "portuguese",
         "stopwords": [
-          "foo", 
-          "bar", 
+          "foo",
+          "bar",
           "baz"
         ]
       },
@@ -357,32 +361,41 @@ db.search($DESIGN_ID, $SEARCH_INDEX, {
 Once you've got an index written, you can query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_search/$INDEX_NAME`. Specify your search query in the `query` query parameter.
 
 #### Query Parameters
+<aside class="warning">You must enable faceting before you can use the following parameters:
+<ul>
+<li> `counts`
+<li> `ridges`
+<li> `drilldown`
+</ul>
+</aside>
+
 
 <!-- The numeric `limit` was suggested by Glynn, in FB 40734. -->
 
 Argument | Description | Optional | Type | Supported Values
 ---------|-------------|----------|------|------------------
-`bookmark` | A bookmark that was received from a previous search. This allows you to page through the results. If there are no more results after the bookmark, you will get a response with an empty rows array and the same bookmark. That way you can determine that you have reached the end of the result list. | yes | string | 
+`bookmark` | A bookmark that was received from a previous search. This allows you to page through the results. If there are no more results after the bookmark, you will get a response with an empty rows array and the same bookmark. That way you can determine that you have reached the end of the result list. | yes | string |
 `counts` | This field defines an array of names of string fields, for which counts should be produced. The response will contain counts for each unique value of this field name among the documents matching the search query. | yes | JSON | A JSON array of field names
 `drilldown` | This field can be used several times. Each use defines a pair of a field name and a value. The search will only match documents that have the given value in the field name. It differs from using `"fieldname:value"` in the q parameter only in that the values are not analyzed. | yes | JSON | A JSON array with two elements, the field name and the value.
 `group_field` | Field by which to group search matches. | yes | String | A string containing the field name and optionally the type of the field (string or number) in angle brackets. If the type is not specified, it defaults to string. For example, `age<number>`.
-`group_limit` | Maximum group count. This field can only be used if group_field is specified. | yes | Numeric | 
+`group_limit` | Maximum group count. This field can only be used if group_field is specified. | yes | Numeric |
 `group_sort` | This field defines the order of the groups in a search using group_field. The default sort order is relevance. | yes | JSON | This field can have the same values as the sort field, so single fields as well as arrays of fields are supported.
 `include_docs` | Include the full content of the documents in the response | yes | boolean |
 `limit` | Limit the number of the returned documents to the specified number. In case of a grouped search, this parameter limits the number of documents per group. | yes | numeric | The limit value can be any positive integer number up to and including 200.
-`query` | A Lucene query | no | string or number | 
+`query` | A Lucene query | no | string or number |
 `ranges` | This field defines ranges for faceted, numeric search fields. The value is a JSON object where the fields names are numeric, faceted search fields and the values of the fields are again JSON objects. Their field names are names for ranges. The values are Strings describing the range, for example `"[0 TO 10]"` | yes | JSON | The value must be on object whose fields again have objects as their values. These objects must have string describing ranges as their field values.
 `sort` | Specifies the sort order of the results. In a grouped search (i.e. when group_field is used), this specifies the sort order within a group. The default sort order is relevance. | yes | JSON | A JSON string of the form `"fieldname<type>"` or `-fieldname<type>` for descending order, where fieldname is the name of a string or number field and type is either number or string or a JSON array of such strings. The type part is optional and defaults to number. Some examples are `"foo"`, `"-foo"`, `"bar<string>"`, `"-foo<number>"` and `["-foo<number>", "bar<string>"]`. String fields used for sorting must not be analyzed fields. The field(s) used for sorting must be indexed by the same indexer used for the search query.
 `stale` | Don't wait for the index to finish building to return results. | yes | string | ok
-`highlight_fields` | Specifies which fields should be highlighted. If specified, the result object will contain a `highlights` field with an entry for each specified field. | yes | Array of strings | 
-`highlight_pre_tag` | A string inserted before the highlighted word in the highlights output | yes, defaults to `<em>` | String | 
-`highlight_post_tag` | A string inserted after the highlighted word in the highlights output | yes, defaults to `<em>` | String | 
+`highlight_fields` | Specifies which fields should be highlighted. If specified, the result object will contain a `highlights` field with an entry for each specified field. | yes | Array of strings |
+`highlight_pre_tag` | A string inserted before the highlighted word in the highlights output | yes, defaults to `<em>` | String |
+`highlight_post_tag` | A string inserted after the highlighted word in the highlights output | yes, defaults to `<em>` | String |
 `highlight_number` | Number of fragments returned in highlights. If the search term occurs less often than the number of fragments specified, longer fragments are returned. | yes, defaults to 1 | Numeric |
 `highlight_size` | Number of characters in each fragment for highlights. | yes, defaults to 100 characters | Numeric |
 `include_fields` | A JSON array of field names to include in search results. Any fields included must have been indexed with the `store:true` option. | yes, the default is all fields | Array of strings |
 
-
 <aside class="warning">Do not combine the `bookmark` and `stale` options. The reason is that both these options constrain the choice of shard replicas to use for determining the response. When used together, the options can result in problems when attempting to contact slow or unavailable replicas.</aside>
+
+<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 #### POSTing search queries
 
@@ -423,11 +436,11 @@ l*
 class:bird AND diet:carnivore
 // Herbivores that start with letter
 "l" l* AND diet:herbivore
-// Medium-sized herbivores 
+// Medium-sized herbivores
 min_length:[1 TO 3] AND diet:herbivore
-// Herbivores that are 2m long or less 
+// Herbivores that are 2m long or less
 diet:herbivore AND min_length:[-Infinity TO 2]
-// Mammals that are at least 1.5m long 
+// Mammals that are at least 1.5m long
 class:mammal AND min_length:[1.5 TO Infinity]
 // Find "Meles meles"
 latin_name:"Meles meles"
@@ -506,6 +519,28 @@ To indicate a field should be indexed for faceted queries,
 set `{"facet": true}` in its options.
 
 <div></div>
+> Example `if` statement:
+
+```
+if (typeof doc.town == "string" && typeof doc.name == "string") {
+  index("town", doc.town, {facet: true});
+  index("town", doc.town, {facet: true});
+    }
+```
+
+
+<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
+
+If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement.
+
+</aside>
+
+
+
+
+<div></div>
+
+
 #### Counts
 
 > Example query
@@ -523,7 +558,7 @@ set `{"facet": true}` in its options.
   "rows":[...],
   "counts":{
     "type":{
-      "sofa": 10, 
+      "sofa": 10,
       "chair": 100,
       "lamp": 97
     }
@@ -545,6 +580,15 @@ and convert using `parseInt`, `parseFloat` and `.toString()` functions.
 </aside>
 
 <div></div>
+
+#### Drilldown
+
+Add `drilldown=["dimension","label"]` to a search query and restrict results to documents with dimension equal to the given label. You can include multiple drilldown parameters to restrict results along multiple dimensions.
+
+Using a drilldown parameter is similar to using `key:value` in the `q` parameter, but the drilldown parameter returns values that the search's analyzer might skip. For example, if the analyzer did not index a stop word like "a", drilldown will return it by `drilldown=["key","a"]`.
+
+<div></div>
+
 #### Ranges
 
 > Example query
@@ -667,9 +711,9 @@ Host: docs.cloudant.com
 ```
 
 In addition to searching by the content of textual fields,
-you can also sort your results by their distance from a geographic coordinate. 
+you can also sort your results by their distance from a geographic coordinate.
 
-You will need to index two numeric fields (representing the longitude and latitude). 
+You will need to index two numeric fields (representing the longitude and latitude).
 
 
 You can then query using the special <distance...> sort field which takes 5 parameters:
@@ -681,7 +725,7 @@ You can then query using the special <distance...> sort field which takes 5 para
 - The units to use (“km” or “mi” for kilometers and miles, respectively). The distance itself is returned in the order field
 
 
-You can combine sorting by distance with any other search query, such as range searches on the latitude and longitude or queries involving non-geographical information. That way, you can search in a bounding box and narrow down the search with additional criteria. 
+You can combine sorting by distance with any other search query, such as range searches on the latitude and longitude or queries involving non-geographical information. That way, you can search in a bounding box and narrow down the search with additional criteria.
 
 ### Highlighting Search Terms
 
@@ -701,7 +745,7 @@ curl "https://user:password@account.cloudant.com/movies/_design/searches/_search
 
 ```json
 {
-  
+
   "highlights": {
     "movie_name": [
       " on the <b>Azazel</b> Orient Express",

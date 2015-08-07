@@ -117,13 +117,17 @@ A list of the error codes returned by Cloudant and generic descriptions of the r
 
     Request completed successfully.
 
+<div id="201"></div>
+
 -   `201 - Created`
 
     Resource created or updated successfully. The resource could be a database or a document, for example.
 
+<div id="202"></div>
+
 -   `202 - Accepted`
 
-    Request has been accepted, but the corresponding operation may not have completed. This is used for background operations, such as database compaction or for bulk operations where some updates might have led to a conflict. This code can also be returned following an attempt to create or update a document.
+    Request has been accepted, but the [quorum](document.html#quorum) for the operation was not met.
 
 <div id="304"></div>
 

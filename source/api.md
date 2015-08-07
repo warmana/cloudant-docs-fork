@@ -48,6 +48,7 @@ fragments = {
   '#analyzers': 'search.html#analyzers',
   '#cloudant-query': 'query.html',
   '#http-status-codes': 'http.html#http-status-codes',
+  '#replication': 'replication.html',
   '#http-headers': 'http.html#http-headers',
   '#ping': 'account.html#ping',
   '#basic-authentication': 'authentication.html#basic-authentication',
