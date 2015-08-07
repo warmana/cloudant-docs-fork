@@ -8,8 +8,10 @@ Cloudant Geo:
 -   Integrates with existing GIS applications, so that they can scale to accommodate different data sizes, concurrent users, and multiple locations.
 -   Provides a NoSQL capability for GIS applications, so that large streams of data can be acquired from devices, sensors and satellites. This data can then be stored, processed, and syndicated across other web applications.
 
+
 This overview describes Cloudant Geospatial:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
+
 
 ### Cloudant Geo overview
 
@@ -54,7 +56,7 @@ This is a simple key:value pair. It must be present, and must contain the value 
 
 This section must contain two fields.
 
-The `type` field holds a GeoJSON object value such as `Point`, `LineString` or `Polygon`.
+The `type` field holds a GeoJSON object value such as `Point`, `LineString`, or `Polygon`.
 
 The `coordinates` field holds an array of latitude and longitude values.
 
@@ -101,6 +103,8 @@ Within that design document, you create an object called `st_indexes` to hold on
 
 This overview explains how to build and query a Cloudant Geospatial index:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
+
+
 
 #### `geoidx`: An example Cloudant Geo index
 
@@ -307,8 +311,10 @@ There are several standard geometric objects, including:
 
 ### Example: Querying a Cloudant Geo index
 
+
 <br>This overview shows an example of how Cloudant Geospatial works:</br>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/o683QPKFEa4" frameborder="0" allowfullscreen title="Cloudant Geospatial in action"></iframe>
+
 
 #### Simple circle
 
