@@ -17,8 +17,10 @@ Indexes of type `text` have a simple mechanism for automatically indexing all th
 <aside class="warning">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
 
+
 This overview explains how to create indexes and queries:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
+
 
 ### Creating an index
 
@@ -27,8 +29,11 @@ You can create an index with one of two types:
 -	`"type": "json"`
 -	`"type": "text"`
 
-This overview explains how to build and query data using Cloudant Query:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/Y-MFcqFHe4I" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
+
+<br>This overview explains how to build and query data using Cloudant Query: </br>
+
+<iframe width="280" height="158" src="https://www.youtube.com/embed/Y-MFcqFHe4I" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
+
 
 #### Creating a "type=json" index
 
@@ -71,7 +76,7 @@ Creates a new index in the specified database using the information supplied in 
     -   **fields**: A JSON array of field names following the [sort syntax](#sort-syntax). Nested fields are also allowed, e.g. `"person.name"`.
 -   **ddoc (optional)**: Name of the design document in which the index will be created. By default, each index will be created in its own design document. Indexes can be grouped into design documents for efficiency. However, a change to one index in a design document will invalidate all other indexes in the same document.
 -   **type (optional)**: Can be ``"json"`` or ``"text"``. Defaults to json. Geospatial indexes will be supported in the future.
--   **name (optional)**: Name of the index. If no name is provided, one will be generated automatically.
+-   **name (optional)**: Name of the index. If no name is provided, a name will be generated automatically.
 
 ##### Return Codes
 
