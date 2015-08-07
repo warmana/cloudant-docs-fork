@@ -9,7 +9,7 @@ Cloudant Geo:
 -   Provides a NoSQL capability for GIS applications, so that large streams of data can be acquired from devices, sensors and satellites. This data can then be stored, processed, and syndicated across other web applications.
 
 <br>This overview explains how to use Cloudant Geospatial:</br>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/bFa3uYGY2M0?rel=0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0?rel=0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
 
 ### Cloudant Geo overview
 
@@ -100,7 +100,7 @@ To make it easier to work with Cloudant Geo documents, it is best practice to cr
 Within that design document, you create an object called `st_indexes` to hold one or more Cloudant Geo index definitions.
 
 <br>This overview explains how to create a Cloudant Geospatial index:</br>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### `geoidx`: An example Cloudant Geo index
 
@@ -306,9 +306,8 @@ There are several standard geometric objects, including:
 -   `triangle`
 
 ### Example: Querying a Cloudant Geo index
-
 <br>This example shows how to query a Cloudant Geospatial index:</br>
-<iframe width="280" height="158" src="https://www.youtube.com/embed/o683QPKFEa4?rel=0" frameborder="0" allowfullscreen title="Cloudant Geospatial in action"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/o683QPKFEa4?rel=0" frameborder="0" allowfullscreen title="Cloudant Geospatial in action"></iframe>
 
 #### Simple circle
 
