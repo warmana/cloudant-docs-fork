@@ -76,7 +76,7 @@ under the License.
           window.location.hash = hash; 
           $(window).trigger('resize');
         };
-        if ($.cookie('hide-code-column')) {
+        if ($.cookie('hide-code-column') && window.location.pathname !== '/try.html') { //hide code column if cookie is set, except on the try it page
           hideCode();
         }
         $('#hideCodeButton').click(hideCode);
