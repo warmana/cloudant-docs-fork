@@ -1,32 +1,32 @@
 ## Replication
 
-Cloudant’s replication capabilities are best-of-class. Data can be copied from one database to another in the same Cloudant account, across accounts and across data centers. Data can even be replicated to and from a Cloudant account and a mobile device using [Cloudant Sync](https://cloudant.com/product/cloudant-features/sync/) or [PouchDB](http://pouchdb.com/). Replication can run in one direction or in both directions, as one-shot or continuous operation and can be finely tuned with optional parameters.
+Cloudant’s replication capabilities are best-of-class. Data can be copied from one database to another in the same Cloudant account, across accounts and across data centers. Data can even be replicated to and from a Cloudant account and a mobile device using [Cloudant Sync](https://cloudant.com/product/cloudant-features/sync/) or [PouchDB](http://pouchdb.com/). Replication can run in one direction or in both directions, as a 'single shot' or continuous operation, and can be finely tuned with optional parameters.
 
-Cloudant’s replication protocol is compatible with a range of other databases and libraries, making it a great fit for Internet of Things (IoT) and mobile applications. 
+Cloudant’s replication protocol is compatible with a range of other databases and libraries, making it a great fit for Internet of Things (IoT) and mobile applications.
 
 This guide introduces Cloudant’s replication functionality, discuss common use-cases and shows how to make your application replicate successfully.
 
 ### What is Replication?
 
-Cloudant is a distributed JSON data store with an HTTP API which is run as a service on multiple clouds, or in your server rack. Documents are stored in databases and can grow to any size as Cloudant shards its data across many nodes. Replication is the copying of data from a source database to a target database.  The source and target databases need not be on the same Cloudant account, or even in the same data center. 
-  
+Cloudant is a distributed JSON data store with an HTTP API which is run as a service on multiple clouds, or in your server rack. Documents are stored in databases and can grow to any size as Cloudant shards its data across many nodes. Replication is the copying of data from a source database to a target database. The source and target databases need not be on the same Cloudant account, or even in the same data center.
+
 ![replication](images/replication_guide_1.png)
 
-Replication is complete when the latest version of each document in the source has made it to the destination database; this includes new documents, updates to existing documents and deletions. Only the latest version of a document will remain after replication; older versions are left behind. 
+Replication is complete when the latest version of each document in the source has made it to the destination database; this includes new documents, updates to existing documents and deletions. Only the latest version of a document will remain after replication; older versions are left behind.
 
 The source database remains unaltered by replication (apart from checkpoint data being written to it, to allow partial replications to resume from the last known position) and any pre-existing data in the destination database remains.
 
 ### How do I initiate replication via the Dashboard?
 
-The Cloudant Dashboard provides a convenient user-interface to trigger replication. Simply visit the Replication tab of your Cloudant Dashboard and click on the New Replication button. Complete the simple form:
+The Cloudant Dashboard provides a convenient user-interface to trigger replication. Open the Replication tab of your Cloudant Dashboard and click on the New Replication button. Complete the simple form:
 
 ![replication2](images/replication_guide_2.png)
 
-defining the source and target databases and click “Replicate”.  
-  
+Using the form, define the source and target databases, then click "Replicate".
+
 ![replication3](images/replication_guide_3.png)
 
-The status of each replication task can be seen in the “All Replications” section of the Dashboard, with each job moving from “Triggered” to “Complete” as it progresses.
+The status of each replication task can be seen in the "All Replications" section of the Dashboard, with each job changing state from "Triggered" to "Complete" as it progresses.
 
 ![replication4](images/replication_guide_4.png)
 
@@ -41,13 +41,13 @@ The status of each replication task can be seen in the “All Replications” se
 }
 ```
 
-The source and target of a replication are simply URLs of Cloudant databases e.g.
+The source and target of a replication are simply URLs of Cloudant databases, as shown in the example.
 
 The source and target need not be on the same account, nor does the source and target database name need to match.
 
 ### Do I run replication on the source or the destination?
 
-Replication can be initiated at either the source or the destination end. This means that you can decide whether account A is pushing data to account B, or account B is pulling data from account A. In some cases, it may not be possible to run replication in either configuration e.g. if one account is behind a firewall. Replication happens over HTTP (or HTTPS) and so no non-standard ports need be opened. The decision as to which device initiates replication is left to you.
+Replication can be initiated at either the source or the destination end. This means that you can decide whether account A is pushing data to account B, or account B is pulling data from account A. In some cases, it may not be possible to run replication in either configuration, for example when one account is behind a firewall. Replication happens over HTTP (or HTTPS) and so no non-standard ports need be opened. The decision as to which device initiates replication is left to you.
 
 ### How to initiate replication via the Cloudant API?
 
@@ -61,8 +61,8 @@ Authorization: ...
 ```
 
 ```shell
-curl 
-   -X POST 
+curl
+   -X POST
    -H 'Content-type: application/json'
    'https://myuser:mypassword@myaccount.cloudant.com/_replicator'
    -d '@replication.json'
@@ -71,44 +71,44 @@ curl
 ```json
 {
   "_id": "weekly_backup",
-  "source":  "https://username:password@myaccount1.cloudant..com/source",
-  "target":  "https://username:password@myaccount2.cloudant.com/destination",
-  "create_target":  true
+  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "target": "https://username:password@myaccount2.cloudant.com/destination",
+  "create_target": true
 }
 ```
 
 Every Cloudant account has a special database called `_replicator`, into which replication jobs can be inserted. Simply add a document into the `_replicator` database to initiate replication.
 
- * `_id` - Supplying an _id field is optional, but can be useful in order to identify replication tasks. Cloudant will generate a value for you if you do not supply one.
- * `source` - the URL of the source Cloudant database, including login credentials
- * `target` - the URL of the destination Cloudant database, including login credentials
- * `create_target` (optional) - whether to create the destination database if it doesn't exist or not
+ * `_id` - Supplying an _id field is optional, but can be useful in order to identify replication tasks. Cloudant generates a value for you if you do not supply one.
+ * `source` - The URL of the source Cloudant database, including login credentials.
+ * `target` - The URL of the destination Cloudant database, including login credentials.
+ * `create_target` - (Optional) Determine whether to create the destination database if it doesn't exist yet.
 
 ### Checkpoints
 
-Under the hood, the replication process writes its state in “checkpoint” documents in both the source and destination databases. This allows replication to be resumed from where it left off without having to start from scratch. This feature can be switched off by supplying `"use_checkpoints": false` when starting replication, but is recommended to leave this feature on if your replication is to resume efficiently from its last known position.
+Internally, the replication process writes its state in "checkpoint" documents stored in both the source and destination databases. This allows a replication task to be resumed from where it left off without having to start from scratch. This feature can be switched off by supplying `"use_checkpoints": false` when starting replication, but it is helpful to leave this feature on if your replication is to resume efficiently from its last known position.
 
 ### Permissions
 
-Admin access is required to insert a document into the `_replicator` database, but the login credentials supplied in the source / target parameters need not have admin rights, only the rights to be able to:
+Admin access is required to insert a document into the `_replicator` database. The login credentials supplied in the source and target parameters do not require full admin rights. It is sufficient for the credentials to be able to:
 
- * write documents at the destination end
- * write checkpoint documents at both ends 
+ * Write documents at the destination end.
+ * Write checkpoint documents at both ends.
 
-Cloudant has a special `_replicator` user permission which allows the creation of checkpoint documents, but does not allow the creation of ordinary documents in a database. It is recommended that you create API keys that have
+Cloudant has a special `_replicator` user permission. This allows checkpoint documents to be created, but does not allow the creation of ordinary documents in a database. It is recommended that you create API keys that have:
 
- * `_reader` and `_replicator` access at the source side
- * `_writer` access at the destination side
+ * `_reader` and `_replicator` access at the source side.
+ * `_writer` access at the destination side.
 
-API keys are created and configured on a per-database basis in the Cloudant Dashboard
+API keys are created and configured on a per-database basis in the Cloudant Dashboard.
 
 ![replication](images/replication_guide_5.png)
-  
-or programmatically via the Cloudant API.
+
+They can also be created programmatically using the Cloudant API.
 
 ### Two-way replication
 
-What if we wanted data to be copied in both directions; known as two-way replication or synchronization? The answer is that we would simply set up two separate replication processes, one taking the data from A to B, the other taking data from B to A. It’s as simple as that! Both replication processes progress independently, with data moving seamlessly in both directions.
+What if we wanted data to be copied in both directions; known as two-way replication or synchronization? The answer is that we would simply set up two separate replication processes, one taking the data from A to B, the other taking data from B to A. Both replication processes work independently, with data moving seamlessly in both directions.
 
 ![replication6](images/replication_guide_6.png)
 
@@ -125,8 +125,8 @@ Authorization: ...
 ```
 
 ```shell
-curl 
-   -X POST 
+curl
+   -X POST
    -H "Content-type: application/json"
    https://myuser:mypassword@myaccount.cloudant.com/_replicator
    -d @continuous-replication.json
@@ -135,15 +135,15 @@ curl
 ```json
 {
   "_id": "weekly_continuous_backup",
-  "source":  "https://username:password@myaccount1.cloudant..com/source",
-  "target":  "https://username:password@myaccount2.cloudant.com/destination",
+  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "target": "https://username:password@myaccount2.cloudant.com/destination",
   "continuous": true
 }
 ```
 
-So far we have only dealt with one-shot replication which finishes when all of the source data has been written to the target database. With continuous replication, data flows continuously with all subsequent changes to the source database being transmitted to the target database in real-time.
+So far we have only dealt with one-shot replication, which finishes when all of the source data has been written to the target database. With continuous replication, data flows continuously. All subsequent changes to the source database are transmitted to the target database in real-time.
 
-Continuous replication is triggered by clicking the “Make this replication continuous” tick box when defining a replication task in the Cloudant Dashboard, or by setting the `"continuous"` flag via the Cloudant API:
+Continuous replication is triggered by clicking the "Make this replication continuous" tick box when defining a replication task in the Cloudant Dashboard, or by setting the `"continuous"` flag in the Cloudant API, as shown in the example.
 
 Two-way replication can be continuous in one or both of the directions by setting the continuous flag accordingly.
 
@@ -177,9 +177,9 @@ Authorization: ...
 }
 ```
 
-Cloudant’s `_replicator` database can be interrogated at any time using the Dashboard or via the API:
+Cloudant’s `_replicator` database can be interrogated at any time using the Dashboard or using the API, as shown in the example.
 
-If replication has failed (e.g. if the authentication credentials were invalid), then the error state will be recorded in the `_replicator` document. In addition, the Cloudant account’s `/_active_tasks` endpoint can be used to see replication work as it progresses (see https://docs.cloudant.com/guides/replication/replicator-database.html for more details).
+If replication has failed, for example if the authentication credentials were invalid, then the error state is recorded in the `_replicator` document. In addition, the Cloudant account's `/_active_tasks` endpoint can be used to see replication work as it progresses (see https://docs.cloudant.com/guides/replication/replicator-database.html for more details).
 
 ### Cancelling replication
 
@@ -192,7 +192,7 @@ curl -X DELETE 'https://myaccount.cloudant.com/_replicator/weekly_backup?rev=22-
 ```http
 DELETE /_replicator/weekly_backup?rev=22-c57c18f7e761f1a76fa977caa03cd098 HTTP/1.1
 Host: myaccount.cloudant.com
-Authorization: 
+Authorization:
 ```
 
 Stopping an ongoing replication job is a simple matter of deleting the document from the `_replicator` database, either via the Dashboard or via the API.
@@ -268,18 +268,18 @@ Authorization: ...
 ```
 
 ```shell
-curl 
-   -X POST 
+curl
+   -X POST
    -H "Content-type: application/json"
    https://myuser:mypassword@myaccount.cloudant.com/_replicator
    -d @filtered-replication.json
 ```
 
-```json   
+```json
 {
   "_id": "weekly_backup",
-  "source":  "https://username:password@myaccount1.cloudant..com/source",
-  "target":  "https://username:password@myaccount2.cloudant.com/destination",
+  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "target": "https://username:password@myaccount2.cloudant.com/destination",
   "filter": "mydesigndoc/myfilter"
 }
 ```
@@ -358,7 +358,7 @@ To access this data programmatically is even simpler. For example the [Cloudant 
 Example use cases might be:
 
  * adding items to a message queue to trigger actions within your application, such as sending a customer email
- * update an in-memory database to record live counts of activity 
+ * update an in-memory database to record live counts of activity
  * writing data to a text file in order to push data into an SQL database
 
 ###### changes-feed-filtering
@@ -392,7 +392,7 @@ API keys are generated in the Cloudant Dashboard and each key can be given indiv
 
 #### Replication document is conflicted
 
-Another consequence of setting user permissions incorrectly is that the `_replicator` document itself (the document that  records the current state of the replication process) becomes conflicted. In extreme examples, the document can become huge (because it contains many unresolved conflicts) eating into available space and causing extra server load. 
+Another consequence of setting user permissions incorrectly is that the `_replicator` document itself (the document that records the current state of the replication process) becomes conflicted. In extreme examples, the document can become huge (because it contains many unresolved conflicts) eating into available space and causing extra server load.
 
 Check the size of your `_replicator` database by doing `GET https://myaccount.cloudant.com/_replicator` and looking for the `disk_size` in the returned JSON. If this indicates a size of over 1GB, then please contact [Cloudant support](https://cloudant.com/support/) for further advice.
 
