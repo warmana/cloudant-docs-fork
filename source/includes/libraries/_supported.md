@@ -24,13 +24,13 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 `<dependency>`<br/>
 &nbsp;&nbsp;`<groupId>com.cloudant</groupId>`<br/>
 &nbsp;&nbsp;`<artifactId>cloudant-client</artifactId>`<br/>
-&nbsp;&nbsp;`<version>1.1.0</version>`<br/>
+&nbsp;&nbsp;`<version>1.1.2</version>`<br/>
 `</dependency>`
 
 #### Gradle dependency details
 
 `dependencies {`<br/>
-&nbsp;&nbsp;`compile group: 'com.cloudant', name: 'cloudant-client', version:'1.1.0'`<br/>
+&nbsp;&nbsp;`compile group: 'com.cloudant', name: 'cloudant-client', version:'1.1.2'`<br/>
 `}`
 
 <table>
