@@ -384,7 +384,7 @@ Authorization: ...
 curl "https://myaccount.cloudant.com/$db/_changes?feed=continuous&include_docs=true&since=now&filter=mydesigndoc/myfilter"
 ```
 
-The changes feed can be filtered with a filter function, by using a similar technique to [filtering during replication](replication-guide.html#filtered-replication).
+The changes feed can be filtered with a filter function, by using a similar technique to [filtering during replication](replication_guide.html#filtered-replication).
 
 <aside>The ordering of the `_changes` feed is not guaranteed. This means changes might not appear in strict time order. The reason is that data is returned from multiple Cloudant nodes, and eventual consistency rules apply.</aside>
 
