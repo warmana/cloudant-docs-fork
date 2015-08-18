@@ -87,7 +87,7 @@ for filename in [
 'attachments',
 'authentication',
 'authorization',
-'backup-guide',
+'backup_guide',
 'backup',
 'basics',
 'cap_theorem',
