@@ -744,10 +744,6 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
 }
 ```
 
-<<<<<<< HEAD
-Combining a `POST` request to a given view, with the `include_docs=true` query argument, enables you to retrieve multiple documents from a database.
-This technique is more efficient than using multiple [`GET`](using_views.html#querying-a-view) API requests.
-=======
 Combining a `POST` request to a given view,
 with the `include_docs=true` query argument,
 enables you to retrieve multiple documents from a database.
