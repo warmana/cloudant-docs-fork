@@ -1,8 +1,8 @@
-## Query
+## Mango
 
-Cloudant Query is a declarative JSON querying syntax for Cloudant databases.
-Cloudant Query wraps several index types, starting with the Primary Index out-of-the-box.
-Cloudant Query indexes can also be built using MapReduce Views (where the index type is `json`),
+Mango is a declarative JSON querying language for CouchDB databases.
+Mango wraps several index types, starting with the Primary Index out-of-the-box.
+Mango indexes can also be built using MapReduce Views (where the index type is `json`),
 and Search Indexes (where the index type is `text`).
 
 If you know exactly what data you want to look for,
@@ -17,22 +17,12 @@ Indexes of type `text` have a simple mechanism for automatically indexing all th
 <aside class="warning">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
 
-
-This overview introduces you to Cloudant Query concepts:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
-
-
 ### Creating an index
 
 You can create an index with one of two types:
 
 -	`"type": "json"`
 -	`"type": "text"`
-
-This overview explains how to build and query data using Cloudant Query:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/Y-MFcqFHe4I" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
-
-
 
 #### Creating a "type=json" index
 
@@ -229,7 +219,7 @@ field names can use dotted notation to access subfields.
 
 ### Working with indexes
 
-Cloudant endpoints can be used to create, list,
+CouchDB endpoints can be used to create, list,
 update,
 and delete indexes in a database,
 and to query data using these indexes.
@@ -250,7 +240,7 @@ Method | Path | Description
 -   **Response Body**: JSON object describing the indexes
 -   **Roles permitted**: \_reader
 
-When you make a `GET` request to `/db/_index`, you get a list of all indexes in the database. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
+When you make a `GET` request to `/db/_index`, you get a list of all indexes in the database. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Mango.
 
 #### Response body
 
@@ -316,7 +306,7 @@ and $name is the name of the index.
 -	**fields (optional, default: null)**: JSON array following the field syntax, described below. This parameter lets you specify which fields of an object should be returned. If it is omitted, the entire object is returned.
 -	**r (optional, default: 1)**: Read quorum needed for the result. This defaults to 1, in which case the document found in the index is returned. If set to a higher value, each document is read from at least that many replicas before it is returned in the results. This is likely to take more time than using only the document stored locally with the index.
 -	**bookmark (optional, default: null)**: A string that enables you to specify which page of results you require. *Only for indexes of type `text`.*
--	**use_index (optional)**: Use this option to identify a specific index for query to run against, rather than using the Cloudant Query algorithm to find the best index. For more information, see [Explain Plans](#explain-plans).
+-	**use_index (optional)**: Use this option to identify a specific index for query to run against, rather than using the Mango algorithm to find the best index. For more information, see [Explain Plans](#explain-plans).
 
 The `bookmark` field is used for paging through result sets. Every query returns an opaque
 string under the `bookmark` key that can then be passed back in a query to get the next page of
@@ -368,9 +358,9 @@ is more efficient.
 
 ### Selector Syntax
 
-The Cloudant Query language is expressed as a JSON object describing documents of interest. Within this structure, you can apply conditional logic using specially named fields.
+The Mango language is expressed as a JSON object describing documents of interest. Within this structure, you can apply conditional logic using specially named fields.
 
-<aside class="notice">While the Cloudant Query language has some similarities with MongoDB query documents,
+<aside class="notice">While the Mango language has some similarities with MongoDB query documents,
 these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.</aside>
 
 #### Selector basics
@@ -387,8 +377,6 @@ Elementary selector syntax requires you to specify one or more fields, and the c
 }
 ```
 
-<div></div>
-
 If you created a full text index by specifying `"type":"text"` when the index was created,
 you can use the `$text` operator to select matching documents.
 In this example,
@@ -403,8 +391,6 @@ the full text index is inspected to find any document that includes the word "Bo
   }
 }
 ```
-
-<div></div>
 
 In this example,
 the full text index is inspected to find any document that includes the word "Bond". In the response, the fields `title` or `cast` are returned for every matching object.
@@ -421,15 +407,13 @@ the full text index is inspected to find any document that includes the word "Bo
 ]
 ```
 
-<div></div>
-
 You can create more complex selector expressions by combining operators.
-However, for Cloudant Query indexes of type `json`,
+However, for Mango indexes of type `json`,
 you cannot use 'combination' or 'array logical' operators such as `$regex` as the *basis* of a query.
 Only the equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but not `$ne`) can be used as the basis of a more complex query.
 For more information about creating complex selector expressions, see [Creating selector expressions](#creating-selector-expressions).
 
-<div></div>
+
 #### Selector with two fields
 
 This selector matches any document with a `name` field containing "Paul",
@@ -458,8 +442,6 @@ For example, you might use a standard JSON structure for specifying a field and 
   }
 }
 ```
-
-<div></div>
 
 An abbreviated equivalent uses a dot notation to combine the field and subfield names into a single name.
 
@@ -502,18 +484,6 @@ The implicit equality test applies also for fields and subfields.
 
 Any JSON object that is not the argument to a condition operator is an implicit `$and` operator on each field.
 
-> [Example selector using an operator to match any document, where the `age` field has a value greater than 20:](try.html#requestType=cq&predefinedQuery=after2010)
-
-```json
-"selector": {
-  "year": {
-    "$gt": 2010
-  }
-}
-```
-
-<div></div>
-
 In this example, there must be a field `director` in a matching document, *and* the field must have a value exactly equal to "Lars von Trier".
 
 > [Example of the implicit equality operator](/try.html#requestType=cq&predefinedQuery=simple)
@@ -523,8 +493,6 @@ In this example, there must be a field `director` in a matching document, *and* 
   "director": "Lars von Trier"
 }
 ```
-
-<div></div>
 
 You can also make the equality operator explicit.
 
@@ -538,8 +506,6 @@ You can also make the equality operator explicit.
 }
 ```
 
-<div></div>
-
 In the example using subfields,
 the required field `imdb` in a matching document *must* also have a subfield `rating` *and* the subfield *must* have a value equal to 8.
 
@@ -552,8 +518,6 @@ the required field `imdb` in a matching document *must* also have a subfield `ra
   }
 }
 ```
-
-<div></div>
 
 Again, you can make the equality operator explicit.
 
@@ -603,8 +567,6 @@ Again, you can make the equality operator explicit.
 }
 ```
 
-<div></div>
-
 In this example, the field `director` must be present and contain the value `"Lars von Trier"` _and_ the field `year` must exist and have the value `2003`.
 
 > [Example of an implicit `$and` operator](try.html#requestType=cq&predefinedQuery=trier2003)
@@ -615,8 +577,6 @@ In this example, the field `director` must be present and contain the value `"La
   "year": 2003
 }
 ```
-
-<div id="combined-expressions"></div>
 
 You can make both the `$and` operator and the equality operator explicit.
 
@@ -665,10 +625,10 @@ Operator | Argument | Purpose
 `$all` | Array | Matches an array value if it contains all the elements of the argument array.
 `$elemMatch` | Selector | Matches and returns all documents that contain an array field with at least one element that matches all the specified query criteria.
 
-<div></div>
+
 #### Examples of combination operators
 
-<div></div>
+
 ##### The `$and` operator
 
 The `$and` operator matches if all the selectors in the array match.
@@ -722,7 +682,6 @@ The `$and` operator matches if all the selectors in the array match.
 }
 ```
 
-<div></div>
 ##### The `$or` operator
 
 The `$or` operator matches if any of the selectors in the array match.
@@ -764,7 +723,6 @@ The `$or` operator matches if any of the selectors in the array match.
 }
 ```
 
-<div></div>
 ##### The `$not` operator
 
 The `$not` operator matches if the given selector does _not_ match.
@@ -813,7 +771,6 @@ The `$not` operator matches if the given selector does _not_ match.
 }
 ```
 
-<div></div>
 ##### The `$nor` operator
 
 The `$nor` operator matches if the given selector does _not_ match.
@@ -866,7 +823,6 @@ The `$nor` operator matches if the given selector does _not_ match.
 }
 ```
 
-<div></div>
 ##### The `$all` operator
 
 The `$all` operator matches an array value if it contains _all_ the elements of the argument array.
@@ -910,7 +866,6 @@ The `$all` operator matches an array value if it contains _all_ the elements of 
 }
 ```
 
-<div></div>
 ##### The `$elemMatch` operator
 
 The `$elemMatch` operator matches and returns all documents that contain an array field with at least one element matching the supplied query criteria.
@@ -977,10 +932,10 @@ Miscellaneous | `$mod` | [Divisor, Remainder] | Divisor and Remainder are both p
 
 <aside class="warning">Regular expressions do not work with indexes, so they should not be used to filter large data sets.</aside>
 
-<div></div>
+
 #### Examples of condition operators
 
-<div></div>
+
 ##### The `$lt` operator
 
 The `$lt` operator matches if the specified field content is less than the argument.
@@ -1023,7 +978,6 @@ The `$lt` operator matches if the specified field content is less than the argum
 }
 ```
 
-<div></div>
 ##### The `$lte` operator
 
 The `$lte` operator matches if the specified field content is less than or equal to the argument.
@@ -1066,7 +1020,6 @@ The `$lte` operator matches if the specified field content is less than or equal
 }
 ```
 
-<div></div>
 ##### The `$eq` operator
 
 The `$eq` operator matches if the specified field content is equal to the supplied argument.
@@ -1107,7 +1060,6 @@ The `$eq` operator matches if the specified field content is equal to the suppli
 }
 ```
 
-<div></div>
 ##### The `$ne` operator
 
 The `$ne` operator matches if the specified field content is not equal to the supplied argument.
@@ -1150,7 +1102,6 @@ The `$ne` operator matches if the specified field content is not equal to the su
 }
 ```
 
-<div></div>
 ##### The `$gte` operator
 
 The `$gte` operator matches if the specified field content is greater than or equal to the argument.
@@ -1193,7 +1144,6 @@ The `$gte` operator matches if the specified field content is greater than or eq
 }
 ```
 
-<div></div>
 ##### The `$gt` operator
 
 The `$gt` operator matches if the specified field content is greater than the argument.
@@ -1236,7 +1186,6 @@ The `$gt` operator matches if the specified field content is greater than the ar
 }
 ```
 
-<div></div>
 ##### The `$exists` operator
 
 The `$exists` operator matches if the field exists, regardless of its value.
@@ -1277,7 +1226,6 @@ The `$exists` operator matches if the field exists, regardless of its value.
 }
 ```
 
-<div></div>
 ##### The `$type` operator
 
 The `$type` operator requires that the specified document field is of the correct type.
@@ -1317,7 +1265,6 @@ The `$type` operator requires that the specified document field is of the correc
 }
 ```
 
-<div></div>
 ##### The `$in` operator
 
 The `$in` operator requires that the document field _must_ exist in the list provided.
@@ -1361,7 +1308,6 @@ The `$in` operator requires that the document field _must_ exist in the list pro
 }
 ```
 
-<div></div>
 ##### The `$nin` operator
 
 The `$nin` operator requires that the document field must _not_ exist in the list provided.
@@ -1406,7 +1352,6 @@ The `$nin` operator requires that the document field must _not_ exist in the lis
 }
 ```
 
-<div></div>
 ##### The `$size` operator
 
 The `$size` operator matches the length of an array field in a document.
@@ -1448,7 +1393,6 @@ The `$size` operator matches the length of an array field in a document.
 }
 ```
 
-<div></div>
 ##### The `$mod` operator
 
 The `$mod` operator matches documents where (`field % Divisor == Remainder`) is true,
@@ -1500,7 +1444,6 @@ and uses [truncated division](https://en.wikipedia.org/wiki/Modulo_operation).</
 }
 ```
 
-<div></div>
 ##### The `$regex` operator
 
 The `$regex` operator matches when the field is a string value _and_ matches the supplied regular expression.
@@ -1560,7 +1503,7 @@ However, not all operators can be used as the base or starting point of the sele
 <aside class="warning">You cannot use combination or array logical operators such as `$regex` as the _basis_ of a query when using indexes of type `json`.
 Only equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but not `$ne`) can be used as the basis of a query for `json` indexes.</aside>
 
-<div></div>
+
 
 For example,
 if you try to perform a query that attempts to match all documents that have a field called `afieldname` containing a value that begins with the letter `A`,
@@ -1586,8 +1529,6 @@ you get an `error: "no_usable_index"` error message.
   reason: "There is no operator in this selector can used with an index."
 }
 ```
-
-<div></div>
 
 A solution is to use an equality operator as the basis of the query.
 You can add a 'null' or always true expression as the basis of the query.
@@ -1643,8 +1584,6 @@ The direction value is `"asc"` for ascending, and `"desc"` for descending.
 [{"fieldName1": "desc"}, {"fieldName2": "desc" }]
 ```
 
-<div></div>
-
 A typical requirement is to search for some content using a selector,
 then to sort the results according to the specified field, in the required direction.
 
@@ -1656,7 +1595,7 @@ To use sorting, ensure that:
 
 <aside class="warning">If an object in the sort array does not have a single key, the resulting sort order is implementation specific and might change.</aside>
 
-<aside>Currently, Cloudant Query does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.</aside>
+<aside>Currently, Mango does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.</aside>
 
 If the direction is ascending, you can use a string instead of an object to specify the sort fields.
 
@@ -1709,11 +1648,11 @@ There is no automatic inclusion of the `_id` or other metadata fields when a fie
 
 ### Explain Plans
 
-Cloudant Query chooses which index to use for responding to a query,
+Mango chooses which index to use for responding to a query,
 unless you specify an index at query time.
 
 When choosing which index to use,
-Cloudant Query uses the following logic:
+Mango uses the following logic:
 
 -	If there are two or more `json` type indexes on the same fields, the index with the smallest number of fields in the index is preferred. If there are still two or more candidate indexes, the index with the first alphabetical name is chosen.
 -	If a `json` type index _and_ a `text` type index could both satisfy a selector, the `json` index is chosen by default.
@@ -1724,7 +1663,7 @@ and you want to use a selector similar to the following:
 
   `{"foo": {"$in": ["red","blue","green"]}}`
 
-Cloudant Query uses the `text` type index,
+Mango uses the `text` type index,
 because a `json` type index cannot satisfy the selector.
 
 However,
@@ -1733,9 +1672,7 @@ you might use a different selector with the same indexes:
   `{"foo": {"$gt": 2}}`
 
 In this example,
-Cloudant Query uses the `json` type index because both types of indexes could satisfy the selector.
-
-<div></div>
+Mango uses the `json` type index because both types of indexes could satisfy the selector.
 
 To identify which index is being used by a particular query,
 send a `POST` to the `_explain` endpoint for the database,
@@ -1819,8 +1756,6 @@ curl 'https://examples.cloudant.com/movies/_explain' \
 }
 ```
 
-<div></div>
-
 To instruct a query to use a specific index,
 add the `use_index` parameter to the query.
 The value of the `use_index` parameter takes one of two formats:
@@ -1856,7 +1791,7 @@ then the match is considered to have succeeded.
 
 #### Selector Translation
 
-A standard Lucene search expression would not necessarily fully 'understand' Cloudant's JSON based query syntax. Therefore, a translation between the two formats takes place.
+A standard Lucene search expression would not necessarily fully 'understand' Mango's JSON based query syntax. Therefore, a translation between the two formats takes place.
 
 In the example given,
 the JSON query approximates to the English phrase:
@@ -1940,34 +1875,34 @@ by running the command shown.
 
 The sample database contains approximately 3,000 documents, and is just under 1 MB in size.
 
-> Obtaining a copy of the Cloudant Query movie database:
+> Obtaining a copy of the Mango movie database:
 
 ```http
 POST /_replicator HTTP/1.1
-Host: user.cloudant.com
+Host: example.com
 Content-Type: application/json
 
 {
   "source": "https://examples.cloudant.com/query-movies",
-  "target": "https://<user:password>@<user>.cloudant.com/my-movies",
+  "target": "https://<user:password>@example.com/my-movies",
   "create_target": true,
   "use_checkpoints": false
 }
 ```
 
 ```shell
-curl 'https://<user:password>@<user>.cloudant.com/_replicator' \
+curl 'https://<user:password>@example.com/_replicator' \
   -X POST \
   -H 'Content-Type: application/json' \
   -d '{
     "source": "https://examples.cloudant.com/query-movies",
-    "target": "https://<user:password>@<user>.cloudant.com/my-movies",
+    "target": "https://<user:password>@example.com/my-movies",
     "create_target": true,
     "use_checkpoints": false
 }'
 ```
 
-> Results after successful replication of the Cloudant Query movie database:
+> Results after successful replication of the Mango movie database:
 
 ```json
 {
@@ -1976,15 +1911,13 @@ curl 'https://<user:password>@<user>.cloudant.com/_replicator' \
 }
 ```
 
-<div></div>
-
 Before we can search the content, we must index it. We do this by creating a text index for the documents.
 
 > Creating a _text_ index for your sample database:
 
 ```http
 POST /my-movies/_index HTTP/1.1
-Host: user.cloudant.com
+Host: example.com
 Content-Type: application/json
 
 {
@@ -1994,7 +1927,7 @@ Content-Type: application/json
 ```
 
 ```shell
-curl 'https://<user:password>@<user>.cloudant.com/my-movies/_index' \
+curl 'https://<user:password>@example.com/my-movies/_index' \
   -X POST \
   -H 'Content-Type: application/json' \
   -d '{"index": {}, "type": "text"}'
@@ -2008,8 +1941,6 @@ curl 'https://<user:password>@<user>.cloudant.com/my-movies/_index' \
 }
 ```
 
-<div></div>
-
 The most obvious difference in the results you get when using full text indexes is the inclusion of a large `bookmark` field.
 The reason is that text indexes are different to view-based indexes.
 For more flexibility when working with the results obtained from a full text query, you can supply the `bookmark` value as part of the request body.
@@ -2021,7 +1952,7 @@ Using the `bookmark` enables you to specify which page of results you require.
 
 ```http
 POST /my-movies/_find HTTP/1.1
-Host: user.cloudant.com
+Host: example.com
 Content-Type: application/json
 
 {
@@ -2033,7 +1964,7 @@ Content-Type: application/json
 
 ```shell
 curl -X POST -H "Content-Type: application/json" \
-        https://<user:password>@<user>.cloudant.com/my-movies/_find \
+        https://<user:password>@example.com/my-movies/_find \
         -d '{"selector": {"Person_name":"Zoe Saldana"}}'
 ```
 
@@ -2060,13 +1991,11 @@ curl -X POST -H "Content-Type: application/json" \
 }
 ```
 
-<div></div>
-
 > Example of a slightly more complex search:
 
 ```http
 POST /my-movies/_find HTTP/1.1
-Host: user.cloudant.com
+Host: example.com
 Content-Type: application/json
 
 {
@@ -2079,7 +2008,7 @@ Content-Type: application/json
 
 ```shell
 curl -X POST -H "Content-Type: application/json" \
-        https://<user:password>@<user>.cloudant.com/my-movies/_find \
+        https://<user:password>@example.com/my-movies/_find \
         -d '{"selector": {"Person_name":"Robert De Niro", "Movie_year": 1978}}'
 ```
 
@@ -2109,7 +2038,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 ```http
 POST /my-movies/_find HTTP/1.1
-Host: user.cloudant.com
+Host: example.com
 Content-Type: application/json
 
 {
@@ -2124,7 +2053,7 @@ Content-Type: application/json
 
 ```shell
 curl -X POST -H "Content-Type: application/json" \
-        https://<user:password>@<user>.cloudant.com/my-movies/_find \
+        https://<user:password>@example.com/my-movies/_find \
         -d '{"selector": {"Person_name":"Robert De Niro", "Movie_year": { "$in": [1974, 2009]}}}'
 ```
 
