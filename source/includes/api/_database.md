@@ -307,7 +307,7 @@ and deletions.
 
 When a `_changes` request is received,
 one replica of each shard of the database is asked to provide a list of changes.
-These responses are combined and returned to the orginal requesting client.
+These responses are combined and returned to the original requesting client.
 
 `_changes` accepts these query arguments:
 

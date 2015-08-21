@@ -34,6 +34,17 @@ under the License.
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
     
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43120670-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+    
     <script type="text/javascript">
    
       $(document).ready(function() {
@@ -76,7 +87,7 @@ under the License.
           window.location.hash = hash; 
           $(window).trigger('resize');
         };
-        if ($.cookie('hide-code-column')) {
+        if ($.cookie('hide-code-column') && window.location.pathname !== '/try.html') { //hide code column if cookie is set, except on the try it page
           hideCode();
         }
         $('#hideCodeButton').click(hideCode);
