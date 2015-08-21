@@ -178,7 +178,7 @@ The valid `<query-parameters>` are as follows:
 </tr>
 <tr class="even">
 <td align="left"><code>limit</code></td>
-<td align="left">An integer to limit the number of results returned. The default is 100. The maximum is 200. A value larger than 200 is an error.</td>
+<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum value is 200. A value larger than 200 is an error.</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>radius</code></td>
