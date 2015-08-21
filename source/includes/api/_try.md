@@ -460,7 +460,9 @@ You can try out requests and output will be shown in the code column to the righ
   pre.hljs span.hljs-title {
     color: #fff;
   }
-  
+  #hideCodeButton {
+    display: none;
+  }
   
   
     

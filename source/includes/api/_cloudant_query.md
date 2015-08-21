@@ -153,7 +153,7 @@ use the simple syntax:
 
 The indexing process traverses all of the fields in all the documents in the database.
 
-An example of creating a text index for all fields in all documents in a database is [available](cloudant-query.html#example:-movies-demo-database).
+An example of creating a text index for all fields in all documents in a database is [available](cloudant_query.html#example:-movies-demo-database).
 
 <aside class="warning">Caution should be taken when indexing all fields in all documents for large data sets,
 as it might be a very resource-consuming activity.</aside>

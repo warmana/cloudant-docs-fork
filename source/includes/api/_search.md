@@ -167,11 +167,7 @@ a possible generic guard clause simply tests to ensure that the type of the cand
 }
 ```
 
-<<<<<<< HEAD
 Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](search.html#language-specific-analyzers).
-=======
-Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](#language-specific-analyzers).
-
 
 Here's the list of generic analyzers supported by Cloudant search:
 
