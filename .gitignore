@@ -28,3 +28,5 @@ build/
 /Gemfile.lock
 /.externalToolBuilders/
 /.project
+/.DS_Store
+/.gitignore
