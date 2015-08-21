@@ -17,8 +17,7 @@ Indexes of type `text` have a simple mechanism for automatically indexing all th
 <aside class="warning">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
 
-<br>This overview explains how to create indexes and queries:</br>
-
+<br>This overview introduces you to Cloudant Query concepts:</br>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
 
 ### Creating an index
@@ -28,8 +27,7 @@ You can create an index with one of two types:
 -	`"type": "json"`
 -	`"type": "text"`
 
-<br>This overview explains how to build and query data using Cloudant Query: </br>
-
+<br>This overview shows you how to build and query data using Cloudant Query: </br>
 <iframe width="280" height="158" src="https://www.youtube.com/embed/Y-MFcqFHe4I" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
 
 #### Creating a "type=json" index
