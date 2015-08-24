@@ -27,3 +27,6 @@ couchapp/_attachments
 build/
 /Gemfile.lock
 
+/.project
+/.gitignore
+/.DS_Store
