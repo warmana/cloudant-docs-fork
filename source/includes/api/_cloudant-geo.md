@@ -362,7 +362,7 @@ The query would then compare the geometry of each document in the index with the
 
 #### A polygon query
 
-A more complex example is where you specify a polygon as the geomtric object of interest. A polygon is simply any object defined by a series of connected points, where none of the connections (the lines between the points) cross any of the other connections.
+A more complex example is where you specify a polygon as the geometric object of interest. A polygon is simply any object defined by a series of connected points, where none of the connections (the lines between the points) cross any of the other connections.
 
 > Example query to find documents that have a geospatial position within a polygon:
 
