@@ -105,7 +105,6 @@ This overview explains how to build and query a Cloudant Geospatial index:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 
-
 #### `geoidx`: An example Cloudant Geo index
 
 > Example Cloudant Geo design document, containing an index:
