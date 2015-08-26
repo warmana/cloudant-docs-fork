@@ -578,7 +578,7 @@ but also the `startkey` and `endkey` parameter values.
 
 ### Querying a view using a list of keys
 
-> Example request to return all recipes, where the key for the view matches either "clear apple juice" or "claret":
+> Example request to return all recipes, where the key for the view matches either "claret" or "clear apple juice":
 
 ```http
 POST /$DB/_design/$DDOC/_view/$VIEWNAME HTTP/1.1
@@ -592,8 +592,8 @@ curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DD
 ```json
 {
    "keys" : [
-      "clear apple juice",
-      "claret"
+      "claret",
+      "clear apple juice"
    ]
 }
 ```
@@ -629,7 +629,8 @@ In all other aspects, the `POST` method is identical to the [`GET`](using_views.
 }
 ```
 
-The response contains the standard view information, but only where the keys match.
+The response contains the standard view information,
+but only where the keys match.
 
 <div id="include_docs_caveat"></div>
 
