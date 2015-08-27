@@ -1,6 +1,9 @@
 ## Back up your data
 
-IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability. This practice is the default for all Cloudant users. Even when your data is replicated in triplicate, it is still  important to back it up.
+IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability.
+This practice is the default for all Cloudant users.
+Even when your data is replicated in triplicate,
+it is still  important to back it up.
 
 You can lose access to your data in more than one way. For example, if a hurricane destroys your data center and all three nodes are in that location, you lose your data. You can prevent the loss of your data in a disaster by replicating your data to a cluster (dedicated or multi-tenant) in a different geographic location. However, if a faulty application deletes or overwrites the data in your database, duplicate data is not helpful.
 
