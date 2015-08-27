@@ -49,6 +49,23 @@ Code | Description
 200 | Index has been created successfully or already existed
 400 | Bad request: the request body does not have the specified format
 
+To create a JSON index in the database $DB, make a `POST` request to `/$DB/_index` with a JSON object describing the index in the request body. The `type` field of the JSON object has to be set to `"json"`. 
+
+##### Request Body
+
+-   **index**:
+    -   **fields**: A JSON array of field names following the [sort syntax](#sort-syntax). Nested fields are also allowed, e.g. `"person.name"`.
+-   **ddoc (optional)**: Name of the design document in which the index will be created. By default, each index will be created in its own design document. Indexes can be grouped into design documents for efficiency. However, a change to one index in a design document will invalidate all other indexes in the same document.
+-   **type (optional)**: Can be ``"json"`` or ``"text"``. Defaults to json. Geospatial indexes will be supported in the future.
+-   **name (optional)**: Name of the index. If no name is provided, a name will be generated automatically.
+
+##### Return Codes
+
+Code | Description
+-----|------------
+200 | Index has been created successfully or already existed
+400 | Bad request: the request body does not have the specified format
+
 > Example of creating a new index for the field called `foo`:
 
 ```shell
