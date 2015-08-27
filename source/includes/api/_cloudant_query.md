@@ -14,8 +14,8 @@ But for maximum possible flexibility when looking for data,
 you would typically create an index of type `text`.
 Indexes of type `text` have a simple mechanism for automatically indexing all the fields in the documents.
 
-<aside class="warning">While more flexible,
-`text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
+While more flexible,
+`text` indexes might take longer to create and require more storage resources than `json` indexes.
 
 ### Creating an index
 
@@ -132,8 +132,8 @@ The indexing process traverses all of the fields in all the documents in the dat
 
 An example of creating a text index for all fields in all documents in a database is [available](#example:-movies-demo-database).
 
-<aside class="warning">Caution should be taken when indexing all fields in all documents for large data sets,
-as it might be a very resource-consuming activity.</aside>
+Caution should be taken when indexing all fields in all documents for large data sets,
+as it might be a very resource-consuming activity.
 
 > Example index creation request to index all fields in all documents
 
@@ -357,8 +357,8 @@ is more efficient.
 
 The Mango language is expressed as a JSON object describing documents of interest. Within this structure, you can apply conditional logic using specially named fields.
 
-<aside class="notice">While the Mango language has some similarities with MongoDB query documents,
-these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.</aside>
+While the Mango language has some similarities with MongoDB query documents,
+these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.
 
 #### Selector basics
 
@@ -927,7 +927,7 @@ Array | `$in` | Array of JSON values | The document field must exist in the list
 Miscellaneous | `$mod` | [Divisor, Remainder] | Divisor and Remainder are both positive or negative integers. Non-integer values result in a [404 status](http.html#404). Matches documents where (`field % Divisor == Remainder`) is true, and only when the document field is an integer.
  | `$regex` | String | A regular expression pattern to match against the document field. Only matches when the field is a string value and matches the supplied regular expression.
 
-<aside class="warning">Regular expressions do not work with indexes, so they should not be used to filter large data sets.</aside>
+Regular expressions do not work with indexes, so they should not be used to filter large data sets.
 
 
 #### Examples of condition operators
@@ -1060,7 +1060,7 @@ The `$eq` operator matches if the specified field content is equal to the suppli
 ##### The `$ne` operator
 
 The `$ne` operator matches if the specified field content is not equal to the supplied argument.
-<aside class="warning">The `$ne` operator cannot be the basis (lowest level) element in a selector when using an index of type `json`.</aside>
+The `$ne` operator cannot be the basis (lowest level) element in a selector when using an index of type `json`.
 
 > `$ne` operator used with full text indexing
 
@@ -1398,11 +1398,11 @@ The Divisor and Remainder must be integers.
 They can be positive or negative integers.
 A query where the Divisor or Remainder is a non-integer returns a [404 status](http.html#404).
 
-<aside class="notice">When using negative integer values for the Divisor or Remainder,
+When using negative integer values for the Divisor or Remainder,
 you should note that Mango's `$mod` operator is similar to the
 [Erlang `rem` modulo operator](http://erlang.org/doc/reference_manual/expressions.html),
 or the [`%` operator in C](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B),
-and uses [truncated division](https://en.wikipedia.org/wiki/Modulo_operation).</aside>
+and uses [truncated division](https://en.wikipedia.org/wiki/Modulo_operation).
 
 > `$mod` operator used with full text indexing
 
@@ -1497,8 +1497,8 @@ This enables us to build up more complex selector expressions.
 
 However, not all operators can be used as the base or starting point of the selector expression when using indexes of type `json`.
 
-<aside class="warning">You cannot use combination or array logical operators such as `$regex` as the _basis_ of a query when using indexes of type `json`.
-Only equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but not `$ne`) can be used as the basis of a query for `json` indexes.</aside>
+You cannot use combination or array logical operators such as `$regex` as the _basis_ of a query when using indexes of type `json`.
+Only equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but not `$ne`) can be used as the basis of a query for `json` indexes.
 
 
 
@@ -1537,7 +1537,7 @@ you could first test that the document has an `_id` value:
 This expression is always true,
 enabling the remainder of the selector expression to be applied.
 
-<aside class="warning">Using `{"_id": { "$gt":null } }` induces a full-table scan, and is not efficient for large databases.</aside>
+Using `{"_id": { "$gt":null } }` induces a full-table scan, and is not efficient for large databases.
 
 Most selector expressions work exactly as you would expect for the given operator.
 The matching algorithms used by the `$regex` operator are currently based on the Perl Compatible Regular Expression (PCRE) library.
@@ -1590,9 +1590,9 @@ To use sorting, ensure that:
 -	There is an index already defined, with all the sort fields in the same order.
 -	Each object in the sort array has a single key.
 
-<aside class="warning">If an object in the sort array does not have a single key, the resulting sort order is implementation specific and might change.</aside>
+If an object in the sort array does not have a single key, the resulting sort order is implementation specific and might change.
 
-<aside>Currently, Mango does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.</aside>
+Currently, Mango does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.
 
 If the direction is ascending, you can use a string instead of an object to specify the sort fields.
 
@@ -1606,11 +1606,11 @@ If possible,
 an attempt is made to discover the field type based on the selector.
 In ambiguous cases the field type must be provided explicitly.
 
-<aside class="warning">
+
 The sorting order is undefined when fields contain different data types.
 This is an important difference between text and view indexes.
 Sorting behavior for fields with different data types might change in future versions.
-</aside>
+
 
 > A simple query, using sorting:
 
@@ -1631,8 +1631,8 @@ The two advantages are:
 
 The fields returned are specified as an array.
 
-<aside>Only the specified filter fields are included, in the response.
-There is no automatic inclusion of the `_id` or other metadata fields when a field list is included.</aside>
+Only the specified filter fields are included, in the response.
+There is no automatic inclusion of the `_id` or other metadata fields when a field list is included.
 
 > Example of selective retrieval of fields from matching documents:
 
@@ -1943,7 +1943,7 @@ The reason is that text indexes are different to view-based indexes.
 For more flexibility when working with the results obtained from a full text query, you can supply the `bookmark` value as part of the request body.
 Using the `bookmark` enables you to specify which page of results you require.
 
-<aside class="warning">The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.</aside>
+The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.
 
 > Searching for a specific document within the database:
 
