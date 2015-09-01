@@ -23,7 +23,9 @@ function activateLanguage(language) {
     $(".highlight." + languages[i]).hide();
   }
   $(".highlight." + language).show();
-
+  $(".highlight.plaintext").show();
+  $(".highlight.json").show();
+  
 }
 
 function setupLanguages(l) {

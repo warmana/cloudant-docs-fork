@@ -52,11 +52,19 @@ under the License.
           window.location.hash = hash; 
           $(window).trigger('resize');
         };
+        
+        function activeLanguage() {
+          var res = $('#lang-selector .active').text();
+          if (res === 'curl') {
+            res = 'shell';
+          }
+          return res;
+        }
 
         function showCode() {
           $.removeCookie('hide-code-column');
           var hash = window.location.hash;
-          $('pre').show();
+          activateLanguage(activeLanguage());
           $('blockquote').show();
           $('.dark-box').css('width', '50%');
           $('#hideCodeButton').show();
@@ -111,17 +119,9 @@ under the License.
             <% end %>
           <% end %>
         ]);
-        
-        var languageInit = $('#lang-selector li.active').text();
-        
-        $('#selected-language-value').text(languageInit);
-        $('#selected-language').click(langDropdown);
-        
-        function langDropdown() {
-          $('#lang-selector ul').toggle();
-          $('#selected-language-icon').toggleClass('open');
-        }
-        
+
+        $('blockquote a').attr('title', 'Click here to try out interactive examples!');
+        $('blockquote a').attr('target', '_blank');
       });
 
       
