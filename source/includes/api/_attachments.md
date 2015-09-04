@@ -3,13 +3,15 @@
 If you want to store data, use attachments.
 Attachments are Binary Large Object ([BLOb](http://en.wikipedia.org/wiki/Binary_large_object)) files contained within documents.
 The BLOb is stored in the `_attachments` component of the document.
-The BLOb includes data about the attachment name, the type of the attachment, and the actual content represented in BASE64 form.
+The BLOb includes data about the attachment name, the type of the attachment, and the actual content.
 Examples of BLObs would be images and multimedia.
+
+<aside class="warning">If you include the attachment as an '[inline](#inline)' component of the overall JSON,
+the attachment content should be represented using BASE64 form.</aside>
 
 The content type corresponds to a [MIME type][mime].
 For example, if you want to attach a `.jpg` image file to a document,
 you specify the attachment MIME type as `image/jpeg`.
-
 
 <aside class="warning">As a best practice, keep attachments small in size and number because attachments can impact performance.</aside>
 
@@ -166,5 +168,7 @@ If the deletion is successful, the response contains `"ok": true`, and the ID an
 ```
 
 Inline attachments are attachments included as part of the JSON content.
+The content must be provided using BASE64 representation,
+as shown in the example.
 
 [mime]: http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
