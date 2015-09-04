@@ -11,21 +11,6 @@ Database backups protect your data against potential loss or corruption. Cloudan
 
 With Cloudant, a database backup stores your database content to a checkpoint. It is possible to ‘roll back' to a specific checkpoint. The checkpoint is not specific to a precise time. Instead, it is a record of the database after specific changes occurred during the backup period. In this way, a backup can preserve the state of your database at a selected time.
 
-
-### Enabling your account for backups
-
-To enable backups with your IBM Cloudant database, you must request a backup task. The Cloudant Support team creates a backup task. You cannot create the backup task on your own. The backup task requires additional processes, and Support must enable enough storage capacity to handle the backup activities.
-
-To enable backups, follow these steps.
-
-1.	Call IBM Cloudant Support to create a backup task for enabling backups.
-2.	Provide the following information.
-  - Target cluster for backups.
-  - Preferred backup task name, for example `towed_vehicles_backup`.
-  - List of accounts and databases to backup, `towed_vehicles`. Backup is currently limited to 50 databases per customer.
-  - Frequency for running backups. Cloudant requires 24 hours between each backup. It is not possible to request a specific time for a backup to begin.
-3.	Support enables backups, schedules backup operations, and verifies the initial backup runs.
-
 ###Incremental backups
 
 At this point, there is no obvious, out-of-the-box solution for backing up a cloud database. You can replicate the database to a dated backup database. This method works and is easy to do. But if the database is big and you need backups for multiple points in time, like seven daily backups and four weekly ones, you end up storing a complete copy in each new backup database, which equals massive disk usage. Incremental backups are a good solution for storing only the documents that have changed since the last backup.
