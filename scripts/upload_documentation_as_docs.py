@@ -107,6 +107,7 @@ for filename in [
 'json',
 'libraries',
 'managing_tasks',
+'monitoring',
 'mvcc',
 'replication_guide',
 'replication',
