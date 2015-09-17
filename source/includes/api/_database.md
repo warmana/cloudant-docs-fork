@@ -120,17 +120,22 @@ such as how many documents it contains.
 
 ```json
 {
-  "update_seq": "0-g1AAAADneJzLYWBgYMlgTmFQSElKzi9KdUhJMtbLTS3KLElMT9VLzskvTUnMK9HLSy3JAapkSmRIsv___39WIgOqHkM8epIcgGRSPTZt-KzKYwGSDA1ACqhzP0k2QrQegGgF2ZoFAGdBTTo",
+  "update_seq": "9824119-g1AAAAIjeJzLYWBg4MhgTmHQSElKzi9KdUhJMtYrKMrMTS1KLU5NLErOMDAw1EvOyS9NScwr0ctLLckB6mBKZEiS____f1YSg9DBKajazYjQnqQAJJPsoSbsfEC6A5IcQCbEQ03YI4BqgiExJiSATKiHmrC3l3Q35LEASYYGIAU0ZD7IlF1KqKYYEW3KAogp-0Gm7HYg1y0HIKbcB5myX4T0eIGY8gBiCiRcPmQBAB4CuUQ",
   "db_name": "db",
+  "sizes": {
+    "file": 46114703224,
+    "external": 193164408719,
+    "active": 34961621142
+  },
   "purge_seq": 0,
   "other": {
-    "data_size": 0
+    "data_size": 193164408719
   },
-  "doc_del_count": 0,
-  "doc_count": 0,
-  "disk_size": 316,
-  "disk_format_version": 5,
-  "compact_running": false,
+  "doc_del_count": 5564,
+  "doc_count": 9818541,
+  "disk_size": 46114703224,
+  "disk_format_version": 6,
+  "compact_running": true,
   "instance_start_time": "0"
 }
 ```
@@ -148,7 +153,8 @@ doc_del_count |	Number of deleted documents
 instance_start_time |	Always 0.
 purge_seq |	The number of purge operations on the database.
 update_seq |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
-other |	Json object containing a data_size field.
+other |	JSON object containing a `data_size` field.
+sizes | JSON object containing file, external, and active sizes.
 
 ### Get Databases
 
