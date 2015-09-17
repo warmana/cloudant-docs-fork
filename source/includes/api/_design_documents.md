@@ -699,6 +699,8 @@ Update validators get four arguments:
 * `userCtx`: context about the currently authenticated user, such as `name` and `roles`..
 * `secObj`: the database's [security object](authorization.html#viewing-permissions)
 
+Update validators do not apply when a design document is updated by an admin user, so that admins can never accidentally lock themselves out.
+
 ### Retrieving information about a design document
 
 > Example to get the information for the `recipesdd` design document in the `recipes` database:
