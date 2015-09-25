@@ -22,8 +22,8 @@ This means that you must replicate from `databasea` to `databaseb`, and separate
 
 Replications are created in one of two ways:
 
-1. A replication can be created using a [replication document](#replication-document-format) in the `_replicator` database. Creating and modifying replications in this way allows you to control replication in the same as working with other documents.
-2. A replication can be started by `POST`ing a JSON document describing the desired replication directly to the `/_replicate` endpoint.
+1. A replication can be created using a [replication document](#replication-document-format) in the `_replicator` database. Creating and modifying replications in this way allows you to control replication in the same as working with other documents. Replication jobs created this way will be resumed after a node restart. 
+2. A replication can be started by `POST`ing a JSON document describing the desired replication directly to the `/_replicate` endpoint. Replication jobs created this way are not resumed if the node they run on is restarted. 
 
 ### Replication document format
 
