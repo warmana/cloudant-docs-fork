@@ -175,7 +175,7 @@ Often, reduce functions can be written to handle rereduce calls without any extr
 
 #### Built-in reduce functions
 
-For performance reasons, a few simple reduce functions are built in. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
+For performance reasons, a few simple reduce functions are built in. Whenever possible, you should use one of these functions instead of writing your own. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
 
 <table>
 <colgroup>
