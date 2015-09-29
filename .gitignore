@@ -29,5 +29,4 @@ build/
 /Gemfile.lock
 
 /.project
-/.gitignore
 /.DS_Store

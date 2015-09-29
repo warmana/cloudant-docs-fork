@@ -20,8 +20,6 @@ Indexes of type `text` have a simple mechanism for automatically indexing all th
 This overview introduces you to Cloudant Query concepts:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
 
-
-
 ### Creating an index
 
 You can create an index with one of two types:

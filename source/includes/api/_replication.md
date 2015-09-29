@@ -43,6 +43,7 @@ Field&nbsp;Name | Required | Description
 `query_params` | no | Object containing properties that are passed to the [filter function](design_documents.html#filter-functions).
 <div id="checkpoints">`use_checkpoints`</div> | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
 `user_ctx` | no | An object containing the username and optionally an array of roles, e.g.: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
+`since_seq` | no | Sequence from which the replication should start
 
 ### The `/_replicator` database
 

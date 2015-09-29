@@ -417,6 +417,7 @@ db.view_with_list($DESIGN_ID, $MAPREDUCE_INDEX, $LIST_FUNCTION, function (err, b
 
 Use list functions to customize the format of [MapReduce](creating_views.html#using-views) query results.
 They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
+You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`. 
 
 <aside>The result of a list function is not stored. This means that the function is executed every time a request is made.
 As a consequence, using map-reduce functions might be more efficient.
