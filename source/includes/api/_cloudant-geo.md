@@ -306,7 +306,6 @@ There are several standard geometric objects, including:
 -   `triangle`
 
 ### Example: Querying a Cloudant Geo index
-<<<<<<< HEAD
 
 <br>This overview shows an example of how Cloudant Geospatial works:</br>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/o683QPKFEa4?rel=0" frameborder="0" allowfullscreen title="Cloudant Geospatial in action"></iframe>
