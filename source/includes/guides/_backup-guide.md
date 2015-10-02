@@ -1,27 +1,15 @@
 ## Back up your data
 
-IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability. This practice is the default for all Cloudant users. Even when your data is replicated in triplicate, it is still  important to back it up.
+IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability.
+This practice is the default for all Cloudant users.
+Even when your data is replicated in triplicate,
+it is still  important to back it up.
 
 You can lose access to your data in more than one way. For example, if a hurricane destroys your data center and all three nodes are in that location, you lose your data. You can prevent the loss of your data in a disaster by replicating your data to a cluster (dedicated or multi-tenant) in a different geographic location. However, if a faulty application deletes or overwrites the data in your database, duplicate data is not helpful.
 
 Database backups protect your data against potential loss or corruption. Cloudant’s replication creates a database backup and stores it on a Cloudant cluster. You can restore data, entire databases or specific JSON documents, from these backups to your production cluster.
 
 With Cloudant, a database backup stores your database content to a checkpoint. It is possible to ‘roll back' to a specific checkpoint. The checkpoint is not specific to a precise time. Instead, it is a record of the database after specific changes occurred during the backup period. In this way, a backup can preserve the state of your database at a selected time.
-
-
-### Enabling your account for backups
-
-To enable backups with your IBM Cloudant database, you must request a backup task. The Cloudant Support team creates a backup task. You cannot create the backup task on your own. The backup task requires additional processes, and Support must enable enough storage capacity to handle the backup activities.
-
-To enable backups, follow these steps.
-
-1.	Call IBM Cloudant Support to create a backup task for enabling backups.
-2.	Provide the following information.
-  - Target cluster for backups.
-  - Preferred backup task name, for example `towed_vehicles_backup`.
-  - List of accounts and databases to backup, `towed_vehicles`. Backup is currently limited to 50 databases per customer.
-  - Frequency for running backups. Cloudant requires 24 hours between each backup. It is not possible to request a specific time for a backup to begin.
-3.	Support enables backups, schedules backup operations, and verifies the initial backup runs.
 
 ###Incremental backups
 
