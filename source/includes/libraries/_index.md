@@ -8,6 +8,7 @@ These include:
 - [Mobile](#mobile)
 - [Java](#java)
 - [Node.js](#node.js)
+- [Couchdb](#couchdb)
 
 A supported library is one where you can contact Cloudant if you encounter a specific, reproducible problem with the library.
 
