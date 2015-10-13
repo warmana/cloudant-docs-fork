@@ -83,6 +83,7 @@ Argument | Description | Optional | Type | Default | Supported values
 `group` | Using the reduce function, group the results to a group or single row. | yes | Boolean | false | 
 `group_level` | Only applicable if the view uses complex keys: keys that are JSON arrays. Groups reduce results for the specified number of array fields. | yes | Numeric | | 
 `include_docs` | Include the full content of the documents in the response. | yes | Boolean | false | 
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false |
 `inclusive_end` | Include rows with the specified endkey. | yes | Boolean | true | 
 `key` | Return only documents that match the specified key. Note: Keys are JSON values, and must be URL encoded. | yes | JSON strings or arrays | | 
 `keys` | Return only documents that match the specified keys. Note: Keys are JSON values and must be URL encoded. | yes | Array of JSON strings or arrays | |

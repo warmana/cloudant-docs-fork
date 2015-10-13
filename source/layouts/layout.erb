@@ -67,11 +67,19 @@ under the License.
           window.location.hash = hash; 
           $(window).trigger('resize');
         };
+        
+        function activeLanguage() {
+          var res = $('#lang-selector .active').text();
+          if (res === 'curl') {
+            res = 'shell';
+          }
+          return res;
+        }
 
         function showCode() {
           $.removeCookie('hide-code-column');
           var hash = window.location.hash;
-          $('pre').show();
+          activateLanguage(activeLanguage());
           $('blockquote').show();
           $('.dark-box').css('width', '50%');
           $('#hideCodeButton').show();
@@ -129,13 +137,13 @@ under the License.
           <% end %>
         ]);
       
-        var languageInit = $('#lang-selector li.active').text();
-        $('#selected-language').text(languageInit);
-        $('#selected-language').click(langDropdown);
+        //var languageInit = $('#lang-selector li.active').text();
+        //$('#selected-language').text(languageInit);
+        //$('#selected-language').click(langDropdown);
           
-        function langDropdown() {
-          $('#lang-selector ul').show();
-        }
+        //function langDropdown() {
+        //  $('#lang-selector ul').show();
+        //}
           
         $('blockquote a').attr('title', 'Click here to try out interactive examples!');
         $('blockquote a').attr('target', '_blank');
@@ -209,10 +217,10 @@ under the License.
               Page.new('Views (MapReduce)', 'creating_views.html', []),
               Page.new('Search', 'search.html', []),
               Page.new('Cloudant Geospatial', 'geo.html', []),
-              Page.new('Metadata Discovery', 'metadata_discovery.html', []),
               Page.new('Replication', 'replication.html', []),
               Page.new('Advanced Replication', 'advanced_replication.html', []),
               Page.new('Active tasks', 'active_tasks.html', []),
+              Page.new('Virtual hosts', 'vhosts.html', []),
               Page.new('Advanced', 'advanced.html', []),
               Page.new('Backup', 'backup.html', []),
               Page.new('Try it', 'try.html', [])

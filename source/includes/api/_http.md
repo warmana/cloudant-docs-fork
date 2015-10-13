@@ -71,6 +71,25 @@ Specifies the content type of the information being supplied within the request.
 
 The use of the `Content-type` on a request is highly recommended.
 
+##### Content-Encoding
+
+> A request with a gzipped request body
+
+```shell
+# create gzipped document
+echo '{"foo":"bar"}' | gzip >doc.gzip
+# create the document in the database
+curl https://example.cloudant.com/db/doc -X PUT -T doc.gzip -H 'Content-Encoding: gzip'
+```
+
+```http
+PUT /db/doc HTTP/1.1
+HOST: example.cloudant.com
+Content-Encoding: gzip
+```
+
+The `Content-Encoding` header specifies the encoding of the request body. Supported values are `gzip` and `deflate`. If the header is used, the request body must be compressed with gzip or deflate accordingly.
+
 ##### If-None-Match
 
 This header can optionally be sent to find out whether a document has been modified since it was last read or updated. The value of the `If-None-Match` header should match the last `Etag` value received. If the value matches the current revision of the document, the server sends a `304 Not Modified` status code and the response will not have a body. If not, you should get a normal 200 response, provided the document still exists and no other errors occur.

@@ -143,7 +143,7 @@ a view query with `include_docs` set to `true` contains the document with the gi
 
 Keys are not limited to simple values. You can use arbitrary JSON values to influence sorting.
 
-When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See HttpViewApi for more information.
+When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See [Using Views](creating_views.html#using-views) for more information.
 
 ### Reduce functions
 
@@ -175,7 +175,7 @@ Often, reduce functions can be written to handle rereduce calls without any extr
 
 #### Built-in reduce functions
 
-For performance reasons, a few simple reduce functions are built in. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
+For performance reasons, a few simple reduce functions are built in. Whenever possible, you should use one of these functions instead of writing your own. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
 
 <table>
 <colgroup>
@@ -366,7 +366,7 @@ Content-Type: application/json
 }
 ```
 
-Argument | Description | Optional | Type | Default | Supported values
+Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Optional | Type | Default | Supported values
 ---------|-------------|----------|------|---------|-----------------
 `descending` | Return the documents in 'descending by key' order. | yes | Boolean | false |
 `endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | |
@@ -578,7 +578,7 @@ but also the `startkey` and `endkey` parameter values.
 
 ### Querying a view using a list of keys
 
-> Example request to return all recipes, where the key for the view matches either "clear apple juice" or "lemonade":
+> Example request to return all recipes, where the key for the view matches either "claret" or "clear apple juice":
 
 ```http
 POST /$DB/_design/$DDOC/_view/$VIEWNAME HTTP/1.1
@@ -592,8 +592,8 @@ curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DD
 ```json
 {
    "keys" : [
-      "some-key",
-      "some-other-key"
+      "claret",
+      "clear apple juice"
    ]
 }
 ```
@@ -603,8 +603,6 @@ the `POST` method allows you to specify the keys to use when retrieving the view
 In all other aspects, the `POST` method is identical to the [`GET`](using_views.html#querying-a-view) API request, in particular, you can use any of its query parameters.
 
 <div></div>
-
-The response contains the standard view information, but only where the keys match:
 
 > Example returned view data
 
@@ -630,6 +628,9 @@ The response contains the standard view information, but only where the keys mat
    "offset" : 6324
 }
 ```
+
+The response contains the standard view information,
+but only where the keys match.
 
 <div id="include_docs_caveat"></div>
 

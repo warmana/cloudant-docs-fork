@@ -117,6 +117,25 @@ you can [query the database](database.html#get-documents) for all documents.
 
 The response contains the document you requested or a description of the error, if the document could not be retrieved.
 
+#### Query Parameters
+
+This is a list of parameters you can add to the URL in the usual way, e.g. `/db/doc?attachments=true&conflicts=true`. All parameters are *optional*.
+
+| Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Type | Description | Default |
+|------|------|-------------|---------|
+| `attachments` | boolean | Includes attachments bodies in response. | false |
+| `att_encoding_info` | boolean | Includes encoding information in attachment stubs if the particular attachment is compressed. | false |
+| `atts_since` | array of revision strings | Includes attachments only since specified revisions. Doesn’t includes attachments for specified revisions. | [] |
+| `conflicts` | boolean | Includes information about conflicts in document. | false |
+| `deleted_conflicts` | boolean | Includes information about deleted conflicted revisions. | false |
+| `latest` | boolean | Forces retrieving latest “leaf” revision, no matter what rev was requested. | false |
+| `local_seq` | boolean | Includes last update sequence number for the document. | false |
+| `meta` | boolean | Acts same as specifying all conflicts, deleted_conflicts and open_revs query parameters. | false |
+| `open_revs` | array or `all` | Retrieves documents of specified leaf revisions. Additionally, it accepts value as all to return all leaf revisions. | [] |
+| `rev` | string | Retrieves document of specified revision. | - |
+| `revs` | boolean | Includes list of all known document revisions. | false |
+| `revs_info` | boolean | Includes detailed information for all known document revisions. | false |
+
 <aside class="warning">
 Due to the distributed, eventually consistent nature of Cloudant, reads might return stale data. In particular, data that has just been written, even by the same client, might not be returned from a read request immediately following the write request. To work around this behaviour, a client can cache state locally. Caching also helps to keep request counts down and thus increase application performance and decrease load on the database cluster. This also applies to requests to map-reduce and search indexes.
 </aside>

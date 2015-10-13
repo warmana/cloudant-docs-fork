@@ -23,6 +23,10 @@ To distinguish between them,
 standard documents have an `_id` indicated by `$DOCUMENT_ID`,
 while design documents have an `_id` indicated by `$DESIGN_ID`.
 
+<aside class="warning">
+If a design document is updated, Cloudant will delete the indexes from the previous version and recreate the index from scratch. If you need to make changes to a design document for a larger database, have a look at the [Design Document Management Guide](design_document_management.html#managing-changes-to-a-design-document).
+</aside>
+
 The structure of design document is as follows:
 
 -   **\_id**: Design Document ID
@@ -413,6 +417,7 @@ db.view_with_list($DESIGN_ID, $MAPREDUCE_INDEX, $LIST_FUNCTION, function (err, b
 
 Use list functions to customize the format of [MapReduce](creating_views.html#using-views) query results.
 They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
+You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`. 
 
 <aside>The result of a list function is not stored. This means that the function is executed every time a request is made.
 As a consequence, using map-reduce functions might be more efficient.
@@ -698,6 +703,8 @@ Update validators get four arguments:
 * `oldDoc`: the version of the document currently in the database, or `null` if there is none.
 * `userCtx`: context about the currently authenticated user, such as `name` and `roles`..
 * `secObj`: the database's [security object](authorization.html#viewing-permissions)
+
+Update validators do not apply when a design document is updated by an admin user, so that admins can never accidentally lock themselves out.
 
 ### Retrieving information about a design document
 

@@ -8,11 +8,11 @@ These endpoints provide information about the state of the cluster, details abou
 
 ```http
 GET / HTTP/1.1
+HOST: $ACCOUNT.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/ \
-     -u $USERNAME
+curl https://$ACCOUNT.cloudant.com/
 ```
 
 ```javascript
@@ -34,7 +34,9 @@ account.request({
 {
   "couchdb": "Welcome",
   "version": "1.0.2",
-  "cloudant_build":"1138"
+  "vendor": {
+     "cloudant_build":"1138"
+  }
 }
 ```
 
@@ -42,8 +44,8 @@ account.request({
 -  **Path**: `/`
 -  **Response**: Welcome message and version
 
-Accessing the database rather than a document within the database returns meta information about the server. The response is a JSON structure containing information about the server, including a welcome message and the version of the server. The `version` field contains the CouchDB version the server is compatible with.
-The `cloudant_build` field contains the build number of Cloudant's CouchDb implementation.
+Accessing the root endpoint `/` returns meta information about the cluster. The response is a JSON object containing a welcome message and the version of the server. The `version` field contains the CouchDB version the server is compatible with.
+The `vendor.cloudant_build` field contains the build number of Cloudant's CouchDb implementation.
 
 ### GET /_db_updates
 
