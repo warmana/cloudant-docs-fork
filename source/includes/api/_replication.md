@@ -22,8 +22,8 @@ This means that you must replicate from `databasea` to `databaseb`, and separate
 
 Replications are created in one of two ways:
 
-1. A replication can be created using a [replication document](#replication-document-format) in the `_replicator` database. Creating and modifying replications in this way allows you to control replication in the same as working with other documents.
-2. A replication can be started by `POST`ing a JSON document describing the desired replication directly to the `/_replicate` endpoint.
+1. A replication can be created using a [replication document](#replication-document-format) in the `_replicator` database. Creating and modifying replications in this way allows you to control replication in the same as working with other documents. Replication jobs created this way will be resumed after a node restart. 
+2. A replication can be started by `POST`ing a JSON document describing the desired replication directly to the `/_replicate` endpoint. Replication jobs created this way are not resumed if the node they run on is restarted. 
 
 ### Replication document format
 
@@ -43,6 +43,7 @@ Field&nbsp;Name | Required | Description
 `query_params` | no | Object containing properties that are passed to the [filter function](design_documents.html#filter-functions).
 <div id="checkpoints">`use_checkpoints`</div> | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
 `user_ctx` | no | An object containing the username and optionally an array of roles, e.g.: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
+`since_seq` | no | Sequence from which the replication should start
 
 ### The `/_replicator` database
 

@@ -9,7 +9,9 @@ Cloudant Geo:
 -   Provides a NoSQL capability for GIS applications, so that large streams of data can be acquired from devices, sensors and satellites. This data can then be stored, processed, and syndicated across other web applications.
 
 This overview describes Cloudant Geospatial:<br/>
+
 <iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
+
 
 ### Cloudant Geo overview
 
@@ -100,6 +102,7 @@ To make it easier to work with Cloudant Geo documents, it is best practice to cr
 Within that design document, you create an object called `st_indexes` to hold one or more Cloudant Geo index definitions.
 
 This overview explains how to build and query a Cloudant Geospatial index:<br/>
+
 <iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### `geoidx`: An example Cloudant Geo index

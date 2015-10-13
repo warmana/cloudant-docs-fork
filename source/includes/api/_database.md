@@ -120,17 +120,22 @@ such as how many documents it contains.
 
 ```json
 {
-  "update_seq": "0-g1AAAADneJzLYWBgYMlgTmFQSElKzi9KdUhJMtbLTS3KLElMT9VLzskvTUnMK9HLSy3JAapkSmRIsv___39WIgOqHkM8epIcgGRSPTZt-KzKYwGSDA1ACqhzP0k2QrQegGgF2ZoFAGdBTTo",
+  "update_seq": "9824119-g1AAAAIjeJzLYWBg4MhgTmHQSElKzi9KdUhJMtYrKMrMTS1KLU5NLErOMDAw1EvOyS9NScwr0ctLLckB6mBKZEiS____f1YSg9DBKajazYjQnqQAJJPsoSbsfEC6A5IcQCbEQ03YI4BqgiExJiSATKiHmrC3l3Q35LEASYYGIAU0ZD7IlF1KqKYYEW3KAogp-0Gm7HYg1y0HIKbcB5myX4T0eIGY8gBiCiRcPmQBAB4CuUQ",
   "db_name": "db",
+  "sizes": {
+    "file": 46114703224,
+    "external": 193164408719,
+    "active": 34961621142
+  },
   "purge_seq": 0,
   "other": {
-    "data_size": 0
+    "data_size": 193164408719
   },
-  "doc_del_count": 0,
-  "doc_count": 0,
-  "disk_size": 316,
-  "disk_format_version": 5,
-  "compact_running": false,
+  "doc_del_count": 5564,
+  "doc_count": 9818541,
+  "disk_size": 46114703224,
+  "disk_format_version": 6,
+  "compact_running": true,
   "instance_start_time": "0"
 }
 ```
@@ -148,7 +153,8 @@ doc_del_count |	Number of deleted documents
 instance_start_time |	Always 0.
 purge_seq |	The number of purge operations on the database.
 update_seq |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
-other |	Json object containing a data_size field.
+other |	JSON object containing a `data_size` field.
+sizes | JSON object containing file, external, and active sizes.
 
 ### Get Databases
 
@@ -229,6 +235,7 @@ Argument | Description | Optional | Type | Default
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
 `key` | Return only documents that match the specified key | yes | string |  
 `limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
@@ -311,17 +318,19 @@ These responses are combined and returned to the original requesting client.
 
 `_changes` accepts these query arguments:
 
-Argument | Description | Supported Values | Default 
+Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default 
 ---------|-------------|------------------|---------
 `descending` | Return the changes in sequential order | boolean | false | 
 `feed` | Type of feed | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
 `filter` | Name of filter function from a design document to get updates | string | no filter
 `heartbeat` | Time in milliseconds after which an empty line is sent during longpoll or continuous if there have been no changes | any positive number | no heartbeat | 
 `include_docs` | Include the document with the result | boolean | false |
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
 `limit` | Maximum number of rows to return | any non-negative number | none |  
-`since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. | string | 0 | 
+`since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. If it is `now`, only changes made after the time of the request will be emitted. | sequence identifier or `now` | 0 | 
 `style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
 `timeout` | Number of milliseconds to wait for data before terminating the response. If heartbeat supersedes timeout if both are supplied. | any positive number | |
+`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. | A JSON array of document IDs | |
 
 <aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
@@ -343,6 +352,10 @@ the format of the report entries reflects the continuous nature of the changes,
 while ensuring validity of the JSON output.
 
 The `filter` parameter designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
+Additionally, there are built in filters available:
+
+ * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
+ * `_design`: The _design filter accepts only changes to design documents.
 
 <div id="changes_responses"></div>
 
@@ -365,7 +378,7 @@ The `filter` parameter designates a pre-defined [filter function](design_documen
 The response is a JSON object containing a list of the changes made to documents within the database.
 The following table describes the meaning of the individual fields:
 
-Field | Description | Type
+Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Type
 ------|-------------|------
 `changes` | Array, listing the changes made to the specific document. | Array
 `deleted` | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
@@ -432,7 +445,31 @@ All changes are returned to the client as soon as possible after they occur.
 
 Each line in the continuous response is either empty or a JSON object representing a single change.
 
-### Delete
+<div> </div>
+
+#### POST
+
+> `POST`ing to the `_changes` endpoint
+
+```http
+POST /$DB/_changes HTTP/1.1
+Host: $USERNAME.cloudant.com
+Content-Type: application/json
+```
+
+```shell
+curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
+```
+
+```json
+{
+  "doc_ids": [ "foo" ]
+}
+```
+
+Instead of `GET`, you can also use `POST` to query the changes feed. The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
+
+### Deleting a database
 
 > Example request to delete a Cloudant database:
 

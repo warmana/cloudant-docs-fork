@@ -143,7 +143,7 @@ a view query with `include_docs` set to `true` contains the document with the gi
 
 Keys are not limited to simple values. You can use arbitrary JSON values to influence sorting.
 
-When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See HttpViewApi for more information.
+When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See [Using Views](creating_views.html#using-views) for more information.
 
 ### Reduce functions
 
@@ -175,7 +175,7 @@ Often, reduce functions can be written to handle rereduce calls without any extr
 
 #### Built-in reduce functions
 
-For performance reasons, a few simple reduce functions are built in. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
+For performance reasons, a few simple reduce functions are built in. Whenever possible, you should use one of these functions instead of writing your own. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
 
 <table>
 <colgroup>
@@ -366,7 +366,7 @@ Content-Type: application/json
 }
 ```
 
-Argument | Description | Optional | Type | Default | Supported values
+Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Optional | Type | Default | Supported values
 ---------|-------------|----------|------|---------|-----------------
 `descending` | Return the documents in 'descending by key' order. | yes | Boolean | false |
 `endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | |

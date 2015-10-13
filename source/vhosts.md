@@ -1,0 +1,84 @@
+---
+title: Cloudant Documentation - Virtual Hosts
+
+language_tabs:
+  - http 
+  - shell: curl
+#  - javascript: node.js
+#  - python
+
+toc_footers:
+  - <a href="https://cloudant.com/">Cloudant</a>
+  - <a href="https://cloudant.com/sign-up/">Sign up</a> / <a href="https://cloudant.com/sign-in/">Sign in</a>
+  - <a href="http://stackoverflow.com/questions/tagged/cloudant">Cloudant on StackOverflow</a>
+  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
+
+---
+
+## Virtual hosts
+
+Virtual hosts (vhosts) are a way to make cloudant serve data from a different domain than the one normally associated with your Cloudant account. You can create as many vhosts as needed and point them to any endpoint in your Cloudant account. Vhosts are often used to point to a `_rewrite` endpoint of a design document in order to use Cloudant as a web server. You need to have the admin role in order to use any of the vhost endpoints.
+
+### Listing virtual hosts
+
+> Listing all vhosts
+
+```shell
+curl "https://$ACCOUNT.cloudant.com/_api/v2/user/virtual_hosts"
+```
+
+```http
+GET /_api/v2/user/virtual_hosts HTTP/1.1
+Host: $ACCOUNT.cloudant.com
+```
+
+To list all virtual hosts in your account, send a `GET` request to `/_api/v2/user/virtual_hosts`. 
+
+### Creating a virtual host
+
+> Creating a vhost
+
+```shell
+curl "https://$ACCOUNT.cloudant.com/_api/v2/user/virtual_hosts" -X POST -d '@vhost.json' -H 'Content-Type: application/json'
+```
+
+```http
+POST /_api/v2/user/virtual_hosts HTTP/1.1
+Host: $ACCOUNT.cloudant.com
+Content-Type: application/json
+```
+
+```json
+{
+  "host": "www.example.com",
+  "path": "/db/_design/doc/_rewrite/"
+}
+```
+
+To create a virtual host, you send a `POST` request to the `/_api/v2/user/virtual_hosts` endpoint with a description of the vhost in a JSON object in the request body. The JSON document contains these fields:
+
+ * `host`: The domain name you want to use for the vhost.
+ * `path`: The endpoint in your Cloudant account the vhost should point to.
+
+### Deleting a virtual host
+
+> Deleting a vhost
+
+```shell
+curl "https://account.cloudant.com/_api/v2/user/virtual_hosts" -X DELETE -d '@vhost.json' -H 'Content-Type: application/json'
+```
+
+```http
+DELETE /_api/v2/user/virtual_hosts HTTP/1.1
+Host: $ACCOUNT.cloudant.com
+Content-Type: application/json
+```
+
+```json
+{
+  "host": "www.example.com"
+}
+```
+
+To delete a vhost, send a `DELETE` request to `/_api/v2/user/virtual_hosts` with the host to delete specified in the request body as shown in the example.

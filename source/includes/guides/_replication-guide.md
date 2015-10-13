@@ -282,13 +282,17 @@ curl
   "_id": "weekly_backup",
   "source": "https://username:password@myaccount1.cloudant..com/source",
   "target": "https://username:password@myaccount2.cloudant.com/destination",
-  "filter": "mydesigndoc/myfilter"
+  "filter": "mydesigndoc/myfilter",
+  "query_params": {
+    "foo": "bar",
+    "baz": 5
+  }
 }
 ```
 
 Cloudant’s filtered replication allows you to define a Javascript function which uses the return value to determine whether each document in a database is to be filtered or not. Filter functions are stored in Design Documents. Here is an example filter function that only allows non-deleted documents to be replicated.
 
-When starting a replication job, a filter function’s name can be specified in terms of the design document it resides in and the filter function’s name.
+When starting a replication job, a filter function’s name can be specified in terms of the design document it resides in and the filter function’s name. You can also specify `query_params`, an object containing properties that are passed to the filter function in the `query` field of its second argument.
 
 ### Changes feed
 
