@@ -102,7 +102,7 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 ### Couchdb
 
-<a target="_blank" href="https://github.com/cloudant/meteor-couchdb">cloudant-couchdb</a> is the official Cloudant library for the couchdb-meteor package. Since Apache CouchDB does not ship with Meteor or the couchdb package, you must provide a URL for Meteor to connect to and a running CouchDB or Cloudant server instance before you install Meteor. Add this package to your Meteor application:
+<a target="_blank" href="https://atmospherejs.com/cloudant/couchdb">cloudant:couchdb</a> is the official Cloudant library for the couchdb-meteor package. Since Apache CouchDB does not ship with Meteor or the couchdb package, you must provide a URL for Meteor to connect to and a running CouchDB or Cloudant server instance before you install Meteor. Add this package to your Meteor application:
 
 `meteor add cloudant:couchdb`
 
