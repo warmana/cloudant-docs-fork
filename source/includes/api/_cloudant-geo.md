@@ -13,7 +13,7 @@ This overview describes Cloudant Geospatial:<br/>
 
 ### Cloudant Geo overview
 
-Cloudant Geo lets you structure your data using GeoJSON\_ format. Design documents are used to index the data. Just like working with other Cloudant documents, an initial scan works through all the documents in the database, giving you the first index. Subsequent updates to the documents result in incremental updates to the index.
+Cloudant Geo lets you structure your data using GeoJSON format. Design documents are used to index the data. Just like working with other Cloudant documents, an initial scan works through all the documents in the database, giving you the first index. Subsequent updates to the documents result in incremental updates to the index.
 
 The key advantage of Cloudant Geo is to enable you to identify, specify, or search for documents based on a spatial relationship; in effect using geometry to provide an additional way of expressing the relationship between and within documents.
 
@@ -29,7 +29,7 @@ An example would be to specify that a document is considered to be 'contained' i
 
 The basic steps for working with geospatial data in Cloudant Geo is as follows:
 
-1.  Include a GeoJSON\_ geometry object in your JSON document. The geometry object can be of any type, including points, lines, or polygons.
+1.  Include a GeoJSON geometry object in your JSON document. The geometry object can be of any type, including points, lines, or polygons.
 2.  Index the geometry object using `st_index`.
 3.  Work with the data by querying using various geometries and geometric relationships.
 
@@ -97,7 +97,7 @@ More information about GeoJSON, including the full specification, is available a
 
 To make it easier to work with Cloudant Geo documents, it is best practice to create a separate design document, specifically for Cloudant Geo. For example, you could create a design document with the `_id` value `"_design/geodd"`.
 
-Within that design document, you create an object called `st_indexes` to hold one or more Cloudant Geo index definitions.
+When you create a geospatial index, you use the system-defined keywords, `st_index` and `st_indexes` to hold one or more Cloudant Geo index definitions.
 
 This overview explains how to build and query a Cloudant Geospatial index:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
@@ -142,7 +142,8 @@ The algorithm used by Cloudant Geo is [R\*\_tree](http://en.wikipedia.org/wiki/R
 
 The fundamental API call for utilizing Cloudant Geo has a simple format.
 
-The valid `<query-parameters>` are as follows:
+####Query Parameters
+Query parameters include query geometry, query relation, and result set. The valid `<query-parameters>` are as follows:
 
 <table>
 <colgroup>
