@@ -9,9 +9,7 @@ Cloudant Geo:
 -   Provides a NoSQL capability for GIS applications, so that large streams of data can be acquired from devices, sensors and satellites. This data can then be stored, processed, and syndicated across other web applications.
 
 This overview describes Cloudant Geospatial:<br/>
-
-<iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
-
+<iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0?rel=0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
 
 ### Cloudant Geo overview
 
@@ -102,8 +100,7 @@ To make it easier to work with Cloudant Geo documents, it is best practice to cr
 When you create a geospatial index, you use the system-defined keywords, `st_index` and `st_indexes` to hold one or more Cloudant Geo index definitions.
 
 This overview explains how to build and query a Cloudant Geospatial index:<br/>
-
-<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### `geoidx`: An example Cloudant Geo index
 
@@ -145,7 +142,6 @@ The algorithm used by Cloudant Geo is [R\*\_tree](http://en.wikipedia.org/wiki/R
 
 The fundamental API call for utilizing Cloudant Geo has a simple format.
 
-####Query Parameters
 Query parameters include query geometry, query relation, and result set. The valid `<query-parameters>` are as follows:
 
 <table>
@@ -182,7 +178,7 @@ Query parameters include query geometry, query relation, and result set. The val
 </tr>
 <tr class="even">
 <td align="left"><code>limit</code></td>
-<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum value is 200. A value larger than 200 is an error.</td>
+<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum is 200. A value larger than 200 is an error.</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>radius</code></td>
@@ -198,6 +194,7 @@ Query parameters include query geometry, query relation, and result set. The val
 </tr>
 </tbody>
 </table>
+
 
 ### Geospatial relationships
 
@@ -360,7 +357,7 @@ The query would then compare the geometry of each document in the index with the
 
 #### A polygon query
 
-A more complex example is where you specify a polygon as the geomtric object of interest. A polygon is simply any object defined by a series of connected points, where none of the connections (the lines between the points) cross any of the other connections.
+A more complex example is where you specify a polygon as the geometric object of interest. A polygon is simply any object defined by a series of connected points, where none of the connections (the lines between the points) cross any of the other connections.
 
 > Example query to find documents that have a geospatial position within a polygon:
 
