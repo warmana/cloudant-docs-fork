@@ -26,7 +26,7 @@ This video explains how to perform group, facet, and geo searches using search i
 
 ### Index functions
 
-> Example search index function (see also [index guard clauses](#index-guard-clauses)):
+> Example search index function:
 
 ```
 function(doc){
