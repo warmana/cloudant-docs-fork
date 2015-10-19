@@ -8,7 +8,6 @@ language_tabs:
 #  - python
 
 ---
-#
 # Getting started with Cloudant NoSQL DB
 
 Cloudant NoSQL DB is a NoSQL database as a service (DBaaS). It's built from the ground
