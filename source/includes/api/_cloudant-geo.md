@@ -143,7 +143,12 @@ The algorithm used by Cloudant Geo is [R\*\_tree](http://en.wikipedia.org/wiki/R
 The fundamental API call for utilizing Cloudant Geo has a simple format.
 
 ####Query Parameters
-Query parameters include query geometry, query relation, and result set. The valid `<query-parameters>` are as follows:
+Query parameters include query geometry, query relation, and result set. The valid `<query-parameters>` include query geometry, query relation, and result sets. 
+
+#####Query Geometry Parameters
+There are four types of query geometries: 
+
+`ellipse | radius | bbox | g`
 
 <table>
 <colgroup>
@@ -157,44 +162,141 @@ Query parameters include query geometry, query relation, and result set. The val
 </tr>
 </thead>
 <tbody>
+
 <tr class="odd">
-<td align="left"><code>bookmark</code></td>
-<td align="left">Allows you to page through the results. The default is 25 results.</td>
+<td align="left"><code>bbox</code></td>
+<td align="left">A bounding box is not a relation. You specify a bounding box to q query by setting the `x` and `y` coordinates as shown in the example: `bbox=-11.05987446,12.28339928,-101.05987446,62.28339928`</td>
 </tr>
+
 <tr class="even">
 <td align="left"><code>ellipse</code></td>
 <td align="left">Specify a latitude, a longitude, and two radii: <code>rangex</code> and <code>rangey</code>. The distance is measured in meters.</td>
 </tr>
-<tr class="odd">
-<td align="left"><code>format=geojson</code></td>
-<td align="left">Causes the output of the query to be in <a href="http://geojson.org/geojson-spec.html">GeoJSON format</a>. If this parameter is omitted, the default format is standard Cloudant output.</td>
-</tr>
+
 <tr class="even">
 <td align="left"><code>g</code></td>
-<td align="left">Specify a geometry value <code>g</code>. Requires a geometric relationship <code>relation</code>.</td>
+<td align="left">Specify a geometry value <code>g</code>. The `g` parameter does not require a  geometric relationship. If you do not specify a relation parameter, Cloudant uses the default parameter, `intersects`. The valid values of the `g` parameter are Point | LineString | Polygon | MultiPoint | MultiLineString | MultiPolygon | GeometryCollection. The GeometryCollection is a valid value for the g parameter. 
+
+<aside class="warning">Note that Cloudant does not support the following values with the `g` parameter: 
+
+circularstring | compoundcurve | curvepolygon | multicurve | multisurface | curve | surface | polyhedralsurface | tin (Triangulated Irregular Network) | triangle </aside></td>
 </tr>
-<tr class="odd">
-<td align="left"><code>include_docs</code></td>
-<td align="left">Add the entire document as a document object, and include it in the output results.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>limit</code></td>
-<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum is 200. A value larger than 200 is an error.</td>
-</tr>
+
 <tr class="odd">
 <td align="left"><code>radius</code></td>
 <td align="left">Specify a latitude, a longitude, and a radius. The distance is measured in meters.</td>
 </tr>
+
+</tbody>
+</table>
+
+
+#####Query Relation Parameter
+Query relation parameters are optional and include the following relation values:
+
+`contains | contains_properly | covered_by | covers | crosses | disjoint | intersects | overlaps | touches | within`
+
+The `equals` operator is an invalid relation, and the "nearest=true" operator returns the nearest neighbor query results. 
+
+<table>
+<colgroup>
+<col width="18%" />
+<col width="81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Parameter</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+
+
 <tr class="even">
 <td align="left"><code>relation</code></td>
 <td align="left">Specify a geometric relationship. Used in conjunction with <code>ellipse</code>, <code>g</code>, or <code>radius</code> parameters.</td>
 </tr>
+
+</tbody>
+</table>
+
+
+#####Result Set Parameters
+You can use the format values with the result set parameters, `legacy | geojson | view | application/vnd.geo+json`. The `reponse_srid to reproject a coordinate to a new one. See the following example:
+
+```
+?response_srid=urn:ogc:def:crs:EPSG::2188&bbox=-11.05987446,12.28339928,-101.05987446,62.28339928
+
+  "rows": [
+    {
+      "id": "79f14b64c57461584b152123e38ee6df",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2642620.5787261548,
+          5442801.4618906835
+        ]
+      }
+    },
+
+?response_srid=urn:ogc:def:crs:EPSG::4326&bbox=-11.05987446,12.28339928,-101.05987446,62.28339928
+
+  "rows": [
+    {
+      "id": "79f14b64c57461584b152123e38ee6df",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -71.04523457,
+          42.28457136
+        ]
+      }
+    }
+   ```
+
+<table>
+<colgroup>
+<col width="18%" />
+<col width="81%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Parameter</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+
+<tr class="odd">
+<td align="left"><code>bookmark</code></td>
+<td align="left">Allows you to page through the results. The default is 25 results.</td>
+
+<tr class="odd">
+<td align="left"><code>format=geojson</code></td>
+<td align="left">Causes the output of the query to be in <a href="http://geojson.org/geojson-spec.html">GeoJSON format</a>. If this parameter is omitted, the default format is standard Cloudant output.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>include_docs</code></td>
+<td align="left">Add the entire document as a document object, and include it in the output results.</td>
+</tr>
+
+<tr class="even">
+<td align="left"><code>limit</code></td>
+<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum value is 200. A value larger than 200 is an error.</td>
+</tr>
+
 <tr class="odd">
 <td align="left"><code>stale=ok</code></td>
 <td align="left">Speed up responses by not waiting for index building or update to complete.</td>
 </tr>
+
+
+
 </tbody>
 </table>
+
+
 
 ### Geospatial relationships
 
