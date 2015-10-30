@@ -61,6 +61,12 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 `npm install cloudant`
 
+#### Getting started with Node.js
+
+<iframe style="height: 400px; float: right; padding-right: 40px; padding-left: 40px; width: 50%; border-width: 0; box-sizing: border-box;" src="http://185.73.38.147:8080/thebe/test-javascript.html"></iframe>
+
+The example shows how to get a document from a Cloudant database using Node.js.
+
 <table>
 <tr>
 <th>Libraries and Frameworks</th>

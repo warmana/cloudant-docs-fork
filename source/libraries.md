@@ -4,7 +4,7 @@ title: Cloudant Documentation
 language_tabs:
   - http 
   - shell: curl
-#  - javascript: node.js
+  - javascript: node.js
 #  - python
 
 toc_footers:
