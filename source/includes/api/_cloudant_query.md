@@ -240,18 +240,18 @@ A list of the available methods and endpoints is provided below:
 Method | Path | Description
 -------|------|------------
 `POST` | `/db/_index` | Create a new index
-`GET` | `/db/_index` | List all indexes
+`GET` | `/db/_index` | List all Cloudant Query indexes
 `DELETE` | `/db/_index` | Delete an index
 `POST`| `/db/_find` | Find documents using an index
 
-### List all indexes
+### List all Cloudant Query indexes
 
 -   **Method**: `GET`
 -   **URL Path**: `/db/_index`
 -   **Response Body**: JSON object describing the indexes
 -   **Roles permitted**: \_reader
 
-When you make a `GET` request to `/db/_index`, you get a list of all indexes in the database. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
+When you make a `GET` request to `/db/_index`, you get a list of all indexes used by Cloudant Query in the database, including the primary index. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
 
 #### Response body
 
