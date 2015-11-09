@@ -120,3 +120,9 @@ To configure the Apache CouchDB or Cloudant server connection information, pass 
 `$export COUCHDB_URL=https://username:password@username.cloudant.com`
 
 See <a target="_blank" href="https://docs.cloudant.com/api.html#">API Reference</a> for more information about meteor-couchdb APIs. 
+
+### Python
+
+A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
+
+The library is a preview (alpha version). As such it does not currently have complete API coverage, nor is the documentation 100% complete.
