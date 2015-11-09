@@ -154,14 +154,23 @@ as it might be a very resource-consuming activity.</aside>
 ##### The `default_field` field
 
 The `default_field` value specifies how the `$text` operator can be used with the index.
-If the `default_field` is not specified,
-it defaults to `true` and the standard analyzer is used.
+
+The `default_field` contains two keys:
+
+Key | Description
+-----|------------
+`"enabled"` | Enable or disable the `default_field index` (default value: `true`). 
+`"analyzer"` | Specifies the Lucene analyzer to use (default value: `"standard"`).
 
 The `analyzer` key in the `default_field` specifies how the index analyzes text.
 The index can subsequently be queried using the `$text` operator.
 See the [Cloudant Search documentation](search.html#analyzers) for alternative analyzers.
 You might choose to use an alternative analyzer when documents are indexed in languages other than English,
 or when you have other special requirements for the analyser such as matching email addresses.
+
+If the `default_field` is not specified,
+or is supplied with an empty object,
+it defaults to `true` and the `"standard"` analyzer is used.
 
 ##### The `selector` field
 
