@@ -16,6 +16,8 @@ Replication takes place in one direction only.
 To keep two databases synchronized with each other, you must replicate in both directions.
 This means that you must replicate from `databasea` to `databaseb`, and separately from `databaseb` to `databasea`.
 
+<aside class="warning">Replications can severely impact the performance of a Cloudant cluster. Performance testing is recommended to understand the impact on your environment under an increasing number of concurrent replications.</aside>
+
 <aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
 <aside class="warning">The target database must exist. It is not automatically created if it does not exist. Add `"create_target":true` to the JSON document describing the replication if the target database does not exist prior to replication.</aside>
