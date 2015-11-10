@@ -135,6 +135,47 @@ There are a number of different algorithms for indexing geospatial data. Some ar
 
 The algorithm used by Cloudant Geo is [R\*\_tree](http://en.wikipedia.org/wiki/R*_tree). Although it has a slightly higher resource requirement for building the index, the resulting index offers much better performance in responding to queries.
 
+<div id="geo-info"></div>
+
+### Obtaining information about a Cloudant geo index
+
+> Example request to obtain information about the `geoidx` geospatial index, held within the `geodd` design document of the `crimes` database:
+
+```http
+GET /crimes/_design/geodd/_geo_info/geoidx HTTP/1.1
+Host: $USERNAME.cloudant.com
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/crimes/_design/geodd/_geo_info/geoidx \
+     -u $USERNAME
+```
+
+> Example JSON structure response:
+
+```json
+{
+	"name": "_design/geodd/geoidx",
+	"geo_index": {
+		"doc_count": 269,
+		"disk_size": 33416,
+		"data_size": 26974
+	}
+}
+```
+
+You can obtain information about a geospatial index within a database.
+Do this by using the `_geo_info` endpoint.
+
+The data returned within the `geo_index` portion of the JSON response includes
+the following fields:
+
+Field | Description
+------|------------
+`doc_count` | Number of documents in the geospatial index.
+`disk_size` | The size of the geospatial index, as stored on disk, in bytes.
+`data_size` | The size of the geospatial index, in bytes.
+
 ### Querying a Cloudant Geo index
 
 > The basic format for a Cloudant Geo API call:
