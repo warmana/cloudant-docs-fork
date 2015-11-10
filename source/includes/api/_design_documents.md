@@ -708,6 +708,8 @@ Update validators do not apply when a design document is updated by an admin use
 
 ### Retrieving information about a design document
 
+There are two endpoints available that provide you with more information: `_info` and `_search_info`.
+
 > Example to get the information for the `recipesdd` design document in the `recipes` database:
 
 ```http
@@ -759,3 +761,47 @@ The individual fields in the returned JSON structure are detailed below:
     -   **updater\_running**: Indicates if the view is currently being updated
     -   **waiting\_clients**: Number of clients waiting on views from this design document
     -   **waiting\_commit**: Indicates if there are outstanding commits to the underlying database that need to processed
+
+> Example to get information about the `description` search within the `app` design document in the `foundbite` database:
+
+```http
+GET /foundbite/_design/app/_search_info/description HTTP/1.1
+Host: $USERNAME.cloudant.com
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/description \
+     -u $USERNAME
+```
+
+> Example JSON structure response:
+
+```json
+{
+	"name": "_design/app/description",
+	"search_index": {
+		"pending_seq": 63,
+		"doc_del_count": 3,
+		"doc_count": 10,
+		"disk_size": 9244,
+		"committed_seq": 63
+	}
+}
+```
+
+-   **Method**: `GET /db/_design/design-doc/_search_info/yourSearch`
+-   **Request**: None
+-   **Response**: JSON information about the specified search
+-   **Roles permitted**: \_reader
+
+Obtains information about a search specified within a given design document.
+
+The individual fields in the returned JSON structure are detailed below:
+
+-   **name**: Name/ID of the Search within the Design Document
+-   **search\_index**: The Search Index
+    -   **pending\_seq**: The sequence number of changes in the database that have reached Lucene, both in memory and on disk.
+    -   **doc\_del\_count**: Number of deleted documents in the index.
+    -   **doc\_count**: Number of documents in the index.
+    -   **disk\_size**: The size of the index on disk, in bytes.
+    -   **committed\_seq**: The sequence number of changes in the database that have been committed to the Lucene index on disk.
