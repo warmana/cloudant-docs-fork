@@ -81,7 +81,7 @@ It must contain two fields: `type` and `coordinates`, where:
     "reptdistrict": "D14",
     "shooting": false,
     "source": "boston"
-  }
+  ..}
 }
 ```
 
@@ -170,8 +170,38 @@ Field | Description
 The fundamental API call for utilizing Cloudant Geo has a simple format, where query parameters `<query-parameters>` include three different types of parameters: query geometry, geometric relation, and result set.
 
 #### Query Geometry
+> Example of an `ellipse` query:
 
-The parameter of query geometry must be provided for a Cloudant Geo search. There are four types of query geometries that are defined as follows:
+```
+?lat=-11.05987446&lon=12.28339928&rangex=200&rangey=100
+```
+
+> Example of a `radius` query:
+
+```
+?lat=-11.05987446&lon=12.28339928&radius=100
+```
+
+> Example of a `bbox` query:
+
+```
+?bbox=-11.05987446,12.28339928,-101.05987446,62.28339928
+```
+
+> Example of a `point` query:
+
+```
+?g=point(-71.0537124 42.3681995)
+```
+
+> Example of a `polygon` query:
+
+```
+?g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
+```
+
+
+A query geometry paramter must be provided for a Cloudant Geo search. There are four types of query geometries that are defined as follows:
 
 <table>
 <colgroup>
@@ -209,37 +239,8 @@ The parameter of query geometry must be provided for a Cloudant Geo search. Ther
 </tbody>
 </table>
 
-Note that Cloudant Geo will use `intersects` as the default geometric relation when executing a query with query geometry only.
+Note that Cloudant Geo uses `intersects` as the default geometric relation when executing a query with query geometry only.
 
-> Example of an `ellipse` query:
-
-```
-?lat=-11.05987446&lon=12.28339928&rangex=200&rangey=100
-```
-
-> Example of a `radius` query:
-
-```
-?lat=-11.05987446&lon=12.28339928&radius=100
-```
-
-> Example of a `bbox` query:
-
-```
-?bbox=-11.05987446,12.28339928,-101.05987446,62.28339928
-```
-
-> Example of a `point` query:
-
-```
-?g=point(-71.0537124 42.3681995)
-```
-
-> Example of a `polygon` query:
-
-```
-?g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
-```
 
 #### Geometric Relation
 
@@ -282,8 +283,8 @@ Given a query geometry parameter, you can then specify a geometric relationship 
 
 <tr class="odd">
 <td align="left"><code>A crosses B</code></td>
-<td align="left">Case 1: True if the interiors intersect and at least the interior of A intersects with the exterior of B. Apply to the `multipoint/linestring`, `multipoint/multilinestring`, `multipoint/polygon`, `multipoint/multipolygon`, `linestring/polygon`, and `linestring/multipolygon` overlays.<br></br>
-<br>Case 2: True if the dimension of the intersection of the interiors is a point. Apply to the `linestring/linestring`, `linestring/multilinestring`, and `multilinestring/multilinestring` overlays.  </br></td>
+<td align="left">Case 1: True if the interiors intersect and at least the interior of A intersects with the exterior of B. Apply to the <code>multipoint</code>/<code>linestring</code>, <code>multipoint</code>/<code>multilinestring</code>, <code>multipoint</code>/<code>polygon</code>, <code>multipoint</code>/<code>multipolygon</code>, <code>linestring</code>/<code>polygon</code>, and <code>linestring</code>/<code>multipolygon</code> overlays.<br></br>
+<br>Case 2: True if the dimension of the intersection of the interiors is a point. Apply to the <code>linestring</code>/<code>linestring</code>, <code>linestring</code>/<code>multilinestring</code>, and <code>multilinestring</code>/</code>multilinestring</code> overlays.  </br></td>
 </tr>
 
 <tr class="even">
@@ -298,13 +299,13 @@ Given a query geometry parameter, you can then specify a geometric relationship 
 
 <tr class="even">
 <td align="left"><code>A overlaps B</code></td>
-<td align="left">Case 1: True if the interior of both geometries intersects the interior and exterior of the other geometries. Apply to the `polygon/polygon`, `multipoint/multipoint`, and `multipolygon/multipolygon` overlays.<br></br>
-<br>Case 2: True if the intersection of the geometries is a linestring. Apply to linestring/linestring and multilinestring/multilinestring  overlays. </br></td>
+<td align="left">Case 1: True if the interior of both geometries intersects the interior and exterior of the other geometries. Apply to the <code>polygon</code>/<code>polygon</code>, <code>multipoint</code>/<code>multipoint</code>, and <code>multipolygon</code>/<code>multipolygon</code> overlays.<br></br>
+<br>Case 2: True if the intersection of the geometries is a linestring. Apply to <code>linestring</code>/<code>linestring</code> and <code>multilinestring</code>/<code>multilinestring</code>  overlays. </br></td>
 </tr>
 
 <tr class="odd">
 <td align="left"><code>A touches B</code></td>
-<td align="left">True if, and only if, the common points of two geometries are found only at the boundaries of two geometries. At least one geometry must be a linestring, polygon, multilinestring, or multipolygon.</td>
+<td align="left">True if, and only if, the common points of two geometries are found only at the boundaries of two geometries. At least one geometry must be a <code>linestring</code>, <code>polygon</code>, <code>multilinestring</code>, or <code>multipolygon</code>.</td>
 </tr>
 
 <tr class="even">
@@ -355,7 +356,7 @@ You can use the following parameters to deal with the returned result set, such 
 
 <tr class="odd">
 <td align="left"><code>skip</code></td>
-<td align="left">Returns the results by skipping the first `N` elements. For example, if you set the `skip` parameter to 5, `?bbox=...&skip=5`, the query skips the first 5 results and returns the remaining results.</td>
+<td align="left">Returns the results by skipping the first <code>N</code> elements. For example, if you set the <code>skip</code> parameter to 5, <code>?bbox=...&skip=5</code>, the query skips the first 5 results and returns the remaining results.</td>
 </tr>
 
 <tr class="odd">
