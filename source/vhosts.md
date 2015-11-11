@@ -33,7 +33,27 @@ GET /_api/v2/user/virtual_hosts HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 ```
 
-To list all virtual hosts in your account, send a `GET` request to `/_api/v2/user/virtual_hosts`. 
+> Example response
+
+```json
+{
+  "virtual_hosts": [
+    [
+      "system1.business.org", 
+      ""
+    ], 
+    [
+      "system2.awarman.org", 
+      "/specificpath"
+    ]
+  ]
+}
+```
+
+To list all virtual hosts in your account, send a `GET` request to `/_api/v2/user/virtual_hosts`.
+
+The JSON response details all of the virtual hosts,
+and any virtual path associated with each host.
 
 ### Creating a virtual host
 
@@ -52,14 +72,22 @@ Content-Type: application/json
 ```json
 {
   "host": "www.example.com",
-  "path": "/db/_design/doc/_rewrite/"
+  "path": "/_api/v2/user/virtual_hosts"
+}
+```
+
+> Example response
+
+```json
+{
+  "ok": true
 }
 ```
 
 To create a virtual host, you send a `POST` request to the `/_api/v2/user/virtual_hosts` endpoint with a description of the vhost in a JSON object in the request body. The JSON document contains these fields:
 
  * `host`: The domain name you want to use for the vhost.
- * `path`: The endpoint in your Cloudant account the vhost should point to.
+ * `path`: An (optional) endpoint in your Cloudant account the vhost should point to.
 
 ### Deleting a virtual host
 
@@ -78,6 +106,14 @@ Content-Type: application/json
 ```json
 {
   "host": "www.example.com"
+}
+```
+
+> Example response
+
+```json
+{
+  "ok": true
 }
 ```
 
