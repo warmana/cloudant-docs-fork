@@ -1647,10 +1647,19 @@ using dotted notation if desired for sub-document fields.
 
 The direction value is `"asc"` for ascending, and `"desc"` for descending.
 
+<aside class="warning">If you omit the direction value,
+the default `"asc"` is used.</aside>
+
 > Example of simple sort syntax:
 
 ```json
 [{"fieldName1": "desc"}, {"fieldName2": "desc" }]
+```
+
+> Example of simple sort, assuming default ascending direction for both fields:
+
+```json
+[{"fieldNameA"}, {"fieldNameB"}]
 ```
 
 <div></div>
