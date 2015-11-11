@@ -93,6 +93,8 @@ To make it easier to work with Cloudant Geo documents, it is best practice to cr
 
 When you create a geospatial index, you must use the Cloudant Geo defined keyword `st_indexes` to hold one or more Cloudant Geo index definitions, where each index must be defined by the Cloudant Geo `st_index` function.
 
+This overview explains how to build and query a Cloudant Geospatial index:<br/>
+<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### `geoidx`: An example Cloudant Geo index
 For example, you could create a design document with the `_id` value `"_design/geodd"` which contains an index called `"geoidx"`. The index is a simple JavaScript function that checks for the presence of a valid geometry object in the document, and if found ensures that the document is included in the `st_index` Cloudant Geo index function.
@@ -111,8 +113,6 @@ For example, you could create a design document with the `_id` value `"_design/g
 }
 ```
 
-This overview explains how to build and query a Cloudant Geospatial index:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### Geospatial indexing
 
