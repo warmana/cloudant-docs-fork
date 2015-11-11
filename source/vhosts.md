@@ -43,7 +43,7 @@ Host: $ACCOUNT.cloudant.com
       ""
     ], 
     [
-      "system2.awarman.org", 
+      "system2.business.org", 
       "/specificpath"
     ]
   ]
