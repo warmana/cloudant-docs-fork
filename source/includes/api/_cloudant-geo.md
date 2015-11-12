@@ -356,7 +356,7 @@ You can use the following parameters to deal with the returned result set, such 
 
 <tr class="odd">
 <td align="left"><code>skip</code></td>
-<td align="left">Returns the results by skipping the first <code>N</code> elements. For example, if you set the <code>skip</code> parameter to 5, <code>?bbox=...&skip=5</code>, the query skips the first 5 results and returns the remaining results.</td>
+<td align="left">Skip this number of records before starting to return the results. The default value is 0.</td>
 </tr>
 
 <tr class="odd">
