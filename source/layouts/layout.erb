@@ -33,7 +33,7 @@ under the License.
 
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -44,9 +44,9 @@ under the License.
       ga('send', 'pageview');
 
     </script>
-    
+
     <script type="text/javascript">
-   
+
       $(document).ready(function() {
         function hideCode() {
           $.cookie('hide-code-column', 'true');
@@ -64,10 +64,10 @@ under the License.
           if ($(hash).offset()) {
             $(document).scrollTop($(hash).offset().top);
           }
-          window.location.hash = hash; 
+          window.location.hash = hash;
           $(window).trigger('resize');
         };
-        
+
         function activeLanguage() {
           var res = $('#lang-selector .active').text();
           if (res === 'curl') {
@@ -92,7 +92,7 @@ under the License.
           if ($(hash).offset()) {
             $(document).scrollTop($(hash).offset().top);
           }
-          window.location.hash = hash; 
+          window.location.hash = hash;
           $(window).trigger('resize');
         };
         if ($.cookie('hide-code-column') && window.location.pathname !== '/try.html') { //hide code column if cookie is set, except on the try it page
@@ -100,9 +100,9 @@ under the License.
         }
         $('#hideCodeButton').click(hideCode);
         $('#showCodeButton').click(showCode);
-        
+
         var headerSelectors = "h3";
-        if ($('h3').length !== 0) { 
+        if ($('h3').length !== 0) {
           var toc = $("#toc").tocify({
             selectors: headerSelectors,
             extendPage: false,
@@ -136,30 +136,30 @@ under the License.
             <% end %>
           <% end %>
         ]);
-      
+
         //var languageInit = $('#lang-selector li.active').text();
         //$('#selected-language').text(languageInit);
         //$('#selected-language').click(langDropdown);
-          
+
         //function langDropdown() {
         //  $('#lang-selector ul').show();
         //}
-          
+
         $('blockquote a').attr('title', 'Click here to try out interactive examples!');
         $('blockquote a').attr('target', '_blank');
-        
+
       });
     </script>
-    
+
   </head>
 
   <body class="<%= page_classes %>">
-        
+
     <div class="main-header">
       <img src="images/ibm_cloudant.png" alt="Cloudant logo"/>
       <div class="header-title">Documentation</div>
     </div>
-    
+
     <div class="tocify-wrapper">
       <div id="searchbox">
         <form>
@@ -169,7 +169,7 @@ under the License.
           </button>
         </form>
       </div>
-      
+
       <ul class="tocify-header first-header">
         <%
           class Page
@@ -187,6 +187,12 @@ under the License.
               Page.new('Contents', 'index.html#contents', []),
               Page.new('Contribute', 'index.html#contribute', [])
             ]),
+            [
+              Page.new('Visual Guide', 'visual-guide.html', [
+                Page.new('Contents', 'index.html#contents', []),
+                Page.new('Contribute', 'index.html#contribute', [])
+              ]),
+          
             Page.new('Cloudant Basics', 'basics.html', [
               Page.new('Database as a Service', 'basics.html#database-as-a-service', []),
               Page.new('IBM Bluemix', 'basics.html#ibm-bluemix', []),
@@ -201,7 +207,7 @@ under the License.
             Page.new('Client Libraries', 'libraries.html', [
               Page.new('Supported', 'libraries.html#supported-client-libraries', []),
               Page.new('Third party', 'libraries.html#third-party-client-libraries', [])
-            
+
             ]),
             Page.new('API Reference', 'api.html', [
               Page.new('HTTP', 'http.html', []),
@@ -261,11 +267,11 @@ under the License.
 				    end
           } %>
       </ul>
-      
-    
-      
-      
-      
+
+
+
+
+
       <ul class="toc-footer">
         <li><a href="https://cloudant.com/"><img src="images/cloudant_icon.png" alt="Cloudant icon"/></a></li>
         <li><a href="https://github.com/cloudant-labs/slate"><img src="images/github_icon.png" alt="Github icon"/></a></li>
@@ -279,7 +285,7 @@ under the License.
       </div>
       <div class="dark-box"></div>
       <div class="content">
-        
+
         <% if current_page.data.includes %>
           <% current_page.data.includes.each do |include| %>
             <%= partial "includes/#{include}" %>

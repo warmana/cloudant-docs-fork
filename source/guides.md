@@ -21,7 +21,6 @@ includes:
 
 <script>
 fragments = {
-  '#visual': 'visual_guide.html',
   '#json': 'json.html',
   '#monitoring-replication28': 'managing_tasks.html',
   '#managing-tasks': 'managing-tasks.html',
