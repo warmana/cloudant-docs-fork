@@ -18,20 +18,11 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 ### Java
 
-<a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a> is the official Cloudant library for Java. You can add it as a dependency to your maven or gradle builds.
+[java-cloudant](https://github.com/cloudant/java-cloudant) is the official Cloudant library for Java.
 
-#### Maven dependency details
-`<dependency>`<br/>
-&nbsp;&nbsp;`<groupId>com.cloudant</groupId>`<br/>
-&nbsp;&nbsp;`<artifactId>cloudant-client</artifactId>`<br/>
-&nbsp;&nbsp;`<version>1.1.2</version>`<br/>
-`</dependency>`
-
-#### Gradle dependency details
-
-`dependencies {`<br/>
-&nbsp;&nbsp;`compile group: 'com.cloudant', name: 'cloudant-client', version:'1.1.2'`<br/>
-`}`
+Information about installing the library by adding it as a dependency to your maven or gradle builds is available
+[here](https://github.com/cloudant/java-cloudant#installation-and-usage),
+along with details and examples of how to use the library.
 
 <table>
 <tr>
