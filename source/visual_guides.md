@@ -15,6 +15,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - guides/visual_guide
+  - visual_guides/dashbaord
 
 ---
