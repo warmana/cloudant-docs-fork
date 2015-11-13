@@ -126,3 +126,13 @@ See <a target="_blank" href="https://docs.cloudant.com/api.html#">API Reference<
 A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
 
 The library is a preview (alpha version). As such it does not currently have complete API coverage, nor is the documentation 100% complete.
+
+### Objective C and Swift
+
+A supported library is available for working with Cloudant using Objective-C on iOS, and using Swift on OS&nbsp;X.
+The library is called ObjectiveCloudant,
+and is installed using `cocoapods`.
+
+The Podfile entry is:
+
+`pod 'ObjectiveCloudant'`
