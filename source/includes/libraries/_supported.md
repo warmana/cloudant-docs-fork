@@ -105,7 +105,8 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
 
-The library is a preview (alpha version). As such it does not currently have complete API coverage, nor is the documentation 100% complete.
+The library is a preview (alpha version).
+As such it does not currently have complete API coverage, nor is the documentation 100% complete.
 
 ### Objective C and Swift
 
@@ -116,3 +117,11 @@ and is installed using `cocoapods`.
 The Podfile entry is:
 
 `pod 'ObjectiveCloudant'`
+
+More information about ObjectiveCloudant,
+including details of installation and how to use the library to store, index and query remote JSON data on Cloudant,
+is available [here](https://github.com/cloudant/objective-cloudant).
+
+The library is an early release version.
+As such it does not currently have complete Cloudant API coverage.
+
