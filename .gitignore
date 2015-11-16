@@ -30,3 +30,4 @@ build/
 
 /.project
 /.DS_Store
+vendor

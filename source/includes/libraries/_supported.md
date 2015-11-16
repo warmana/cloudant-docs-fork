@@ -30,8 +30,8 @@ along with details and examples of how to use the library.
 <th>Examples and Tutorials</th>
 </tr>
 <tr>
-<td><ul><li><a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a></li>
-<li><a target="_blank" href="http://code.google.com/p/ektorp/">ektorp</a></li>
+<td>Supported:<ul><li><a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a></li></ul>
+Unsupported:<ul><li><a target="_blank" href="http://code.google.com/p/ektorp/">ektorp</a></li>
 <li><a target="_blank" href="http://code.google.com/p/jcouchdb/">jcouchdb</a></li>
 <li><a target="_blank" href="https://github.com/isterin/jrelax">jrelax</a></li>
 <li><a target="_blank" href="http://www.lightcouch.org/">LightCouch</a></li>
