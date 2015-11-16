@@ -1,8 +1,8 @@
 ---
-title: Cloudant Documentation - Visual Guide
+title: Cloudant Documentation - JSON
 
 language_tabs:
-  - http
+  - http 
   - shell: curl
 #  - javascript: node.js
 #  - python
@@ -15,17 +15,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - visual_guides/index
+  - visual_guides/dashboard
 
 ---
-
-<script>
-fragments = {
-  '#dashboard': 'dashboard.html'
-}
-fragment = window.location.hash;
-dest = fragments[fragment];
-if (dest) {
-  window.location = dest;
-}
-</script>
