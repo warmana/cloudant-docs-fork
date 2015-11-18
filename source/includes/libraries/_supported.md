@@ -99,18 +99,19 @@ Unsupported:<ul><li><a target="_blank" href="http://code.google.com/p/ektorp/">e
 
 The couchdb-meteor package provides:
 
-+ Livequery implementation and real-time updates from the database by consuming the CouchDB _changes feed
++ Livequery implementation and real-time updates from the database by consuming the CouchDB `_changes` feed
 + Distributed Data Protocol (DDP) RPC endpoints that update data from clients connected locally
 + Serialization and deserialization of updates to the DDP format
 
 
-**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Prebuilt binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the prebuilt binaries are available.
+**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. pre-built binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the pre-built binaries are available.
 
 To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
 
 `$export COUCHDB_URL=https://username:password@username.cloudant.com`
 
-See <a target="_blank" href="https://docs.cloudant.com/api.html#">API Reference</a> for more information about meteor-couchdb APIs. 
+See [API Reference](api.html) for more information about meteor-couchdb APIs. 
+
 
 ### Python
 
@@ -135,4 +136,5 @@ is available [here](https://github.com/cloudant/objective-cloudant).
 
 The library is an early release version.
 As such it does not currently have complete Cloudant API coverage.
+
 
