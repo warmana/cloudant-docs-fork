@@ -8,9 +8,10 @@ These include:
 - [Mobile](libraries.html#mobile)
 - [Java](libraries.html#java)
 - [Node.js](libraries.html#node.js)
+- [Couchdb](libraries.html#couchdb)
 - [Python](libraries.html#python)
 - [Objective C and Swift](libraries.html#objective-c-and-swift)
-- [Couchdb](libraries.html#couchdb)
+
 
 A supported library is one where you can contact Cloudant if you encounter a specific, reproducible problem with the library.
 
