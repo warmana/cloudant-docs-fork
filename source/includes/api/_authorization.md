@@ -181,7 +181,7 @@ POST https://<username>.cloudant.com/_api/v2/api_keys HTTP/1.1
 ```
 
 ```shell
-curl -X POST https://$USERNAME:$PASSWORD@cloudant.com/_api/v2/api_keys
+curl -X POST https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/api_keys
 ```
 
 ```javascript
@@ -220,3 +220,25 @@ an API key has no permissions for anything,
 and must be given permissions explicitly.
 
 The response contains the generated key and password.
+
+### Deleting API keys
+
+#### To remove an API key using the Dashboard
+
+1.	Click on `Databases` -> `Permissions`.
+2.	Hover over the API key you would like to delete.
+3.	Click the '`X`' that appears when you hover over the API key.
+
+#### To remove an API key using the Cloudant API
+
+Use the [modifying permissions](#modifying-permissions) technique to remove the API key from the list of users with access permission.
+
+This works because an API key is similar to a user,
+and has been granted access permissions.
+By removing the API key from the list of users that have access permissions,
+the effect is to delete the API key.
+
+To remove the API key,
+send an HTTP `PUT` request to the same `_security` API endpoint you used to [create the API key](#creating-api-keys).
+Provide an updated list of the usernames that have access permission.
+The updated list should _omit_ the API key.

@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - Backup Guide
+title: Cloudant Documentation - Visual Guide
 
 language_tabs:
   - http
@@ -15,5 +15,17 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-- guides/backup-guide
+  - visual_guides/index
+
 ---
+
+<script>
+fragments = {
+  '#dashboard': 'dashboard.html'
+}
+fragment = window.location.hash;
+dest = fragments[fragment];
+if (dest) {
+  window.location = dest;
+}
+</script>

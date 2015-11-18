@@ -80,7 +80,8 @@ fragments = {
   '#active-tasks': 'active_tasks.html',
   '#advanced': 'advanced.html',
   '#creating-an-index': 'cloudant_query.html#creating-an-index',
-  '#finding-documents-using-an-index': 'cloudant_query.html#finding-documents-using-an-index'
+  '#finding-documents-using-an-index': 'cloudant_query.html#finding-documents-using-an-index',
+  '#monitoring': 'monitoring.html'
 }
 fragment = window.location.hash;
 dest = fragments[fragment];

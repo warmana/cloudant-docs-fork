@@ -17,8 +17,11 @@ Indexes of type `text` have a simple mechanism for automatically indexing all th
 <aside class="warning">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
 
+
 This overview introduces you to Cloudant Query concepts:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/aKnK8MuThjM?rel=0" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
+
+<iframe width="480" height="270" src="https://www.youtube.com/embed/aKnK8MuThjM" frameborder="0" allowfullscreen title="Introducing the New Cloudant Query"></iframe>
+
 
 ### Creating an index
 
@@ -29,6 +32,8 @@ You can create an index with one of two types:
 
 This overview explains how to build and query data using Cloudant Query:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/Y-MFcqFHe4I?rel=0" frameborder="0" allowfullscreen title="Building and Querying using Cloudant Query"></iframe>
+
+
 
 #### Creating a "type=json" index
 
@@ -154,14 +159,23 @@ as it might be a very resource-consuming activity.</aside>
 ##### The `default_field` field
 
 The `default_field` value specifies how the `$text` operator can be used with the index.
-If the `default_field` is not specified,
-it defaults to `true` and the standard analyzer is used.
+
+The `default_field` contains two keys:
+
+Key | Description
+-----|------------
+`"enabled"` | Enable or disable the `default_field index` (default value: `true`). 
+`"analyzer"` | Specifies the Lucene analyzer to use (default value: `"standard"`).
 
 The `analyzer` key in the `default_field` specifies how the index analyzes text.
 The index can subsequently be queried using the `$text` operator.
 See the [Cloudant Search documentation](search.html#analyzers) for alternative analyzers.
 You might choose to use an alternative analyzer when documents are indexed in languages other than English,
 or when you have other special requirements for the analyser such as matching email addresses.
+
+If the `default_field` is not specified,
+or is supplied with an empty object,
+it defaults to `true` and the `"standard"` analyzer is used.
 
 ##### The `selector` field
 
@@ -235,18 +249,18 @@ A list of the available methods and endpoints is provided below:
 Method | Path | Description
 -------|------|------------
 `POST` | `/db/_index` | Create a new index
-`GET` | `/db/_index` | List all indexes
+`GET` | `/db/_index` | List all Cloudant Query indexes
 `DELETE` | `/db/_index` | Delete an index
 `POST`| `/db/_find` | Find documents using an index
 
-### List all indexes
+### List all Cloudant Query indexes
 
 -   **Method**: `GET`
 -   **URL Path**: `/db/_index`
 -   **Response Body**: JSON object describing the indexes
 -   **Roles permitted**: \_reader
 
-When you make a `GET` request to `/db/_index`, you get a list of all indexes in the database. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
+When you make a `GET` request to `/db/_index`, you get a list of all indexes used by Cloudant Query in the database, including the primary index. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
 
 #### Response body
 
@@ -1633,10 +1647,19 @@ using dotted notation if desired for sub-document fields.
 
 The direction value is `"asc"` for ascending, and `"desc"` for descending.
 
+<aside class="warning">If you omit the direction value,
+the default `"asc"` is used.</aside>
+
 > Example of simple sort syntax:
 
 ```json
 [{"fieldName1": "desc"}, {"fieldName2": "desc" }]
+```
+
+> Example of simple sort, assuming default ascending direction for both fields:
+
+```json
+[{"fieldNameA"}, {"fieldNameB"}]
 ```
 
 <div></div>

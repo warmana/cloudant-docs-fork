@@ -43,7 +43,7 @@ then
       security='
         {
           "cloudant": {
-            "nobody":["_reader"],
+            "kelepirstantoneatessolit":["_reader"],
             "docs-testb":["_reader","_writer","_admin","_replicator"]
           }
         }'

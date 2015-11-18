@@ -18,20 +18,11 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 ### Java
 
-<a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a> is the official Cloudant library for Java. You can add it as a dependency to your maven or gradle builds.
+[java-cloudant](https://github.com/cloudant/java-cloudant) is the official Cloudant library for Java.
 
-#### Maven dependency details
-`<dependency>`<br/>
-&nbsp;&nbsp;`<groupId>com.cloudant</groupId>`<br/>
-&nbsp;&nbsp;`<artifactId>cloudant-client</artifactId>`<br/>
-&nbsp;&nbsp;`<version>1.1.2</version>`<br/>
-`</dependency>`
-
-#### Gradle dependency details
-
-`dependencies {`<br/>
-&nbsp;&nbsp;`compile group: 'com.cloudant', name: 'cloudant-client', version:'1.1.2'`<br/>
-`}`
+Information about installing the library by adding it as a dependency to your maven or gradle builds is available
+[here](https://github.com/cloudant/java-cloudant#installation-and-usage),
+along with details and examples of how to use the library.
 
 <table>
 <tr>
@@ -39,8 +30,8 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 <th>Examples and Tutorials</th>
 </tr>
 <tr>
-<td><ul><li><a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a></li>
-<li><a target="_blank" href="http://code.google.com/p/ektorp/">ektorp</a></li>
+<td>Supported:<ul><li><a target="_blank" href="https://github.com/cloudant/java-cloudant">java-cloudant</a></li></ul>
+Unsupported:<ul><li><a target="_blank" href="http://code.google.com/p/ektorp/">ektorp</a></li>
 <li><a target="_blank" href="http://code.google.com/p/jcouchdb/">jcouchdb</a></li>
 <li><a target="_blank" href="https://github.com/isterin/jrelax">jrelax</a></li>
 <li><a target="_blank" href="http://www.lightcouch.org/">LightCouch</a></li>
@@ -120,3 +111,30 @@ To configure the Apache CouchDB or Cloudant server connection information, pass 
 `$export COUCHDB_URL=https://username:password@username.cloudant.com`
 
 See [API Reference](api.html) for more information about meteor-couchdb APIs. 
+
+
+### Python
+
+A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
+
+The library is a preview (alpha version).
+As such it does not currently have complete API coverage, nor is the documentation 100% complete.
+
+### Objective C and Swift
+
+A supported library is available for working with Cloudant using Objective-C on iOS, and using Swift on OS&nbsp;X.
+The library is called ObjectiveCloudant,
+and is installed using `cocoapods`.
+
+The Podfile entry is:
+
+`pod 'ObjectiveCloudant'`
+
+More information about ObjectiveCloudant,
+including details of installation and how to use the library to store, index and query remote JSON data on Cloudant,
+is available [here](https://github.com/cloudant/objective-cloudant).
+
+The library is an early release version.
+As such it does not currently have complete Cloudant API coverage.
+
+

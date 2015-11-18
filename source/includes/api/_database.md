@@ -204,7 +204,7 @@ The response is an array with all database names.
 A video explaining how to get all documents from a Cloudant database is available here:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/Zoaifed-fWQ?rel=0" frameborder="0" allowfullscreen title="Using the primary index, overview video"></iframe>
 
-> Getting all documents in a database
+> Getting all documents in a database:
 
 ```http
 GET /_all_docs HTTP/1.1
@@ -226,6 +226,16 @@ db.list(function (err, body, headers) {
 });
 ```
 
+> Getting all documents in a database that match at least one of the specified keys:
+
+```http
+GET /_all_docs?keys=["somekey","someotherkey"] HTTP/1.1
+```
+
+```shell
+curl https://%USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_all_docs?keys=["somekey","someotherkey"]
+```
+
 To list all the documents in a database, make a GET request against `https://$USERNAME.cloudant.com/$DATABASE/_all_docs`.
 
 The `_all_docs` endpoint accepts these query arguments:
@@ -237,16 +247,20 @@ Argument | Description | Optional | Type | Default
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
 `conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
-`key` | Return only documents that match the specified key | yes | string |  
+`key` | Return only documents with IDs that match the specified key | yes | string |  
+`keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
 `limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
 <aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
+<aside class="warning">When using the `keys` argument,
+it might be easier to use `POST` rather than `GET` if you need a large number of strings to list the desired keys.</aside>
+
 <div></div>
 
-> Example response:
+> Example response after requesting all documents in a database:
 
 ```json
 {

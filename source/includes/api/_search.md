@@ -26,7 +26,7 @@ This video explains how to perform group, facet, and geo searches using search i
 
 ### Index functions
 
-> Example search index function (see also [index guard clauses](#index-guard-clauses)):
+> Example search index function:
 
 ```
 function(doc){
@@ -336,7 +336,7 @@ You can test the results of analyzer tokenization by posting sample data to the 
 ### Queries
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_search/$INDEX_NAME?q=$QUERY \
+curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_ID/_search/$INDEX_NAME?q=$QUERY \
      -u $USERNAME
 ```
 
@@ -354,7 +354,7 @@ db.search($DESIGN_ID, $SEARCH_INDEX, {
 });
 ```
 
-Once you've got an index written, you can query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_search/$INDEX_NAME`. Specify your search query in the `query` query parameter.
+Once you've got an index written, you can query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_ID/_search/$INDEX_NAME`. Specify your search query in the `query` query parameter.
 
 #### Query Parameters
 <aside class="warning">You must enable faceting before you can use the following parameters:
