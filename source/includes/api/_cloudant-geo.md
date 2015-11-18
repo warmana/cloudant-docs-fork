@@ -246,7 +246,7 @@ Note that Cloudant Geo uses `intersects` as the default geometric relation when 
 
 Cloudant Geo works with geospatial relationships and follows the [DE-9IM specification](https://en.wikipedia.org/wiki/DE-9IM) for geometric relations. These define the different ways in which two geospatial objects are related to each other, if indeed they are related at all. For example, you might specify a polygon object that describes a housing district. You could then query your document database for people residing within that district, by requesting all documents where the place of residence is *contained* within the polygon object.
 
-Given a query geometry parameter, you can then specify a geometric relationship against the query geometry when querying the documents in your database. The query parameter of geometric relation is *optional* and includes the following geometric relations:
+Given a query geometry, you can then specify a geometric relationship against the query geometry when querying the documents in your database. Specifically, let Q be a query geometry, a GeoJSON document R is regarded as the result when a geometric relation between Q and R returns true, where the geometric relations are defined bellow:
 
 <table>
 <colgroup>
@@ -262,61 +262,66 @@ Given a query geometry parameter, you can then specify a geometric relationship 
 <tbody>
 
 <tr class="odd">
-<td align="left"><code>A contains B</code></td>
-<td align="left">True if no points of B lie in the exterior of A.</td>
+<td align="left"><code>Q contains R</code></td>
+<td align="left">Query returns all geometries whose points do not lie in the exterior of R.</td>
 
 </tr>
 <tr class="even">
-<td align="left"><code>A contains_properly B</code></td>
-<td align="left">True if B intersects the interior of A but not the boundary (or exterior) of A.</td>
+<td align="left"><code>Q contains_properly R</code></td>
+<td align="left">True if R intersects the interior of Q but not the boundary (or exterior) of Q.</td>
 </tr>
 
 <tr class="odd">
-<td align="left"><code>A covered_by B</code></td>
-<td align="left">True if A is entirely within B. <code>covered_by</code> returns the exact opposite result of <code>covers</code>.</td>
+<td align="left"><code>Q covered_by R</code></td>
+<td align="left">True if Q is entirely within R. <code>covered_by</code> returns the exact opposite result of <code>covers</code>.</td>
 </tr>
 
 <tr class="even">
-<td align="left"><code>A covers B</code></td>
-<td align="left">True if B is entirely within A. <code>covers</code> returns the exact opposite result of <code>covered_by</code>.</td>
+<td align="left"><code>Q covers R</code></td>
+<td align="left">True if R is entirely within Q. <code>covers</code> returns the exact opposite result of <code>covered_by</code>.</td>
 </tr>
 
 <tr class="odd">
-<td align="left"><code>A crosses B</code></td>
-<td align="left">Case 1: True if the interiors intersect and at least the interior of A intersects with the exterior of B. Apply to the <code>multipoint</code>/<code>linestring</code>, <code>multipoint</code>/<code>multilinestring</code>, <code>multipoint</code>/<code>polygon</code>, <code>multipoint</code>/<code>multipolygon</code>, <code>linestring</code>/<code>polygon</code>, and <code>linestring</code>/<code>multipolygon</code> overlays.<br></br>
-<br>Case 2: True if the dimension of the intersection of the interiors is a point. Apply to the <code>linestring</code>/<code>linestring</code>, <code>linestring</code>/<code>multilinestring</code>, and <code>multilinestring</code>/</code>multilinestring</code> overlays.  </br></td>
+<td align="left"><code>Q crosses R</code></td>
+<td align="left">Case 1: True if the interiors intersect and at least the interior of Q intersects with the exterior of R. Apply to the geometry pairs of `multipoint/linestring`, `multipoint/multilinestring`, `multipoint/polygon`, `multipoint/multipolygon`, `linestring/polygon`, and `linestring/multipolygon`.</br>
+<br>Case 2: True if the intersection of the interiors of Q and R is a point. Apply to the geometry pairs of `linestring/linestring`, `linestring/multilinestring`, and `multilinestring/multilinestring`.</br></td>
 </tr>
 
 <tr class="even">
-<td align="left"><code>A disjoint B</code></td>
-<td align="left">True if the two geometries do not intersect. <code>disjoint</code> returns the exact opposite result of <code>intersects</code>.</td>
+<td align="left"><code>Q disjoint R</code></td>
+<td align="left">True if the two geometries of Q and R do not intersect. <code>disjoint</code> returns the exact opposite result of <code>intersects</code>.</td>
 </tr>
 
 <tr class="odd">
-<td align="left"><code>A intersects B</code></td>
-<td align="left">True if the two geometries intersect. <code>intersects</code> returns the exact opposite result of <code>disjoint</code>.</td>
+<td align="left"><code>Q intersects R</code></td>
+<td align="left">True if the two geometries of Q and R intersect. <code>intersects</code> returns the exact opposite result of <code>disjoint</code>.</td>
 </tr>
 
 <tr class="even">
-<td align="left"><code>A overlaps B</code></td>
-<td align="left">Case 1: True if the interior of both geometries intersects the interior and exterior of the other geometries. Apply to the <code>polygon</code>/<code>polygon</code>, <code>multipoint</code>/<code>multipoint</code>, and <code>multipolygon</code>/<code>multipolygon</code> overlays.<br></br>
-<br>Case 2: True if the intersection of the geometries is a linestring. Apply to <code>linestring</code>/<code>linestring</code> and <code>multilinestring</code>/<code>multilinestring</code>  overlays. </br></td>
+<td align="left"><code>Q overlaps R</code></td>
+<td align="left">Case 1: True if the interior of both geometries intersects the interior and exterior of the other. Apply to the geometry pairs of `polygon/polygon`, `multipoint/multipoint`, and `multipolygon/multipolygon`.</br>
+<br>Case 2: True if the intersection of the geometries is a linestring. Apply to the geometry pairs of linestring/linestring and multilinestring/multilinestring. </br></td>
 </tr>
 
 <tr class="odd">
-<td align="left"><code>A touches B</code></td>
-<td align="left">True if, and only if, the common points of two geometries are found only at the boundaries of two geometries. At least one geometry must be a <code>linestring</code>, <code>polygon</code>, <code>multilinestring</code>, or <code>multipolygon</code>.</td>
+<td align="left"><code>Q touches R</code></td>
+<td align="left">True if, and only if, the common points of two geometries are found only at the boundaries of two geometries. At least one geometry must be a linestring, polygon, multilinestring, or multipolygon.</td>
 </tr>
 
 <tr class="even">
-<td align="left"><code>A within B</code></td>
-<td align="left">True if A lies entirely within B. <code>within</code> returns the exact opposite result of <code>contains</code>.</td>
+<td align="left"><code>Q within R</code></td>
+<td align="left">True if Q lies entirely within R. <code>within</code> returns the exact opposite result of <code>contains</code>.</td>
 </tr>
 
 </tbody>
 </table>
 
-Cloudant Geo also provides a special geometric relation `nearest=true` that can be used with other geometric relations together to return nearest neighbor query results.
+> Example of returning all geometries which are contained by a `polygon`:
+
+```
+?relation=contains&g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
+```
+
 
 #### Result Set
 
