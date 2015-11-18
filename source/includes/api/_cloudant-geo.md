@@ -322,6 +322,21 @@ Given a query geometry, you can then specify a geometric relationship against th
 ?relation=contains&g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
 ```
 
+#### Nearest neighbor search
+
+Cloudant Geo supports nearest neighbor search (known as NN search) if provided `nearest=true`, which returns all results by sorting their distances to the center of the query geometry. This geometric relation `nearest=true` can be used either with all above geometric relations or alone.
+
+For example, one policeman may search five crimes which occured nearest to a specific location by issuing the following query.
+
+> Example query to find nearest five crimes against a given location:
+
+```
+https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx
+?g=POINT(-71.0537124 42.3681995)&nearest=true&limit=5
+```
+
+It is important to note that `nearest=true` can change the semantics of a Cloudant Geo search. For example, without `nearest=true` in the above query, we can only get the GeoJSON documents whose coordinates equal to the given query point `(-71.0537124 42.3681995)` or empty result set; however, with `nearest=true` we can have all GeoJSON documents in the database returned whose orders are measured by their distances to the query point.
+
 
 #### Result Set
 
