@@ -5,11 +5,12 @@ Client libraries are the tools that let you develop your own applications to wor
 Some client libraries are formally [supported](libraries.html#supported-client-libraries) by Cloudant.
 These include:
 
--	[Mobile](libraries.html#mobile)
--	[Java](libraries.html#java)
--	[Node.js](libraries.html#node.js)
--	[Python](libraries.html#python)
--	[Objective C and Swift](libraries.html#objective-c-and-swift)
+- [Mobile](libraries.html#mobile)
+- [Java](libraries.html#java)
+- [Node.js](libraries.html#node.js)
+- [Python](libraries.html#python)
+- [Objective C and Swift](libraries.html#objective-c-and-swift)
+- [Couchdb](libraries.html#couchdb)
 
 A supported library is one where you can contact Cloudant if you encounter a specific, reproducible problem with the library.
 
