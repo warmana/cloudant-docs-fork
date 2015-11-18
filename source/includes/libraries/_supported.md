@@ -108,7 +108,7 @@ as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-re
 
 The couchdb-meteor package provides:
 
-+ Livequery implementation and real-time updates from the database by consuming the CouchDB _changes feed
++ Livequery implementation and real-time updates from the database by consuming the CouchDB `_changes` feed
 + Distributed Data Protocol (DDP) RPC endpoints that update data from clients connected locally
 + Serialization and deserialization of updates to the DDP format
 
@@ -119,4 +119,4 @@ To configure the Apache CouchDB or Cloudant server connection information, pass 
 
 `$export COUCHDB_URL=https://username:password@username.cloudant.com`
 
-See <a target="_blank" href="https://docs.cloudant.com/api.html#">API Reference</a> for more information about meteor-couchdb APIs. 
+See [API Reference](api.html) for more information about meteor-couchdb APIs. 
