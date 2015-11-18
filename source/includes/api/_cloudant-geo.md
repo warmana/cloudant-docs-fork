@@ -246,7 +246,7 @@ Note that Cloudant Geo uses `intersects` as the default geometric relation when 
 
 Cloudant Geo works with geospatial relationships and follows the [DE-9IM specification](https://en.wikipedia.org/wiki/DE-9IM) for geometric relations. These define the different ways in which two geospatial objects are related to each other, if indeed they are related at all. For example, you might specify a polygon object that describes a housing district. You could then query your document database for people residing within that district, by requesting all documents where the place of residence is *contained* within the polygon object.
 
-Given a query geometry, you can then specify a geometric relationship against the query geometry when querying the documents in your database. Specifically, let Q be a query geometry, a GeoJSON document R is regarded as the result when a geometric relation between Q and R returns true, where the geometric relations are defined bellow:
+When you specify a query geometry, you can specify a geometric relationship against the query geometry when querying the documents in your database. Specifically, query geometry equals Q, R equals a GeoJSON document with R regarded as the result when a geometric relation between Q and R returns true. The geometric relations are defined in the following table:
 
 <table>
 <colgroup>
@@ -324,9 +324,9 @@ Given a query geometry, you can then specify a geometric relationship against th
 
 #### Nearest neighbor search
 
-Cloudant Geo supports nearest neighbor search (known as NN search) if provided `nearest=true`, which returns all results by sorting their distances to the center of the query geometry. This geometric relation `nearest=true` can be used either with all above geometric relations or alone.
+Cloudant Geo supports nearest neighbor search, known as NN search. If provided, `nearest=true` returns all results by sorting their distances to the center of the query geometry. This geometric relation `nearest=true` can be used either with all above geometric relations or alone.
 
-For example, one policeman may search five crimes which occured nearest to a specific location by issuing the following query.
+For example, one policeman might search five crimes which occurred near a specific location by issuing the query in the following example.
 
 > Example query to find nearest five crimes against a given location:
 
@@ -335,7 +335,7 @@ https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx
 ?g=POINT(-71.0537124 42.3681995)&nearest=true&limit=5
 ```
 
-It is important to note that `nearest=true` can change the semantics of a Cloudant Geo search. For example, without `nearest=true` in the above query, we can only get the GeoJSON documents whose coordinates equal to the given query point `(-71.0537124 42.3681995)` or empty result set; however, with `nearest=true` we can have all GeoJSON documents in the database returned whose orders are measured by their distances to the query point.
+It is important to note that the `nearest=true` search can change the semantics of a Cloudant Geo search. For example, without `nearest=true` in the example query above, the results only include the GeoJSON documents whose coordinates equal the given query point `(-71.0537124 42.3681995)` or empty result set. However, by using the `nearest=true` search, the results include all GeoJSON documents in the database whose order is measured by the distance to the query point.
 
 
 #### Result Set
