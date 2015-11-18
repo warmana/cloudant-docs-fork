@@ -181,7 +181,7 @@ POST https://<username>.cloudant.com/_api/v2/api_keys HTTP/1.1
 ```
 
 ```shell
-curl -X POST https://$USERNAME:$PASSWORD@cloudant.com/_api/v2/api_keys
+curl -X POST https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/api_keys
 ```
 
 ```javascript
