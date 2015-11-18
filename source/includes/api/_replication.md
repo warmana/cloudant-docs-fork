@@ -1,4 +1,6 @@
-<h2 id="ReplicationAPI">Replication</h2>
+<div id="ReplicationAPI"></div>
+
+## Replication
 
 Cloudant replication is the process that synchronizes ('syncs') the state of two databases.
 Any change which has occured in the source database is reproduced in the target database.
@@ -43,13 +45,35 @@ Field&nbsp;Name | Required | Description
 `filter` | no | Name of a [filter function](design_documents.html#filter-functions) that can choose which documents get replicated.
 `proxy` | no | Proxy server URL.
 `query_params` | no | Object containing properties that are passed to the [filter function](design_documents.html#filter-functions).
+`since_seq` | no | Sequence from which the replication should start. More information about `since_seq` is available [here](replication.html#since-seq-field).
 <div id="checkpoints">`use_checkpoints`</div> | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
-`user_ctx` | no | An object containing the username and optionally an array of roles, e.g.: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
-`since_seq` | no | Sequence from which the replication should start
+`user_ctx` | no | An object containing the username and optionally an array of roles, for example: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
+
+<div id="since-seq-field"></div>
+
+#### The `since_seq` field
+
+If you do not want to replicate the entire contents of a database,
+you can specify a 'replication sequence value' in the `since_seq` field.
+
+The replication sequence value indicates how far you have progressed 'through' a database,
+for example as part of a replication.
+Setting the contents of the `since_seq` field to this value ensures that the replication starts from that point,
+rather than from the very beginning.
+
+This field is especially useful for creating incremental copies of databases. To do this:
+
+1.	Find the ID of the [checkpoint](replication.html#checkpoints) document for the last replication. It is stored in the  `_replication_id` field of the replication document in the [`_replicator` database](replication.html#replicator-database).
+2.	Open the checkpoint document at `/<database>/_local/<_replication_id>`, where `<_replication_id>` is the ID you found in the previous step, and `<database>` is the name of the source or the target database. The document usually exists on both databases but might only exist on one.
+3.	Search for the `recorded_seq` field of the first element in the history array.
+4.	Set the `since_seq` field in the replication document to the value of the `recorded_seq` field.
+5.	Start replicating to a new database.
+
+<div id="replicator-database"></div>
 
 ### The `/_replicator` database
 
-The `/_replicator` database is a special database where you can `PUT` or `POST` documents to trigger replications, or `DELETE` to cancel ongoing replications. These documents have exactly the same content as the JSON documents you can `POST` to the [`/_replicate/`](#the-/_replicate-endpoint) endpoint. The fields supplied in the replication document are `source`, `target`, `continuous`, `create_target`, `doc_ids`, `filter`, `proxy`, `query_params`, `use_checkpoints`. These fields are described in the [Replication document format](#replication-document-format).
+The `/_replicator` database is a special database where you can `PUT` or `POST` documents to trigger replications, or `DELETE` to cancel ongoing replications. These documents have exactly the same content as the JSON documents you can `POST` to the [`/_replicate/`](replication.html#the-/_replicate-endpoint) endpoint. The fields supplied in the replication document are `source`, `target`, `continuous`, `create_target`, `doc_ids`, `filter`, `proxy`, `query_params`, `use_checkpoints`. These fields are described in the [Replication document format](#replication-document-format).
 
 Replication documents can have a user defined `_id`.
 
@@ -194,9 +218,9 @@ DELETE /_replicator/replication-doc?rev=1-... HTTP/1.1
 curl -X DELETE https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_replicator/replication-doc?rev=1-...
 ```
 
-To cancel a replication, simply [delete its replication document](#document-delete) from the `_replicator` database.
+To cancel a replication, simply [delete its replication document](document.html#document-delete) from the `_replicator` database.
 
-If the replication is in an [`error` state](#replication-status), the replicator makes repeated attempts to achieve a successful replication. A consequence is that the replication document is updated with each attempt. This also changes the document revision value. Therefore, you should get the revision value immediately before deleting the document, otherwise you might get an [HTTP 409 "document update conflict"](http.html#409) response.
+If the replication is in an [`error` state](advanced_replication.html#replication-status), the replicator makes repeated attempts to achieve a successful replication. A consequence is that the replication document is updated with each attempt. This also changes the document revision value. Therefore, you should get the revision value immediately before deleting the document, otherwise you might get an [HTTP 409 "document update conflict"](http.html#409) response.
 
 ### The /\_replicate endpoint
 
@@ -220,7 +244,7 @@ Content-Type: application/json
 }
 ```
 
-You are encouraged to use the [Replicator Database](#the-/_replicator-database) to manage replication.
+You are encouraged to use the [Replicator Database](replication.html#the-/_replicator-database) to manage replication.
 However, replication can also be triggered by sending a `POST` request directly to the `/_replicate` API URL. The `POST` contains a JSON document that describes the desired replication.
 
 -   **Method**: `POST`
