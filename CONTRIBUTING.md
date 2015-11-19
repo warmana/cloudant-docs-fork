@@ -1,6 +1,6 @@
 # Contributing
 
-We expect only that you do your best <3
+We expect only that you do your best.
 
 To contribute:
 
