@@ -1654,7 +1654,7 @@ the default `"asc"` is used.</aside>
 > Example of simple sort, assuming default ascending direction for both fields:
 
 ```json
-[{"fieldNameA"}, {"fieldNameB"}]
+["fieldNameA", "fieldNameB"]
 ```
 
 <div></div>
