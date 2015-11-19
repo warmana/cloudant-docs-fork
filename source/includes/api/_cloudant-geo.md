@@ -246,7 +246,7 @@ Note that Cloudant Geo uses `intersects` as the default geometric relation when 
 
 Cloudant Geo works with geospatial relationships and follows the [DE-9IM specification](https://en.wikipedia.org/wiki/DE-9IM) for geometric relations. These define the different ways in which two geospatial objects are related to each other, if indeed they are related at all. For example, you might specify a polygon object that describes a housing district. You could then query your document database for people residing within that district by requesting all documents where the place of residence is *contained* within the polygon object.
 
-When you specify a query geometry, you can specify a geometric relationship against the query geometry when you query the documents in your database. Specifically, Q is a query geometry and R is a GeoJSON document where R is regarded as the result when a geometric relation between Q and R returns true. The geometric relations are defined in the following table:
+When you specify a query geometry, you can specify a geometric relationship against the query geometry when you query the documents in your database. Specifically, if Q is a query geometry, then a GeoJSON document, R, is regarded as the result when a geometric relation between Q and R returns true. The geometric relations are defined in the following table:
 
 <table>
 <colgroup>
@@ -263,7 +263,7 @@ When you specify a query geometry, you can specify a geometric relationship agai
 
 <tr class="odd">
 <td align="left"><code>Q contains R</code></td>
-<td align="left">Query returns all geometries whose points do not lie in the exterior of R.</td>
+<td align="left">True if no points of R lie in the exterior of Q.</td>
 
 </tr>
 <tr class="even">
