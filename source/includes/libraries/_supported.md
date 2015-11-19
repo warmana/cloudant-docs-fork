@@ -103,8 +103,7 @@ The couchdb-meteor package provides:
 + Serialization and deserialization of updates to the DDP format
 
 
-**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Prebuilt binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the prebuilt binaries are available.
-
+**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Pre-built binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the pre-built binaries are available.
 
 To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
 
