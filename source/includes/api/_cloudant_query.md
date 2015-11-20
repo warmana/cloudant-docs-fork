@@ -32,7 +32,7 @@ This overview explains how to build and query data using Cloudant Query:<br/>
 
 #### Creating a "type=json" index
 
-To create a JSON index in the database $DB, make a `POST` request to `/$DB/_index` with a JSON object describing the index in the request body. The `type` field of the JSON object has to be set to `"json"`. 
+To create a JSON index in the database $DB, make a `POST` request to `/$DB/_index` with a JSON object describing the index in the request body. The `type` field of the JSON object has to be set to `"json"`.
 
 ##### Request Body
 
@@ -159,7 +159,7 @@ The `default_field` contains two keys:
 
 Key | Description
 -----|------------
-`"enabled"` | Enable or disable the `default_field index` (default value: `true`). 
+`"enabled"` | Enable or disable the `default_field index` (default value: `true`).
 `"analyzer"` | Specifies the Lucene analyzer to use (default value: `"standard"`).
 
 The `analyzer` key in the `default_field` specifies how the index analyzes text.
@@ -385,10 +385,8 @@ Elementary selector syntax requires you to specify one or more fields, and the c
 > [A simple selector](try.html#requestType=cq&predefinedQuery=simple)
 
 ```json
-{
-  "selector": {
-    "director": "Lars von Trier"
-  }
+"selector": {
+  "director": "Lars von Trier"
 }
 ```
 
@@ -402,10 +400,8 @@ the full text index is inspected to find any document that includes the word "Bo
 > [A simple selector for a full text index](try.html#requestType=cq&predefinedQuery=bond)
 
 ```json
-{
-  "selector": {
-    "$text": "Bond"
-  }
+"selector": {
+  "$text": "Bond"
 }
 ```
 
