@@ -742,3 +742,21 @@ the default values have some implications:
 For more information about Cloudant and distributed system concepts,
 see the [CAP Theorem](cap_theorem.html) guide,
 or contact Cloudant support.
+
+### TTL - Time to Live
+
+[Time to Live](https://en.wikipedia.org/wiki/Time_to_live) (TTL) is a property of data,
+where after a relative amount of time,
+or at an absolute time,
+the data is deemed to have expired.
+The data itself might be deleted or moved to an alternative (archive) location.
+
+Cloudant does not support Time to Live functionality.
+
+The reason is that Cloudant documents are only soft-deleted,
+not completely deleted.
+The soft deletion involves replacing the original document with a smaller record.
+This small record is required for replication purposes; it helps ensure that the correct revision to use can be identified during replication.
+
+If TTL were available in Cloudant,
+the resulting potential increase in short-lived documents and soft deletion records would mean that the database size could grow in an unbounded fashion.
