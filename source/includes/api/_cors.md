@@ -161,3 +161,18 @@ CORS support is available in the Cloudant dashboard.
 You can update your CORS settings using the CORS tab within the dashboard:
 
 ![CORS dashboard illustration](images/corsdashboard.png)
+
+To see the current CORS configuration,
+simply open the CORS tab in the dashboard.
+
+You can enable or disable CORS using the "`Enable CORS`" checkbox.
+This corresponds to the [`enable_cors` option](cors.html#configuration-endpoints) when changing the CORS configuration from within an application.
+
+To specify that CORS is enabled for all domains,
+select the "`All domains (*)`" option.
+
+To specify that CORS is enabled only for exact origin domains,
+list each of the domains or subdomains using the "`Restrict to specific domains`" option.
+For each domain,
+provide a full URL,
+preferably using the `https` prefix for additional security.
