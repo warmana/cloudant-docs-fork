@@ -1,6 +1,3 @@
-This is the dashboard markdown file for the _account page.
-
-
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
 ## ACCOUNT
@@ -72,3 +69,5 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 * Select the location for your data.
 
 ![alt text](images/visual_guide/6_account/8.png)
+
+---
