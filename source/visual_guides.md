@@ -15,20 +15,13 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - visual/index
+  - visual_guides/index
 
 ---
 
 <script>
 fragments = {
-  '#account': 'account.html'
-  '#active_tasks': 'active_tasks.html'
-  '#databases': 'databases.html'
-  '#helpful_links': 'helpful_links.html'
-  '#overview': 'overview.html'
-  '#replication': 'replication.html'
-  '#support': 'support.html'
-  '#warehousing': 'warehousing.html'
+  '#dashboard': 'dashboard.html'
 }
 fragment = window.location.hash;
 dest = fragments[fragment];
