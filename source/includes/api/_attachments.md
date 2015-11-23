@@ -172,3 +172,18 @@ The content must be provided using BASE64 representation,
 as shown in the example.
 
 [mime]: http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types
+
+### Performance considerations
+
+While document attachments are very useful,
+they do have implications for application performance.
+In particular,
+having a large number of attachments can have an adverse performance impact during replication.
+
+For example,
+if your application requires lots of images to be stored as attachments,
+or has large images,
+a better approach would be to use an alternative BLOb storage mechanism for the images,
+with the image metadata (such as URLs) in Cloudant.
+
+You might find it helpful to carry out performance testing for your specific application to determine which approach works best for your circumstances.  
