@@ -5,7 +5,7 @@ If it's your first time here, scan this section before you scroll further. The s
 ## Database as a Service
 
 As a hosted and managed database-as-a-service (DBaaS),
-Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](#json) data,
+Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
 and 24-hour operational support and maintenance.
 Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
 and is delivered as a multi-tenant, dedicated, and installed service.
@@ -105,25 +105,6 @@ You can continuously replicate. This means that a target database updates every 
 Continuous replication can be used for backups of data, aggregation across multiple databases, or for sharing data.
 
 <aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
-
-## Quorum - writing and reading
-
-When you store data in a distributed database,
-where content is stored in more than one node,
-how do you know when all nodes have received the data?
-Similarly,
-when you are reading data,
-how do you know that the data from the node replying to your request is the same as a copy of the data stored on other nodes?
-
-Cloudant uses the idea of a '[Quorum](http://en.wikipedia.org/wiki/Quorum_%28distributed_computing%29)' to answer these questions.
-A quorum is used to determine whether data has been successfully written or retrieved,
-where the number of nodes that confirm and agree on the data written or read must be at least the number specified as 'quorum'.
-A more detailed discussion is available [here](document.html#quorum).
-
-<aside class="warning">Quorum settings are fixed for multi-tenant systems,
-and cannot be changed.
-For help understanding quorum settings and their implications on dedicated Cloudant systems,
-contact Cloudant support.</aside>
 
 ## Cloudant Local
 

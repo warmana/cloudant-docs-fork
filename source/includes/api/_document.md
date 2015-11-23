@@ -10,7 +10,7 @@ or generated automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_
 The `_rev` field is a revision number, and is [essential to Cloudant's replication protocol](mvcc.html).
 In addition to these two mandatory fields, documents can contain any other content expressed using JSON.
 
-<aside>Cloudant uses an [eventually consistent](./basics.html#consistency) model for data. This means that under some conditions, it is possible that if your application performs a document write or update, followed immediately by a read of the same document, older document content is retrieved. In other words, your application would see the document content as it was *before* the write or update occurred. For more information about this, see the topic on [Consistency](./basics.html#consistency).</aside>
+<aside>Cloudant uses an [eventually consistent](basics.html#consistency) model for data. This means that under some conditions, it is possible that if your application performs a document write or update, followed immediately by a read of the same document, older document content is retrieved. In other words, your application would see the document content as it was *before* the write or update occurred. For more information about this, see the topic on [Consistency](basics.html#consistency).</aside>
 
 <h3 id="documentCreate">Create</h3>
 
@@ -705,43 +705,17 @@ throw({forbidden: 'invalid recipe ingredient'});
 Entries with this error type indicate that the validation routine applied to the document during submission has returned an error.
 
 <div id="quorum"></div>
+
 ### Quorum - writing and reading data
 
 In a distributed system,
 it is possible that a request might take some time to complete.
-A quorum is used to help determine when a given request,
+A 'quorum' mechanism is used to help determine when a given request,
 such as a write or read,
 has completed successfully.
 
-The number of systems deemed to represent a quorum for reading and writing have default values based on the [`n`, the number of replicas for each document](database.html#create),
-where `n` defaults to 3.
-By default,
-the number of systems for a quorum for reading is `r`,
-calculated as `n/2+1`.
-Similarly,
-the number of systems for a quorum for writing is `w`,
-calculated as `n/2+1`.
-
-<aside class="warning">It is not possible to specify the `n` value for a database at creation time on a multi-tenant system.
 For help understanding quorum settings and their implications on dedicated Cloudant systems,
-contact Cloudant support.</aside>
-
-Cloudant implements a 'sloppy quorum' mechanism.
-This means data is still written or read,
-because if a primary node (one that would normally be used for the write or read) is not available,
-another available node accepts and responds to the request.
-
-The default quorum values should result in the best overall performance for all users.
-However,
-the default values have some implications:
-
--	Concurrent updates to the same document are possible and would generate a conflict internally. Avoid making rapid updates to the same document. Have a strategy for handling conflicts, as you might be creating them unwittingly.
--	There are no "read your writes" guarantees. You might write a document and then have a read request serviced from a shard copy which has not yet received the write. Another scenario would be a write where quorum was not met; immediately reading the same document back might return a different revision.
--	You should assume that secondary index reads are always eventually consistent. This is because a read request might be serviced by a shard copy that has not yet received the previous write.
-
-For more information about Cloudant and distributed system concepts,
-see the [CAP Theorem](cap_theorem.html) guide,
-or contact Cloudant support.
+contact Cloudant support.
 
 ### TTL - Time to Live
 
