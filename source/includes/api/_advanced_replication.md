@@ -240,3 +240,9 @@ These options can be set for a replication by including them in the replication 
 -   `retries_per_request` - The maximum number of retries per request. Before a retry, the replicator will wait for a short period of time before repeating the request. This period of time doubles between each consecutive retry attempt. This period of time never goes beyond 5 minutes and its minimum value (before the first retry is attempted) is 0.25 seconds. The default value of this parameter is 10 attempts.
 -   `socket_options` - A list of options to pass to the connection sockets. The available options can be found in the [documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). Default value is `[{keepalive, true}, {nodelay, false}]`.
 
+### Attachments
+
+Having large numbers of attachments on documents might cause an adverse effect on replication performance.
+
+For more information about the effect of attachments on replication performance,
+see [here](attachments.html#performance-considerations).
