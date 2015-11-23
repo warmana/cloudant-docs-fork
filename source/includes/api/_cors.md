@@ -1,5 +1,4 @@
-CORS
-----
+## CORS
 
 [Cross-origin resource sharing (CORS)](http://www.w3.org/TR/cors/) is a mechanism that allows resources such as JSON documents in a Cloudant database to be requested from Javascript running on a website loaded from another domain.
 These "cross-domain" requests would normally be forbidden by web browsers, due to the
@@ -155,3 +154,10 @@ Content-Length: 178
 
 ... returns the CORS config in a JSON document.
 
+### Dashboard
+
+CORS support is available in the Cloudant dashboard.
+
+You can update your CORS settings using the CORS tab within the dashboard:
+
+![CORS dashboard illustration](images/corsdashboard.png)
