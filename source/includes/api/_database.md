@@ -39,30 +39,17 @@ The database name must start with a lowercase letter and contain only the follow
  - Digits (0-9)
  - Any of the characters _, $, (, ), +, -, and /
  
-#### Query Parameters
+#### Database topology
 
-> Create a database with non-default values for `n` and `q`
+It is possible to modify the configuration of a database sharding topology of a database on dedicated database clusters.
+This can be done at the time a database is created.
+However,
+poor choice for configuration parameters can adversely affect database performance.
 
-```shell
-curl -X PUT 'http://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE?n=2&q=32'
-```
+For more information about modifying database configuration in a dedicated database environment,
+please contact Cloudant support.
 
-```http
-PUT /$DATABASE?n=2&q=32 HTTP/1.1
-HOST: $ACCOUNT.cloudant.com
-```
-
-There are two configuration parameters that control the sharding topology of a database.
-The defaults are specified in the server configuration and may be overridden at database creation time on dedicated database clusters.
-`n` specifies the number of replicas of each document,
-while `q` fixes the number of partitions of the database.
-On multi-tenant clusters,
-the defaults can not be overwritten.
-
-Parameter | Description | Default
-----------|-------------|----------
-n         | number of replicas of each document | 3
-q         | number of partitions of the database | 4
+<aside class="warning">It is not possible to modify the configuration used for databases on multi-tenant clusters.</aside>
 
 #### Response
 
