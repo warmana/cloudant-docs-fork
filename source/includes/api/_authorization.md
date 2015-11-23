@@ -162,6 +162,12 @@ for example by granting read,
 write,
 or admin access permissions.
 
+API keys are not the _same_ as normal user accounts.
+In particular,
+an API key does not have access to the dashboard.
+An API key is primarily used to enable applications to access a database,
+with a determined level of access control.
+
 <aside class="warning">If you choose to generate an API key through the dashboard,
 remember to record the key name and password.
 These are both randomly generated,
