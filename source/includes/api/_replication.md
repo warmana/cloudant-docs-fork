@@ -202,7 +202,12 @@ This returns any active tasks, including replications. To filter for replication
 This overview explains how to check replication status:<br/>
 <iframe width="480" height="270" src="https://www.youtube.com/embed/TIXpJmmqP6Y?rel=0" frameborder="0" allowfullscreen title="Replication status check video"></iframe>
 
-For details about the information provided by `_active_tasks`, see [Active tasks](active_tasks.html).
+If you monitor the `_active_tasks` and find that the state of a replication is not changing,
+you might have a 'stalled' replication.
+If you are sure that the replication has stalled,
+contact Cloudant support for assistance.
+
+For more details about the information provided by `_active_tasks`, see [Active tasks](active_tasks.html).
 
 <h3></h3>
 
@@ -244,7 +249,9 @@ Content-Type: application/json
 }
 ```
 
-You are encouraged to use the [Replicator Database](replication.html#the-/_replicator-database) to manage replication.
+It is preferable to use the [Replicator Database](replication.html#the-/_replicator-database) to manage replication.
+Details of why are provided [here](replication.html#avoiding-the-/_replicate-endpoint).
+
 However, replication can also be triggered by sending a `POST` request directly to the `/_replicate` API URL. The `POST` contains a JSON document that describes the desired replication.
 
 -   **Method**: `POST`
@@ -273,6 +280,22 @@ The specification of the replication request is controlled through the JSON cont
 -   **proxy**: (Optional) Address of a proxy server through which replication should occur.
 -   **source**: Source database URL, including user name and password.
 -   **target**: Target database URL, including user name and password.
+
+#### Avoiding the /\_replicate endpoint
+
+You should use the `/_replicator` database in preference to the `/_replicate` endpoint.
+
+A significant reason for this is that in the event of problem during replication,
+such as a stall,
+timeout,
+or application crash,
+a replication defined within the `/_replicator` database is automatically restarted by the system.
+
+If you defined a replication by sending a request to the `/_replicate` endpoint,
+it cannot be restarted by the system if a problem occurs because the replication request does not persist.
+
+In addition,
+replications defined in the `/_replicator` database are easier to [monitor](advanced_replication.html#replication-status).
 
 ### Replication Operation
 
