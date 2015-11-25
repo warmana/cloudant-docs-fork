@@ -23,7 +23,6 @@ includes:
   - visual/warehousing
   - visual/support
   - visual/helpful_links
-  
 
 ---
 

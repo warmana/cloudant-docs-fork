@@ -113,8 +113,7 @@ for filename in [
 'search',
 'transactions',
 'try',
-'using_views',
-'dashboard'
+'using_views'
 ]:
 	index_file(filename)
 
