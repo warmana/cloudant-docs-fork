@@ -2,8 +2,8 @@
 title: Cloudant Documentation - JSON
 
 language_tabs:
-  - http 
-  - shell: curl
+#  - http 
+#  - shell: curl
 #  - javascript: node.js
 #  - python
 
@@ -15,6 +15,20 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - visual_guides/dashboard
+  - visual/overview
+  - visual/account
+  - visual/databases
+  - visual/active_tasks
+  - visual/replication
+  - visual/warehousing
+  - visual/support
+  - visual/helpful_links
+  
 
 ---
+
+<style>
+hr {
+display: none;
+}
+</style>
