@@ -148,6 +148,20 @@ Filters are invoked by using a JSON statement that identifies:
 
 Arguments can be supplied to the filter function by including key:value pairs in the `query_params` field of the invocation.
 
+### Named Document Replication
+
+> Example replication of specific documents:
+
+```json
+{
+  "source": "http://username:password@example.org/example-database",
+  "target": "http://username:password@127.0.0.1:5984/example-database",
+  "doc_ids": ["foo", "bar", "baz"]
+}
+```
+
+Sometimes you only want to replicate some documents. For this simple case, you do not need to write a filter function. To replicate specific documents, add the list of keys as an array in the `doc_ids` field.
+
 ### Replicating through a proxy
 
 > Example showing replication through a proxy:
