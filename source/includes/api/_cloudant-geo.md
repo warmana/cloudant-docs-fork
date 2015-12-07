@@ -223,7 +223,7 @@ A query geometry paramter must be provided for a Cloudant Geo search. There are 
 
 <tr class="even">
 <td align="left"><code>radius</code></td>
-<td align="left">Specify a cycle query with a latitude <code>lat</code>, a longitude <code>lon</code>, and a radius <code>radius</code> measured in meters.</td>
+<td align="left">Specify a circle query with a latitude <code>lat</code>, a longitude <code>lon</code>, and a radius <code>radius</code> measured in meters.</td>
 </tr>
 
 <tr class="odd">
@@ -361,7 +361,7 @@ You can use the following parameters to deal with the returned result set, such 
 
 <tr class="even">
 <td align="left"><code>format</code></td>
-<td align="left">Causes the query output to be in a specific format of <code>legacy | geojson | view | application/vnd.geo+json</code>. The default format is <code>view</code>.</td>
+<td align="left">Causes the query output to be in a specific format of <code>legacy | geojson | view | application/vnd.geo+json</code>. The default format is <code>view</code>. See examples of different query formats below. </td>
 </tr>
 
 <tr class="odd">
@@ -387,6 +387,82 @@ You can use the following parameters to deal with the returned result set, such 
 </tbody>
 </table>
 
+#####Query format examples
+> Example query to return results with `format=legacy`:
+
+```
+curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=legacy&lat=42.3397&lon=-71.07959&radius=10'
+```
+
+> Example response to the query:
+
+```json
+{
+    "bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIzLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
+    "features": [
+        {
+            "id": "79f14b64c57461584b152123e38a8e8b"
+        }
+    ],
+    "type": "FeatureCollection"
+}
+```
+
+> Example query to return results with `format=view`:
+
+```
+curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=view&lat=42.3397&lon=-71.07959&radius=10'
+```
+
+> Example response to the query:
+
+```json
+{
+    "bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIxLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
+    "rows": [
+        {
+            "geometry": {
+                "coordinates": [
+                    -71.07958956,
+                    42.33967135
+                ],
+                "type": "Point"
+            },
+            "id": "79f14b64c57461584b152123e38a8e8b"
+        }
+    ]
+}
+```
+
+
+> Example query to return results with `format=geojson` or `format=application/vnd.geo+json`:
+
+```
+curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=geojson&lat=42.3397&lon=-71.07959&radius=10'
+```
+
+> Example response to the query:
+
+```json
+{
+    "bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIyLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
+    "features": [
+        {
+            "_id": "79f14b64c57461584b152123e38a8e8b",
+            "geometry": {
+                "coordinates": [
+                    -71.07958956,
+                    42.33967135
+                ],
+                "type": "Point"
+            },
+            "properties": [],
+            "type": "Feature"
+        }
+    ],
+    "type": "FeatureCollection"
+}
+```
 
 ### Example: Querying a Cloudant Geo index
 
