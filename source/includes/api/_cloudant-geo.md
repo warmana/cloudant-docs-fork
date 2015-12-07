@@ -361,33 +361,8 @@ You can use the following parameters to deal with the returned result set, such 
 
 <tr class="even">
 <td align="left"><code>format</code></td>
-<td align="left">Causes the query output to be in a specific format of <code>legacy | geojson | view | application/vnd.geo+json</code>. The default format is <code>view</code>. See examples of different query formats below. </td>
-</tr>
+<td align="left">Causes the query output to be in a specific format of <code>legacy | geojson | view | application/vnd.geo+json</code>. The default format is <code>view</code>. 
 
-<tr class="odd">
-<td align="left"><code>include_docs</code></td>
-<td align="left">Adds the entire document as a document object, and includes it in the output results.</td>
-</tr>
-
-<tr class="even">
-<td align="left"><code>limit</code></td>
-<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum value is 200. A value larger than 200 will return an error.</td>
-</tr>
-
-<tr class="odd">
-<td align="left"><code>skip</code></td>
-<td align="left">Skip this number of records before starting to return the results. The default value is 0.</td>
-</tr>
-
-<tr class="odd">
-<td align="left"><code>stale=ok</code></td>
-<td align="left">Speeds up responses by not waiting to complete index re-building or updates between database cluster nodes.</td>
-</tr>
-
-</tbody>
-</table>
-
-#####Query format examples
 > Example query to return results with `format=legacy`:
 
 ```
@@ -462,7 +437,31 @@ curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?for
     ],
     "type": "FeatureCollection"
 }
-```
+```</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>include_docs</code></td>
+<td align="left">Adds the entire document as a document object, and includes it in the output results.</td>
+</tr>
+
+<tr class="even">
+<td align="left"><code>limit</code></td>
+<td align="left">An integer to limit the number of results returned. The default value is 100. The maximum value is 200. A value larger than 200 will return an error.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>skip</code></td>
+<td align="left">Skip this number of records before starting to return the results. The default value is 0.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>stale=ok</code></td>
+<td align="left">Speeds up responses by not waiting to complete index re-building or updates between database cluster nodes.</td>
+</tr>
+
+</tbody>
+</table>
 
 ### Example: Querying a Cloudant Geo index
 
