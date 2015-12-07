@@ -465,7 +465,7 @@ curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?for
     "type": "FeatureCollection"
 }
 ```
-These examples show the query output results that are available depending on the options you specify with the format parameter.
+These examples show the available results based on the options you specify for the format parameter.
 
 <div></div>
 
