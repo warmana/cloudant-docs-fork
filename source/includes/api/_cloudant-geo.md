@@ -388,7 +388,7 @@ You can use the following parameters to deal with the returned result set, such 
 </tbody>
 </table>
 
-#####Query Output Examples
+#####Format Parameter Examples
 
 > Example query to return results with `format=legacy`:
 
@@ -465,7 +465,7 @@ curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?for
     "type": "FeatureCollection"
 }
 ```
-These examples demonstrate the query output results that are available depending on the options you specify with the format parameter.
+These examples show the query output results that are available depending on the options you specify with the format parameter.
 
 <div></div>
 
