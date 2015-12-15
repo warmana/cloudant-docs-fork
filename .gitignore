@@ -27,9 +27,10 @@ couchapp/_attachments
 # build artifacts
 build/
 /Gemfile.lock
-
+/.externalToolBuilders/
 /.project
 /.DS_Store
+/.gitignore
 vendor
 /.externalToolBuilders/
 /.project

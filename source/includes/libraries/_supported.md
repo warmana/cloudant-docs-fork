@@ -13,8 +13,7 @@ Two versions are available:
 - <a target="_blank" href="https://github.com/cloudant/sync-android">Cloudant Sync - Android / JavaSE</a>
 - <a target="_blank" href="https://github.com/cloudant/CDTDatastore">Cloudant Sync - iOS</a>
 
-An <a target="_blank" href="https://cloudant.com/product/cloudant-features/sync/">overview</a> of Cloudant Sync is available,
-as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-resources/">resources</a>.
+An <a target="_blank" href="https://cloudant.com/product/cloudant-features/sync/">overview</a> of Cloudant Sync is available, as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-resources/">resources</a>.
 
 ### Java
 
@@ -105,6 +104,7 @@ The couchdb-meteor package provides:
 
 
 **Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Prebuilt binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the prebuilt binaries are available.
+
 
 To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
 
