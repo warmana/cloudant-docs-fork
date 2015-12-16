@@ -41,7 +41,7 @@ More information about how Cloudant backs up data is provided in the rest of thi
 For further assistance,
 or to request that data backup is enabled,
 contact the Cloudant support team:
-[support@cloudant.com](support@cloudant.com).
+[support@cloudant.com](mailto:support@cloudant.com).
 
 ### Incremental backups
 
