@@ -17,6 +17,7 @@ toc_footers:
 includes:
   - visual/overview
   - visual/account
+  - visual/dashboard
   - visual/databases
   - visual/active_tasks
   - visual/replication
