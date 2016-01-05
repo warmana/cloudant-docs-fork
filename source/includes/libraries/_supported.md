@@ -13,8 +13,7 @@ Two versions are available:
 - <a target="_blank" href="https://github.com/cloudant/sync-android">Cloudant Sync - Android / JavaSE</a>
 - <a target="_blank" href="https://github.com/cloudant/CDTDatastore">Cloudant Sync - iOS</a>
 
-An <a target="_blank" href="https://cloudant.com/product/cloudant-features/sync/">overview</a> of Cloudant Sync is available,
-as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-resources/">resources</a>.
+An <a target="_blank" href="https://cloudant.com/product/cloudant-features/sync/">overview</a> of Cloudant Sync is available, as are details of <a target="_blank" href="https://cloudant.com/cloudant-sync-resources/">resources</a>.
 
 ### Java
 
