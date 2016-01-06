@@ -18,5 +18,3 @@ includes:
   - visual_guides/dashboard
 
 ---
-
-
