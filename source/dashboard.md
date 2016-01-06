@@ -15,20 +15,8 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - visual/overview
-  - visual/account
-  - visual/dashboard
-  - visual/databases
-  - visual/active_tasks
-  - visual/replication
-  - visual/warehousing
-  - visual/support
-  - visual/helpful_links
+  - visual_guides/dashboard
 
 ---
 
-<style>
-hr {
-display: none;
-}
-</style>
+
