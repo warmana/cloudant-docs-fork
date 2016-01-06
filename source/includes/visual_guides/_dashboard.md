@@ -20,7 +20,7 @@ Before you can use the Cloudant Dashboard, you must sign up for an account. You 
 
 The Databases page is the landing page for the Dashboard. You can create documents and manage your Cloudant databases from this page.
 
-→ [Learn more](https://docs.cloudant.com/database.html#undefined)
+→ [Learn more about managing databases in Cloudant.](https://docs.cloudant.com/database.html#undefined)
 
 ---
 
