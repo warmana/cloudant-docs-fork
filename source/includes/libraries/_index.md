@@ -2,8 +2,7 @@
 
 Client libraries are the tools that let you develop your own applications to work with Cloudant databases.
 
-Some client libraries are formally [supported](libraries.html#supported-client-libraries) by Cloudant.
-These include:
+Some client libraries are formally [supported](libraries.html#supported-client-libraries) by Cloudant. These include:
 
 -	[Mobile](libraries.html#mobile)
 -	[Java](libraries.html#java)

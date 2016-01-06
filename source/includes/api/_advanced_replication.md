@@ -72,7 +72,7 @@ A continuous replication can never have a `completed` state.
 
 In any production application, security of the source and target databases is essential.
 In order for replication to proceed, authentication is necessary to access the databases.
-In addition, checkpoints for replication are [enabled by default](#checkpoints), which means that replicating the source database requires write access.
+In addition, checkpoints for replication are [enabled by default](replication.html#checkpoints), which means that replicating the source database requires write access.
 
 To enable authentication during replication, include a username and password in the database URL. The replication process uses the supplied values for HTTP Basic Authentication.
 
