@@ -1,6 +1,6 @@
 <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 
-## ACCOUNT
+### ACCOUNT
 
 On the Account page, you can see Cloudant announcements and usage statistics. Or you can update your profile, change your account password, add or update a credit card, and change the location of your data.
 
@@ -8,35 +8,35 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 
 ---
 
-### ANNOUNCEMENTS
+#### ANNOUNCEMENTS
 * Learn about new Cloudant releases and information that might be interesting.
 
 ![alt text](images/visual_guide/6_account/1.png)
 
 ---
 
-### PROFILE
+#### PROFILE
 * Change your name, company name, or email.
 
 ![alt text](images/visual_guide/6_account/2.png)
 
 ---
 
-### PASSWORD
+#### PASSWORD
 * Change your password.
 
 ![alt text](images/visual_guide/6_account/3.png)
 
 ---
 
-### VIRTUAL HOSTS
+#### VIRTUAL HOSTS
 1. Enter your **hostname**, or a **path** within your hostname, and click **Add** to map your domain to a Cloudant account.
 2. **Update** your DNS record to point to `yourname`.cloudant.com using CNAME.
 ![alt text](images/visual_guide/6_account/4.png)
 
 ---
 
-### Cross-Origin Resource Sharing (CORS)
+#### Cross-Origin Resource Sharing (CORS)
 *Only available after previous step.*
 
 1. Click on **CORS** tab.
@@ -51,21 +51,21 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 
 ---
 
-### USAGE
+#### USAGE
 * View a graph that shows your data usage and associated cost.
 
 ![alt text](images/visual_guide/6_account/6.png)
 
 ---
 
-### CREDIT CARD
+#### CREDIT CARD
 * Update your credit card number.
 
 ![alt text](images/visual_guide/6_account/7.png)
 
 ---
 
-### LOCATION FOR YOUR DATA
+#### LOCATION FOR YOUR DATA
 * Select the location for your data.
 
 ![alt text](images/visual_guide/6_account/8.png)
