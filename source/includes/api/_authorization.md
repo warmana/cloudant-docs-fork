@@ -3,6 +3,10 @@
 When you have authenticated, the next test is to decide whether you
 are permitted to perform certain tasks. This is called authorization.
 
+<aside class="warning">
+Cloudant Local does not use the authorization system described here. Instead, it uses the [CouchDB security model](https://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_db_security.html). See also the [CouchDB documentation](http://docs.couchdb.org/en/1.6.1/intro/security.html).
+</aside>
+
 ### Roles
 
 Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description

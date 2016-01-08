@@ -252,6 +252,8 @@ Dbcopy should be used carefully, since it can negatively impact the performance 
  2. Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
  3. It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
 
+Dbcopy is not available on Cloudant Local.
+
 </aside>
 
 ### Storing the view definition

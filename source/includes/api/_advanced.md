@@ -87,7 +87,7 @@ account.request({
 }
 ```
 
-<aside class="warning">This feature is only available to dedicated customers.</aside>
+<aside class="warning">This feature is only available on dedicated clusters and is also not part of Cloudant Local.</aside>
 
 Obtains a list of changes to databases, like a global [changes feed](database.html#get-changes). Changes can be either updates to the database, creation, or deletion of a database. Like the changes feed, the feed is not guaranteed to return changes in the correct order and might contain changes more than once. Polling modes for this method works just like polling modes for [the changes feed](database.html#get-changes).
 

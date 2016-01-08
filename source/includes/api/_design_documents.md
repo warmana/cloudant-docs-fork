@@ -35,7 +35,7 @@ The structure of design document is as follows:
     -   **viewname** (one for each view): View Definition
         -   **map**: Map Function for the view
         -   **reduce (optional)**: Reduce Function for the view
-        -   **dbcopy (optional)**: Database name to store view results in
+        -   **dbcopy (optional, not available on Cloudant Local)**: Database name to store view results in
 -   **indexes (optional)**: an object describing search indexes
     -   **index name** (one for each index): Index definition
         -   **analyzer**: Object describing the analyzer to be used or an object with the following fields:
