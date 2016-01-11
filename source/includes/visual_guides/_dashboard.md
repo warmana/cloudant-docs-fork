@@ -1,5 +1,3 @@
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
 # Overview
 
 Welcome to IBM Cloudant. Cloudant is a database-as-a-service that manages, scales, and supports your fast-growing data needs 24x7, so you can stay focused on new development and growing your business.
@@ -11,16 +9,18 @@ Welcome to IBM Cloudant. Cloudant is a database-as-a-service that manages, scale
 Before you can use the Cloudant Dashboard, you must sign up for an account. You can sign up for a 30-day, free account to check the dashboard out. 
 
 1. Sign up for an account at [cloudant.com](http://cloudant.com/).
-![alt text](images/visual_guide/1_getting_started/1.png)
+![sign up](images/visual_guide/1_getting_started/1.png)
 
 2. See white papers, webinars, videos, blogs, and more under Resources.
-![alt text](images/visual_guide/1_getting_started/2.png)
+![resources](images/visual_guide/1_getting_started/2.png)
+
+---
 
 ## Databases
 
 The Databases page is the landing page for the Dashboard. You can create documents and manage your Cloudant databases from this page.
 
-→ [Learn more](https://docs.cloudant.com/database.html#undefined)
+→ [Learn more about databases.](https://docs.cloudant.com/database.html#undefined)
 
 ---
 
@@ -29,73 +29,68 @@ The Databases page is the landing page for the Dashboard. You can create documen
 2. Enter the name of the database.
 3. Click **Create**.
 
-![alt text](images/visual_guide/2_databases/1.png)
+![add new database](images/visual_guide/2_databases/1.png)
 
 ---
 
 ### View Database Details
 Click the database whose information you want to view. Each database includes a tab with information about permissions, changes, documents, queries, and design documents. From those tabs, you can:
- 
+
+→ [Learn more about database sharing.](https://docs.cloudant.com/authorization.html#undefined)
+
 * Share a database with change permissions.
 
-→ [Learn more](https://docs.cloudant.com/authorization.html#undefined)
-![alt text](images/visual_guide//2_databases/2.png)
+![share a database with change permissions](images/visual_guide/2_databases/2.png)
 
 ---
 
-* View Changes.
+* View changes.
 
-![alt text](images/visual_guide//2_databases/3.png)
+![view changes](images/visual_guide/2_databases/3.png)
 
 ---
 * Edit documents:
-	* **In Document**: Click the radio button on the All Documents page. You can select one or multiple documents to change the view or delete.
+* **In a document**: Click the radio button on the All Documents page. You can select one or multiple documents to change the view or delete it.
 	
-![alt text](images/visual_guide/2_databases/4.png)
+![edit documents](images/visual_guide/2_databases/4.png)
 
 ---
-* **For an individual doc**: Click <span class=" fa fa-pencil"> button to edit, upload, or clone documents.
+* **In a single document**: Click the pencil button to edit, upload, or clone documents.
 		
-![alt text](images/visual_guide/2_databases/5.png)
+![menu bar](images/visual_guide/2_databases/5.png)
 
 ---
-* **Run Queries**: you can update a query or add an index to find documents.
+* **Run queries**: You can update a query or add an index to find documents.
 	
-→ [Learn more](https://docs.cloudant.com/cloudant_query.html#undefine)
+→ [Learn more about queries.](https://docs.cloudant.com/cloudant_query.html#undefine)
 	
-![alt text](images/visual_guide/2_databases/6.png)
-	
----
-* **Run Queries**: Click <span class=" fa fa-gear"> **Create New View**. Name the design document.
-	
-→ [Learn more](https://docs.cloudant.com/creating_views.html)
+![run queries](images/visual_guide/2_databases/6.png)
 
-![alt text](images/visual_guide/2_databases/7.png)
 ---
 
 ### Use the Settings Menu
-Click <span class=" fa fa-gear"> to start the following tasks:
+Click the gear icon to start the following tasks:
 
-* **Add New Doc**: Enter the JSON to create the document. You can also upload an attachment or clone a document.
+* Add New Doc: Enter the JSON to create the document. You can also upload an attachment or clone a document.
 
-* **Add New View**: Enter your information and click **Save & Build Index**.
+* Add New View: Enter your information and click **Save & Build Index**.
 
-* **Add New Query Indexes**: Enter JSON query syntax to query your database and click **Create Index**.
+* Add New Query Indexes: Enter JSON query syntax to query your database and click **Create Index**.
 
-* **Add New Search Index**: Enter information to create a search index and click **Create Index**.
+* Add New Search Index: Enter information to create a search index and click **Create Index**.
 
-![alt text](images/visual_guide/2_databases/8.png)
+![settings menu](images/visual_guide/2_databases/8.png)
 	
 ## Replication
 
 Replication is an interface to the replication system. You can initiate replication between local and remote databases You can find details about the _replicator database on the Databases page. 
 
-→ [Learn more](https://docs.cloudant.com/replication.html#undefined)
+→ [Learn more about replication.](https://docs.cloudant.com/replication.html#undefined)
 
 ---
 
 ### Replicate a Database
-1. In the left navigation click **Replication**, then ![alt text](images/visual_guide/3_replication/1.png)
+1. In the left navigation click **Replication**, then ![replication button](images/visual_guide/3_replication/1.png)
 2. Select a **Source Database** and **Target Database**, and if needed, select the **Make this replication continuous** checkbox.
 3. Click **Replicate**.
 
