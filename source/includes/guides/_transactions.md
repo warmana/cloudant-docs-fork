@@ -59,24 +59,25 @@ In event sourcing, the database's [atomic](#acid_atomic) unit is the document, w
 
 Documents should be understood as a sum of their interactions instead of merely their current state. In the case of the shopping app, this would be representing an account as every transaction logged within it instead of just its current balance.
 
-### Grouping Transactions
+### Grouping Documents
+
+To group individual documents, you can add a field in each document that contains a value to group the documents together. With this value defined in each document, you can use a view to group the documents by this value.
+
+In this example, you use a shopping cart that contains each item in an order as a separate document. This order can also be used in an event-sourcing <link> approach which groups related events to a single conceptual entity.
 
 > Example array with multiple IDs:
 
 ```json
 {
   "uuids": [
-    "320afa89017426b994162ab004ce3383",
-    "320afa89017426b994162ab004ce3b09",
-    "320afa89017426b994162ab004ce4083"
+    "320afa89017426b994162ab004ce3383"
   ]
 }
 ```
 
 The `_uuids` ([UUIDs](http://en.wikipedia.org/wiki/Universally_unique_identifier)) endpoint can be used to maintain purchases as individual documents when they are purchased through a shopping cart in a single transaction.
 
-By default, `https://$USERNAME.cloudant.com/_uuids` returns one ID. An array of multiple IDs can be called with `_uuids?count=$NUMBER`, so `?count=3` would return something like the example provided.
-
+By default, `https://$USERNAME.cloudant.com/_uuids` returns one ID. An array of multiple IDs can be called with `_uuids?count=$NUMBER`, so `?count=3` returns three IDs. 
 <div></div>
 
 > Example of shared transaction `_id`:
@@ -95,7 +96,7 @@ By default, `https://$USERNAME.cloudant.com/_uuids` returns one ID. An array of 
 }
 ```
 
-These arrays can be used to generate a shared transaction `_id` which allows you to retrieve them as a group later. A view for this might look something like the example provided.
+These arrays can be used to generate a shared `transaction_id` value which allows you to retrieve them as a group later. A view for this might look something like the example provided.
 
 A `_view/transactions?key={transaction_id}&include_docs=true` query retrieves every change associated with a transaction.
 
