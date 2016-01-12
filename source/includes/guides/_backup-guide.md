@@ -17,7 +17,7 @@ if a faulty application deletes or overwrites the data in your database,
 duplicate data is not helpful.
 
 With Cloudant,
-you can have incremental backups that update daily.
+Enterprise customers can have incremental backups that update daily.
 These daily updates or 'deltas' enable document comparison,
 and easier single document restoration.
 At regular intervals,
@@ -43,6 +43,8 @@ or to request that data backup is enabled,
 contact the Cloudant support team:
 [support@cloudant.com](mailto:support@cloudant.com).
 
+<aside class="warning">The Cloudant backup facility is available only to Enterprise customers.</aside>
+
 ### Incremental backups
 
 The first step in enabling incremental backups is to take a full backup of your entire database.
@@ -58,10 +60,6 @@ As part of the request to enable data backups,
 you can specific a time of day for the backup to run.
 The daily delta is created each day,
 at the time you specified.
-
-<aside class="warning">The interval between backups must be 24 hours or more.
-In other words,
-you can run daily backups but not hourly backups.</aside>
 
 ### Roll ups
 
