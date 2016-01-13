@@ -18,6 +18,10 @@ However,
 if a faulty application deletes or overwrites the data in your database,
 duplicate data is not helpful.
 
+Having a comprehensive,
+tested backup enables you to answer the following question with confidence:
+"How can we restore data in case of loss or corruption?"
+
 With Cloudant,
 Enterprise customers can have incremental backups that update daily.
 These daily updates or 'deltas' enable document comparison,
@@ -75,9 +79,14 @@ at the time you specified.
 
 A roll up combines daily backups into weekly,
 rolled up databases.
-These roll up databases combine the daily deltas into a coarser time slice.
+These roll up databases combine the daily deltas into a coarser,
+or 'less granular',
+time slice.
 Weekly databases roll up into monthly databases,
 and monthly databases roll up into yearly databases.
+
+![Illustration of roll up hierarchy](images/rollups.png)
+
 When requesting that backups are enabled,
 you decide a specific number of days to wait between each of these roll up activities.
 
