@@ -107,7 +107,7 @@ request assistance from Cloudant support.
 
 ### Using the Dashboard
 
-You can review the status and history of backups using the Cloudant Dashboard.
+Enterprise customers can review the status and history of backups using the Cloudant Dashboard.
 
 Tasks you can perform include:
 
@@ -116,3 +116,39 @@ Tasks you can perform include:
 -	View a list of backup document versions by date and time.
 -	View a current document and the difference between it and any backed up version.
 -	Restore a document from a backed up version.
+
+#### Viewing database backup status
+
+![Dashboard view of database backup status](images/dashboarddatabasesbackup.png)
+
+When you select the Database tab within the Cloudant Dashboard,
+you can see a backup status column for each of your databases.
+
+#### Viewing document backup status
+
+![Dashboard view of backup status for all documents](images/dashboarddatabasesbackupbutton.png)
+
+Within a database,
+you can view the backup status of a specific document.
+To do this,
+first check to see if there is a backup icon
+![Dashboard backup icon](images/dashboarddatabasesbackupicon.png)
+for your document.
+This shows whether the specific document is included within the backup task.
+
+When you select the document,
+you can see a backup tab.
+
+![Dashboard view of document backup status](images/dashboarddatabasesbackupdocument.png)
+
+#### Viewing differences between document backup versions, and restoring
+
+![Dashboard view of document backup status](images/dashboarddatabasesbackupdocumentdiff.png)
+
+When you click the backup tab for a document,
+you can see the differences between the current version of the document,
+and any other backed-up version.
+
+If you decide that you would like to restore a specific backup version of that document,
+simply select the date of the backup to restore,
+then click the 'Restore' button. 
