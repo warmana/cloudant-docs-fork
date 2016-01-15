@@ -101,6 +101,10 @@ and also see changes made to that document.
 You can also restore the document to the version that was current on a particular date,
 if it is available within the granularity of the delta.
 
+<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+In other words,
+the document should not be constantly receiving changes and updates.</aside>
+
 For more complex restores,
 such as a full database restore,
 request assistance from Cloudant support.
@@ -151,4 +155,89 @@ and any other backed-up version.
 
 If you decide that you would like to restore a specific backup version of that document,
 simply select the date of the backup to restore,
-then click the 'Restore' button. 
+then click the 'Restore' button.
+
+<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+In other words,
+the document should not be constantly receiving changes and updates.</aside>
+
+### Using the API
+
+A modest number of REST API calls are available for working with the Cloudant backup facility.
+
+#### Task configuration
+
+> Retrieving the backup task configuration for the user.
+
+```http
+GET /_api/v2/backup/task HTTP/1.1
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task \
+     -X GET
+```
+
+The `task` call gets the backup task configuration for the user.
+
+#### List of databases
+
+> Retrieving the list of databases created by a backup task, that contain a specific document.
+
+```http
+GET /_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true HTTP/1.1
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true \
+     -X GET
+```
+
+The `monitor` call gets a list of the databases created by the backup task `$TASKNAME`,
+that also contain the document `$DOCID`.
+
+The call supports an optional argument: `include_docs`.
+The default value is `false`.
+If set to `true`,
+the `monitor` call returns the full document content for each backup database containing `$DOCID`.
+
+#### Restore a document
+
+> Restore a document from the most recent version held in a specific backup database.
+
+```http
+POST /_api/v2/backup/restore/document --data=@RESTORE.json HTTP/1.1
+Content-Type: application/json
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/_api/v2/backup/restore/document --data=@RESTORE.json \
+     -X POS \
+     -H "Content-Type: application/json" \
+     -d "$JSON"
+```
+
+```json
+{
+  "doc_id": $DOCID,
+  "task_name": $TASKNAME,
+  "task_date": $TASKDATE,
+  "frequency": $FREQUENCY
+}
+```
+
+The `restore` call replaces a document,
+identified by `$DOCID`,
+from a source database.
+The source database is identified by the `$TASKNAME`.
+The `$TASKDATE` is the timestamp of the specific backup,
+and specifies when the backup was performed.
+The `$FREQUENCY` is one of the following four values:
+`"daily"`,
+`"weekly"`,
+`"monthly"`,
+or `"yearly"`.
+
+<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+In other words,
+the document should not be constantly receiving changes and updates.</aside>
