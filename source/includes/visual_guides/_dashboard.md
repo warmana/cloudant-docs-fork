@@ -1,10 +1,10 @@
-# Overview
+## Overview
 
 Welcome to IBM Cloudant. Cloudant is a database-as-a-service that manages, scales, and supports your fast-growing data needs 24x7, so you can stay focused on new development and growing your business.
 
 ---
 
-## Getting Started
+### Getting Started
 
 Before you can use the Cloudant Dashboard, you must sign up for an account. You can sign up for a 30-day, free account to check the dashboard out. 
 
@@ -16,7 +16,7 @@ Before you can use the Cloudant Dashboard, you must sign up for an account. You 
 
 ---
 
-## Databases
+### Databases
 
 The Databases page is the landing page for the Dashboard. You can create documents and manage your Cloudant databases from this page.
 
@@ -24,7 +24,7 @@ The Databases page is the landing page for the Dashboard. You can create documen
 
 ---
 
-### Add New Database
+#### Add New Database
 1. Click **Add New Database**.
 2. Enter the name of the database.
 3. Click **Create**.
@@ -33,7 +33,7 @@ The Databases page is the landing page for the Dashboard. You can create documen
 
 ---
 
-### View Database Details
+#### View Database Details
 Click the database whose information you want to view. Each database includes a tab with information about permissions, changes, documents, queries, and design documents. From those tabs, you can:
 
 → [Learn more about database sharing.](https://docs.cloudant.com/authorization.html#undefined)
@@ -68,7 +68,7 @@ Click the database whose information you want to view. Each database includes a 
 
 ---
 
-### Use the Settings Menu
+#### Use the Settings Menu
 Click the gear icon to start the following tasks:
 
 * Add New Doc: Enter the JSON to create the document. You can also upload an attachment or clone a document.
@@ -81,7 +81,7 @@ Click the gear icon to start the following tasks:
 
 ![settings menu](images/visual_guide/2_databases/8.png)
 	
-## Replication
+### Replication
 
 Replication is an interface to the replication system. You can initiate replication between local and remote databases You can find details about the _replicator database on the Databases page. 
 
@@ -89,7 +89,7 @@ Replication is an interface to the replication system. You can initiate replicat
 
 ---
 
-### Replicate a Database
+#### Replicate a Database
 1. In the left navigation click **Replication**, then ![replication button](images/visual_guide/3_replication/1.png)
 2. Select a **Source Database** and **Target Database**, and if needed, select the **Make this replication continuous** checkbox.
 3. Click **Replicate**.
@@ -99,7 +99,7 @@ Replication is an interface to the replication system. You can initiate replicat
 
 ---
 
-### Cancel or Rerun a Replication
+#### Cancel or Rerun a Replication
  
 * If you want to rerun a replication, click ![alt text](images/visual_guide/3_replication/4.png) to start another run, or if a replication is in progress, you can stop it by clicking ![alt text](images/visual_guide/3_replication/5.png).
 
@@ -107,14 +107,14 @@ Replication is an interface to the replication system. You can initiate replicat
 
 ---
 
-### Enable Continuous Replication
+#### Enable Continuous Replication
 
 * If you want to propagate changes from your original source database to a replicated database, when you create a new replication, select the **Make this replication continuous** checkbox. Or after you create a replication, open the replication details by clicking the replication document link. 
 
 
 ![alt text](images/visual_guide/3_replication/6.png)	
 
-## Warehousing
+### Warehousing
 
 You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analytics of your database activity.
 
@@ -125,7 +125,7 @@ You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analyti
 
 ---
 
-### Creating a Warehouse
+#### Creating a Warehouse
  
 1. In the left navigation, click **Warehousing**, then **Create New Warehouse**.
 
@@ -149,7 +149,7 @@ You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analyti
 
 ---
 
-### View Warehouse Analytics 
+#### View Warehouse Analytics 
 *Only available after previous steps*
 
 * In the left navigation, click Warehousing, then the warehouse you want to view details about.
@@ -157,30 +157,30 @@ You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analyti
 ![alt text](images/visual_guide/4_warehousing/6.png)
 
 
-## Active Tasks
+### Active Tasks
 Shows a list of the running background tasks on the server, including database compaction, index building, and replication.
 
 → [Learn more](https://docs.cloudant.com/active_tasks.html#undefined)
 
 ---
 
-### Sorting Active Tasks
+#### Sorting Active Tasks
 * The Active Tasks dashboard shows multiple views of each active task. You can view all the active tasks together in a list, or you can **select a tab** that contains only replication tasks, database compaction tasks, indexer tasks, or view compaction tasks.
 ![alt text](images/visual_guide/5_active_tasks/1.png)
 
 ---
 
-### Change Polling Intervals
+#### Change Polling Intervals
 * When you view the active tasks, their status can change. Adjust the time between auto-updates by moving the **Polling Interval** slider.
 ![alt text](images/visual_guide/5_active_tasks/2.png)
 
 ---
 
-### API URL
+#### API URL
 * The Active Tasks page is an interface to the Active Tasks API call. Click **API URL**, then **Copy** to view or copy the raw JSON.
 ![alt text](images/visual_guide/5_active_tasks/3.png)
 
-## Account
+### Account
 
 On the Account page, you can see Cloudant announcements and usage statistics. Or you can update your profile, change your account password, add or update a credit card, and change the location of your data.
 
@@ -188,35 +188,35 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 
 ---
 
-### Announcements
+#### Announcements
 * Learn about new Cloudant releases and information that might be interesting.
 
 ![alt text](images/visual_guide/6_account/1.png)
 
 ---
 
-### Profiile
+#### Profiile
 * Change your name, company name, or email.
 
 ![alt text](images/visual_guide/6_account/2.png)
 
 ---
 
-### Password
+#### Password
 * Change your password.
 
 ![alt text](images/visual_guide/6_account/3.png)
 
 ---
 
-### Virtual Hosts
+#### Virtual Hosts
 1. Enter your **hostname**, or a **path** within your hostname, and click **Add** to map your domain to a Cloudant account.
 2. **Update** your DNS record to point to `yourname`.cloudant.com using CNAME.
 ![alt text](images/visual_guide/6_account/4.png)
 
 ---
 
-### Cross-Origin Resource Sharing 
+#### Cross-Origin Resource Sharing 
 *CORS is only available after you complete the previous step.*
 
 1. Click on **CORS** tab.
@@ -230,33 +230,33 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 
 ---
 
-### Usage
+#### Usage
 * View a graph that shows your data usage and associated cost.
 
 ![alt text](images/visual_guide/6_account/6.png)
 
 ---
 
-### Credit Card
+#### Credit Card
 * Update your credit card number.
 
 ![alt text](images/visual_guide/6_account/7.png)
 
 ---
 
-### Location for your Data
+#### Location for your Data
 * Select the location for your data.
 
 ![alt text](images/visual_guide/6_account/8.png)
 
 ---	
-## Support
+### Support
 
 Shows a list of the running background tasks on the server, including database compaction, index building, and replication.
 
 ---
 
-### Create a Support Case
+#### Create a Support Case
 1. Click **Support**, then ![alt text](images/visual_guide/7_support/button.png)
 2. Enter a subject and the details of your question or problem.
 3. **Optional**: attach a file.
@@ -266,13 +266,13 @@ Shows a list of the running background tasks on the server, including database c
 
 ---
 
-### Access More Information
+#### Access More Information
 * When you view the active tasks, their status can change. Adjust the time between auto-updates by moving the **Polling Interval** slider.
 ![alt text](images/visual_guide/7_support/2.png)
 
 ---
 
-## Helpful Links
+### Helpful Links
 
 ---
 
