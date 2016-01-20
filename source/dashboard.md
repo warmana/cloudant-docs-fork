@@ -17,11 +17,4 @@ toc_footers:
 includes:
   - visual_guides/dashboard
 
-
 ---
-
-<style>
-hr {
-display: none;
-}
-</style>

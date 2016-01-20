@@ -1,22 +1,22 @@
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
-# Overview
+## Overview
 
 Welcome to IBM Cloudant. Cloudant is a database-as-a-service that manages, scales, and supports your fast-growing data needs 24x7, so you can stay focused on new development and growing your business.
 
 ---
 
-## Getting Started
+### Getting Started
 
 Before you can use the Cloudant Dashboard, you must sign up for an account. You can sign up for a 30-day, free account to check the dashboard out. 
 
 1. Sign up for an account at [cloudant.com](http://cloudant.com/).
-![alt text](images/visual_guide/1_getting_started/1.png)
+![sign up](images/visual_guide/1_getting_started/1.png)
 
 2. See white papers, webinars, videos, blogs, and more under Resources.
-![alt text](images/visual_guide/1_getting_started/2.png)
+![resources](images/visual_guide/1_getting_started/2.png)
 
-## Databases
+---
+
+### Databases
 
 The Databases page is the landing page for the Dashboard. You can create documents and manage your Cloudant databases from this page.
 
@@ -24,69 +24,67 @@ The Databases page is the landing page for the Dashboard. You can create documen
 
 ---
 
-### Add New Database
+#### Add New Database
 1. Click **Add New Database**.
 2. Enter the name of the database.
 3. Click **Create**.
 
-![alt text](images/visual_guide/2_databases/1.png)
+![add new database](images/visual_guide/2_databases/1.png)
 
 ---
 
-### View Database Details
-Click the database whose information you want to view. Each database includes a tab with information about permissions, changes, documents, queries, and design documents. From those tabs, you can:
- 
-* Share a database with change permissions.
+#### View Database Details
+Click **Permissions** tab, and click the database whose information you want to view. Each database includes a tab with information about permissions, changes, documents, queries, and design documents. From those tabs, you can:
 
 → [Learn more](https://docs.cloudant.com/authorization.html#undefined)
-![alt text](images/visual_guide//2_databases/2.png)
+
+* Share a database with change permissions.
+
+![change database permissions](images/visual_guide/2_databases/2.png)
 
 ---
 
-* View Changes.
+* View changes.
+Click **Changes** tab.
 
-![alt text](images/visual_guide//2_databases/3.png)
+![view changes](images/visual_guide/2_databases/3.png)
 
 ---
-* Edit documents:
-	* **In Document**: Click the radio button on the All Documents page. You can select one or multiple documents to change the view or delete.
+* Working with documents:
+* **In multiple document**: Click the radio button on the All Documents page. You can select one or multiple documents to change the view or delete it.
 	
-![alt text](images/visual_guide/2_databases/4.png)
+![edit documents](images/visual_guide/2_databases/4.png)
 
 ---
-* **For an individual doc**: Click <span class=" fa fa-pencil"> button to edit, upload, or clone documents.
+* **In a single document**: Click the pencil button to edit, upload, or clone documents.
 		
-![alt text](images/visual_guide/2_databases/5.png)
+![menu bar](images/visual_guide/2_databases/5.png)
 
 ---
-* **Run Queries**: you can update a query or add an index to find documents.
+* **Run queries**: You can update a query or add an index to find documents.
 	
 → [Learn more](https://docs.cloudant.com/cloudant_query.html#undefine)
 	
-![alt text](images/visual_guide/2_databases/6.png)
-	
----
-* **Run Queries**: Click <span class=" fa fa-gear"> **Create New View**. Name the design document.
-	
-→ [Learn more](https://docs.cloudant.com/creating_views.html)
+![run queries](images/visual_guide/2_databases/6.png)
 
-![alt text](images/visual_guide/2_databases/7.png)
 ---
 
-### Use the Settings Menu
-Click <span class=" fa fa-gear"> to start the following tasks:
+#### Use the Settings Menu
+Click the gear icon to start the following tasks:
 
-* **Add New Doc**: Enter the JSON to create the document. You can also upload an attachment or clone a document.
+* Add New Doc: Enter the JSON to create the document. You can also upload an attachment or clone a document.
 
-* **Add New View**: Enter your information and click **Save & Build Index**.
+* Add New View: Enter your information and click **Save & Build Index**.
 
-* **Add New Query Indexes**: Enter JSON query syntax to query your database and click **Create Index**.
+* Add New Query Indexes: Enter JSON query syntax to query your database and click **Create Index**.
 
-* **Add New Search Index**: Enter information to create a search index and click **Create Index**.
+* Add New Search Index: Enter information to create a search index and click **Create Index**.
 
-![alt text](images/visual_guide/2_databases/8.png)
+![settings menu](images/visual_guide/2_databases/8.png)
+
+---
 	
-## Replication
+### Replication
 
 Replication is an interface to the replication system. You can initiate replication between local and remote databases You can find details about the _replicator database on the Databases page. 
 
@@ -94,98 +92,94 @@ Replication is an interface to the replication system. You can initiate replicat
 
 ---
 
-### Replicate a Database
-1. In the left navigation click **Replication**, then ![alt text](images/visual_guide/3_replication/1.png)
-2. Select a **Source Database** and **Target Database**, and if needed, select the **Make this replication continuous** checkbox.
+#### Replicate a Database
+1. In the left navigation, click **Replication**.
+2. Select a **Source Database** and **Target Database**, and if needed, select the **Make this replication continuous** check box.
 3. Click **Replicate**.
 
 <span class=" fa fa-info">The source database can be a local or remote database. If you select a New Database as the Target Database, you can replicate into a new database. A target database can be local or remote.
-![alt text](images/visual_guide/3_replication/2.png)
+![create replication](images/visual_guide/3_replication/2.png)
 
 ---
 
-### Cancel or Rerun a Replication
+#### Cancel or Rerun a Replication
  
-* If you want to rerun a replication, click ![alt text](images/visual_guide/3_replication/4.png) to start another run, or if a replication is in progress, you can stop it by clicking ![alt text](images/visual_guide/3_replication/5.png).
+* If you want to rerun a replication, click ![rerun button](images/visual_guide/3_replication/4.png) to start another run, or if a replication is in progress, you can stop it by clicking ![cancel button](images/visual_guide/3_replication/5.png).
 
-![alt text](images/visual_guide/3_replication/3.png)
+![all replications tab](images/visual_guide/3_replication/3.png)
 
 ---
 
-### Enable Continuous Replication
+#### Enable Continuous Replication
 
-* If you want to propagate changes from your original source database to a replicated database, when you create a new replication, select the **Make this replication continuous** checkbox. Or after you create a replication, open the replication details by clicking the replication document link. 
+* If you want to propagate changes from your original source database to a replicated database, when you create a new replication, select the **Make this replication continuous** check box. Or after you create a replication, open the replication details by clicking the replication document link. 
 
 
-![alt text](images/visual_guide/3_replication/6.png)	
+![make this replication continuous check box](images/visual_guide/3_replication/6.png)	
 
-## Warehousing
+### Warehousing
 
 You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analytics of your database activity.
 
-→ [Learn more](https://docs.cloudant.com/replication.html#undefined) **Need Warehousing Link**
-
 * Click **Getting Started** to learn more about warehousing and it’s capabilities.
-![alt text](images/visual_guide/4_warehousing/1.png)
+![getting started with warehousing](images/visual_guide/4_warehousing/1.png)
 
 ---
 
-### Creating a Warehouse
+#### Creating a Warehouse
  
-1. In the left navigation, click **Warehousing**, then **Create New Warehouse**.
+1. In the left navigation, click **Warehousing**, then **Create a Warehouse**.
+	![warehouse menu](images/visual_guide/4_warehousing/2.png)
 
-![alt text](images/visual_guide/4_warehousing/2.png)
-
----
 2. **Authenticate** with your IBM Bluemix username and password.
-	![alt text](images/visual_guide/4_warehousing/3.png)
+	![authenticate](images/visual_guide/4_warehousing/3.png)
 	
----
 3. **Pick a name** for your warehouse and **choose which database** you would like to add to the warehouse.
-	![alt text](images/visual_guide/4_warehousing/4.png)
+	![add a warehouse name](images/visual_guide/4_warehousing/4.png)
 	
----
 4. **Optional**: You can add the warehouse to an existing dashDB service instance or to a specific IBM Bluemix organization and space.
-	![alt text](images/visual_guide/4_warehousing/5.png)
+	![add a warehouse to a dashDB service](images/visual_guide/4_warehousing/5.png)
 	
----
-5. Click ![alt text](images/visual_guide/4_warehousing/Button.png) and you will be taken to the warehouses page.
-	![alt text](images/visual_guide/4_warehousing/6.png)
+5. Click ![create warehouse button](images/visual_guide/4_warehousing/Button.png) and you will be taken to the warehouses page.
+	![warehouse list](images/visual_guide/4_warehousing/6.png)
 
 ---
 
-### View Warehouse Analytics 
+#### View Warehouse Analytics 
 *Only available after previous steps*
 
-* In the left navigation, click Warehousing, then the warehouse you want to view details about.
+* In the left navigation, click **Warehousing**, then the warehouse you want to view details about.
 
-![alt text](images/visual_guide/4_warehousing/6.png)
+![warehouse list](images/visual_guide/4_warehousing/6.png)
 
+---
 
-## Active Tasks
+### Active Tasks
 Shows a list of the running background tasks on the server, including database compaction, index building, and replication.
 
 → [Learn more](https://docs.cloudant.com/active_tasks.html#undefined)
 
 ---
 
-### Sorting Active Tasks
-* The Active Tasks dashboard shows multiple views of each active task. You can view all the active tasks together in a list, or you can **select a tab** that contains only replication tasks, database compaction tasks, indexer tasks, or view compaction tasks.
-![alt text](images/visual_guide/5_active_tasks/1.png)
+#### Sorting Active Tasks
+* The Active Tasks dashboard shows multiple views of each active task. You can view all the active tasks together in a list, or you can select a tab that contains only replication tasks, database compaction tasks, indexer tasks, or view compaction tasks.
+![active tasks tabs](images/visual_guide/5_active_tasks/1.png)
 
 ---
 
-### Change Polling Intervals
+#### Change Polling Intervals
 * When you view the active tasks, their status can change. Adjust the time between auto-updates by moving the **Polling Interval** slider.
-![alt text](images/visual_guide/5_active_tasks/2.png)
+![polling interval slider](images/visual_guide/5_active_tasks/2.png)
 
 ---
 
-### API URL
+#### API URL
 * The Active Tasks page is an interface to the Active Tasks API call. Click **API URL**, then **Copy** to view or copy the raw JSON.
-![alt text](images/visual_guide/5_active_tasks/3.png)
+![api url, view json button, and copy button](images/visual_guide/5_active_tasks/3.png)
 
-## Account
+---
+
+### Account
 
 On the Account page, you can see Cloudant announcements and usage statistics. Or you can update your profile, change your account password, add or update a credit card, and change the location of your data.
 
@@ -193,91 +187,44 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 
 ---
 
-### Announcements
-* Learn about new Cloudant releases and information that might be interesting.
-
-![alt text](images/visual_guide/6_account/1.png)
-
----
-
-### Profiile
-* Change your name, company name, or email.
-
-![alt text](images/visual_guide/6_account/2.png)
-
----
-
-### Password
-* Change your password.
-
-![alt text](images/visual_guide/6_account/3.png)
-
----
-
-### Virtual Hosts
+#### Virtual Hosts
+1. Click on **Account** > **Virtual Hosts** tabs.
 1. Enter your **hostname**, or a **path** within your hostname, and click **Add** to map your domain to a Cloudant account.
 2. **Update** your DNS record to point to `yourname`.cloudant.com using CNAME.
-![alt text](images/visual_guide/6_account/4.png)
+![virtual hosts window](images/visual_guide/6_account/4.png)
 
 ---
 
-### Cross-Origin Resource Sharing 
+#### Cross-Origin Resource Sharing 
 *CORS is only available after you complete the previous step.*
 
-1. Click on **CORS** tab.
+1. Click on **Account** > **CORS** tabs.
 2. Select **Enable CORS**.
 3. **Define** the domains where database accepts requests.
 4. Click **Add**.
 
 <span class=" fa fa-info">The source database can be a local or remote database. If you select a New Database as the Target Database, you can replicate into a new database. A target database can be local or remote.
 
-![alt text](images/visual_guide/6_account/5.png)
-
----
-
-### Usage
-* View a graph that shows your data usage and associated cost.
-
-![alt text](images/visual_guide/6_account/6.png)
-
----
-
-### Credit Card
-* Update your credit card number.
-
-![alt text](images/visual_guide/6_account/7.png)
-
----
-
-### Location for your Data
-* Select the location for your data.
-
-![alt text](images/visual_guide/6_account/8.png)
+![CORS window](images/visual_guide/6_account/5.png)
 
 ---	
-## Support
+### Support
 
 Shows a list of the running background tasks on the server, including database compaction, index building, and replication.
 
 ---
 
-### Create a Support Case
-1. Click **Support**, then ![alt text](images/visual_guide/7_support/button.png)
+#### Create a Support Case
+1. Click **Support**, then ![new case button](images/visual_guide/7_support/button.png)
 2. Enter a subject and the details of your question or problem.
-3. **Optional**: attach a file.
+3. **Optional**: Attach a file.
 4. Click **Submit**.
 
-![alt text](images/visual_guide/7_support/1.png)
+![new case window](images/visual_guide/7_support/1.png)
 
 ---
 
-### Access More Information
-* When you view the active tasks, their status can change. Adjust the time between auto-updates by moving the **Polling Interval** slider.
-![alt text](images/visual_guide/7_support/2.png)
-
----
-
-## Helpful Links
+### Helpful Links
 
 ---
 
