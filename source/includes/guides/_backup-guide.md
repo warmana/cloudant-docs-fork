@@ -406,8 +406,6 @@ Replication uses sequence values to identify the documents changed during the in
 
 The backup operation uses replication to get and store a checkpoint.
 This checkpoint is another database with an internal name.
-The backup operation creates the name from a combination of the date and the backup task name.
-This name makes it easier to identify checkpoints during the recovery or roll up process.
 
 The replication process for a database starts by finding the value of the `since_seq` parameter.
 The parameter indicates where the last replication finished.
