@@ -183,6 +183,13 @@ Shows a list of the running background tasks on the server, including database c
 ![alt text](images/visual_guide/6_account/4.png)
 
 ---
+### Account
+
+On the Account page, you can see Cloudant announcements and usage statistics. Or you can update your profile, change your account password, add or update a credit card, and change the location of your data.
+
+→ [Learn more](https://docs.cloudant.com/account.html)
+
+---
 
 #### Cross-Origin Resource Sharing 
 *CORS is only available after you complete the previous step.*
