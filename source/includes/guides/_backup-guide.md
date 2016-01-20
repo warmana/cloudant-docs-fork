@@ -8,7 +8,7 @@ it is still  important to back it up.
 
 Why is backing up important?
 In general,
-you could lose access to organizational data in many ways.
+you could lose access to data in many ways.
 For example,
 if a hurricane destroys your data center and all three nodes are in that location,
 you lose your data.
@@ -23,7 +23,7 @@ tested backup enables you to answer the following question with confidence:
 "How can we restore data in case of loss or corruption?"
 
 With Cloudant,
-Enterprise customers can have incremental backups that update daily.
+Enterprise customers can have daily incremental backups.
 These daily updates or 'deltas' enable document comparison,
 and easier single document restoration.
 At regular intervals,
@@ -36,7 +36,8 @@ This process of rolling up deltas is a pragmatic compromise between
 being able to restore exactly the right version of a document,
 and requiring a lot of storage space.
 
-Should you wish to restore some documents,
+The backup facility allows you to restore individual documents manually.
+Should you wish to restore and entire database,
 for example as part of a disaster recovery scenario,
 you can contact the support team and have your data restored to a specific day,
 week,
@@ -88,7 +89,12 @@ and monthly databases roll up into yearly databases.
 ![Illustration of roll up hierarchy](images/rollups.png)
 
 When requesting that backups are enabled,
-you decide a specific number of days to wait between each of these roll up activities.
+you should specify how many daily deltas to keep.
+Once that number is reached,
+the oldest daily delta is rolled up into the most recent weekly database.
+Thereafter,
+the weekly databases are rolled up to create the monthly databases,
+and so on.
 
 Once the delta databases have been rolled up,
 they are removed to free up storage space.
@@ -101,7 +107,7 @@ and also see changes made to that document.
 You can also restore the document to the version that was current on a particular date,
 if it is available within the granularity of the delta.
 
-<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+<aside class="warning">Documents must be static before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
 
@@ -116,7 +122,6 @@ Enterprise customers can review the status and history of backups using the Clou
 Tasks you can perform include:
 
 -	View the status of the last backup, including its date and time.
--	View the history of all backup replications that have run for a specific backup operation.
 -	View a list of backup document versions by date and time.
 -	View a current document and the difference between it and any backed up version.
 -	Restore a document from a backed up version.
@@ -157,17 +162,17 @@ If you decide that you would like to restore a specific backup version of that d
 simply select the date of the backup to restore,
 then click the 'Restore' button.
 
-<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+<aside class="warning">Documents must be in a stable state before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
 
 ### Using the API
 
-A modest number of REST API calls are available for working with the Cloudant backup facility.
+A number of REST API calls are available for working with the Cloudant backup facility.
 
 #### Task configuration
 
-> Retrieving the backup task configuration for the user.
+> Retrieving the backup task configuration for the user, returning results in a list format (default).
 
 ```http
 GET /_api/v2/backup/task HTTP/1.1
@@ -178,7 +183,134 @@ curl https://$USERNAME.cloudant.com/_api/v2/backup/task \
      -X GET
 ```
 
+> Retrieving the backup task configuration for the user, returning results in a mapping format.
+
+```http
+GET /_api/v2/backup/task?format=mapping HTTP/1.1
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping \
+     -X GET
+```
+
 The `task` call gets the backup task configuration for the user.
+
+You can specify the format used in the response by using the `format` parameter.
+
+<div></div>
+
+> Example response following a list format request:
+
+```
+{
+  "rows": [
+    {
+      "username": "$USERNAME",
+      "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
+      "source_db": "backmeup",
+      "latest_completion": null
+    },
+    {
+      "username": "$USERNAME",
+      "task": "backup-d0ea6e8218074699a562af543db66615",
+      "source_db": "backuptest",
+      "latest_completion": "2016-01-17T05:57:44+00:00"
+    },
+    {
+      "username": "$USERNAME",
+      "task": "backup-24cd8359b94640be85b7d4071921e781",
+      "source_db": "taskdb",
+      "latest_completion": "2016-01-17T00:01:04+00:00"
+    }
+  ]
+}
+```
+
+The default response format is a list.
+You can request this format directly by using the `...backup/task?format=list` parameter. 
+The response contains a simple list of the backup tasks defined for the user.
+
+For example, you might request a list format response using either of the following commands:
+	`https://$USERNAME.cloudant.com/_api/v2/backup/task`
+	`https://$USERNAME.cloudant.com/_api/v2/backup/task?format=list`
+
+<div></div>
+
+> Example response following a mapping format request:
+
+```
+{
+  "backmeup": {
+    "username": "$USERNAME",
+    "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
+    "source_db": "backmeup",
+    "latest_completion": null
+  },
+  "backuptest": {
+    "username": "$USERNAME",
+    "task": "backup-d0ea6e8218074699a562af543db66615",
+    "source_db": "backuptest",
+    "latest_completion": "2016-01-17T05:57:44+00:00"
+  },
+  "taskdb": {
+    "username": "$USERNAME",
+    "task": "backup-24cd8359b94640be85b7d4071921e781",
+    "source_db": "taskdb",
+    "latest_completion": "2016-01-17T00:01:04+00:00"
+  }
+}
+```
+
+A more comprehensive response is available in the mapping format.
+You can request this format directly by using the `...backup/task?format=mapping` parameter.
+
+For example, you might request a mapping format response using the following command:
+`https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping`
+
+<div></div>
+
+#### Determining backup tasks for specific databases
+
+> Example command to find backup tasks for the `backuptest` and `taskdb` database:
+
+```http
+GET /_api/v2/backup/task?databases=backuptest,taskdb HTTP/1.1
+```
+
+```shell
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task?databases=backuptest,taskdb \
+     -X GET
+```
+
+> Example response to finding backup tasks for specific databases:
+
+```
+{
+  "rows": [
+    {
+      "username": "$USERNAME",
+      "task": "backup-d0ea6e8218074699a562af543db66615",
+      "source_db": "backuptest",
+      "latest_completion": "2016-01-17T05:57:44+00:00"
+    },
+    {
+      "username": "$USERNAME",
+      "task": "backup-24cd8359b94640be85b7d4071921e781",
+      "source_db": "taskdb",
+      "latest_completion": "2016-01-17T00:01:04+00:00"
+    }
+  ]
+}
+```
+
+The `databases` parameter for the `task` request is used to find what backup tasks are associated with a specified database.
+
+The response lists the backup task details for the database identified in the `source_db` field.
+The `task` identified can be used in other backup API calls,
+such as [database listing](backup-guide.html#list-of-databases).
+
+<div></div>
 
 #### List of databases
 
@@ -200,6 +332,8 @@ The call supports an optional argument: `include_docs`.
 The default value is `false`.
 If set to `true`,
 the `monitor` call returns the full document content for each backup database containing `$DOCID`.
+
+<div></div>
 
 #### Restore a document
 
@@ -238,6 +372,102 @@ The `$FREQUENCY` is one of the following four values:
 `"monthly"`,
 or `"yearly"`.
 
-<aside class="warning">Documents must be in a 'frozen' state before restoring from backup.
+<aside class="warning">Documents must be in a stable state before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
+
+<div></div>
+
+### In depth
+
+A very simple form of backup is to [replicate](replication.html) the database to a dated backup database.
+
+This method works and is easy to do.
+But if the database is big and you need backups for multiple points in time,
+for example seven daily backups and four weekly ones,
+you end up storing a complete copy of all the documents in each new backup database.
+This is likely to require a lot of storage space.
+
+Incremental backups are a good solution for storing only the documents that have changed since the last backup.
+
+Initially,
+you perform a backup of the entire database.
+After the first backup,
+you run regular,
+incremental backups,
+backing up only what has changed in the database since the last backup.
+Typically these incremental backups take place once a day,
+so this replication is a daily backup.
+
+Incremental backups save only the delta between backups.
+At regular intervals,
+the source database is replicated to a target database.
+Replication uses sequence values to identify the documents changed during the interval period.
+
+The backup operation uses replication to get and store a checkpoint.
+This checkpoint is another database with an internal name.
+The backup operation creates the name from a combination of the date and the backup task name.
+This name makes it easier to identify checkpoints during the recovery or roll up process.
+
+The replication process for a database starts by finding the value of the `since_seq` parameter.
+The parameter indicates where the last replication finished.
+
+The following steps outline how incremental backups are created.
+
+#### 1. Find the ID of the checkpoint document for the last replication.
+
+> Get checkpoint ID of the last incremental backup for a database called `original`:
+
+```http
+GET /_replicator/original HTTP/1.1
+```
+
+```shell
+$ replication_id=$(curl "${url}/_replicator/original" | jq -r '._replication_id')
+```
+
+The checkpoint ID value is stored in the `_replication_id` field in the replication document in the `_replicator` database.
+
+<div></div>
+
+#### 2. Get `recorded_seq` value
+
+> Get `recorded_seq` from database called `original`
+
+```http
+GET /original/_local/${replication_id} HTTP/1.1
+```
+
+```shell
+$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
+```
+
+After you get the checkpoint ID,
+you use it to get the `recorded_seq` value from the first element of the history array in the `/_local/${replication_id}` document in the original database.
+
+<div> </div>
+
+#### 3. Run an incremental backup
+
+> Start new incremental backup to an incremental database called `newbackup`:
+
+```http
+PUT /_replicator/newbackup HTTP/1.1
+Content-Type: application/json
+```
+
+```shell
+$ curl -X PUT "${url}/_replicator/newbackup" -H "${ct}" -d @newbackup.json
+# where newbackup.json contains the following:
+```
+
+```json
+{
+  "_id": "newbackup",
+  "source": "${url}/original",
+  "target": "${url}/newbackup",
+  "since_seq": "${recorded_seq}"
+}
+```
+
+Now that you have the checkpoint ID and `recorded_seq`, you can start the new incremental backup.
