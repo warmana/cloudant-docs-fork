@@ -118,7 +118,7 @@ Replication is an interface to the replication system. You can initiate replicat
 
 You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analytics of your database activity.
 
-→ [Learn more](https://docs.cloudant.com/replication.html#undefined) **Need Warehousing Link**
+→ [Learn more](https://need warehouse link) 
 
 * Click **Getting Started** to learn more about warehousing and it’s capabilities.
 ![alt text](images/visual_guide/4_warehousing/1.png)
@@ -128,22 +128,17 @@ You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analyti
 #### Creating a Warehouse
  
 1. In the left navigation, click **Warehousing**, then **Create New Warehouse**.
+	![alt text](images/visual_guide/4_warehousing/2.png)
 
-![alt text](images/visual_guide/4_warehousing/2.png)
-
----
 2. **Authenticate** with your IBM Bluemix username and password.
 	![alt text](images/visual_guide/4_warehousing/3.png)
 	
----
 3. **Pick a name** for your warehouse and **choose which database** you would like to add to the warehouse.
 	![alt text](images/visual_guide/4_warehousing/4.png)
 	
----
 4. **Optional**: You can add the warehouse to an existing dashDB service instance or to a specific IBM Bluemix organization and space.
 	![alt text](images/visual_guide/4_warehousing/5.png)
 	
----
 5. Click ![alt text](images/visual_guide/4_warehousing/Button.png) and you will be taken to the warehouses page.
 	![alt text](images/visual_guide/4_warehousing/6.png)
 
@@ -160,7 +155,7 @@ You can create a warehouse in IBM dashDB. A warehouse provides deep-dive analyti
 ### Active Tasks
 Shows a list of the running background tasks on the server, including database compaction, index building, and replication.
 
-→ [Learn more](https://docs.cloudant.com/active_tasks.html#undefined)
+→ [Learn more about active tasks.](https://docs.cloudant.com/active_tasks.html#undefined)
 
 ---
 
@@ -180,33 +175,6 @@ Shows a list of the running background tasks on the server, including database c
 * The Active Tasks page is an interface to the Active Tasks API call. Click **API URL**, then **Copy** to view or copy the raw JSON.
 ![alt text](images/visual_guide/5_active_tasks/3.png)
 
-### Account
-
-On the Account page, you can see Cloudant announcements and usage statistics. Or you can update your profile, change your account password, add or update a credit card, and change the location of your data.
-
-→ [Learn more](https://docs.cloudant.com/account.html)
-
----
-
-#### Announcements
-* Learn about new Cloudant releases and information that might be interesting.
-
-![alt text](images/visual_guide/6_account/1.png)
-
----
-
-#### Profiile
-* Change your name, company name, or email.
-
-![alt text](images/visual_guide/6_account/2.png)
-
----
-
-#### Password
-* Change your password.
-
-![alt text](images/visual_guide/6_account/3.png)
-
 ---
 
 #### Virtual Hosts
@@ -219,7 +187,7 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 #### Cross-Origin Resource Sharing 
 *CORS is only available after you complete the previous step.*
 
-1. Click on **CORS** tab.
+1. Click on **Account** > **CORS** tabs.
 2. Select **Enable CORS**.
 3. **Define** the domains where database accepts requests.
 4. Click **Add**.
@@ -227,27 +195,6 @@ On the Account page, you can see Cloudant announcements and usage statistics. Or
 <span class=" fa fa-info">The source database can be a local or remote database. If you select a New Database as the Target Database, you can replicate into a new database. A target database can be local or remote.
 
 ![alt text](images/visual_guide/6_account/5.png)
-
----
-
-#### Usage
-* View a graph that shows your data usage and associated cost.
-
-![alt text](images/visual_guide/6_account/6.png)
-
----
-
-#### Credit Card
-* Update your credit card number.
-
-![alt text](images/visual_guide/6_account/7.png)
-
----
-
-#### Location for your Data
-* Select the location for your data.
-
-![alt text](images/visual_guide/6_account/8.png)
 
 ---	
 ### Support
@@ -263,12 +210,6 @@ Shows a list of the running background tasks on the server, including database c
 4. Click **Submit**.
 
 ![alt text](images/visual_guide/7_support/1.png)
-
----
-
-#### Access More Information
-* When you view the active tasks, their status can change. Adjust the time between auto-updates by moving the **Polling Interval** slider.
-![alt text](images/visual_guide/7_support/2.png)
 
 ---
 
