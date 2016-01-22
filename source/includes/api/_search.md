@@ -458,7 +458,11 @@ Wild card searches are supported, for both single (`?`) and multiple (`*`) chara
 Wildcards must come after the search term.
 Use `*:*` to return all results.
 
-Result sets from searches are limited to 200 rows, and return 25 rows by default. The number of rows returned can be changed via the limit parameter. The response contains a bookmark. If the bookmark is passed back as a URL parameter you'll skip through the rows you've already seen and get the next set of results.
+Result sets from searches are limited to 200 rows, and return 25 rows by default. The number of rows returned can be changed via the limit parameter.
+If the search query does *not* specify the `"group_field"` argument,
+the response contains a bookmark. If the bookmark is passed back as a URL parameter you'll skip through the rows you've already seen and get the next set of results.
+
+<aside class="warning">The response never includes a bookmark if the `"group_field"` argument is specified in the search query.</aside>
 
 The following characters require escaping if you want to search on them: `+ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /`
 
