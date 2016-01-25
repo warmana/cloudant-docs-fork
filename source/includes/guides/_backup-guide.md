@@ -52,6 +52,12 @@ contact the Cloudant support team:
 
 <aside class="warning">The Cloudant backup facility is available only to Enterprise customers.</aside>
 
+<aside class="warning">By default,
+`_design` documents are not backed up,
+so that indexes are built on the incremental backup databases.
+If you require backups of the `_design` documents,
+you must maintain them in your preferred source control tool.</aside>
+
 ### Concepts
 
 *	Backup run: For a backup period, the source database is replicated using sequence values to determine the documents that changed during the backup period. On completion, this replication is called the daily backup.
@@ -378,7 +384,7 @@ the document should not be constantly receiving changes and updates.</aside>
 
 <div></div>
 
-### In depth
+### How backup using incremental replication works
 
 A very simple form of backup is to [replicate](replication.html) the database to a dated backup database.
 
