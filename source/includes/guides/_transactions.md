@@ -111,7 +111,7 @@ function (doc)
 }}
 
 ```
-<div></div>
+
 Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
 
 > Built-in "_sum" reducer
@@ -126,7 +126,7 @@ Select the built-in "_sum" reducer which produces output either as a ledger of p
  }
  
 ```
-<div></div>
+
 Or it produces output as totals grouped by order_id (?group_level=1):
 
 > Totals grouped by order_id
@@ -139,7 +139,3 @@ Or it produces output as totals grouped by order_id (?group_level=1):
  	}
 
 ``` 
-<div></div>
-	 
-
-
