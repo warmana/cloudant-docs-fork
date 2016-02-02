@@ -98,8 +98,7 @@ The example below shows the Map function:
 > Map function
 
 ```
-{
-function (doc) 
+{function (doc) 
 {
   if (doc.type === 'purchase') {
     emit(doc.order_id, doc.total);
@@ -113,23 +112,20 @@ function (doc)
 ```
 <div></div>
 
-> Built-in "_sum" reducer
 
-```
-{
+
+
+
+Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
+
+```{
 	"total_rows":3,"offset":0,"rows":[
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
  	]
  }
- 
 ```
-
-
-Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
-
-
 
 
 Or it produces output as totals grouped by order_id (?group_level=1):
