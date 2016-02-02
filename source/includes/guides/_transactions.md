@@ -91,44 +91,41 @@ In this example, the customer paid by supplying a credit card and redeeming a pr
 -	Purchase totals as positive numbers
 -	Payments against the account as negative numbers
 
-
-The example below shows the Map function: 
-<div></div>
- 
 > Map function
 
 ```
-{function (doc) 
 {
-  if (doc.type === 'purchase') {
-    emit(doc.order_id, doc.total);
-  } else{
-    if (doc.type === 'payment') {
-      emit(doc.order_id, -doc.value);
-    }
-  }
-}}
-
-```
-<div></div>
-
-
-
-
-
-Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
-
-```{
-	"total_rows":3,"offset":0,"rows":[
- 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
- 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
- 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
- 	]
+function (doc) 
+	{
+	if (doc.type === 'purchase') {
+		emit(doc.order_id, doc.total);
+		} else{
+	if (doc.type === 'payment') {
+		emit(doc.order_id, -doc.value);
+	  }
+	 }
+	 }
  }
 ```
 
+The example below shows the Map function: 
 
-Or it produces output as totals grouped by order_id (?group_level=1):
+<div></div>
+
+> Built-in "_sum" reducer
+
+```
+{
+"total_rows":3,"offset":0,"rows":[
+	{"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
+	{"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
+	{"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
+	]
+ }
+```
+
+Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
+<div></div>
 
 > Totals grouped by order_id
 
@@ -136,7 +133,10 @@ Or it produces output as totals grouped by order_id (?group_level=1):
 {
 "rows":[
  	{"key":"320afa89017426b994162ab004ce3383","value":0}
- 	]
- 	}
-
+ ]
+ }
 ``` 
+
+Or totals grouped by order_id (?group_level=1):
+
+
