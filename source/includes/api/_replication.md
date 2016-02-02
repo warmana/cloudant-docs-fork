@@ -24,6 +24,11 @@ This means that you must replicate from `databasea` to `databaseb`, and separate
 
 <aside class="warning">The target database must exist. It is not automatically created if it does not exist. Add `"create_target":true` to the JSON document describing the replication if the target database does not exist prior to replication.</aside>
 
+<aside class="warning">Replicator databases must be maintained and looked after,
+just like any other valuable data store.
+For more information,
+see [replication database maintenance](replication.html#replication-database-maintenance).</aside>
+
 Replications are created in one of two ways:
 
 1. A replication can be created using a [replication document](#replication-document-format) in the `_replicator` database. Creating and modifying replications in this way allows you to control replication in the same as working with other documents. Replication jobs created this way will be resumed after a node restart. 
@@ -581,3 +586,14 @@ Content-Type: application/json
 
 A simple example of creating a replication task, then canceling it.
 
+### Replication database maintenance
+
+A replication database must be looked after like any other database.
+If you do not perform regular maintenance,
+you risk problems with invalid documents,
+caused by interruptions to the replication process.
+
+There are two main actions you can perform to maintain a replication database:
+
+1.	Remove old documents. This can be done simply by determining the age of documents, and [deleting them](https://docs.cloudant.com/document.html#delete) if they are no longer required.
+2.	Remove conflicted documents. These are documents affected by an interrupted replication process, resulting in temporary uncertainty over which document in the replication database is the correct one. It is straightforward to [find](https://docs.cloudant.com/mvcc.html#distributed-databases-and-conflicts) and [resolve](https://docs.cloudant.com/mvcc.html#how-to-resolve-conflicts) conflicted documents.
