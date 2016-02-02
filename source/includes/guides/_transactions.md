@@ -84,31 +84,18 @@ To create a unique identifier to use in your application, such as an "order_id",
 
 
 If the customer successfully pays for their items, additional records are added to the database to record the order:
-
 <div></div>
 
-> Map function
-
-```
-function (doc) 
-{
-  if (doc.type === 'purchase') {
-    emit(doc.order_id, doc.total);
-  } else{
-    if (doc.type === 'payment') {
-      emit(doc.order_id, -doc.value);
-    }
-  }
-}
-```
- 
 In this example, the customer paid by supplying a credit card and redeeming a pre-paid voucher. The total of the two payment added up to the amount of the order. Each payment was written to Cloudant as a separate document. You can see the status of an account by creating a view of everything you know about an account as a ledger containing the following information: 
  
 -	Purchase totals as positive numbers
 -	Payments against the account as negative numbers
-<div></div>
 
-< Map function
+
+The example below shows the Map function: 
+<div></div>
+ 
+> Map function
 
 ```
 {
@@ -121,13 +108,13 @@ function (doc)
       emit(doc.order_id, -doc.value);
     }
   }
-}
+}}
+
 ```
-
-The example below shows the Map function:  
-
 <div></div>
-< Built-in "_sum" reducer
+Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
+
+> Built-in "_sum" reducer
 
 ```
 {
@@ -137,13 +124,12 @@ The example below shows the Map function:
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
  	]
  }
+ 
 ```
-
-Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
-
 <div></div>
+Or it produces output as totals grouped by order_id (?group_level=1):
 
-< Totals grouped by order_id
+> Totals grouped by order_id
 
 ```
 {
@@ -151,11 +137,9 @@ Select the built-in "_sum" reducer which produces output either as a ledger of p
  	{"key":"320afa89017426b994162ab004ce3383","value":0}
  	]
  	}
-```
- 
- 
-Or it produces output as totals grouped by order_id (?group_level=1):
 
+``` 
+<div></div>
 	 
 
 
