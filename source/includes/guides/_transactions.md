@@ -1,6 +1,7 @@
 ## Storing purchase orders in Cloudant
 
 > Example shopping app documents:
+```json
 {
   "_id": "
 023f7a21dbe8a4177a2816e4ad1ea27e
@@ -34,7 +35,7 @@
   "tax" : 3.32,
   "total": 26.46
 }
-
+```
 
 If you intend to create an e-commerce system and use Cloudant to store the purchase order records, then 
 you can model a single purchase order this way:
@@ -59,6 +60,7 @@ To create a unique identifier to use in your application, such as an `order_id`,
 
 ###Recording payments
 > Payment record
+```json
 {
   "_id": "
 bf70c30ea5d8c3cd088fef98ad678e9e
@@ -79,10 +81,12 @@ bf70c30ea5d8c3cd088fef98ad678e9e
    "method": "voucher",
    "payment_reference": "Q88775662377224"
 }
- 
+```
+
 If the customer successfully pays for their items, additional records are added to the database to record the order:
 
 > Example of the Map function
+```json
 function (doc) {
   if (doc.type === 'purchase') {
     emit(doc.order_id, doc.total);
@@ -92,6 +96,7 @@ function (doc) {
     }
   }
 }
+```
  
 In this example, the customer paid by supplying a credit card and redeeming a pre-paid voucher. The total of the two payment added up to the amount of the order. Each payment was written to Cloudant as a separate document. You can see the status of an account by creating a view of everything you know about an account as a ledger containing the following information: 
  
@@ -99,18 +104,22 @@ In this example, the customer paid by supplying a credit card and redeeming a pr
 -	Payments against the account as negative numbers
 
 > Example of the built-in "_sum" reducer
+```json
  	{"total_rows":3,"offset":0,"rows":[
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
  	]}
+```
 
 Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false):
 
 > Totals grouped by order_id
+```json
  	{"rows":[
  	{"key":"320afa89017426b994162ab004ce3383","value":0}
  	]}
+```
  	 
 ...or as totals grouped by order_id (?group_level=1):
 
