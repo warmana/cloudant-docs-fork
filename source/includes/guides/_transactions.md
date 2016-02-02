@@ -1,163 +1,116 @@
-## Transactions in Cloudant
+## Storing purchase orders in Cloudant
 
 > Example shopping app documents:
-
-```json
 {
+  "_id": "
+023f7a21dbe8a4177a2816e4ad1ea27e
+",
   "type": "purchase",
-  "item": "...",
-  "account": "...",
-  "quantity": 2,
-  "unit_price": 99.99
-}
-
-{
-  "type": "payment",
-  "account": "...",
-  "value": 199.98
-}
-```
-
-In a shopping app, purchases must reflect charges and a change in inventory. However, if one of those processes fails while others succeed, your information becomes inconsistent. While previous revisions of your documents might be lost to [compaction](http://en.wikipedia.org/wiki/Data_compaction), regularly holding on to older data can slow things down.
-
-The easiest way to achieve consistency is *not* update documents at all.
-
-In the case of the shopping app, instead insert documents like the examples provided.
-
-<div></div>
-
-> Example view to calculate a running total:
-
-```json
-{
-  "views": {
-    "totals": {
-      "map": function(doc){
-        if(doc.type === 'purchase'){
-          emit(doc.account, doc.quantity * doc.unit_price);
-        }else{
-          if(doc.type === 'payment'){
-            emit(doc.account, -doc.value);
-          } 
-        }
+  "order_id": "320afa89017426b994162ab004ce3383",
+  "basket": [
+     {
+       "product_id": "A56",
+       "title": "Adele - 25",
+       "category": "Audio CD",
+       "price": 8.33,
+       "tax": 0.2,
+       "quantity": 2
       },
-      "reduce": "_sum"
-    }
-  }
-}
-```
-
-`item` and `account` are IDs for other objects in your database. To calculate a running total for an account, we would use a [view](creating_views.html) like the example provided.
-
-Calling this view with the `group=true&key={account}` options gives you a running balance for a particular account. To give refunds, insert a document with values to balance out the transaction.
-
-Logging events and aggregating them to determine an object's state is called [event sourcing](http://martinfowler.com/eaaDev/EventSourcing.html). It can provide SQL-like transactional [atomicity](#acid_atomic) even in a [NoSQL database](basics.html#json) like Cloudant.
-
-### Event Sourcing
-
-In event sourcing, the database's [atomic](#acid_atomic) unit is the document, which means if a document fails to write, it should never leave the database in an inconsistent state.
-
-Documents should be understood as a sum of their interactions instead of merely their current state. In the case of the shopping app, this would be representing an account as every transaction logged within it instead of just its current balance.
-
-### Grouping Documents
-
-To group individual documents, you can add a field in each document that contains a value to group the documents together. With this value defined in each document, you can use a view to group the documents by this value.
-
-In this example, you use a shopping cart that contains each item in an order as a separate document. This order can also be used in an event-sourcing <link> approach which groups related events to a single conceptual entity.
-
-> Example array with multiple IDs:
-
-```json
-{
-  "uuids": [
-    "320afa89017426b994162ab004ce3383"
-  ]
-}
-```
-
-The `_uuids` ([UUIDs](http://en.wikipedia.org/wiki/Universally_unique_identifier)) endpoint can be used to maintain purchases as individual documents when they are purchased through a shopping cart in a single transaction.
-
-By default, `https://$USERNAME.cloudant.com/_uuids` returns one ID. An array of multiple IDs can be called with `_uuids?count=$NUMBER`, so `?count=3` returns three IDs. 
-<div></div>
-
-> Example of shared transaction `_id`:
-
-```json
-{
-  "views": {
-    "transactions": {
-      "map": function(doc){
-        if(doc.type === 'purchase'){
-          emit(doc.transaction_id, null);
-        }
+      {
+        "product_id": "B32",
+        "title": "The Lady In The Van - Alan Bennett",
+        "category": "Paperback book",
+        "price": 3.49,
+        "tax": 0,
+        "quantity": 2
       }
-    }
-  }
-}
-```
-
-These arrays can be used to generate a shared `transaction_id` value which allows you to retrieve them as a group later. A view for this might look something like the example provided.
-
-A `_view/transactions?key={transaction_id}&include_docs=true` query retrieves every change associated with a transaction.
-
-### Mapping Data into Events
-
-> Example document to be mapped to another database:
-
-```json
-{
-  "account_id": "...",
-  "balance": "...",
-  "transaction_history": [{
-    "date": "...",
-    "item": "...",
-    "quantity": "...",
-    "unit_price": 100
-  },{
-    "date": "...",
-    "transaction_id": "...",
-    "destination_account": "...",
-    "change": 50
-  }]
-}
-```
-
-> Example view to map a document to another database:
-
-```json
-{
-  "views": {
-    "events": {
-      "map": function(doc){
-        for(var i in doc.transaction_history){
-          var transaction = doc.transaction_history[i];
-          emit({
-            from: doc.account_id,
-            to: transaction.destination_account,
-            transaction_id: transaction.transaction_id,
-            date: transaction.date
-          }, transaction.change);
-        }
-      },
-      "dbcopy": "events"
-    }
-  }
-}
-```
-
-> Example document in the events database, describing the mapping performed by a view:
-
-```json
-{
-  "key": {
-    "from": "...",
-    "to": "...",
-    "transaction_id": "...",
-    "date": "..."
+   ],
+  "account_id": "985522332",
+  "delivery": {
+    "option": "Next Day",
+    "price": 2.99
   },
-  "value": 100
+  "pretax" : 20.15,
+  "tax" : 3.32,
+  "total": 26.46
 }
-```
-The `dbcopy` map can be used to migrate data into events, and then output them to another database, in order to better accommodate event sourcing.
 
-A document can be mapped into another database using a [view](creating_views.html). The mapping also generates a document in the events database.
+
+If you intend to create an e-commerce system and use Cloudant to store the purchase order records, then 
+you can model a single purchase order this way:
+
+<div></div>
+
+This example provides enough data in a purchase record to render a summary of an order on a web page, or an email, without fetching additional records. Notice the order's details in the following list:
+ 
+-	The basket contains reference ids (product_id) to a database of products stored elsewhere.
+-	The basket duplicates some of the product data in this record; enough to record the state of the items purchased at the point of sale.
+-	The document does not contain fields that mark the status of the order. Additional documents will be added later to record payments and delivery.
+-	The database automatically generates a document _id when it inserts the document into the database.
+-	A unique identifier (order_id) is supplied with each purchase record to reference the order later. 
+ 
+When the customer places an order, typically when the customer enters the "checkout" phase on the website, a purchase order record is created. 
+
+###Generating your own unique identifiers (UUIDs)
+ 
+In a relational database, sequential "auto incrementing" numbers are often used but in distributed databases, where data is spread around of cluster of servers, longer UUIDs are used to ensure that documents are stored with their own unique id.
+ 
+To create a unique identifier to use in your application, such as an `order_id`, call the `GET _uuids` endpoint on the Cloudant API and the database will generate an identifier for you. The same endpoint can be used to generate multiple ids by adding a `count` parameter, for example, `/_uuids?count=10`.
+
+###Recording payments
+> Payment record
+{
+  "_id": "
+bf70c30ea5d8c3cd088fef98ad678e9e
+",
+  "type": "payment",
+  "account_id": "985522332",
+  "order_id": "320afa89017426b994162ab004ce3383",
+  "value": 6.46,
+  "method": "credit card",
+  "payment_reference": "AB9977G244FF2F667"
+}
+{
+   "_id": "12c0ea6cd3d2c6e3b1d34442aea6a2d9",
+   "type": "payment",
+   "account_id": "985522332",
+   "order_id": "320afa89017426b994162ab004ce3383",
+   "value": 20.00,
+   "method": "voucher",
+   "payment_reference": "Q88775662377224"
+}
+ 
+If the customer successfully pays for their items, additional records are added to the database to record the order:
+
+> Example of the Map function
+function (doc) {
+  if (doc.type === 'purchase') {
+    emit(doc.order_id, doc.total);
+  } else{
+    if (doc.type === 'payment') {
+      emit(doc.order_id, -doc.value);
+    }
+  }
+}
+ 
+In this example, the customer paid by supplying a credit card and redeeming a pre-paid voucher. The total of the two payment added up to the amount of the order. Each payment was written to Cloudant as a separate document. You can see the status of an account by creating a view of everything you know about an account as a ledger containing the following information: 
+ 
+-	Purchase totals as positive numbers
+-	Payments against the account as negative numbers
+
+> Example of the built-in "_sum" reducer
+ 	{"total_rows":3,"offset":0,"rows":[
+ 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
+ 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
+ 	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
+ 	]}
+
+Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false):
+
+> Totals grouped by order_id
+ 	{"rows":[
+ 	{"key":"320afa89017426b994162ab004ce3383","value":0}
+ 	]}
+ 	 
+...or as totals grouped by order_id (?group_level=1):
+
