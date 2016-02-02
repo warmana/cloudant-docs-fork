@@ -1,11 +1,10 @@
 ## Storing purchase orders in Cloudant
 
-> Example shopping app documents:
-```json
+> Example shopping app documents
+
+```
 {
-  "_id": "
-023f7a21dbe8a4177a2816e4ad1ea27e
-",
+  "_id": "023f7a21dbe8a4177a2816e4ad1ea27e",
   "type": "purchase",
   "order_id": "320afa89017426b994162ab004ce3383",
   "basket": [
@@ -56,15 +55,15 @@ When the customer places an order, typically when the customer enters the "check
  
 In a relational database, sequential "auto incrementing" numbers are often used but in distributed databases, where data is spread around of cluster of servers, longer UUIDs are used to ensure that documents are stored with their own unique id.
  
-To create a unique identifier to use in your application, such as an `order_id`, call the `GET _uuids` endpoint on the Cloudant API and the database will generate an identifier for you. The same endpoint can be used to generate multiple ids by adding a `count` parameter, for example, `/_uuids?count=10`.
+To create a unique identifier to use in your application, such as an "order_id", call the "GET _uuids" endpoint on the Cloudant API and the database will generate an identifier for you. The same endpoint can be used to generate multiple ids by adding a "count" parameter, for example, `/_uuids?count=10`.
 
 ###Recording payments
+
 > Payment record
-```json
+
+```
 {
-  "_id": "
-bf70c30ea5d8c3cd088fef98ad678e9e
-",
+  "_id": "bf70c30ea5d8c3cd088fef98ad678e9e",
   "type": "payment",
   "account_id": "985522332",
   "order_id": "320afa89017426b994162ab004ce3383",
@@ -83,11 +82,16 @@ bf70c30ea5d8c3cd088fef98ad678e9e
 }
 ```
 
+
 If the customer successfully pays for their items, additional records are added to the database to record the order:
 
-> Example of the Map function
-```json
-function (doc) {
+<div></div>
+
+> Map function
+
+```
+function (doc) 
+{
   if (doc.type === 'purchase') {
     emit(doc.order_id, doc.total);
   } else{
@@ -102,24 +106,56 @@ In this example, the customer paid by supplying a credit card and redeeming a pr
  
 -	Purchase totals as positive numbers
 -	Payments against the account as negative numbers
+<div></div>
 
-> Example of the built-in "_sum" reducer
-```json
- 	{"total_rows":3,"offset":0,"rows":[
+< Map function
+
+```
+{
+function (doc) 
+{
+  if (doc.type === 'purchase') {
+    emit(doc.order_id, doc.total);
+  } else{
+    if (doc.type === 'payment') {
+      emit(doc.order_id, -doc.value);
+    }
+  }
+}
+```
+
+The example below shows the Map function:  
+
+<div></div>
+< Built-in "_sum" reducer
+
+```
+{
+	"total_rows":3,"offset":0,"rows":[
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":26.46},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-20},
  	  {"id":"320afa89017426b994162ab004ce3383","key":"985522332","value":-6.46}
- 	]}
+ 	]
+ }
 ```
 
-Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false):
+Select the built-in "_sum" reducer which produces output either as a ledger of payment events (queried with ?reduce=false): 
 
-> Totals grouped by order_id
-```json
- 	{"rows":[
+<div></div>
+
+< Totals grouped by order_id
+
+```
+{
+"rows":[
  	{"key":"320afa89017426b994162ab004ce3383","value":0}
- 	]}
+ 	]
+ 	}
 ```
- 	 
-...or as totals grouped by order_id (?group_level=1):
+ 
+ 
+Or it produces output as totals grouped by order_id (?group_level=1):
+
+	 
+
 
