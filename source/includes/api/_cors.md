@@ -10,7 +10,7 @@ CORS defines a way in which the browser and the server interact to determine whe
 To do this, add `https://www.example.com` to your list of allowed origins.
 The effect is that scripts loaded from this domain are then allowed to make AJAX requests to your Cloudant databases.
 By using HTTP auth with CORS requests, users of your application are able to access their database only.
-2. You want to allow third parties access to your your database.
+2. You want to allow third parties access to your database.
 An example might be where you have a database that contains product information,
 and you want to give sales partners access to the information from Javascript running on their own domain.
 To do this, add their domain to your list of allowed origins.
