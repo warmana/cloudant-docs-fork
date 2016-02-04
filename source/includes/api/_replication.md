@@ -588,12 +588,10 @@ A simple example of creating a replication task, then canceling it.
 
 ### Replication database maintenance
 
-A replication database must be looked after like any other database.
+A replication database should be looked after like any other database.
 If you do not perform regular maintenance,
-you risk problems with invalid documents,
-caused by interruptions to the replication process.
+you might accumulate invalid documents caused by interruptions to the replication process.
+A large number of invalid documents can result in excess load being placed on your cluster when the replicator process is restarted by Cloudant operations.
 
-There are two main actions you can perform to maintain a replication database:
-
-1.	Remove old documents. This can be done simply by determining the age of documents, and [deleting them](https://docs.cloudant.com/document.html#delete) if they are no longer required.
-2.	Remove conflicted documents. These are documents affected by an interrupted replication process, resulting in temporary uncertainty over which document in the replication database is the correct one. It is straightforward to [find](https://docs.cloudant.com/mvcc.html#distributed-databases-and-conflicts) and [resolve](https://docs.cloudant.com/mvcc.html#how-to-resolve-conflicts) conflicted documents.
+The main action you can perform to maintain a replication database is to remove remove old documents.
+This can be done simply by determining the age of documents, and [deleting them](https://docs.cloudant.com/document.html#delete) if they are no longer required.
