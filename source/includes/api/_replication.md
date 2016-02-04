@@ -593,5 +593,5 @@ If you do not perform regular maintenance,
 you might accumulate invalid documents caused by interruptions to the replication process.
 A large number of invalid documents can result in excess load being placed on your cluster when the replicator process is restarted by Cloudant operations.
 
-The main action you can perform to maintain a replication database is to remove remove old documents.
+The main action you can perform to maintain a replication database is to remove old documents.
 This can be done simply by determining the age of documents, and [deleting them](https://docs.cloudant.com/document.html#delete) if they are no longer required.
