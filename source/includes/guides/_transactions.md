@@ -39,7 +39,13 @@ This example will demonstrate how to build an e-commerce system and take advanta
   "account_id": "985522332",
   "delivery": {
     "option": "Next Day",
-    "price": 2.99
+    "price": 2.99,
+    "address": {
+      "street": "17 Front Street",
+      "town": "Middlemarch",
+      "postcode": "W1A 1AA"
+    }
+  },
   },
   "pretax" : 20.15,
   "tax" : 3.32,
