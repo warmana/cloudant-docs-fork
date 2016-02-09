@@ -1,4 +1,4 @@
-## Storing purchase orders in Cloudant
+## Grouping related documents together in Cloudant
 
 Traditionally, e-commerce systems are built with relational databases. These databases typically use a number of tables joined together to record sales, customer details, purchased products, and delivery tracking information. Relational databases offer high consistency meaning that application developers can build their applications to a database's strengths, including using joins between collections, enumerations to record the state of an object, and database transactions to guarantee atomic operations.
 
@@ -39,7 +39,13 @@ This example will demonstrate how to build an e-commerce system and take advanta
   "account_id": "985522332",
   "delivery": {
     "option": "Next Day",
-    "price": 2.99
+    "price": 2.99,
+    "address": {
+      "street": "17 Front Street",
+      "town": "Middlemarch",
+      "postcode": "W1A 1AA"
+    }
+  },
   },
   "pretax" : 20.15,
   "tax" : 3.32,
