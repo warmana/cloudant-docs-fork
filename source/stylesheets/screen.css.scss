@@ -327,7 +327,7 @@ body, html {
   min-height: 100%;
   padding-bottom: 60px;
 
-  &>form, &>h1, &>h2, &>h3, &>h4, &>p, &>ul, &>ol, &>aside, &>dl{
+  &>form, &>h1, &>h2, &>h3, &>h4, &>p, &>ul, &>ol, &>aside, &>dl, &>button {
     margin-right: $examples-width;
     padding: 0 $main-padding;
     @include box-sizing(border-box);
@@ -548,7 +548,7 @@ body, html {
 
     &>p { margin: 0; }
 
-    a {
+    &.highlight a {
       color: #fff;
       text-decoration: none;
       border-bottom: dashed 1px #ccc;
@@ -564,7 +564,7 @@ body, html {
   pre {
     @extend %code-font;
 
-    &:last-of-type {
+    &.highlight:last-of-type {
       border-top: 0.2em solid $examples-bg;
       margin-top: -0.2em;
     }

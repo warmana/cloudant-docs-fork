@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation
+title: Cloudant Documentation - Node.js
 
 language_tabs:
   - http 
@@ -15,9 +15,8 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - libraries/index
-#  - libraries/supported
-#  - libraries/thirdparty
+  - libraries/nodejs
 
 ---
+
 
