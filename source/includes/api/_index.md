@@ -33,5 +33,3 @@ The Cloudant Blog article [Authorized curl, a.k.a acurl](https://cloudant.com/bl
 enabling you to enter commands such as:<br/>
 	`acurl https://$USERNAME.cloudant.com`
 
-A video introduction about `acurl` is also available:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/n28IWoL1sXQ?rel=0" frameborder="0" allowfullscreen title="Setting up pre authenticated cURL video"></iframe>
