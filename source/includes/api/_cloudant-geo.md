@@ -8,10 +8,6 @@ Cloudant Geo:
 -   Integrates with existing GIS applications, so that they can scale to accommodate different data sizes, concurrent users, and multiple locations.
 -   Provides a NoSQL capability for GIS applications, so that large streams of data can be acquired from devices, sensors, and satellites. This data can then be stored, processed, and syndicated across other web applications.
 
-This overview describes Cloudant Geospatial:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/bFa3uYGY2M0" frameborder="0" allowfullscreen title="Introducing Cloudant Geospatial"></iframe>
-
-
 ### Cloudant Geo overview
 
 Cloudant Geo lets you structure your data using GeoJSON format. Design documents are used to index the data. Just like working with other Cloudant documents, an initial scan works through all the documents in the database, giving you the first index. Subsequent updates to the documents result in incremental updates to the index.
@@ -92,9 +88,6 @@ More information about GeoJSON, including the full specification, is available a
 To make it easier to work with Cloudant Geo documents, it is best practice to create a separate design document, specifically for Cloudant Geo.
 
 When you create a geospatial index, you must use the Cloudant Geo defined keyword `st_indexes` to hold one or more Cloudant Geo index definitions, where each index must be defined by the Cloudant Geo `st_index` function.
-
-This overview explains how to build and query a Cloudant Geospatial index:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/JqZOcp0pox4?rel=0" frameborder="0" allowfullscreen title="Building and Querying a Cloudant Geospatial index"></iframe>
 
 #### `geoidx`: An example Cloudant Geo index
 For example, you could create a design document with the `_id` value `"_design/geodd"` which contains an index called `"geoidx"`. The index is a simple JavaScript function that checks for the presence of a valid geometry object in the document, and if found ensures that the document is included in the `st_index` Cloudant Geo index function.
@@ -470,9 +463,6 @@ These examples show the available results based on the options you specify for t
 <div></div>
 
 ### Example: Querying a Cloudant Geo index
-
-<br>This overview shows an example of how Cloudant Geospatial works:</br>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/o683QPKFEa4?rel=0" frameborder="0" allowfullscreen title="Cloudant Geospatial in action"></iframe>
 
 #### Simple Circle
 

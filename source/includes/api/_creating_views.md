@@ -5,9 +5,6 @@
 Views are used to obtain data stored within a database.
 Views are written using Javascript functions.
 
-This video explains the basic concepts of MapReduce:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/Clgh9q4k92A?rel=0" frameborder="0" allowfullscreen title="MapReduce, overview video"></iframe>
-
 ### View concepts
 
 Views are mechanisms for working with document content in databases.
@@ -99,12 +96,6 @@ The list also includes metadata such as the number of key:value pairs returned.
 
 <aside class="notice">The document `_id` is automatically included in each of the key:value pair result records.
 This is to make it easier for the client to work with the results.</aside>
-
-This video explains how to use MapReduce functions to create views:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/YQmqtYZReMo?rel=0" frameborder="0" allowfullscreen title="Video on creating secondary indexes"></iframe>
-
-This video describes advanced secondary index techniques:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/eM2k8nrnLFg?rel=0" frameborder="0" allowfullscreen title="Video on advanced secondary index techniques"></iframe>
 
 ### Map function examples
 

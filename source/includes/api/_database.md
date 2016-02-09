@@ -4,9 +4,6 @@ Cloudant databases contain JSON objects.
 These JSON objects are called [documents](document.html#documents).
 All documents must be contained in a database.
 
-You interact with Cloudant databases and documents using API commands, as this overview explains:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/47qQMaYJVUU?rel=0" frameborder="0" allowfullscreen title="API overview video"></iframe>
-
 ### Create
 
 > Create a database
@@ -187,9 +184,6 @@ make a GET request against `https://$USERNAME.cloudant.com/_all_dbs`.
 The response is an array with all database names.
 
 ### Get Documents
-
-A video explaining how to get all documents from a Cloudant database is available here:<br/>
-<iframe width="480" height="270" src="https://www.youtube.com/embed/Zoaifed-fWQ?rel=0" frameborder="0" allowfullscreen title="Using the primary index, overview video"></iframe>
 
 > Getting all documents in a database:
 
