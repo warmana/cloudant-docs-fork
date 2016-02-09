@@ -194,7 +194,7 @@ The fundamental API call for utilizing Cloudant Geo has a simple format, where q
 ```
 
 
-A query geometry paramter must be provided for a Cloudant Geo search. There are four types of query geometries that are defined as follows:
+A query geometry parameter must be provided for a Cloudant Geo search. There are four types of query geometries that are defined as follows:
 
 <table>
 <colgroup>
