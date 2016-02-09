@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+.content {
+  pre, blockquote {
+    float: none;
+    top: 0;
+    margin: 10px 60px 10px 40px;
+    width: auto;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  blockquote {
+    border-top: 0;
+  }
+  
+  blockquote:before {
+    display:none;
+  }
+  
+  h1,h2,h3,h4,h5,p,table,ul,ol,aside,dl {
+    margin-right: 20px;
+  }
+} 
+
+.dark-box {
+  display: none;
+}
+
+#expand-collapse-code {
+  display: none;
+}  
+  
+.thebe_controls button {
+  width: auto;
+  height: auto;
+  border-radius:10px;
+  position: relative;
+  margin: 40px;
+  padding:10px;
+  left:0;
+}
+
+.output_prompt, .output_result {
+  display:none;
+}
