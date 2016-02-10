@@ -229,14 +229,14 @@ under the License.
               Page.new('Replication', 'replication_guide.html', []),
               Page.new('Managing tasks', 'managing_tasks.html', []),
               Page.new('Document versioning and conflicts', 'mvcc.html', []),
-              Page.new('Transactions in Cloudant', 'transactions.html', []),
+              Page.new('Grouping related documents together in Cloudant', 'transactions.html', []),
               Page.new('CAP theorem', 'cap_theorem.html', []),
               Page.new('AcID', 'acid.html', []),
               Page.new('Backup', 'backup-guide.html', []),
               Page.new('CouchApps', 'couchapps.html', []),
               Page.new('Design document management', 'design_document_management.html', [])
             ])
-          ].each { |page|
+          ].each { |page| 
             %>
 		        <li class="tocify-item">
 				      <a href="<%=page.link%>"><%=page.name%></a>
