@@ -1,5 +1,6 @@
 ---
-title: Cloudant Documentation - Client libraries
+title: Cloudant Documentation - Sync
+jupyter_kernel: java
 
 language_tabs:
 #  - http 
@@ -15,7 +16,7 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - libraries/index
+  - libraries/sync
 
 ---
 
