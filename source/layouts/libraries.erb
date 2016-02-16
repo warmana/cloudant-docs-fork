@@ -30,78 +30,26 @@ under the License.
     <%= stylesheet_link_tag "typeahead", media: 'screen' %>
     <%= stylesheet_link_tag "print", media: 'print' %>
     
+    <link href="stylesheets/libraries.css" rel="stylesheet" type="text/css" media="screen" />
+    
     <%= javascript_include_tag  "all" %>
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-43120670-1', 'auto');
-      ga('send', 'pageview');
-
-    </script>
+    <script src="//storage.googleapis.com/kimstebel-public/thebe/static/main-built.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
 
       $(document).ready(function() {
-        function hideCode() {
-          $.cookie('hide-code-column', 'true');
-          var hash = window.location.hash;
-          $('pre').hide();
-          $('blockquote').hide();
-          $('.dark-box').css('width', '20px');
-          $('#hideCodeButton').hide();
-          $('#showCodeButton').show();
-          $('#expand-collapse-code').toggleClass('hide-code-column');
-          var contentTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'p', 'table', 'ul', 'ol', 'aside', 'dl'];
-          for (var i in contentTags) {
-            $('.content > ' + contentTags[i]).css('margin-right', '20px');
-          }
-          if ($(hash).offset()) {
-            $(document).scrollTop($(hash).offset().top);
-          }
-          window.location.hash = hash;
-          $(window).trigger('resize');
-        };
-
-        function activeLanguage() {
-          var res = $('#lang-selector .active').text();
-          if (res === 'curl') {
-            res = 'shell';
-          }
-          return res;
-        }
-
-        function showCode() {
-          $.removeCookie('hide-code-column');
-          var hash = window.location.hash;
-          activateLanguage(activeLanguage());
-          $('blockquote').show();
-          $('.dark-box').css('width', '50%');
-          $('#hideCodeButton').show();
-          $('#showCodeButton').hide();
-          $('#expand-collapse-code').toggleClass('hide-code-column');
-          var contentTags = ['h1', 'h2', 'h3', 'h4', 'h5', 'p', 'table', 'ul', 'ol', 'aside', 'dl'];
-          for (var i in contentTags) {
-            $('.content > ' + contentTags[i]).css('margin-right', '50%');
-          }
-          if ($(hash).offset()) {
-            $(document).scrollTop($(hash).offset().top);
-          }
-          window.location.hash = hash;
-          $(window).trigger('resize');
-        };
-        if ($.cookie('hide-code-column') && window.location.pathname !== '/try.html') { //hide code column if cookie is set, except on the try it page
-          hideCode();
-        }
-        $('#hideCodeButton').click(hideCode);
-        $('#showCodeButton').click(showCode);
-
+        
+        new Thebe({
+          url: 'http://vmwtpm097c.hursley.ibm.com:8000/',
+		      selector: 'pre.thebe',
+          tmpnb_mode: true,
+          kernel_name: '<%= current_page.data.jupyter_kernel%>',
+		      debug: true,
+        	image_name: 'kimstebel/thebe-demo-notebook',
+	        codemirror_mode_name: '<%= current_page.data.jupyter_kernel%>'
+        });
+        
         var headerSelectors = "h3";
         if ($('h3').length !== 0) {
           var toc = $("#toc").tocify({
@@ -137,17 +85,6 @@ under the License.
             <% end %>
           <% end %>
         ]);
-
-        //var languageInit = $('#lang-selector li.active').text();
-        //$('#selected-language').text(languageInit);
-        //$('#selected-language').click(langDropdown);
-
-        //function langDropdown() {
-        //  $('#lang-selector ul').show();
-        //}
-
-        $('blockquote a').attr('title', 'Click here to try out interactive examples!');
-        $('blockquote a').attr('target', '_blank');
 
       });
     </script>
@@ -308,5 +245,15 @@ under the License.
         </div>
       </div>
     </div>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-43120670-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
   </body>
 </html>

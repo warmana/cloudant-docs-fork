@@ -1,9 +1,10 @@
 ---
-title: Cloudant Documentation - Node.js
+title: Cloudant Documentation - .Net
+jupyter_kernel: none
 
 language_tabs:
-  - http 
-  - shell: curl
+#  - http 
+#  - shell: curl
 #  - javascript: node.js
 #  - python
 
@@ -15,8 +16,7 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - libraries/nodejs
+  - libraries/dotnet
 
 ---
-
 
