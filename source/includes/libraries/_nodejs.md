@@ -1,6 +1,6 @@
-# Javascript
+## Javascript
 
-## nodejs-cloudant
+### nodejs-cloudant
 
 [nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant) is the officially supported Cloudant library for Node.js. You can install it with npm:
 
@@ -19,7 +19,7 @@ console.log("Cloudant works");
 
 As you can see, you can run and edit these code snippets right on this website.
 
-### Getting Started
+#### Getting Started
 
 Now it's time to begin doing real work with Cloudant and Node.js.
 
@@ -29,15 +29,19 @@ Initialize your Cloudant connection by supplying your *account* and *password*, 
 // Load the Cloudant library.
 var Cloudant = require('cloudant');
 
-var me = 'examples'; // Set this to your own account or use the examples account
-var password = undefined; // Set this to your own password or leave it undefined to use the examples account
+var me = 'nodejs'; // Set this to your own account
+var password = 'your password'; // Set this to your own password
 
 // Initialize the library with the account.
 var cloudant = Cloudant({account:me, password:password});
 
 // Get all databases
 cloudant.db.list(function(err, allDbs) {
-  console.log('All databases: %s', allDbs.join(', '))
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('All databases: %s', allDbs.join(', '));
+  }
 });
 </pre>
 
@@ -45,104 +49,100 @@ Possible output (depending on your databases, of course):
 
      All my databases: example_db, jasons_stuff, scores
 
-Upper-case `Cloudant` is this package you load using `require()`, while lower-case `cloudant` represents an authenticated, confirmed connection to your Cloudant service.
+Upper-case `Cloudant` is the package you load using `require()`, while lower-case `cloudant` represents an authenticated, confirmed connection to your Cloudant service.
 
 If you omit the "password" field, you will get an "anonymous" connection: a client that sends no authentication information (no passwords, no cookies, etc.)
 
-To use the example code as-is, you must first install the `dotenv` package from npm, then create a `.env` file with your Cloudant credentials. For example:
-
-~~~
-npm install dotenv                               # Install ./node_modules/dotenv
-echo "/.env"                       >> .gitignore # Do not track .env in the revision history
-echo "cloudant_username=myaccount" >  .env       # Replace myaccount with your account name
-echo "cloudant_password='secret'"  >> .env       # Replace secret with your password
-~~~
-
 Here is simple but complete example of working with data:
 
-~~~ js
-require('dotenv').load();
-
+<pre class="thebe" id="nodejs-example-alice">
 // Load the Cloudant library.
 var Cloudant = require('cloudant');
 
-// Initialize Cloudant with settings from .env
-var username = process.env.cloudant_username || "nodejs";
-var password = process.env.cloudant_password;
+// Initialize Cloudant with your credentials
+var username = 'your username';
+var password = 'your password';
+var dbname = 'alice'; //change this if you already have a database called alice
 var cloudant = Cloudant({account:username, password:password});
 
-// Remove any existing database called "alice".
-cloudant.db.destroy('alice', function(err) {
+// Remove any existing database with that name.
+cloudant.db.destroy(dbname, function(err) {
 
-  // Create a new "alice" database.
-  cloudant.db.create('alice', function() {
+  // Create a new database.
+  cloudant.db.create(dbname, function() {
 
-    // Specify the database we are going to use (alice)...
-    var alice = cloudant.db.use('alice')
+    // Specify the database we are going to use (e.g. alice)...
+    var alice = cloudant.db.use(dbname)
 
     // ...and insert a document in it.
     alice.insert({ crazy: true }, 'rabbit', function(err, body, header) {
       if (err) {
         return console.log('[alice.insert] ', err.message);
       }
-
       console.log('You have inserted the rabbit.');
       console.log(body);
     });
   });
 });
-~~~
+</pre>
 
 If you run this example, you will see:
 
-    You have inserted the rabbit.
-    { ok: true,
-      id: 'rabbit',
-      rev: '1-6e4cb465d49c0368ac3946506d26335d' }
+```
+You have inserted the rabbit.
+{ ok: true,
+  id: 'rabbit',
+  rev: '1-6e4cb465d49c0368ac3946506d26335d' }
+```
 
 You can find a further CRUD example in the [example](https://github.com/cloudant/nodejs-cloudant/tree/master/example) directory of this project.
 
-### Initialization
+#### Initialization
 
 To use Cloudant, `require('cloudant')` in your code. That will return the initialization function. Run that function, passing your account name and password, and an optional callback. (And see the [security note](#security-note) about placing your password into your source code.
 
 In general, the common style is that `Cloudant` (upper-case) is the **package** you load; wheareas `cloudant` (lower-case) is your connection to your database--the result of calling `Cloudant()`:
 
-~~~ js
+```javascript
 var Cloudant = require('cloudant');
 var cloudant = Cloudant({account:me, password:password});
-~~~
+```
 
 If you would prefer, you can also initialize Cloudant with a URL:
 
-~~~ js
-var Cloudant = require('cloudant')
+```javascript
+var Cloudant = require('cloudant');
 var cloudant = Cloudant("https://MYUSERNAME:MYPASSWORD@MYACCOUNT.cloudant.com");
-~~~
+```
 
 You can optionally provide a callback to the Cloudant initialization function. This will make the library automatically "ping" Cloudant to confirm the connection and that your credentials work.
 
 Here is a simple example of initializing asychronously, using its optional callback parameter:
 
-~~~ js
+<pre class="thebe">
 var Cloudant = require('cloudant');
 var me = 'nodejs'; // Replace with your account.
-var password = process.env.cloudant_password;
+var password = ''; // Put your password here
+var dbname = 'alice';
 
 Cloudant({account:me, password:password}, function(err, cloudant) {
   if (err) {
     return console.log('Failed to initialize Cloudant: ' + err.message);
   }
 
-  var db = cloudant.db.use("animals");
-  db.get("dog", function(err, data) {
+  var db = cloudant.db.use(dbname);
+  db.get("alice", function(err, data) {
     // The rest of your code goes here. For example:
-    console.log("Found dog:", data);
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Found Alice:", data);
+    }
   });
 });
-~~~
+</pre>
 
-### Callback Signature
+#### Callback Signature
 
 After initialization, in general, callback functions receive three arguments:
 
@@ -152,11 +152,11 @@ After initialization, in general, callback functions receive three arguments:
 
 The `ping()` function is the only exception to this rule. It does not return headers since a "ping" is made from multiple requests to gather various bits of information.
 
-### Password Authentication
+#### Password Authentication
 
 By default, when you connect to your cloudant account (i.e. "me.cloudant.com"), you authenticate as the account owner (i.e. "me"). However, you can use Cloudant with any username and password. Just provide an additional "username" option when you initialize Cloudant. This will connect to your account, but using the username as the authenticated user. (And of course, use the appropriate password.)
 
-~~~ js
+<pre class="thebe">
 var Cloudant = require('cloudant');
 var me = "nodejs";         // Substitute with your Cloudant user account.
 var otherUsername = "jhs"; // Substitute with some other Cloudant user account.
@@ -169,10 +169,9 @@ Cloudant({account:me, username:otherUsername, password:otherPassword}, function(
 
   console.log('Connected with username: %s', reply.userCtx.name);
 });
-~~~
+</pre>
 
-
-## PouchDB
+### PouchDB
 
 <a href="http://pouchdb.com/">PouchDB</a> is a JavaScript database that runs in the browser and in Node.js and can sync with Cloudant, meaning you can make your apps offline-ready just by using PouchDB. For more info, see [our blog post](https://cloudant.com/blog/pouchdb) on PouchDB. Cloudant does not provide support for PouchDB.
 
@@ -207,7 +206,7 @@ To obtain PouchDB, and for setup details, refer to <a href="http://pouchdb.com/"
 </tr>
 </table>
 
-## Related links
+#### Related links
 
 <table>
 <tr>

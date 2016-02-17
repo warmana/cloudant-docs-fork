@@ -7,9 +7,30 @@
     top: 0;
     margin: 10px 60px 10px 40px;
     width: auto;
-    border-radius: 10px;
+    border-radius: 0;
     padding: 10px;
     box-sizing: border-box;
+    color: #000;
+  }
+
+  pre.highlight .c, pre.highlight .cm, pre.highlight .c1, pre.highlight .cs {
+    color: #333;
+  }
+
+  code {
+    color: #000;
+  }
+
+  pre, pre.highlight, pre.highlight .w {
+    background-color: #fff;
+  }
+
+  pre.highlight:last-of-type {
+    border: none;
+  }
+
+  pre.javascript {
+    display:block;
   }
   blockquote {
     border-top: 0;
@@ -22,7 +43,7 @@
   h1,h2,h3,h4,h5,p,table,ul,ol,aside,dl {
     margin-right: 20px;
   }
-} 
+}
 
 .dark-box {
   display: none;
@@ -35,11 +56,17 @@
 .thebe_controls button {
   width: auto;
   height: auto;
-  border-radius:10px;
+  border-radius: 10px;
   position: relative;
-  margin: 20px;
+  margin: 0 20px 20px 0px;
+  border-width: 1px;
+  border-color: #000;
+  border-style: solid;
   padding:10px;
   left:0;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
 }
 
 .output_prompt, .output_result {
@@ -47,9 +74,8 @@
 }
 
 .output_subarea pre {
-//  background-color: #fff;
-//  color: #000;
-
+  background-color: #fff;
+  color: #000;
 }
 
 .output_subarea pre, pre.thebe {
@@ -61,6 +87,7 @@
   line-height: 16px;
 }
 
-.CodeMirror-linenumber, .CodeMirror-gutters {
-  visibility: hidden;
+div.thebe_wrap {
+  margin: 0 40px;
 }
+
