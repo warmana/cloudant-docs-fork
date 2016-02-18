@@ -7,10 +7,74 @@ All documents must have two fields:
 a unique `_id` field, and a `_rev` field.
 The `_id` field is either created by you,
 or generated automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier) by Cloudant.
-The `_rev` field is a revision number, and is [essential to Cloudant's replication protocol](mvcc.html).
-In addition to these two mandatory fields, documents can contain any other content expressed using JSON.
+The `_rev` field is a revision number,
+and is [essential to Cloudant's replication protocol](mvcc.html).
+In addition to these two mandatory fields,
+documents can generally contain any other content that can be described using JSON.
 
-<aside>Cloudant uses an [eventually consistent](basics.html#consistency) model for data. This means that under some conditions, it is possible that if your application performs a document write or update, followed immediately by a read of the same document, older document content is retrieved. In other words, your application would see the document content as it was *before* the write or update occurred. For more information about this, see the topic on [Consistency](basics.html#consistency).</aside>
+<div></div>
+
+> Example of JSON document attempting to create a top-level field with an underscore prefix:
+
+```json
+{
+	"_top_level_field_name": "some data"
+}
+```
+
+> Error message returned when attempting to create a top-level field with an underscore prefix:
+
+```json
+{
+	"error": "doc_validation",
+	"reason": "Bad special document member: _top_level_field_name"
+}
+```
+
+Field names beginning with the underscore character (`_`) are reserved in Cloudant.
+This means you cannot normally have your own field names that begin with an underscore.
+For example,
+the field `example` would be permitted,
+but the field `_example` would result in a `doc_validation` error message.
+
+<div></div>
+
+> Example of JSON document attempting to create a field with an underscore prefix, nested within an object:
+
+```json
+{
+	"another_top_level_field_name": "some data",
+	"another_field": {
+		"_lower_level_field_name": "some more data"
+	}
+}
+```
+
+> Example success message returned when creating a lower-level field with an underscore prefix:
+
+```json
+{
+	"ok": true,
+	"id": "2",
+	"rev": "1-9ce0b1caa2d37165b135ab585275d8d4"
+}
+```
+
+However,
+if the field name is for an object nested _within_ the document,
+it is possible to use an underscore prefix for the field name.
+
+<div></div>
+
+Cloudant uses an [eventually consistent](basics.html#consistency) model for data.
+This means that under some conditions,
+it is possible that if your application performs a document write or update,
+followed immediately by a read of the same document,
+older document content is retrieved.
+In other words,
+your application would see the document content as it was *before* the write or update occurred.
+For more information about this,
+see the topic on [Consistency](basics.html#consistency).
 
 <h3 id="documentCreate">Create</h3>
 
