@@ -1,6 +1,6 @@
 ---
 title: Cloudant Documentation - Python
-jupyter_kernel: python3
+jupyter_kernel: python2
 
 language_tabs:
 #  - http 
