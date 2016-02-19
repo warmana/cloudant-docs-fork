@@ -600,7 +600,7 @@ Where `$DESIGN_ID` is the `_id` of the document defining the update handler, `$U
 
 ### Filter Functions
 
-> Example design document:
+> Example design document containing a filter function:
 
 ```json
 {
@@ -611,8 +611,16 @@ Where `$DESIGN_ID` is the `_id` of the document defining the update handler, `$U
 }
 ```
 
-Filter functions filter the [changes feed](database.html#get-changes), removing changes you don't want to monitor.
-The filter function is run over every change in the changes feed, and only those for which the function returns `true` are returned to the client in the response.
+Filter functions are design documents that enable you to filter the [changes feed](database.html#get-changes).
+They work by applying tests to each of the objects included in the changes feed.
+If any of the function tests fail,
+the object is 'removed' or 'filtered' from the feed.
+If the function returns a `true` result when applied to a change,
+the change remains in the feed.
+Therefore,
+filter functions let you 'remove' or 'ignore' changes you don't want to monitor.
+
+<aside>Filter functions can also be used to modify a [replication task](advanced_replication.html#filtered-replication).</aside>
 
 <div></div>
 
@@ -621,48 +629,77 @@ The filter function is run over every change in the changes feed, and only those
 ```
 function(doc, req){
   // we need only `mail` documents
-  if (doc.type !== 'mail'){
+  if (doc.type != 'mail'){
     return false;
   }
   // we're interested only in `new` ones
-  if (doc.status !== 'new'){
+  if (doc.status != 'new'){
     return false;
   }
   return true; // passed!
 }
 ```
 
-Filter functions receive two arguments: `doc` and [req](#req). `doc` represents the document being filtered and `req` contains information about the http request. In most cases, only the `doc` parameter will be used.
+Filter functions require two arguments: `doc` and [`req`](#req).
+
+The `doc` argument represents the document being tested for filtering.
+
+The `req` argument contains additional information about the HTTP request.
+This enables a filter function to be more dynamic,
+for example by allowing you to control aspects of the test as part of the HTTP request.
+In many use cases,
+however,
+only the `doc` parameter is used.
 
 <div></div>
 
 > Example query:
 
 ```http
-GET /$DATABASE/_changes?filter=$DESIGN_ID%2F$FILTER HTTP/1.1
+GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION HTTP/1.1
 Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID%2F$FILTER \
+curl https://$USERNAME.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION \
      -u $USERNAME
 ```
 
-```javascript
-var nano = require('nano');
-var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
+To apply a filter function to the changes feed,
+include the `filter` parameter in the `_changes` query,
+providing the name of the filter to use.
 
-account.db.changes($DATABASE, {
-  // ex: example/filter
-  filter: [$DESIGN_ID, $FILTER_FUNCTION].join('/')
-}, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
-});
+<div></div>
+
+> Using the `req` argument:
+
+```http
+GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new HTTP/1.1
+Host: $USERNAME.cloudant.com
 ```
 
-To use a filter function on the changes feed, specify the `filter` parameter in the `_changes` query.
+```shell
+curl https://$USERNAME.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new \
+     -u $USERNAME
+```
+
+> Example filter function that uses the `req` argument:
+
+```
+function(doc, req){
+  // we need only `mail` documents
+  if (doc.type != 'mail'){
+    return false;
+  }
+  // we're interested only in `new` ones
+  if (doc.status != req.query.status){
+    return false;
+  }
+  return true; // passed!
+}
+```
+
+The `req` argument gives you access to aspects of the HTTP request using the `query` property.
 
 ### Update Validators
 
