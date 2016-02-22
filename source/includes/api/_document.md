@@ -477,7 +477,7 @@ The HTTP status code tells you whether the request was fully or partially succes
 <tbody>
 <tr class="odd">
 <td align="left">201</td>
-<td align="left">The request succeeded, but this does not imply all documents were updated. Inspect the response body to determine the status of each requested change, and [address any problems](document.html#bulk-document-validation-and-conflict-errors).</td>
+<td align="left">The request succeeded, but this does not imply all documents were updated. Inspect the response body to determine the status of each requested change, and <a href="document.html#bulk-document-validation-and-conflict-errors">address any problems</a>.</td>
 </tr>
 <tr class="even">
 <td align="left">202</td>
