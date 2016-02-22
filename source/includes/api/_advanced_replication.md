@@ -91,6 +91,8 @@ To choose which documents to transfer,
 include one or more filter functions in a design document on the source.
 You can then tell the replicator to use these filter functions.
 
+<aside>Filtering documents during replication is similar to the process of [filtering the `_changes` feed](design_documents.html#filter-functions).</aside>  
+
 A filter function takes two arguments:
 
 - The document to be replicated.
