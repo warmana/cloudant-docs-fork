@@ -645,11 +645,16 @@ Filter functions require two arguments: `doc` and [`req`](#req).
 The `doc` argument represents the document being tested for filtering.
 
 The `req` argument contains additional information about the HTTP request.
-This enables a filter function to be more dynamic,
-for example by allowing you to control aspects of the test as part of the HTTP request.
-In many use cases,
+It enables you to create filter functions that are more dynamic,
+because they are based on additional factors such as query parameters or the user context.
+
+For example,
+you could control aspects of the filter function tests by using dynamic values provided as part of the HTTP request.
+In many filter function use cases,
 however,
 only the `doc` parameter is used.
+
+More details about the `req` parameter are available [here](#req).
 
 <div></div>
 
