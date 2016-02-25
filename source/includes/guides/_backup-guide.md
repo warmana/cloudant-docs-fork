@@ -6,7 +6,6 @@ This capability:
 <ul>
 <li>Is not enabled by default.</li>
 <li>Is only available to Enterprise customers, who must specifically request it.</li>
-<li>Requires a dedicated cluster for the purpose.</li>
 <li>Must be explicitly configured before it is operational.</li>
 <li>Is subject to known limitations.</li>
 </ul>
