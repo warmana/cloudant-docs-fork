@@ -1,5 +1,18 @@
 ## Back up your data
 
+<aside class="warning">This guide refers to a <b>Beta</b> daily incremental backup capability,
+available only on request to Enterprise customers.
+This capability:
+<ul>
+<li>Is not enabled by default.</li>
+<li>Is only available to Enterprise customers, who must specifically request it.</li>
+<li>Requires a dedicated cluster for the purpose.</li>
+<li>Must be explicitly configured before it is operational.</li>
+<li>Is subject to known limitations.</li>
+</ul>
+For more information,
+please contact the <a href="mailto:support@cloudant.com">IBM Cloudant support team</a>.</aside>
+
 IBM Cloudant creates three copies of each document
 and stores it on three different servers in a cluster to ensure high availability.
 This practice is the default for all Cloudant users.
@@ -24,7 +37,11 @@ tested backup enables you to answer the following question with confidence:
 
 With Cloudant,
 Enterprise customers can have daily incremental backups.
-These daily updates or 'deltas' enable document comparison,
+
+<aside class="warning">Daily incremental backup for Enterprise customers is currently a <b>Beta</b> capability.
+It is <b>not</b> enabled by default.</aside>
+
+Daily incremental backups or 'deltas' enable document comparison,
 and easier single document restoration.
 At regular intervals,
 which can be configured,
