@@ -505,10 +505,9 @@ Factors affecting,
 or even interrupting,
 the replication will affect or even stall backup or restore processes.</li>
 <li>Backup and restore processes could take a significant amount of time for large databases,
-for example over 100GB is size.
+for example over 100GB in size.
 This applies to the initial backup,
-and also to the daily incremental backups,
-each of which could take a few days to complete for a large database.
+which could take a few days to complete for a large database.
 <br/>Similarly,
 the restore process could take from a few hours to several days,
 again depending on the size of the database.</li>
