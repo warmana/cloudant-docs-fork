@@ -522,7 +522,9 @@ you must specify each of the databases within a user account that you want enabl
 <br/>Currently,
 there is a limit of 50 databases enabled for backup within any one user account.</li>
 <li>The IBM Cloudant Backup facility does not currently support backup or restore for
-<a href="design_documents.html">"design documents"</a>.</li>
+<a href="design_documents.html">"design documents"</a>.
+<br/>If you require backups of design documents,
+you must maintain them in your preferred source control tool.</li>
 <li>Currently,
 the target database for restoring must be different from the original source database.</li>
 </ul>
