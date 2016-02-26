@@ -7,7 +7,7 @@ This capability:
 <li>Is not enabled by default.</li>
 <li>Is only available to Enterprise customers, who must specifically request it.</li>
 <li>Must be explicitly configured before it is operational.</li>
-<li>Is subject to known limitations.</li>
+<li>Is subject to [known limitations](backup-guide.html#known-limitations).</li>
 </ul>
 For more information,
 please contact the <a href="mailto:support@cloudant.com">IBM Cloudant support team</a>.</aside>
@@ -491,3 +491,38 @@ $ curl -X PUT "${url}/_replicator/newbackup" -H "${ct}" -d @newbackup.json
 ```
 
 Now that you have the checkpoint ID and `recorded_seq`, you can start the new incremental backup.
+
+### Known limitations
+
+<aside class="warning">Daily incremental backup for Enterprise customers is currently a Beta capability.
+It is not enabled by default.</aside>
+
+<ul>
+<li>IBM Cloudant Backup,
+and the associated restore capabilities,
+are based on the underlying replication technology.
+Factors affecting,
+or even interrupting,
+the replication will affect or even stall backup or restore processes.</li>
+<li>Backup and restore processes could take a significant amount of time for large databases,
+for example over 100GB is size.
+This applies to the initial backup,
+and also to the daily incremental backups,
+each of which could take a few days to complete for a large database.
+<br/>Similarly,
+the restore process could take from a few hours to several days,
+again depending on the size of the database.</li>
+<li>For large daily backups,
+it is possible that the backup process cannot complete in one day (24 hours).
+The backup process normally runs to completion,
+therefore it would include incremental changes for more than a day.</li>
+<li>There is currently no support for backing up a full user account.
+Instead,
+you must specify each of the databases within a user account that you want enabled for backup or restore.
+<br/>Currently,
+there is a limit of 50 databases enabled for backup within any one user account.</li>
+<li>The IBM Cloudant Backup facility does not currently support backup or restore for
+<a href="design_documents.html">"design documents"</a>.</li>
+<li>Currently,
+the target database for restoring must be different from the original source database.</li>
+</ul>

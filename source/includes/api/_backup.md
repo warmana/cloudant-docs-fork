@@ -14,7 +14,10 @@ But if your database is big,
 or you need backups for multiple points in time,
 having a complete copy of your database for each of the requirements can quickly result in significant disk usage.
 
-An alternative is to use the Cloudant Incremental Backup feature.
+An alternative is to use the IBM Cloudant Incremental Backup feature.
 Incremental backups are a good solution for storing only the documents that have changed since the last backup.
+
+<aside class="warning">Daily incremental backup for Enterprise customers is currently a Beta capability.
+It is not enabled by default.</aside>
 
 You can see more information about Incremental Backups at [Back up your data](backup-guide.html).
