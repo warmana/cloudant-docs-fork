@@ -61,7 +61,7 @@ We are going to call this view "`by_ts`" and put it into a Design Document calle
 
 The result is that our map code has been turned into a JSON-compatible string, and included in a Design Document.
 
-Once the Design Document is saved, Cloudant triggers server-side processes to build the `fetch/by_ts` view. It does this by iterating over every document in the database, and sending each one to the Javascript map function. The function returns the emitted key/value pair. As the iteration continues, each key/value pair is stored in a B-Tree index. After the index is built for the first time, subsequent re-indexing is performed only against new and updated documents. Deleted documents are de-indexed. This time-saving process is known as *incremental MapReduce*, illustrated below:
+Once the Design Document is saved, Cloudant triggers server-side processes to build the `fetch/by_ts` view. It does this by iterating over every document in the database, and sending each one to the Javascript map function. The function returns the emitted key/value pair. As the iteration continues, each key/value pair is stored in a B-Tree index. After the index is built for the first time, subsequent re-indexing is performed only against new and updated documents. Deleted documents are de-indexed. This time-saving process is known as *incremental MapReduce*, as shown in the following diagram:
 
 ![Illustration of Incremental MapReduce](images/DesDocMan00.png)
 
@@ -70,7 +70,7 @@ It's worth remembering at this point that:
 -	The construction of an index happens asynchronously. Cloudant confirms that our Design Document has been saved, but to check on the progress on the construction of our index, we have to poll Cloudant's [\_active\_tasks](active_tasks.html) endpoint.
 -	The more data we have, the longer it takes before the index is ready.
 -	While the initial index build is in progress, **any queries made against that index block**.
--	Querying a view triggers the 'mapping' of any documents that haven't yet been incrementally indexed. This ensures we get an up-to-date view of the data. (See [The '`stale`' parameter](#stale) discussion, below, for exceptions to this rule.)
+-	Querying a view triggers the 'mapping' of any documents that haven't yet been incrementally indexed. This ensures we get an up-to-date view of the data. (See the following ['`stale`' parameter](DesignDocumentManagement.html#stale) discussion, for exceptions to this rule.)
 
 ### Multiple views in the same design document
 
@@ -194,7 +194,7 @@ Source code here: [https://github.com/glynnbird/couchmigrate](https://github.com
 <div id="stale"></div>
 ### The '`stale`' parameter
 
-If an index is complete, but new records are added into the database, then the index is scheduled to be updated in the background. This is the state of the database shown in the diagram below:
+If an index is complete, but new records are added into the database, then the index is scheduled to be updated in the background. This is the state of the database shown in the following diagram:
 
 ![Illustration of index scheduled for updating](images/DesDocMan01.png)
 

@@ -790,7 +790,7 @@ curl https://$USERNAME.cloudant.com/recipes/_design/recipesdd/_info \
 
 Obtains information about a given design document, including the index, index size and current status of the design document and associated index information.
 
-The individual fields in the returned JSON structure are detailed below:
+The individual fields in the returned JSON structure are as follows:
 
 -   **name**: Name/ID of Design Document
 -   **view\_index**: View Index
@@ -838,7 +838,7 @@ curl https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/descripti
 
 Obtains information about a search specified within a given design document.
 
-The individual fields in the returned JSON structure are detailed below:
+The individual fields in the returned JSON structure are as follows:
 
 -   **name**: Name/ID of the Search within the Design Document
 -   **search\_index**: The Search Index

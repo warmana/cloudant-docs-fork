@@ -123,7 +123,7 @@ function (doc) {
 
 ```
 
-The example below shows the Map function: 
+The following example shows the Map function: 
 
 <div></div>
 

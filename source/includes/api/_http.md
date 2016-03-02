@@ -5,7 +5,7 @@ This section provides details of the [HTTP Headers](#http-headers) and [HTTP Sta
 ### HTTP Headers
 
 Because Cloudant uses HTTP for all external communication, you need to ensure that the correct HTTP request headers are supplied and processed on retrieval.
-This is to ensure that you get the right format and encoding. Different environments and clients are more or less strict on the effect of these HTTP headers, especially when they are not present.
+This is to ensure that you get the correct format and encoding. Different environments and clients are more or less strict on the effect of these HTTP headers, especially when they are not present.
 Where possible, you should be as specific as possible.
 
 #### Request headers
@@ -96,7 +96,7 @@ This header can optionally be sent to find out whether a document has been modif
 
 #### Response Headers
 
-Response headers are returned by the server when sending back content and include a number of different header fields, many of which are standard HTTP response header and have no significance to how Cloudant operates. The list of response headers important to Cloudant are listed below.
+Response headers are returned by the server when sending back content and include a number of different header fields, many of which are standard HTTP response header and have no significance to how Cloudant operates. The list of response headers important to Cloudant are as follows.
 
 The supported HTTP response headers include:
 
@@ -130,7 +130,7 @@ ETags cannot currently be used with views or lists, since the ETags returned fro
 
 With the interface to Cloudant working through HTTP, error codes and statuses are reported using a combination of the HTTP status code number, and corresponding data in the body of the response data.
 
-A list of the error codes returned by Cloudant and generic descriptions of the related errors are provided below. The meaning of different status codes for specific request types are provided in the corresponding API call reference.
+A list of the error codes returned by Cloudant and generic descriptions of the related errors are as follows. The meaning of different status codes for specific request types are provided in the corresponding API call reference.
 
 -   `200 - OK`
 

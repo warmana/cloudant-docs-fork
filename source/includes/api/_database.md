@@ -124,7 +124,7 @@ such as how many documents it contains.
 }
 ```
 
-The elements of the returned structure are shown in the table below:
+The elements of the returned structure are shown in the following table:
 
 Field |	Description
 ------|------------

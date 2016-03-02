@@ -70,7 +70,7 @@ to you.
 ####2	Connecting to the service in your application
 
 After binding a service instance to the application,
-code similar to the example below is added to your `VCAP_SERVICES` environment
+code similar to the following example is added to your `VCAP_SERVICES` environment
 variable.
 
 	```{

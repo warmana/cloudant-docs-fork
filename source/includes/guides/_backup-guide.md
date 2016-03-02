@@ -49,7 +49,7 @@ Similarly,
 weekly deltas are rolled up into monthly deltas,
 and monthly deltas into yearly ones.
 This process of rolling up deltas is a pragmatic compromise between
-being able to restore exactly the right version of a document,
+being able to restore exactly the correct version of a document,
 and requiring a lot of storage space.
 
 The backup facility allows you to restore individual documents manually.

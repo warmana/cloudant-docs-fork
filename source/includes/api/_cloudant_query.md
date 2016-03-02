@@ -233,7 +233,7 @@ update,
 and delete indexes in a database,
 and to query data using these indexes.
 
-A list of the available methods and endpoints is provided below:
+A list of the available methods and endpoints follows:
 
 Method | Path | Description
 -------|------|------------
@@ -312,7 +312,7 @@ and $name is the name of the index.
 -	**limit (optional, default: 25)**: Maximum number of results returned.
 -	**skip (optional, default: 0)**: Skip the first 'n' results, where 'n' is the value specified.
 -	**sort (optional, default: [])**: JSON array following [sort syntax](#sort-syntax)
--	**fields (optional, default: null)**: JSON array following the field syntax, described below. This parameter lets you specify which fields of an object should be returned. If it is omitted, the entire object is returned.
+-	**fields (optional, default: null)**: JSON array following the field syntax, described in the following information. This parameter lets you specify which fields of an object should be returned. If it is omitted, the entire object is returned.
 -	**r (optional, default: 1)**: Read quorum needed for the result. This defaults to 1, in which case the document found in the index is returned. If set to a higher value, each document is read from at least that many replicas before it is returned in the results. This is likely to take more time than using only the document stored locally with the index.
 -	**bookmark (optional, default: null)**: A string that enables you to specify which page of results you require. *Only for indexes of type `text`.*
 -	**use_index (optional)**: Use this option to identify a specific index for query to run against, rather than using the Cloudant Query algorithm to find the best index. For more information, see [Explain Plans](#explain-plans).

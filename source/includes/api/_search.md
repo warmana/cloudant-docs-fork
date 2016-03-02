@@ -406,7 +406,7 @@ curl 'https://account.cloudant.com/db/_design/ddoc/_search/searchname' -X POST -
 }
 ```
 
-Instead of using the `GET` HTTP method, you can also use `POST`. The main advantage of `POST` queries is, that they can have a request body, so you can specify the request as a JSON object. Each parameter in the table above corresponds to a field in the JSON object in the request body.
+Instead of using the `GET` HTTP method, you can also use `POST`. The main advantage of `POST` queries is, that they can have a request body, so you can specify the request as a JSON object. Each parameter in the previous table corresponds to a field in the JSON object in the request body.
 
 <div> </div>
 
@@ -437,7 +437,7 @@ diet:(herbivore OR omnivore) AND class:mammal
 *:*
 ```
 
-The Cloudant search query syntax is based on the [Lucene syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search queries take the form of name:value (unless the name is omitted, in which case they hit the default field, demonstrated in the example to your right).
+The Cloudant search query syntax is based on the [Lucene syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search queries take the form of name:value (unless the name is omitted, in which case they hit the default field, demonstrated in the example provided).
 
 Queries over multiple fields can be logically combined, and groups and fields can be further grouped. The available logical operators are case sensitive and are `AND`, `+`, `OR`, `NOT` and `-`. Range queries can run over strings or numbers.
 
@@ -643,7 +643,7 @@ function(doc) {
 }
 ```
 
-> An example query that sorts cities in the upper hemisphere by their distance to New York:
+> An example query that sorts cities in the northern hemisphere by their distance to New York:
 
 ```shell
 curl 'https://docs.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'

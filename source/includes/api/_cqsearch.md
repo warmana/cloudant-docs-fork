@@ -216,8 +216,8 @@ sometimes necessary for a field type to be specified, as shown in the example. I
 attempt is made to discover the field type based on the selector. In ambiguous cases the field type must
 be provided explicitly.
 
-<!-- You can discover the reason for this type specification in the
-implementation notes below. -->
+<!-- You can discover the reason for this type specification in the following
+implementation notes. -->
 
 <aside class="warning">
 The sorting order is undefined when fields contain different data types. This is an important difference between text and view indexes. Sorting behavior for fields with different data types might change in future versions.
@@ -715,7 +715,7 @@ The query mechanism resolves this by preferring to return 'false positive' resul
 
 <!--
 As the astute observer will have noticed there are a number of queries that are not directly
-answerable using the given scheme described above. A good example would be searching
+answerable using the given scheme described earlier. A good example would be searching
 using the `$elemMatch` operator which applies to objects in arrays. Given that we erase array
 position of fields we are unable to determine the difference between field names originating from
 separate elemnts. Consider a search for large red shirts with the following documents:
@@ -723,7 +723,7 @@ separate elemnts. Consider a search for large red shirts with the following docu
 
 Because of the way the conversion to field/value pairs is done, there is no way to tell whether any particular field value came from a specific element of
 an array. Instead, the approach taken is to ensure that all documents  - including false
-positives - are returned by the initial index lookup and then apply a filtering step to make sure only the right documents are returned. The key here is to
+positives - are returned by the initial index lookup and then apply a filtering step to make sure only the correct documents are returned. The key here is to
 always ensure that queries don't have false *negatives* at the expense of filtering out the possible false positives.
 
 With the post-lookup filtering, searching for large red shirts is possible by
