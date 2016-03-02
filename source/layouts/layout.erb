@@ -53,6 +53,7 @@ under the License.
           var hash = window.location.hash;
           $('pre').hide();
           $('blockquote').hide();
+          $('div.blockquote').hide();
           $('.dark-box').css('width', '20px');
           $('#hideCodeButton').hide();
           $('#showCodeButton').show();
@@ -81,6 +82,7 @@ under the License.
           var hash = window.location.hash;
           activateLanguage(activeLanguage());
           $('blockquote').show();
+          $('div.blockquote').show();
           $('.dark-box').css('width', '50%');
           $('#hideCodeButton').show();
           $('#showCodeButton').hide();
@@ -147,6 +149,8 @@ under the License.
 
         $('blockquote a').attr('title', 'Click here to try out interactive examples!');
         $('blockquote a').attr('target', '_blank');
+        $('div.blockquote a').attr('title', 'Click here to try out interactive examples!');
+        $('div.blockquote a').attr('target', '_blank');
 
       });
     </script>
@@ -278,13 +282,17 @@ under the License.
       </div>
       <div class="dark-box"></div>
       <div class="content">
-
+        <%
+        def replace_blockquote(str)
+          str.gsub(/<blockquote>/, '<div class="blockquote" role="complementary" aria-label="' + SecureRandom.base64 + '">').gsub(/<\/blockquote>/, '</div>')
+        end
+        %>
         <% if current_page.data.includes %>
           <% current_page.data.includes.each do |include| %>
-            <%= partial "includes/#{include}" %>
+            <%= replace_blockquote(partial("includes/#{include}")) %>
           <% end %>
         <% end %>
-        <%= yield %>
+        <%= replace_blockquote(yield) %>
       </div>
       <div class="dark-box">
         <div id="lang-selector">

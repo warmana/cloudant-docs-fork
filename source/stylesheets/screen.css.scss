@@ -524,7 +524,7 @@ body, html {
 // This is all the stuff that appears in the right half of the page
 
 .content {
-  pre, blockquote {
+  pre, blockquote, div.blockquote {
     position:relative;
     top: -1em;
     background-color: $code-annotation-bg;
@@ -561,7 +561,7 @@ body, html {
     }
   }
   
-  blockquote:before {
+  div.blockquote:before, blockquote:before {
     content: "";
     display: inline-block;
     width: 12px;
@@ -574,7 +574,7 @@ body, html {
     z-index: 1000;
   }
   
-  blockquote {
+  div.blockquote, blockquote {
     border-top: 1em solid $examples-bg;
     &>p {
       background-color: $code-annotation-bg;
