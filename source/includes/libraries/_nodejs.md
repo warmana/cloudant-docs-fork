@@ -2,9 +2,9 @@
 
 ### nodejs-cloudant
 
-[nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant) is the officially supported Cloudant library for Node.js. You can install it with npm:
+[nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant) is the officially supported Cloudant library for Node.js. You can install it with `npm`:
 
-The best way to use the Cloudant client is to begin with your own Node.js project, and define this work as your dependency. In other words, put me in your package.json dependencies. The npm tool can do this for you, from the command line:
+The best way to use the Cloudant client is to begin with your own Node.js project, and define it as a dependency in your `package.json`. The `npm` tool can do this for you, from the command line:
 
 ```shell
 npm install --save cloudant
@@ -29,11 +29,11 @@ Initialize your Cloudant connection by supplying your *account* and *password*, 
 // Load the Cloudant library.
 var Cloudant = require('cloudant');
 
-var me = 'nodejs'; // Set this to your own account
+var username = 'nodejs'; // Set this to your own account
 var password = 'your password'; // Set this to your own password
 
 // Initialize the library with the account.
-var cloudant = Cloudant({account:me, password:password});
+var cloudant = Cloudant({account:username, password:password});
 
 // Get all databases
 cloudant.db.list(function(err, allDbs) {
@@ -121,11 +121,11 @@ Here is a simple example of initializing asychronously, using its optional callb
 
 <pre class="thebe">
 var Cloudant = require('cloudant');
-var me = 'nodejs'; // Replace with your account.
+var username = 'nodejs'; // Replace with your account.
 var password = ''; // Put your password here
 var dbname = 'alice';
 
-Cloudant({account:me, password:password}, function(err, cloudant) {
+Cloudant({account:username, password:password}, function(err, cloudant) {
   if (err) {
     return console.log('Failed to initialize Cloudant: ' + err.message);
   }
@@ -154,15 +154,15 @@ The `ping()` function is the only exception to this rule. It does not return hea
 
 #### Password Authentication
 
-By default, when you connect to your cloudant account (i.e. "me.cloudant.com"), you authenticate as the account owner (i.e. "me"). However, you can use Cloudant with any username and password. Just provide an additional "username" option when you initialize Cloudant. This will connect to your account, but using the username as the authenticated user. (And of course, use the appropriate password.)
+By default, when you connect to your cloudant account (i.e. "account.cloudant.com"), you authenticate as the account owner (i.e. "account"). However, you can use Cloudant with any username and password. Just provide an additional "username" option when you initialize Cloudant. This will connect to your account, but using the username as the authenticated user. (And of course, use the appropriate password.)
 
 <pre class="thebe">
 var Cloudant = require('cloudant');
-var me = "nodejs";         // Substitute with your Cloudant user account.
+var account = "nodejs";         // Substitute with your Cloudant user account.
 var otherUsername = "jhs"; // Substitute with some other Cloudant user account.
 var otherPassword = process.env.other_cloudant_password;
 
-Cloudant({account:me, username:otherUsername, password:otherPassword}, function(er, cloudant, reply) {
+Cloudant({account:account, username:otherUsername, password:otherPassword}, function(er, cloudant, reply) {
   if (er) {
     throw er;
   }
