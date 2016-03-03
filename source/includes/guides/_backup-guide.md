@@ -70,7 +70,7 @@ contact the Cloudant support team:
 
 <aside class="warning">By default,
 `_design` documents are not backed up,
-so that indexes are built on the incremental backup databases.
+so that indexes are _not_ built on the incremental backup databases.
 If you require backups of the `_design` documents,
 you must maintain them in your preferred source control tool.</aside>
 
