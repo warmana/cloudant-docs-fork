@@ -1,119 +1,74 @@
-## Back up your data using replication
+## Back up your data
 
-Database backups protect your data against potential loss or corruption.
-You can use Cloudant’s replication facility to create a database backup,
-and store it on a Cloudant cluster.
-You can then restore data,
-entire databases,
-or specific JSON documents,
-from these backups to your production cluster.
+IBM Cloudant creates three copies of each document and stores it on three different servers in a cluster to ensure high availability.
+This practice is the default for all Cloudant users.
+Even when your data is replicated in triplicate,
+it is still  important to back it up.
 
-Using Cloudant replication,
-a database backup stores your database content to a checkpoint.
-It is possible to ‘roll back' to a specific checkpoint.
-The checkpoint is not specific to a precise time.
-Instead,
-it is a record of the database as it was after specific changes occurred during the backup period.
-In this way,
-a backup can preserve the state of your database at a selected time.
+You can lose access to your data in more than one way. For example, if a hurricane destroys your data center and all three nodes are in that location, you lose your data. You can prevent the loss of your data in a disaster by replicating your data to a cluster (dedicated or multi-tenant) in a different geographic location. However, if a faulty application deletes or overwrites the data in your database, duplicate data is not helpful.
 
-### Incremental backups
+Database backups protect your data against potential loss or corruption. Cloudant’s replication creates a database backup and stores it on a Cloudant cluster. You can restore data, entire databases or specific JSON documents, from these backups to your production cluster.
 
-If you are an Enterprise customer,
-a daily incremental backup capability is [available](backup-guide.html).
+With Cloudant, a database backup stores your database content to a checkpoint. It is possible to ‘roll back' to a specific checkpoint. The checkpoint is not specific to a precise time. Instead, it is a record of the database after specific changes occurred during the backup period. In this way, a backup can preserve the state of your database at a selected time.
 
-If you are not an Enterprise customer,
-or you prefer to create your own backups,
-you can use Cloudant’s replication facility to create a database backup.
+###Incremental backups
 
-A simple approach is to replicate the entire database to a dated backup database.
-This method works and is easy to do.
-But if you need backups for multiple points in time,
-such as seven daily backups and four weekly ones,
-you have to store a complete copy of the database in each new backup database.
-This quickly requires significant disk usage,
-especially if your database is large.
+At this point, there is no obvious, out-of-the-box solution for backing up a cloud database. You can replicate the database to a dated backup database. This method works and is easy to do. But if the database is big and you need backups for multiple points in time, like seven daily backups and four weekly ones, you end up storing a complete copy in each new backup database, which equals massive disk usage. Incremental backups are a good solution for storing only the documents that have changed since the last backup.
 
-As an alternative,
-incremental backups are a good solution for storing only the documents that have changed since the last backup.
+Initially, you perform a backup of the entire database. After the first backup, you run daily, incremental backups, backing up only what has changed in the database since the last backup. This replication becomes a daily backup.
 
-The process is simple.
-Initially,
-you perform a backup of the entire database.
-After the first backup,
-you run daily 'incremental' backups,
-backing up _only_ what has changed in the database since the last backup.
-This replication becomes a daily backup.
+<aside class="warning">You can configure a backup to trigger at regular intervals. However, each interval must be 24 hours or more. In other words, you can run daily backups but not hourly backups.</aside>
 
-<aside class="warning" role="complementary" aria-label="triggerintervals">You can configure a backup to trigger at regular intervals.
-However,
-each interval must be 24 hours or more.
-In other words,
-you can run daily backups but not hourly backups.</aside>
+####Setup
 
-### Creating an incremental backup
+Incremental backups save only the delta between backups. Every 24 hours, the source database is repeatedly replicated to a target database. Replication uses sequence values to identify the documents changed during that 24-hour period. The backup operation uses replication to get and store a checkpoint. This checkpoint is another database with an internal name. The backup operation creates the name from a combination of the date and the backup task name. This name makes it easier to identify checkpoints during the recovery or roll up process.
 
-Incremental backups save only the differences or 'deltas' between backups.
-Every 24 hours,
-the source database is replicated to a target database.
+The replication process starts with another database with a `since_seq` parameter. The `since_seq` parameter indicates where the last replication stopped. The following steps show how to set up incremental backups.
 
-Replication uses sequence values to identify the documents changed during the 24-hour period.
-The backup operation works by using replication to get and store a checkpoint.
-A checkpoint is simply another document with an internal name.
-The backup operation creates the name from a combination of the date and the backup task name.
-This name makes it easier to identify checkpoints during the recovery or roll up process.
+1.	Find the ID of the checkpoint document for the last replication. It is stored in the  `_replication_id` field of the replication document in the `_replicator` database.
+2.	Open the checkpoint document at `/<database>/_local/<_replication_id>`, where `<_replication_id>` is the ID you found in the previous step and `<database>` is the name of the source or the target database. The document usually exists on both databases but might only exist on one.
+3.	Search for the `recorded_seq` field of the first element in the history array.
+4.	Start replicating to a new database.  
+5.	Set the `since_seq` field in the replication document to the value of the `recorded_seq` field.
 
-To create an incremental backup,
-you must perform the following steps:
 
-1.	Find the ID of the checkpoint document for the last replication. It is stored in the  `_replication_id` field of the replication document, found in the `_replicator` database.
-2.	Open the checkpoint document at `/<database>/_local/<_replication_id>`, where `<_replication_id>` is the ID you found in the previous step, and `<database>` is the name of the source or the target database. The document usually exists on both databases but might only exist on one.
-3.	Search for the `recorded_seq` field of the first element in the history array found in the checkpoint document.
-4.	Start replicating to the new incremental backup database, setting the `since_seq` field in the replication document to the value of the `recorded_seq` field found in the previous step.
+### Roll ups
 
-### Restoring a database
+A roll up combines daily backups into weekly, rolled up databases. These roll up databases combine the daily deltas into a coarser time slice. Weekly databases roll up into monthly databases, and monthly databases roll up into yearly databases. You manage roll up frequencies and settings via the Backup Task.
 
-To restore a database from incremental backups,
-you replicate each incremental backup to a new database,
-starting with the most recent increment.
+You can request the following intervals for roll ups:
+- Daily - Combine daily checkpoints into a weekly checkpoint.
+- Weekly - Combine weekly checkpoints into a monthly checkpoint.
+- Monthly - Combine monthly checkpoints into a yearly checkpoint.
 
-You could start with the oldest backup,
-then apply the subsequent  backups in order.
-However,
-replicating from the latest incremental backup first is faster because updated documents are only written to the target database once.
-Any documents older than a copy already present in the new database are skipped.
+These requests are one-off requests and do not repeat automatically. If you request a daily roll up to create a weekly checkpoint and you want another weekly checkpoint the following week, you must request a daily roll up again.
+
+<aside class="warning">A roll up does not remove the original checkpoints. To conserve space when databases are rolled up, remove the input databases that the roll up uses. If you request a daily roll up, the daily checkpoints still exist. To remove the rolled-up checkpoints and save storage costs, request a backup cleanup.</aside>
+
+
+### Restores
+
+To restore a database from a backup, you replicate each incremental backup to a new database starting with the latest increment. Replicating from the latest incremental backup first is faster because updated documents are only written to the target database once. However, this order is not required.
 
 
 ### An example
-
-This example shows how to:
-
--	Setup databases to use incremental backup.
--	Run a full backup.
--	Set up and run an incremental backup.
--	Restore a backup.
+This example shows how to create databases to use backup, run a full backup, set up and run an incremental backup, and restore backups.
 
 > Constants used in this guide
 
-```
+```shell
 # save base URL and the content type in shell variables
 $ url='https://<username>:<password>@<username>.cloudant.com'
 $ ct='Content-Type: application-json'
 ```
 
-Assume you need to back up one database.
-You want to create a full backup on Monday,
-and an incremental backup on Tuesday.
+Let's say you need to back up one database. You want to create a full backup on Monday and an incremental backup on Tuesday. You can use the curl and [jq](http://stedolan.github.io/jq/) commands to run these operations. Of course, any http client will work.
 
-You can use the `curl` and [`jq`](http://stedolan.github.io/jq/) commands to run these operations.
-In practice,
-you could use any http client.
+<div> </div>
 
-<div></div>
+#### Step 1: Create three databases
 
-#### Step 1: Check you have three databases
-
-> Check you have three databases to use with this example
+> Create three databases to use with this example
 
 ```shell
 $ curl -X PUT "${url}/original"
@@ -133,13 +88,9 @@ PUT /backup-monday HTTP/1.1
 PUT /backup-tuesday HTTP/1.1
 ```
 
-For this example,
-you require three databases:
+You create three databases: one original and one for Monday and Tuesday.
 
--	The original database, holding the data you want to backup.
--	Two incremental databases, for Monday (`backup-monday`) and Tuesday (`backup-tuesday`).
-
-<div></div>
+<div> </div>
 
 #### Step 2: Create the `_replicator` database
 
@@ -157,65 +108,49 @@ If it does not exist, create the `_replicator` database.
 
 <div> </div>
 
-#### Step 3: Back up the entire (original) database
+#### Step 3: Back up the entire database
 
 > Run a full backup on Monday
 
 ```http
-PUT /_replicator/full-backup-monday HTTP/1.1
+PUT /_replicator/backup-monday HTTP/1.1
 Content-Type: application/json
-# using the following json document:
 ```
 
 ```shell
-$ curl -X PUT "${url}/_replicator/full-backup-monday" -H "$ct" -d @backup-monday.json
+$ curl -X PUT "${url}/_replicator/backup-monday" -H "$ct" -d @backup-monday.json
 # where backup-monday.json has the following contents:
 ```
 
 ```json
 {
-  "_id": "full-backup-monday",
+  "_id": "backup-monday",
   "source": "${url}/original",
   "target": "${url}/backup-monday"
 }
 ```
 
-On Monday,
-you want to back up all your data for the first time.
-Do this by replicating everything from `original` to `backup-monday`.
+On Monday, back up your data for the first time and replicate
+everything from `original` to `backup-monday`.
+
 
 <div> </div>
 
 #### Step 4: Get checkpoint ID
 
-> Get checkpoint ID to help find the `recorded_seq` value:
+> Get checkpoint ID to run an incremental backup
 
 ```http
 GET /_replicator/backup-monday HTTP/1.1
-# Search for the value of _replication_id
 ```
 
 ```shell
 $ replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
 ```
 
-On Tuesday,
-you want to do an incremental backup,
-rather than another full backup.
+On Tuesday, things get more complicated. To start the incremental backup, you need two values: checkpoint ID and `recorded_seq`. These values mark where the last backup ended and indicate where to start the next incremental backup.
 
-To start the incremental backup,
-you need two values:
-
--	The checkpoint ID.
--	The `recorded_seq` value.
-
-These values identify where the last backup ended,
-and determine where to start the next incremental backup.
-After you get these values, you can run the incremental backup.
-
-You start by finding the checkpoint ID value.
-This is stored in the `_replication_id` field of the replication document,
-within the `_replicator` database.
+The checkpoint ID value is stored in the `_replication_id` field in the replication document in the `_replicator` database. After you get these values, you can run the incremental backup.
 
 <div> </div>
 
@@ -225,20 +160,12 @@ within the `_replicator` database.
 
 ```http
 GET /original/_local/${replication_id} HTTP/1.1
-# Search for the first value of recorded_seq in the history array
 ```
 
 ```shell
-$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
+$ recorded_seq=$(curl "${url}/original/_local/${repl_id}" | jq -r '.history[0].recorded_seq')
 ```
-
-After you get the checkpoint ID,
-use it to get the `recorded_seq` value.
-This is found in the first element of the history array in the `/_local/${replication_id}` document,
-within the original database.
-
-You now have the `recorded_seq` value.
-This tells you the last document replicated from the original database.
+After you get the checkpoint ID, you use it to get the `recorded_seq` value from the first element of the history array in the `/_local/${replication_id}` document in the original database.
 
 <div> </div>
 
@@ -247,33 +174,25 @@ This tells you the last document replicated from the original database.
 > Start Tuesday's incremental backup
 
 ```http
-PUT /_replicator/incr-backup-tuesday HTTP/1.1
+PUT /_replicator/backup-tuesday HTTP/1.1
 Content-Type: application/json
-# using the following json document:
 ```
 
 ```shell
-$ curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
+$ curl -X PUT "${url}/_replicator/backup-tuesday" -H "${ct}" -d @backup-tuesday.json
 # where backup-tuesday.json contains the following:
 ```
 
 ```json
 {
-  "_id": "incr-backup-tuesday",
+  "_id": "backup-tuesday",
   "source": "${url}/original",
   "target": "${url}/backup-tuesday",
   "since_seq": "${recorded_seq}"
 }
 ```
 
-Now that you have the checkpoint ID and `recorded_seq`,
-you can start Tuesday's incremental backup.
-This replicates all the document changes made _since_ the last replication.
-
-When the replication finishes,
-you have a completed incremental backup.
-The backup consists of all the documents in the original database,
-and may be restored by retrieving the content of both the `backup-monday` _and_ `backup-tuesday` databases.
+Now that you have the checkpoint ID and `recorded_seq`, you can start Tuesday's  incremental backup.
 
 <div> </div>
 
@@ -284,7 +203,6 @@ and may be restored by retrieving the content of both the `backup-monday` _and_ 
 ```http
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
-# using the following json document:
 ```
 
 ```shell
@@ -301,25 +219,17 @@ $ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.js
 }
 ```
 
-To restore from a backup,
-you replicate the initial full backup,
-and any incremental backups,
-to a new database.
-
-For example,
-to restore Monday's state,
-you would replicate from the `backup-monday` database.
+To restore from a backup, replicate the initial full backup, and any incremental backups, to a new database. To restore Monday's state, replicate from the `backup-monday` database.
 
 <div> </div>
 
 #### Step 8: Restore the Tuesday backup
 
-> Restore Tuesday's backup to get the latest changes first
+> Restore Tuesday's backup with the latest changes first
 
 ```http
 PUT /_replicator/restore-tuesday HTTP/1.1
 Content-Type: application/json
-# using the following json document:
 ```
 
 ```shell
@@ -336,12 +246,11 @@ $ curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.
 }
 ```
 
-> Finish by restoring Monday's backup last
+> Restore Tuesday's backup with Monday's backup last
 
 ```http
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
-# using the following json document:
 ```
 
 ```shell
@@ -357,28 +266,34 @@ $ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.js
 }
 ```
 
-To restore Tuesday's database,
-you first replicate from `backup-tuesday` and then from `backup-monday`.
-
-You could restore in chronological sequence,
-but by using the reverse order,
-documents updated on Tuesday only need to be written to the target database once;
-older versions of the document stored in the Monday database are ignored.
+If you want to restore Tuesday's state instead, replicate from `backup-tuesday` and then from `backup-monday`. If you use this order, documents updated on Tuesday will only need to be written to the target database once.
 
 <div> </div>
 
+### Using the Dashboard
+
+You can review the status and history of backups using the Dashboard.
+
+  - View the status of the last backup, including date and time.
+  - View the history of all backup replications that have run for a specific backup operation.
+  - View a list of backup document versions by date and time.
+  - View a current document and diff of any backed up version.
+  - Restore document to backed up version.
+
+Cloudant Support can help you with restores, status, and problems with backups.
+
+  - Restore an entire database or a specific document from backup.
+  - Ask about the status of a backup.
+  - Log issues with backups.
+  - Cleanup backup checkpoints that have rolled up and combined with a higher-level checkpoint.
+
 ### Best practices
 
-While the previous information outlines the basic backup process,
-each application needs its own requirements and strategies for backups.
-Here are a few best practices you might want to keep in mind.
+While the previous information outlines the basic backup process, each application needs its own requirements and strategies for backups. Here are a few best practices you might want to keep in mind.
 
 #### Scheduling backups
 
-Replication jobs can significantly increase the load on a cluster.
-If you are backing up several databases,
-it is best to stagger the replication jobs for different times,
-or to a time when the cluster is less busy.
+Replication jobs can significantly increase the load on a cluster. If you are backing up several databases, it is best to stagger the replication jobs for different times or to a time when the cluster is less busy.
 
 ##### Changing the IO priority of a backup
 
@@ -401,10 +316,10 @@ or to a time when the cluster is less busy.
 }
 ```
 
-You can change the priority of backup jobs by adjusting the value of the `x-cloudant-io-priority` field within the replication document.
+You can change the priority of backup jobs by adjusting the settings in the `x-cloudant-io-priority` field.
+1.	In the target, change the `headers` object.
+2.	In the source, change the replication document to "low".
 
-1.	In the source and target fields, change the `headers` object.
-2.	In the headers object, change the `x-cloudant-io-priority` field value to `"low"`.
 
 <div id="design-documents"> </div>
 
