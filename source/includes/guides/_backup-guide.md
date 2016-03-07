@@ -525,5 +525,5 @@ there is a limit of 50 databases enabled for backup within any one user account.
 <br/>If you require backups of design documents,
 you must maintain them in your preferred source control tool.</li>
 <li>Currently,
-the target database for restoring must be different from the original source database.</li>
+the target database for performing a database restore must be different from the original source database.</li>
 </ul>
