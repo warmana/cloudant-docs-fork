@@ -37,6 +37,10 @@ tested backup enables you to answer the following question with confidence:
 With Cloudant,
 Enterprise customers can have daily incremental backups.
 
+If you are not an Enterprise customer,
+or you wish to create your own backup mechanism,
+consider [using Replication to perform backups](backup-guide-using-replication.html).
+
 <aside class="warning" role="complementary" aria-label="betaonly">Daily incremental backup for Enterprise customers is currently a <b>Beta</b> capability.
 It is <b>not</b> enabled by default.</aside>
 
