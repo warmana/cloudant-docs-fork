@@ -95,7 +95,7 @@ This example shows how to:
 
 > Constants used in this guide
 
-```shell
+```
 # save base URL and the content type in shell variables
 $ url='https://<username>:<password>@<username>.cloudant.com'
 $ ct='Content-Type: application-json'
@@ -109,11 +109,11 @@ You can use the `curl` and [`jq`](http://stedolan.github.io/jq/) commands to run
 In practice,
 you could use any http client.
 
-<div> </div>
+<div></div>
 
-#### Step 1: Create three databases
+#### Step 1: Check you have three databases
 
-> Create three databases to use with this example
+> Check you have three databases to use with this example
 
 ```shell
 $ curl -X PUT "${url}/original"
@@ -133,9 +133,13 @@ PUT /backup-monday HTTP/1.1
 PUT /backup-tuesday HTTP/1.1
 ```
 
-You create three databases: one original and one for Monday and Tuesday.
+For this example,
+you require three databases:
 
-<div> </div>
+-	The original database, holding the data you want to backup.
+-	Two incremental databases, for Monday (`backup-monday`) and Tuesday (`backup-tuesday`).
+
+<div></div>
 
 #### Step 2: Create the `_replicator` database
 
@@ -153,49 +157,65 @@ If it does not exist, create the `_replicator` database.
 
 <div> </div>
 
-#### Step 3: Back up the entire database
+#### Step 3: Back up the entire (original) database
 
 > Run a full backup on Monday
 
 ```http
-PUT /_replicator/backup-monday HTTP/1.1
+PUT /_replicator/full-backup-monday HTTP/1.1
 Content-Type: application/json
+# using the following json document:
 ```
 
 ```shell
-$ curl -X PUT "${url}/_replicator/backup-monday" -H "$ct" -d @backup-monday.json
+$ curl -X PUT "${url}/_replicator/full-backup-monday" -H "$ct" -d @backup-monday.json
 # where backup-monday.json has the following contents:
 ```
 
 ```json
 {
-  "_id": "backup-monday",
+  "_id": "full-backup-monday",
   "source": "${url}/original",
   "target": "${url}/backup-monday"
 }
 ```
 
-On Monday, back up your data for the first time and replicate
-everything from `original` to `backup-monday`.
-
+On Monday,
+you want to back up all your data for the first time.
+Do this by replicating everything from `original` to `backup-monday`.
 
 <div> </div>
 
 #### Step 4: Get checkpoint ID
 
-> Get checkpoint ID to run an incremental backup
+> Get checkpoint ID to help find the `recorded_seq` value:
 
 ```http
 GET /_replicator/backup-monday HTTP/1.1
+# Search for the value of _replication_id
 ```
 
 ```shell
 $ replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
 ```
 
-On Tuesday, things get more complicated. To start the incremental backup, you need two values: checkpoint ID and `recorded_seq`. These values mark where the last backup ended and indicate where to start the next incremental backup.
+On Tuesday,
+you want to do an incremental backup,
+rather than another full backup.
 
-The checkpoint ID value is stored in the `_replication_id` field in the replication document in the `_replicator` database. After you get these values, you can run the incremental backup.
+To start the incremental backup,
+you need two values:
+
+-	The checkpoint ID.
+-	The `recorded_seq` value.
+
+These values identify where the last backup ended,
+and determine where to start the next incremental backup.
+After you get these values, you can run the incremental backup.
+
+You start by finding the checkpoint ID value.
+This is stored in the `_replication_id` field of the replication document,
+within the `_replicator` database.
 
 <div> </div>
 
@@ -205,12 +225,20 @@ The checkpoint ID value is stored in the `_replication_id` field in the replicat
 
 ```http
 GET /original/_local/${replication_id} HTTP/1.1
+# Search for the first value of recorded_seq in the history array
 ```
 
 ```shell
-$ recorded_seq=$(curl "${url}/original/_local/${repl_id}" | jq -r '.history[0].recorded_seq')
+$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
 ```
-After you get the checkpoint ID, you use it to get the `recorded_seq` value from the first element of the history array in the `/_local/${replication_id}` document in the original database.
+
+After you get the checkpoint ID,
+use it to get the `recorded_seq` value.
+This is found in the first element of the history array in the `/_local/${replication_id}` document,
+within the original database.
+
+You now have the `recorded_seq` value.
+This tells you the last document replicated from the original database.
 
 <div> </div>
 
@@ -219,25 +247,33 @@ After you get the checkpoint ID, you use it to get the `recorded_seq` value from
 > Start Tuesday's incremental backup
 
 ```http
-PUT /_replicator/backup-tuesday HTTP/1.1
+PUT /_replicator/incr-backup-tuesday HTTP/1.1
 Content-Type: application/json
+# using the following json document:
 ```
 
 ```shell
-$ curl -X PUT "${url}/_replicator/backup-tuesday" -H "${ct}" -d @backup-tuesday.json
+$ curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
 # where backup-tuesday.json contains the following:
 ```
 
 ```json
 {
-  "_id": "backup-tuesday",
+  "_id": "incr-backup-tuesday",
   "source": "${url}/original",
   "target": "${url}/backup-tuesday",
   "since_seq": "${recorded_seq}"
 }
 ```
 
-Now that you have the checkpoint ID and `recorded_seq`, you can start Tuesday's  incremental backup.
+Now that you have the checkpoint ID and `recorded_seq`,
+you can start Tuesday's incremental backup.
+This replicates all the document changes made _since_ the last replication.
+
+When the replication finishes,
+you have a completed incremental backup.
+The backup consists of all the documents in the original database,
+and may be restored by retrieving the content of both the `backup-monday` _and_ `backup-tuesday` databases.
 
 <div> </div>
 
@@ -248,6 +284,7 @@ Now that you have the checkpoint ID and `recorded_seq`, you can start Tuesday's 
 ```http
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
+# using the following json document:
 ```
 
 ```shell
@@ -264,17 +301,25 @@ $ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.js
 }
 ```
 
-To restore from a backup, replicate the initial full backup, and any incremental backups, to a new database. To restore Monday's state, replicate from the `backup-monday` database.
+To restore from a backup,
+you replicate the initial full backup,
+and any incremental backups,
+to a new database.
+
+For example,
+to restore Monday's state,
+you would replicate from the `backup-monday` database.
 
 <div> </div>
 
 #### Step 8: Restore the Tuesday backup
 
-> Restore Tuesday's backup with the latest changes first
+> Restore Tuesday's backup to get the latest changes first
 
 ```http
 PUT /_replicator/restore-tuesday HTTP/1.1
 Content-Type: application/json
+# using the following json document:
 ```
 
 ```shell
@@ -291,11 +336,12 @@ $ curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.
 }
 ```
 
-> Restore Tuesday's backup with Monday's backup last
+> Finish by restoring Monday's backup last
 
 ```http
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
+# using the following json document:
 ```
 
 ```shell
@@ -311,34 +357,28 @@ $ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.js
 }
 ```
 
-If you want to restore Tuesday's state instead, replicate from `backup-tuesday` and then from `backup-monday`. If you use this order, documents updated on Tuesday will only need to be written to the target database once.
+To restore Tuesday's database,
+you first replicate from `backup-tuesday` and then from `backup-monday`.
+
+You could restore in chronological sequence,
+but by using the reverse order,
+documents updated on Tuesday only need to be written to the target database once;
+older versions of the document stored in the Monday database are ignored.
 
 <div> </div>
 
-### Using the Dashboard
-
-You can review the status and history of backups using the Dashboard.
-
-  - View the status of the last backup, including date and time.
-  - View the history of all backup replications that have run for a specific backup operation.
-  - View a list of backup document versions by date and time.
-  - View a current document and diff of any backed up version.
-  - Restore document to backed up version.
-
-Cloudant Support can help you with restores, status, and problems with backups.
-
-  - Restore an entire database or a specific document from backup.
-  - Ask about the status of a backup.
-  - Log issues with backups.
-  - Cleanup backup checkpoints that have rolled up and combined with a higher-level checkpoint.
-
 ### Best practices
 
-While the previous information outlines the basic backup process, each application needs its own requirements and strategies for backups. Here are a few best practices you might want to keep in mind.
+While the previous information outlines the basic backup process,
+each application needs its own requirements and strategies for backups.
+Here are a few best practices you might want to keep in mind.
 
 #### Scheduling backups
 
-Replication jobs can significantly increase the load on a cluster. If you are backing up several databases, it is best to stagger the replication jobs for different times or to a time when the cluster is less busy.
+Replication jobs can significantly increase the load on a cluster.
+If you are backing up several databases,
+it is best to stagger the replication jobs for different times,
+or to a time when the cluster is less busy.
 
 ##### Changing the IO priority of a backup
 
@@ -361,10 +401,10 @@ Replication jobs can significantly increase the load on a cluster. If you are ba
 }
 ```
 
-You can change the priority of backup jobs by adjusting the settings in the `x-cloudant-io-priority` field.
-1.	In the target, change the `headers` object.
-2.	In the source, change the replication document to "low".
+You can change the priority of backup jobs by adjusting the value of the `x-cloudant-io-priority` field within the replication document.
 
+1.	In the source and target fields, change the `headers` object.
+2.	In the headers object, change the `x-cloudant-io-priority` field value to `"low"`.
 
 <div id="design-documents"> </div>
 
