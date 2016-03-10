@@ -23,9 +23,11 @@ To distinguish between them,
 standard documents have an `_id` indicated by `$DOCUMENT_ID`,
 while design documents have an `_id` indicated by `$DESIGN_ID`.
 
-<aside class="warning">
-If a design document is updated, Cloudant will delete the indexes from the previous version and recreate the index from scratch. If you need to make changes to a design document for a larger database, have a look at the [Design Document Management Guide](design_document_management.html#managing-changes-to-a-design-document).
-</aside>
+<aside class="warning" role="complementary" aria-label="designupdateaffectsindexes">If a design document is updated,
+Cloudant deletes the indexes from the previous version,
+and recreates the index from scratch.
+If you need to make changes to a design document for a larger database,
+have a look at the [Design Document Management Guide](design_document_management.html#managing-changes-to-a-design-document).</aside>
 
 The structure of design document is as follows:
 
@@ -55,7 +57,7 @@ You can copy the latest version of a design document to a new document
 by specifying the base document and target document.
 The copy is requested using the `COPY` HTTP request.
 
-<aside class="warning">`COPY` is a non-standard HTTP command.</aside>
+<aside class="warning" role="complementary" aria-label="copynonstandard">`COPY` is a non-standard HTTP command.</aside>
 
 <div></div>
 
@@ -80,7 +82,7 @@ An example request to copy the design document `recipes` to the new
 design document `recipelist` produces a response containing the ID and revision of
 the new document.
 
-<aside class="notice">Copying a design document does not automatically reconstruct the view
+<aside class="notice" role="complementary" aria-label="noautoreconstruct">Copying a design document does not automatically reconstruct the view
 indexes. Like other views, these are recreated the first
 time the new view is accessed.</aside>
 
@@ -419,7 +421,7 @@ Use list functions to customize the format of [MapReduce](creating_views.html#us
 They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
 You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`. 
 
-<aside>The result of a list function is not stored. This means that the function is executed every time a request is made.
+<aside class="warning" role="complementary" aria-label="listresultnotstored">The result of a list function is not stored. This means that the function is executed every time a request is made.
 As a consequence, using map-reduce functions might be more efficient.
 For web and mobile applications, consider whether any computations done in a list function would be better placed in the application tier.</aside>
 
@@ -513,7 +515,7 @@ db.show($DESIGN_ID, $SHOW_FUNCTION, $DOCUMENT_ID, function (err, body) {
 Show functions are similar to [list functions](#list-functions) but are used to format individual documents.
 They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
 
-<aside>The result of a show function is not stored. This means that the function is executed every time a request is made.
+<aside class="warning" role="complementary" aria-label="showresultnotstored">The result of a show function is not stored. This means that the function is executed every time a request is made.
 As a consequence, using map functions might be more efficient.
 For web and mobile applications, consider whether any computations done in a show function would be better placed in the application tier.</aside>
 
@@ -620,7 +622,7 @@ the change remains in the feed.
 Therefore,
 filter functions let you 'remove' or 'ignore' changes you don't want to monitor.
 
-<aside>Filter functions can also be used to modify a [replication task](advanced_replication.html#filtered-replication).</aside>
+<aside class="information" role="complementary" aria-label="modifyreplicationtask">Filter functions can also be used to modify a [replication task](advanced_replication.html#filtered-replication).</aside>
 
 <div></div>
 
@@ -790,7 +792,7 @@ curl https://$USERNAME.cloudant.com/recipes/_design/recipesdd/_info \
 
 Obtains information about a given design document, including the index, index size and current status of the design document and associated index information.
 
-The individual fields in the returned JSON structure are detailed below:
+The individual fields in the returned JSON structure are as follows:
 
 -   **name**: Name/ID of Design Document
 -   **view\_index**: View Index
@@ -838,7 +840,7 @@ curl https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/descripti
 
 Obtains information about a search specified within a given design document.
 
-The individual fields in the returned JSON structure are detailed below:
+The individual fields in the returned JSON structure are as follows:
 
 -   **name**: Name/ID of the Search within the Design Document
 -   **search\_index**: The Search Index

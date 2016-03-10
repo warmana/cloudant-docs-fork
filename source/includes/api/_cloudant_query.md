@@ -14,7 +14,7 @@ But for maximum possible flexibility when looking for data,
 you would typically create an index of type `text`.
 Indexes of type `text` have a simple mechanism for automatically indexing all the fields in the documents.
 
-<aside class="warning">While more flexible,
+<aside class="warning" role="complementary" aria-label="texttakeslonger">While more flexible,
 `text` indexes might take longer to create and require more storage resources than `json` indexes.</aside>
 
 ### Creating an index
@@ -132,7 +132,7 @@ The indexing process traverses all of the fields in all the documents in the dat
 
 An example of creating a text index for all fields in all documents in a database is [available](cloudant_query.html#example:-movies-demo-database).
 
-<aside class="warning">Caution should be taken when indexing all fields in all documents for large data sets,
+<aside class="warning" role="complementary" aria-label="avoidindexingallfields">Caution should be taken when indexing all fields in all documents for large data sets,
 as it might be a very resource-consuming activity.</aside>
 
 > Example index creation request to index all fields in all documents
@@ -233,7 +233,7 @@ update,
 and delete indexes in a database,
 and to query data using these indexes.
 
-A list of the available methods and endpoints is provided below:
+A list of the available methods and endpoints follows:
 
 Method | Path | Description
 -------|------|------------
@@ -312,7 +312,7 @@ and $name is the name of the index.
 -	**limit (optional, default: 25)**: Maximum number of results returned.
 -	**skip (optional, default: 0)**: Skip the first 'n' results, where 'n' is the value specified.
 -	**sort (optional, default: [])**: JSON array following [sort syntax](#sort-syntax)
--	**fields (optional, default: null)**: JSON array following the field syntax, described below. This parameter lets you specify which fields of an object should be returned. If it is omitted, the entire object is returned.
+-	**fields (optional, default: null)**: JSON array following the field syntax, described in the following information. This parameter lets you specify which fields of an object should be returned. If it is omitted, the entire object is returned.
 -	**r (optional, default: 1)**: Read quorum needed for the result. This defaults to 1, in which case the document found in the index is returned. If set to a higher value, each document is read from at least that many replicas before it is returned in the results. This is likely to take more time than using only the document stored locally with the index.
 -	**bookmark (optional, default: null)**: A string that enables you to specify which page of results you require. *Only for indexes of type `text`.*
 -	**use_index (optional)**: Use this option to identify a specific index for query to run against, rather than using the Cloudant Query algorithm to find the best index. For more information, see [Explain Plans](#explain-plans).
@@ -369,7 +369,7 @@ is more efficient.
 
 The Cloudant Query language is expressed as a JSON object describing documents of interest. Within this structure, you can apply conditional logic using specially named fields.
 
-<aside class="notice">While the Cloudant Query language has some similarities with MongoDB query documents,
+<aside class="notice" role="complementary" aria-label="cloudantquerydifferentmongodbquery">While the Cloudant Query language has some similarities with MongoDB query documents,
 these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.</aside>
 
 #### Selector basics
@@ -970,7 +970,7 @@ Array | `$in` | Array of JSON values | The document field must exist in the list
 Miscellaneous | `$mod` | [Divisor, Remainder] | Divisor and Remainder are both positive or negative integers. Non-integer values result in a [404 status](http.html#404). Matches documents where (`field % Divisor == Remainder`) is true, and only when the document field is an integer.
  | `$regex` | String | A regular expression pattern to match against the document field. Only matches when the field is a string value and matches the supplied regular expression.
 
-<aside class="warning">Regular expressions do not work with indexes, so they should not be used to filter large data sets.</aside>
+<aside class="warning" role="complementary" aria-label="dontuseregexforlargedatasets">Regular expressions do not work with indexes, so they should not be used to filter large data sets.</aside>
 
 <div></div>
 #### Examples of condition operators
@@ -1106,7 +1106,8 @@ The `$eq` operator matches if the specified field content is equal to the suppli
 ##### The `$ne` operator
 
 The `$ne` operator matches if the specified field content is not equal to the supplied argument.
-<aside class="warning">The `$ne` operator cannot be the basis (lowest level) element in a selector when using an index of type `json`.</aside>
+
+<aside class="warning" role="complementary" aria-label="nenotbasiselement">The `$ne` operator cannot be the basis (lowest level) element in a selector when using an index of type `json`.</aside>
 
 > `$ne` operator used with full text indexing
 
@@ -1452,7 +1453,7 @@ The Divisor and Remainder must be integers.
 They can be positive or negative integers.
 A query where the Divisor or Remainder is a non-integer returns a [404 status](http.html#404).
 
-<aside class="notice">When using negative integer values for the Divisor or Remainder,
+<aside class="notice" role="complementary" aria-label="modoperatoranderlang">When using negative integer values for the Divisor or Remainder,
 you should note that the Cloudant `$mod` operator is similar to the
 [Erlang `rem` modulo operator](http://erlang.org/doc/reference_manual/expressions.html),
 or the [`%` operator in C](https://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B),
@@ -1552,7 +1553,7 @@ This enables us to build up more complex selector expressions.
 
 However, not all operators can be used as the base or starting point of the selector expression when using indexes of type `json`.
 
-<aside class="warning">You cannot use combination or array logical operators such as `$regex` as the _basis_ of a query when using indexes of type `json`.
+<aside class="warning" role="complementary" aria-label="querybasislimits">You cannot use combination or array logical operators such as `$regex` as the _basis_ of a query when using indexes of type `json`.
 Only equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but not `$ne`) can be used as the basis of a query for `json` indexes.</aside>
 
 <div></div>
@@ -1594,7 +1595,7 @@ you could first test that the document has an `_id` value:
 This expression is always true,
 enabling the remainder of the selector expression to be applied.
 
-<aside class="warning">Using `{"_id": { "$gt":null } }` induces a full-table scan, and is not efficient for large databases.</aside>
+<aside class="warning" role="complementary" aria-label="fullscannotefficient">Using `{"_id": { "$gt":null } }` induces a full-table scan, and is not efficient for large databases.</aside>
 
 Most selector expressions work exactly as you would expect for the given operator.
 The matching algorithms used by the `$regex` operator are currently based on the Perl Compatible Regular Expression (PCRE) library.
@@ -1632,7 +1633,7 @@ using dotted notation if desired for sub-document fields.
 
 The direction value is `"asc"` for ascending, and `"desc"` for descending.
 
-<aside class="warning">If you omit the direction value,
+<aside class="warning" role="complementary" aria-label="defaultdirectionvalue">If you omit the direction value,
 the default `"asc"` is used.</aside>
 
 > Example of simple sort syntax:
@@ -1658,9 +1659,9 @@ To use sorting, ensure that:
 -	There is an index already defined, with all the sort fields in the same order.
 -	Each object in the sort array has a single key.
 
-<aside class="warning">If an object in the sort array does not have a single key, the resulting sort order is implementation specific and might change.</aside>
+<aside class="warning" role="complementary" aria-label="singlekeyeffect">If an object in the sort array does not have a single key, the resulting sort order is implementation specific and might change.</aside>
 
-<aside>Currently, Cloudant Query does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.</aside>
+<aside class="warning" role="complementary" aria-label="nodifferentsortbyfield">Currently, Cloudant Query does not support multiple fields with different sort orders, so the directions must be either all ascending or all descending.</aside>
 
 If the direction is ascending, you can use a string instead of an object to specify the sort fields.
 
@@ -1674,11 +1675,9 @@ If possible,
 an attempt is made to discover the field type based on the selector.
 In ambiguous cases the field type must be provided explicitly.
 
-<aside class="warning">
-The sorting order is undefined when fields contain different data types.
+<aside class="warning" role="complementary" aria-label="sortorderundefined">The sorting order is undefined when fields contain different data types.
 This is an important difference between text and view indexes.
-Sorting behavior for fields with different data types might change in future versions.
-</aside>
+Sorting behavior for fields with different data types might change in future versions.</aside>
 
 > A simple query, using sorting:
 
@@ -1699,7 +1698,7 @@ The two advantages are:
 
 The fields returned are specified as an array.
 
-<aside>Only the specified filter fields are included, in the response.
+<aside class="warning" role="complementary" aria-label="onlyfilterfields">Only the specified filter fields are included, in the response.
 There is no automatic inclusion of the `_id` or other metadata fields when a field list is included.</aside>
 
 > Example of selective retrieval of fields from matching documents:
@@ -2019,7 +2018,7 @@ The reason is that text indexes are different to view-based indexes.
 For more flexibility when working with the results obtained from a full text query, you can supply the `bookmark` value as part of the request body.
 Using the `bookmark` enables you to specify which page of results you require.
 
-<aside class="warning">The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.</aside>
+<aside class="warning" role="complementary" aria-label="bookmarktruncated">The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.</aside>
 
 > Searching for a specific document within the database:
 

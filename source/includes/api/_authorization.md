@@ -146,7 +146,7 @@ The response tells you whether the update has been successful.
 
 ### Creating API Keys
 
-<aside class="warning">The earlier method of generating API keys by `POST`ing to `https://cloudant.com/api/generate_api_key` is now deprecated.</aside>
+<aside class="warning" role="complementary" aria-label="apibypostdeprecated">The earlier method of generating API keys by `POST`ing to `https://cloudant.com/api/generate_api_key` is now deprecated.</aside>
 
 API keys allow you to give access to a person or application without having to create a new Cloudant account.
 An API key consists of a randomly generated username and password.
@@ -163,12 +163,12 @@ an API key does not have access to the dashboard.
 An API key is primarily used to enable applications to access a database,
 with a determined level of access control.
 
-<aside class="warning">If you choose to generate an API key through the dashboard,
+<aside class="warning" role="complementary" aria-label="oneoffgeneration">If you choose to generate an API key through the dashboard,
 remember to record the key name and password.
 These are both randomly generated,
 and cannot be retrieved if lost or forgotten.</aside>
 
-<aside class="warning">IBM Cloudant Data Layer Local Edition ("Cloudant Local") does not support API Keys.
+<aside class="warning" role="complementary" aria-label="noapikeysforcl">IBM Cloudant Data Layer Local Edition ("Cloudant Local") does not support API Keys.
 For a similar capability,
 create "CouchDB" style users,
 as described in the [IBM Knowledge Center](http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_db_security.html).</aside>

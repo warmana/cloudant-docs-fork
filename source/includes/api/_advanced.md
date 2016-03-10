@@ -87,7 +87,7 @@ account.request({
 }
 ```
 
-<aside class="warning">This feature is only available to dedicated customers.</aside>
+<aside class="warning" role="complementary" aria-label="dedicatedonly">This feature is only available to dedicated customers.</aside>
 
 Obtains a list of changes to databases, like a global [changes feed](database.html#get-changes). Changes can be either updates to the database, creation, or deletion of a database. Like the changes feed, the feed is not guaranteed to return changes in the correct order and might contain changes more than once. Polling modes for this method works just like polling modes for [the changes feed](database.html#get-changes).
 
@@ -334,7 +334,7 @@ curl https://$USERNAME.cloudant.com/$DATABASE/_revs_limit \
 
 Gets the number of past revisions of a document that Cloudant stores information on.
 
-<aside>Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
+<aside class="warning" role="complementary" aria-label="tombstones1">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
 
 ### PUT /$DB/_revs_limit
 
@@ -380,7 +380,7 @@ account.request({
 
 Sets the maximum number of past revisions that Cloudant stores information on.
 
-<aside>Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
+<aside class="warning" role="complementary" aria-label="tombstones2">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
 
 ### GET /_membership
 

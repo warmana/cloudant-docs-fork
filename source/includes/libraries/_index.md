@@ -15,7 +15,7 @@ A supported library is one where you can contact Cloudant if you encounter a spe
 
 Other client libraries have been created by [third parties](libraries.html#third-party-client-libraries).
 
-<aside class="warning">Third-party client libraries are not maintained or supported by Cloudant.
+<aside class="warning" role="complementary" aria-label="notmaintained">Third-party client libraries are not maintained or supported by Cloudant.
 If you encounter a specific, reproducible problem with a third-party library,
 you should contact the library maintainer for assistance.</aside> 
 

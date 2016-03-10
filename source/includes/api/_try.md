@@ -298,7 +298,7 @@ curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/examples/_design/ddoc/_s
 }
 ```
 
-You can try out requests and output will be shown in the code column to the right. We have put together some sample data so that you can play with Cloudant straight away.
+You can try out requests and obtain output results in the code column. We have put together some sample data so that you can experiment with Cloudant straight away.
 
 <div class="test-form-container">
 

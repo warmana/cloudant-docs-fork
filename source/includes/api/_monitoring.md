@@ -16,7 +16,7 @@ For more detailed system information,
 you make use of the cluster monitoring API,
 "knockwurst".
 
-<aside class="warning">The "knockwurst" cluster monitoring API is not available for [IBM Cloudant Data Layer Local Edition (Cloudant Local)](basics.html#cloudant-local).</aside>
+<aside class="warning" role="complementary" aria-label="monitoringnotavailable">The "knockwurst" cluster monitoring API is not available for [IBM Cloudant Data Layer Local Edition (Cloudant Local)](basics.html#cloudant-local).</aside>
 
 ### Monitoring metrics overview
 

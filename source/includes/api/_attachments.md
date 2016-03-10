@@ -6,14 +6,14 @@ The BLOb is stored in the `_attachments` component of the document.
 The BLOb includes data about the attachment name, the type of the attachment, and the actual content.
 Examples of BLObs would be images and multimedia.
 
-<aside class="warning">If you include the attachment as an '[inline](#inline)' component of the overall JSON,
+<aside class="warning" role="complementary" aria-label="usebase64">If you include the attachment as an '[inline](#inline)' component of the overall JSON,
 the attachment content should be represented using BASE64 form.</aside>
 
 The content type corresponds to a [MIME type][mime].
 For example, if you want to attach a `.jpg` image file to a document,
 you specify the attachment MIME type as `image/jpeg`.
 
-<aside class="warning">As a best practice, keep attachments small in size and number because attachments can impact performance.</aside>
+<aside class="warning" role="complementary" aria-label="keepattachmentssmall">As a best practice, keep attachments small in size and number because attachments can impact performance.</aside>
 
 ### Create / Update
 
@@ -58,7 +58,7 @@ make a PUT request with the document's latest `_rev` to `https://$USERNAME.cloud
 The attachment's [content type][mime] must be specified using the `Content-Type` header.
 The `$ATTACHMENT` value is the name by which the attachment is associated with the document.
 
-<aside>You can create more than one attachment for a document;
+<aside class="information" role="complementary" aria-label="attachmentsmustbeunique">You can create more than one attachment for a document;
 simply ensure that the `$ATTACHMENT` value for each attachment is unique within the document.</aside>
 
 <div></div>

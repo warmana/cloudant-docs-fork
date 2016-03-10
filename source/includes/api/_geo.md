@@ -38,7 +38,7 @@ function (doc) {
 
 ```
 
-<aside>Geo indexing is only available on dedicated clusters who purchased the feature.</aside>
+<aside class="notice" role="complementary" aria-label="onlyondedicated">Geo indexing is only available on dedicated clusters who purchased the feature.</aside>
 
 Geo indexing allows you to perform sophisticated geo-spatial queries returning documents based on their geometric relationships.
 

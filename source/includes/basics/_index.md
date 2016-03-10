@@ -84,7 +84,7 @@ For more information about Cloudant and distributed system concepts, see the [CA
 You can continuously replicate. This means that a target database updates every time the source database changes. Testing for source changes involves ongoing internal calls.
 Continuous replication can be used for backups of data, aggregation across multiple databases, or for sharing data.
 
-<aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
+<aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
 ## Cloudant Local
 

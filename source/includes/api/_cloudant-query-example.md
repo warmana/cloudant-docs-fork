@@ -30,7 +30,7 @@ So in accordance with IMDb’s (Conditions of Use)[http://www.imdb.com/help/show
  | (http://www.imdb.com).
  | Used with permission.
 
-To follow along, replicate the database `https://examples.cloudant.com/movies-demo/` into your own account. This database only contains the sample data. No indexes have been defined yet. In order to do queries, you will have to define indexes yourself. If you're too lazy to do that, you can also use our :ref:`test form <cloudant-query-guide-form>` below.
+To follow along, replicate the database `https://examples.cloudant.com/movies-demo/` into your own account. This database only contains the sample data. No indexes have been defined yet. In order to do queries, you must define indexes yourself. Alternatively, you could instead use the following :ref:`test form <cloudant-query-guide-form>`.
 
 ```shell
     curl 'https://user:password@user.cloudant.com/_replicate' -X POST -H 'Content-Type: application/json' -d '{
@@ -399,7 +399,7 @@ You can use the `name` (view name) and the `ddoc` (design document ID) you find 
 
 #### Deleting indexes
 
-> Here is how you would delete the first index listed above:
+> Here is how you would delete the first index listed:
 
 ```shell
 curl -X DELETE 'https://<user>:<pass>@<user>.cloudant.com/movies-demo/_index/4c4a214887d5ef7e5594091be1ce51ecb0aeaf37/json/4c4a214887d5ef7e5594091be1ce51ecb0aeaf37""'

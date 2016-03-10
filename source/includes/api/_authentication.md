@@ -8,7 +8,7 @@ with Cloudant: Basic authentication and Cookie authentication.
 Basic authentication is similar to showing an ID at a door for checking every time you want to enter.
 Cookie authentication is similar to having a key to the door so that you can let yourself in whenever you want. The key is a cookie named `AuthSession`.
 
-<aside class="notice">When creating or using performance critical Cloudant applications,
+<aside class="notice" role="complementary" aria-label="cookiesaregood">When creating or using performance critical Cloudant applications,
 Cookie authentication has benefits compared with Basic authentication.
 Therefore,
 you should prefer Cookie authentication where possible.</aside>
@@ -59,7 +59,8 @@ Method | Path | Description | Headers | Form Parameters
 `GET` | `/_session` | Returns cookie based login user information | AuthSession cookie returned by POST request | —
 `DELETE` | `/_session` | Logout cookie based user | AuthSession cookie returned by POST request | —
 
-<h3></h3>
+<div></div>
+
 #### Requesting a cookie
 
 > Request a cookie
@@ -148,8 +149,8 @@ x-couch-request-id: a638431d
 
 If your credentials are valid, the response contains a cookie which remains active for twenty-four hours.
 
+<div></div>
 
-<h3></h3>
 #### Getting cookie information
 
 > Example request for cookie information:

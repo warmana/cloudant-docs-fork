@@ -72,7 +72,7 @@ curl ... | jq '.[] | select(.type=="search_indexer") | .changes_done'
 
 To estimate the time needed until the indexing task is complete, monitor the number of `changes_done` and compare this value to `total_changes`. For instance, if `changes_done` increases by 250 per second and `total_changes` is 1,000,000, the task is expected to take 4,000 seconds, or about 66 minutes, to complete.
 
-<aside class="warning"> Estimates of the time to complete an indexing task cannot be 100% accurate. The actual time to complete the task depends on several factors, including:
+<aside class="warning" role="complementary" aria-label="estimates">Estimates of the time to complete an indexing task cannot be 100% accurate. The actual time to complete the task depends on several factors, including:
 
 - The time it takes to process each document. For instance, a view might check the type of a document first, and only emit new index entries for one type.
 - The size of the documents.
@@ -148,6 +148,6 @@ To resolve a stalled replication, you might have to cancel the replication proce
 
 If that does not help, the replication might be stalled because the user accessing the source or target databases does not have write permissions.
 
-<aside class="notice">Replication makes use of checkpoints. This means that content already replicated and unchanged does not have to be replicated again if the replication is restarted.</aside>
+<aside class="notice" role="complementary" aria-label="checkpoints">Replication makes use of checkpoints. This means that content already replicated and unchanged does not have to be replicated again if the replication is restarted.</aside>
 
 If you created the replication process by creating a document in the `_replicator` database, you can also check the status of the replication there.

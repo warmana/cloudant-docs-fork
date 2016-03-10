@@ -1,6 +1,6 @@
 ## Document Versioning and MVCC
 
-Multi-version concurrency control (MVCC) is how Cloudant databases ensure that all of the nodes in a database's cluster contain only the [newest version](document.html) of a document. Since Cloudant databases are [eventually consistent](#acid), this is necessary to prevent inconsistencies arising between nodes as a result of synchronizing between outdated documents.
+Multi-version concurrency control (MVCC) is how Cloudant databases ensure that all of the nodes in a database's cluster contain only the [newest version](document.html) of a document. Since Cloudant databases are [eventually consistent](cap_theorem.html), this is necessary to prevent inconsistencies arising between nodes as a result of synchronizing between outdated documents.
 
 Multi-Version Concurrency Control (MVCC) enables concurrent read and write access to a Cloudant database. MVCC is a form of <a href="http://en.wikipedia.org/wiki/Optimistic_concurrency_control" target="_blank">optimistic concurrency</a>.
 It makes both read and write operations on Cloudant databases faster because there is no need for database locking on either read or write operations. MVCC also enables synchronization between Cloudant database nodes.
@@ -20,7 +20,7 @@ The two main uses of the revision number are to help:
 
 You must specify the previous `_rev` when [updating a document](document.html#update) or else your request will fail and return a [409 error](http.html#409).
 
-<aside class="warning">`_rev` should not be used to build a version control system.
+<aside class="warning" role="complementary" aria-label="revnotVCS">`_rev` should not be used to build a version control system.
 The reason is that it is an internal value used by the server.
 In addition, older revisions of a document are transient, and therefore removed regularly.</aside>
 
@@ -33,7 +33,7 @@ Distributed databases work without a constant connection to the main database on
 
 To find conflicts, add the query parameter `conflicts=true` when retrieving a document. The document will contain a `_conflicts` array with all conflicting revisions.
 
-To find conflicts for multiple documents in a database, write a view. To the right is a map function that emits all conflicting revisions for every document that has a conflict.
+To find conflicts for multiple documents in a database, write a view. An example map function is provided, that emits all conflicting revisions for every document with a conflict.
 
 
 > map function to find conflicts:
@@ -57,7 +57,7 @@ Once you've found a conflict, you can resolve it in 4 steps.
  * [Upload](#upload-the-new-revision) the new revision.
  * [Delete](#delete-old-revisions) old revisions.
 
-Let's look at an example of how this can be done. Suppose you have a database of products for an online shop. The first version of a document might look like this example on the right.
+Let's consider an example of how this can be done. Suppose you have a database of products for an online shop. The first version of a document might look like this example provided.
 
 > first revision of the document
 
@@ -144,7 +144,7 @@ For a practical example of how to implement these changes, see [this project wit
 
 #### Upload the new revision
 
-In this example, you produce the document to your right and update the database with it.
+In this example, you create a document similar to the example provided, and update the database with it.
 
 > third revision, merging changes from the two conflicting second revisions
 

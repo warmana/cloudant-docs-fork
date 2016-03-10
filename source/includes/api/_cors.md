@@ -19,7 +19,7 @@ The effect is that scripts running on their website are able to access your Clou
 ### Browser support
 
 CORS is supported by all current versions of commonly used browsers.
-<aside class="notice">Versions of Microsoft Internet Explorer prior to version 10 offer partial support for CORS.
+<aside class="notice" role="complementary" aria-label="msiecorssupport">Versions of Microsoft Internet Explorer prior to version 10 offer partial support for CORS.
 Versions of Microsoft Internet Explorer prior to version 8 do not support CORS.</aside>
 
 ### Security
@@ -76,7 +76,7 @@ To reduce the risk:
 
 -   **enable\_cors**: boolean value to turn CORS on or off.
 -   **allow\_credentials**: boolean value to allow authentication credentials. If set to true, browser requests must be done using `withCredentials = true`.
--   **origins**: “origins”: An array of strings containing allowed origin domains. You have to specify the full URL including the protocol. It is recommended that only the HTTPS protocol is used. Subdomains count as seperate domains, so you have to specify all subdomains used. See the example request below.
+-   **origins**: “origins”: An array of strings containing allowed origin domains. You have to specify the full URL including the protocol. It is recommended that only the HTTPS protocol is used. Subdomains count as seperate domains, so you have to specify all subdomains used. See the following example request.
 
 ### Setting the CORS configuration
 
