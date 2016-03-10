@@ -5,7 +5,7 @@ The majority of requests and responses to and from Cloudant use the JavaScript O
 JSON is used because it is the simplest and easiest solution for working with data using a web browser.
 This is because JSON structures can be evaluated and used as JavaScript objects within the web browser environment. JSON also integrates with the server-side JavaScript used within Cloudant. JSON documents are always UTF-8 encoded.
 
-<aside class="warning">Care should be taken to ensure that:
+<aside class="warning" role="complementary" aria-label="takecare">Care should be taken to ensure that:
 
 -  Your JSON structures are valid. Invalid structures cause Cloudant to return an HTTP status code of [400 (bad request)](http.html#400).
 -  You normalize strings in JSON documents retrieved from Cloudant, before you compare them. This is because Unicode normalization might have been applied, so that a string stored and then retrieved is not identical on a binary level.

@@ -1,6 +1,6 @@
 ## Third-party client libraries
 
-<aside class="warning">Third-party client libraries are not maintained or supported by Cloudant.</aside>
+<aside class="warning" role="complementary" aria-label="notmaintained">Third-party client libraries are not maintained or supported by Cloudant.</aside>
 
 ### Mobile
 
@@ -70,9 +70,9 @@ To install, download sag from [http://www.saggingcouch.com/download.php](http://
 
 To obtain PouchDB, and for setup details, refer to <a href="http://pouchdb.com/">PouchDB</a>.
 
-<aside class="notice">PouchDB is also available for Node.js: `npm install pouchdb`</aside>
+<aside class="notice" role="complementary" aria-label="nodejs">PouchDB is also available for Node.js: `npm install pouchdb`</aside>
 
-<aside class="notice">PouchDB can also be installed with Bower: `bower install pouchdb`</aside>
+<aside class="notice" role="complementary" aria-label="bower">PouchDB can also be installed with Bower: `bower install pouchdb`</aside>
 
 <table>
 <tr>

@@ -132,7 +132,7 @@ To create a document, make a POST request with the document's JSON content to `h
 
 The response is a JSON document containing the ID of the created document, the revision string, and `"ok": true`. If you did not provide an `_id` field, Cloudant generates one automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier). If creation of the document failed, the response contains a description of the error.
 
-<aside>If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
+<aside class="warning" role="complementary" aria-label="cannotmeetquorum">If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 ### Read
 
@@ -200,8 +200,7 @@ This is a list of parameters you can add to the URL in the usual way, e.g. `/db/
 | `revs` | boolean | Includes list of all known document revisions. | false |
 | `revs_info` | boolean | Includes detailed information for all known document revisions. | false |
 
-<aside class="warning">
-Due to the distributed, eventually consistent nature of Cloudant, reads might return stale data. In particular, data that has just been written, even by the same client, might not be returned from a read request immediately following the write request. To work around this behaviour, a client can cache state locally. Caching also helps to keep request counts down and thus increase application performance and decrease load on the database cluster. This also applies to requests to map-reduce and search indexes.
+<aside class="warning" role="complementary" aria-label="readsmightbestale">Due to the distributed, eventually consistent nature of Cloudant, reads might return stale data. In particular, data that has just been written, even by the same client, might not be returned from a read request immediately following the write request. To work around this behaviour, a client can cache state locally. Caching also helps to keep request counts down and thus increase application performance and decrease load on the database cluster. This also applies to requests to map-reduce and search indexes.
 </aside>
 
 ### Read Many
@@ -255,7 +254,7 @@ db.insert($JSON, $JSON._id, function (err, body, headers) {
 
 To update (or create) a document, make a PUT request with the updated JSON content *and* the latest `_rev` value (not needed for creating new documents) to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 
-<aside>If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
+<aside class="warning" role="complementary" aria-label="uselatestrev1">If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
 This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 <div></div>
@@ -302,11 +301,10 @@ db.destroy($JSON._id, $REV, function (err, body, headers) {
 
 To delete a document, make a DELETE request with the document's latest `_rev` in the querystring, to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 
-<aside>If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](basics.html#http-status-codes).
+<aside class="warning" role="complementary" aria-label="uselatestrev2">If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
 This error prevents you overwriting data changed by other clients. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
-<aside class="warning">
-CouchDB doesn’t completely delete the specified document. Instead, it leaves a tombstone with very basic information about the document. The tombstone is required so that the delete action can be replicated. Since the tombstones stay in the database indefinitely, creating new documents and deleting them increases the disk space usage of a database and the query time for the primary index, which is used to look up documents by their ID.
+<aside class="warning" role="complementary" aria-label="notcompletedelete">CouchDB doesn’t completely delete the specified document. Instead, it leaves a tombstone with very basic information about the document. The tombstone is required so that the delete action can be replicated. Since the tombstones stay in the database indefinitely, creating new documents and deleting them increases the disk space usage of a database and the query time for the primary index, which is used to look up documents by their ID.
 </aside>
 
 <div></div>

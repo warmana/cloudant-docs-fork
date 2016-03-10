@@ -219,9 +219,7 @@ be provided explicitly.
 <!-- You can discover the reason for this type specification in the following
 implementation notes. -->
 
-<aside class="warning">
-The sorting order is undefined when fields contain different data types. This is an important difference between text and view indexes. Sorting behavior for fields with different data types might change in future versions.
-</aside>
+<aside class="warning" role="complementary" aria-label="sortorderundefined">The sorting order is undefined when fields contain different data types. This is an important difference between text and view indexes. Sorting behavior for fields with different data types might change in future versions.</aside>
 
 The `bookmark` field is used for paging through result sets. Every query returns an opaque
 string under the `bookmark` key that can then be passed back in a query to get the next page of
@@ -356,7 +354,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 The most obvious difference in the results you get when using FTI is the inclusion of a large `bookmark` field. The reason is that text indexes are different to view-based indexes. For more flexibility when working with the results obtained from an FTI query, you can supply the `bookmark` value as part of the request body. Using the `bookmark` enables you to specify which page of results you require.
 
-<aside class="warning">The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.</aside>
+<aside class="notice" role="complementary" aria-label="bookmarklong">The actual `bookmark` value is very long, so the examples here are truncated for reasons of clarity.</aside>
 
 <div></div>
 
@@ -452,7 +450,7 @@ curl -X POST -H "Content-Type: application/json" \
 
 The `$text` operator is based on a Lucene search with a standard analyzer. This means the operator is not case sensitive, and matches on any words.
 
-<aside class="warning">The `$text` operator does not support full Lucene syntax, such as wildcards, fuzzy matches, or proximity detection.
+<aside class="warning" role="complementary" aria-label="textnotfulllucene">The `$text` operator does not support full Lucene syntax, such as wildcards, fuzzy matches, or proximity detection.
 For more information on the available Lucene syntax, have a look at the [Cloudant Search documentation](search.html).</aside>
 
 The resulting query is `AND`'ed with the rest of the selector.

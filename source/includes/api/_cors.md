@@ -19,7 +19,7 @@ The effect is that scripts running on their website are able to access your Clou
 ### Browser support
 
 CORS is supported by all current versions of commonly used browsers.
-<aside class="notice">Versions of Microsoft Internet Explorer prior to version 10 offer partial support for CORS.
+<aside class="notice" role="complementary" aria-label="msiecorssupport">Versions of Microsoft Internet Explorer prior to version 10 offer partial support for CORS.
 Versions of Microsoft Internet Explorer prior to version 8 do not support CORS.</aside>
 
 ### Security

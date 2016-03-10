@@ -20,7 +20,7 @@ The two main uses of the revision number are to help:
 
 You must specify the previous `_rev` when [updating a document](document.html#update) or else your request will fail and return a [409 error](http.html#409).
 
-<aside class="warning">`_rev` should not be used to build a version control system.
+<aside class="warning" role="complementary" aria-label="revnotVCS">`_rev` should not be used to build a version control system.
 The reason is that it is an internal value used by the server.
 In addition, older revisions of a document are transient, and therefore removed regularly.</aside>
 

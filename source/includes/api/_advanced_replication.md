@@ -91,7 +91,7 @@ To choose which documents to transfer,
 include one or more filter functions in a design document on the source.
 You can then tell the replicator to use these filter functions.
 
-<aside>Filtering documents during replication is similar to the process of [filtering the `_changes` feed](design_documents.html#filter-functions).</aside>  
+<aside role="complementary" aria-label="filtersimilartochanges">Filtering documents during replication is similar to the process of [filtering the `_changes` feed](design_documents.html#filter-functions).</aside>  
 
 A filter function takes two arguments:
 
@@ -215,7 +215,7 @@ For admins, the `user_ctx` property is optional, and if it's missing it defaults
 
 Also, for admins the `user_ctx` property can be used to trigger a replication on behalf of another user. This is the user context that will be passed to local target database document validation functions.
 
-<aside class="warning">The `user_ctx` property only has an effect for local endpoints.</aside>
+<aside class="warning" role="complementary" aria-label="ctxonlylocal">The `user_ctx` property only has an effect for local endpoints.</aside>
 
 As stated before, for admins the `user_ctx` property is optional, while for regular (non admin) users it's mandatory. When the roles property of `user_ctx` is missing, it defaults to the empty list *[ ]*.
 

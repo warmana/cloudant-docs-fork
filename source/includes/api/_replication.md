@@ -12,13 +12,13 @@ Replication takes place in one direction only.
 To keep two databases synchronized with each other, you must replicate in both directions.
 This means that you must replicate from `database1` to `database2`, and separately from `database2` to `database1`.
 
-<aside class="warning">Replications can severely impact the performance of a Cloudant cluster. Performance testing is recommended to understand the impact on your environment under an increasing number of concurrent replications.</aside>
+<aside class="warning" role="complementary" aria-label="performanceimpact">Replications can severely impact the performance of a Cloudant cluster. Performance testing is recommended to understand the impact on your environment under an increasing number of concurrent replications.</aside>
 
-<aside class="warning">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
+<aside class="warning" role="complementary" aria-label="continuousequalslotsofcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
-<aside class="warning">The target database must exist. It is not automatically created if it does not exist. Add `"create_target":true` to the JSON document describing the replication if the target database does not exist prior to replication.</aside>
+<aside class="warning" role="complementary" aria-label="targetmustexist">The target database must exist. It is not automatically created if it does not exist. Add `"create_target":true` to the JSON document describing the replication if the target database does not exist prior to replication.</aside>
 
-<aside class="warning">Replicator databases must be maintained and looked after,
+<aside class="warning" role="complementary" aria-label="lookafterdatabases">Replicator databases must be maintained and looked after,
 just like any other valuable data store.
 For more information,
 see [replication database maintenance](replication.html#replication-database-maintenance).</aside>
@@ -30,7 +30,7 @@ Replications are created in one of two ways:
 
 ### Replication document format
 
-<aside class="warning">You must use the *full* URL when specifying the source and target databases in a replication document.</aside>
+<aside class="warning" role="complementary" aria-label="usefullurl">You must use the *full* URL when specifying the source and target databases in a replication document.</aside>
 
 The format of the document used to describe a replication is as follows:
 
@@ -78,7 +78,7 @@ Replication documents can have a user defined `_id`.
 
 The names of the source and target databases do not have to be the same.
 
-<aside class="warning">All design documents and `_local` documents added to the `/_replicator` database are ignored.</aside>
+<aside class="warning" role="complementary" aria-label="ignorethesedocs">All design documents and `_local` documents added to the `/_replicator` database are ignored.</aside>
 
 #### Creating a replication
 
@@ -370,7 +370,7 @@ Content-Type: application/json
 
 A replication triggered by `POST`ing to `/_replicate` can be canceled by `POST`ing the exact same JSON object but with the additional `cancel` property set to `true`.
 
-<aside class="warning">If a replication is canceled, the request which initiated the replication fails with error 500 (shutdown).</aside>
+<aside class="warning" role="complementary" aria-label="cancelerrorcode">If a replication is canceled, the request which initiated the replication fails with error 500 (shutdown).</aside>
 
 The replication ID can be obtained from the original replication request if it is a continuous replication.
 Alternatively, the replication ID can be obtained from `/_active_tasks`.
@@ -470,7 +470,7 @@ Changes are replicated between the two databases as long as a network connection
 When in operation, the replication process does not stop when it has processed all current updates.
 Instead, the replication process continues to wait for further updates to the source database, and applies them to the target.
 
-<aside class="warning">Continuous replication forces checks to be made continuously on the source database.
+<aside class="warning" role="complementary" aria-label="continuouschecks">Continuous replication forces checks to be made continuously on the source database.
 This results in an increasing number of database accesses, even if the source database content has not changed.
 Database accesses are counted as part of the work performed by a multi-tenant database configuration.</aside>
 
@@ -501,7 +501,7 @@ Database accesses are counted as part of the work performed by a multi-tenant da
 
 Cancel continuous replication by including the `cancel` field in the JSON request object, and setting the value to `true`.
 
-<aside class="warning">For the cancelation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
+<aside class="warning" role="complementary" aria-label="identicalrequest">For the cancelation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
 
 Requesting cancellation of a replication that does not exist results in a 404 error.
 

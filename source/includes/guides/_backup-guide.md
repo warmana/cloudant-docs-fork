@@ -1,6 +1,6 @@
 ## Back up your data
 
-<aside class="warning">This guide refers to a <b>Beta</b> daily incremental backup capability,
+<aside class="warning" role="complementary" aria-label="betaonly0">This guide refers to a <b>Beta</b> daily incremental backup capability,
 available only on request to Enterprise customers.
 This capability:
 <ul>
@@ -37,7 +37,7 @@ tested backup enables you to answer the following question with confidence:
 With Cloudant,
 Enterprise customers can have daily incremental backups.
 
-<aside class="warning">Daily incremental backup for Enterprise customers is currently a <b>Beta</b> capability.
+<aside class="warning" role="complementary" aria-label="betaonly">Daily incremental backup for Enterprise customers is currently a <b>Beta</b> capability.
 It is <b>not</b> enabled by default.</aside>
 
 Daily incremental backups or 'deltas' enable document comparison,
@@ -66,9 +66,9 @@ or to request that data backup is enabled,
 contact the Cloudant support team:
 [support@cloudant.com](mailto:support@cloudant.com).
 
-<aside class="warning">The Cloudant backup facility is available only to Enterprise customers.</aside>
+<aside class="warning" role="complementary" aria-label="enterpriseonly2">The Cloudant backup facility is available only to Enterprise customers.</aside>
 
-<aside class="warning">By default,
+<aside class="warning" role="complementary" aria-label="designdocsnotbackedup">By default,
 `_design` documents are not backed up,
 so that indexes are _not_ built on the incremental backup databases.
 If you require backups of the `_design` documents,
@@ -129,7 +129,7 @@ and also see changes made to that document.
 You can also restore the document to the version that was current on a particular date,
 if it is available within the granularity of the delta.
 
-<aside class="warning">Documents must be static before restoring from backup.
+<aside class="warning" role="complementary" aria-label="mustbestatic">Documents must be static before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
 
@@ -184,7 +184,7 @@ If you decide that you would like to restore a specific backup version of that d
 simply select the date of the backup to restore,
 then click the 'Restore' button.
 
-<aside class="warning">Documents must be in a stable state before restoring from backup.
+<aside class="warning" role="complementary" aria-label="mustbestable1">Documents must be in a stable state before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
 
@@ -394,7 +394,7 @@ The `$FREQUENCY` is one of the following four values:
 `"monthly"`,
 or `"yearly"`.
 
-<aside class="warning">Documents must be in a stable state before restoring from backup.
+<aside class="warning" role="complementary" aria-label="mustbestable2">Documents must be in a stable state before restoring from backup.
 In other words,
 the document should not be constantly receiving changes and updates.</aside>
 
@@ -494,7 +494,7 @@ Now that you have the checkpoint ID and `recorded_seq`, you can start the new in
 
 ### Known limitations
 
-<aside class="warning">Daily incremental backup for Enterprise customers is currently a Beta capability.
+<aside class="warning" role="complementary" aria-label="betaonly">Daily incremental backup for Enterprise customers is currently a Beta capability.
 It is not enabled by default.</aside>
 
 <ul>

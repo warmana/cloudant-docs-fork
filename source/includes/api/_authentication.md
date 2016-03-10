@@ -8,7 +8,7 @@ with Cloudant: Basic authentication and Cookie authentication.
 Basic authentication is similar to showing an ID at a door for checking every time you want to enter.
 Cookie authentication is similar to having a key to the door so that you can let yourself in whenever you want. The key is a cookie named `AuthSession`.
 
-<aside class="notice">When creating or using performance critical Cloudant applications,
+<aside class="notice" role="complementary" aria-label="cookiesaregood">When creating or using performance critical Cloudant applications,
 Cookie authentication has benefits compared with Basic authentication.
 Therefore,
 you should prefer Cookie authentication where possible.</aside>

@@ -94,7 +94,7 @@ The list consists of key and value pairs,
 where the key helps you identify the specific document and the value provides just the precise detail you want.
 The list also includes metadata such as the number of key:value pairs returned.
 
-<aside class="notice">The document `_id` is automatically included in each of the key:value pair result records.
+<aside class="notice" role="complementary" aria-label="autoincludeid">The document `_id` is automatically included in each of the key:value pair result records.
 This is to make it easier for the client to work with the results.</aside>
 
 ### Map function examples
@@ -236,12 +236,11 @@ If the `dbcopy` field of a view is set, the view contents will be written to a d
 </tbody>
 </table>
 
-<aside class="warning">
-Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
+<aside class="warning" role="complementary" aria-label="dbcopyperformance">Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
 
- 1. It creates a new database, so it can use a lot of disk space.
- 2. Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
- 3. It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
+1	It creates a new database, so it can use a lot of disk space.
+2	Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
+3	It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
 
 </aside>
 
@@ -375,7 +374,7 @@ Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | |
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | |
 
-<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+<aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 ### Indexes
 
@@ -398,7 +397,7 @@ a 'fingerprint' of the view definition is created whenever the design document i
 If the fingerprint changes,
 then the view indexes are completely rebuilt.
 
-<aside class="notice">View index rebuilds occur whenever a change occurs to any one view from all the views defined in the design document.
+<aside class="notice" role="complementary" aria-label="rebuildonchange">View index rebuilds occur whenever a change occurs to any one view from all the views defined in the design document.
 For example,
 if you have a design document with three views,
 and you update the design document,

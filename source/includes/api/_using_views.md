@@ -115,7 +115,7 @@ a 'fingerprint' of the view definition is created whenever the design document i
 If the fingerprint changes,
 then the view indexes are completely rebuilt.
 
-<aside class="notice">View index rebuilds occur whenever a change occurs to any one view from all the views defined in the design document.
+<aside class="notice" role="complementary" aria-label="rebuildsafterchange">View index rebuilds occur whenever a change occurs to any one view from all the views defined in the design document.
 For example,
 if you have a design document with three views,
 and you update the design document,

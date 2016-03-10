@@ -37,7 +37,7 @@ function(doc){
 }
 ```
 
-<aside class="warning">Attempting to index using a data field that does not exist will fail.
+<aside class="warning" role="complementary" aria-label="fieldmustexist">Attempting to index using a data field that does not exist will fail.
 To avoid this problem, use an appropriate [guard clause](#index-guard-clauses).</aside>
 
 The function contained in the index field is a Javascript function that is called for each document in the database. It takes the document as a parameter, extracts some data from it and then calls the `index` function to index that data.
@@ -211,7 +211,7 @@ These analyzers will omit very common words in the specific language, and many a
 * thai
 * turkish
 
-<aside class="information">Language-specific analyzers are optimized for the specified language.
+<aside class="information" role="complementary" aria-label="optimization">Language-specific analyzers are optimized for the specified language.
 You cannot combine a generic analyzer with a language-specific analyzer.
 However,
 you could use the [`perfield` analyzer](#per-field-analyzers) to select different analyzers for different fields within the documents.</aside>
@@ -268,7 +268,7 @@ The `perfield` analyzer configures multiple analyzers for different fields.
 
 Stop words are words that do not get indexed. You define them within a design document by turning the analyzer string into an object.
 
-<aside>The `keyword`, `simple` and `whitespace` analyzers do not support stop words.</aside>
+<aside class="warning" role="complementary" aria-label="stopwords">The `keyword`, `simple` and `whitespace` analyzers do not support stop words.</aside>
 
 <div></div>
 #### Testing analyzer tokenization
@@ -348,14 +348,14 @@ db.search($DESIGN_ID, $SEARCH_INDEX, {
 Once you've got an index written, you can query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_ID/_search/$INDEX_NAME`. Specify your search query in the `query` query parameter.
 
 #### Query Parameters
-<aside class="warning">You must enable faceting before you can use the following parameters:
+
+<aside class="warning" role="complementary" aria-label="enablebeforeuse">You must enable faceting before you can use the following parameters:
 <ul>
 <li> `counts`
 <li> `ridges`
 <li> `drilldown`
 </ul>
 </aside>
-
 
 <!-- The numeric `limit` was suggested by Glynn, in FB 40734. -->
 
@@ -380,9 +380,9 @@ Argument | Description | Optional | Type | Supported Values
 `highlight_size` | Number of characters in each fragment for highlights. | yes, defaults to 100 characters | Numeric |
 `include_fields` | A JSON array of field names to include in search results. Any fields included must have been indexed with the `store:true` option. | yes, the default is all fields | Array of strings |
 
-<aside class="warning">Do not combine the `bookmark` and `stale` options. The reason is that both these options constrain the choice of shard replicas to use for determining the response. When used together, the options can result in problems when attempting to contact slow or unavailable replicas.</aside>
+<aside class="warning" role="complementary" aria-label="donotcombine">Do not combine the `bookmark` and `stale` options. The reason is that both these options constrain the choice of shard replicas to use for determining the response. When used together, the options can result in problems when attempting to contact slow or unavailable replicas.</aside>
 
-<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+<aside class="warning" role="complementary" aria-label="performanceimplications">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 #### POSTing search queries
 
@@ -453,7 +453,7 @@ Result sets from searches are limited to 200 rows, and return 25 rows by default
 If the search query does *not* specify the `"group_field"` argument,
 the response contains a bookmark. If the bookmark is passed back as a URL parameter you'll skip through the rows you've already seen and get the next set of results.
 
-<aside class="warning">The response never includes a bookmark if the `"group_field"` argument is specified in the search query.</aside>
+<aside class="warning" role="complementary" aria-label="omitsbookmark">The response never includes a bookmark if the `"group_field"` argument is specified in the search query.</aside>
 
 The following characters require escaping if you want to search on them: `+ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /`
 
@@ -466,7 +466,7 @@ If using the 'sort by distance' feature as described in [Geographical Searches](
 then the first element is the distance from a point,
 measured using either kilometers or miles.
 
-<aside class="warning">The second element in the order array can be ignored.
+<aside class="warning" role="complementary" aria-label="ignoresecond">The second element in the order array can be ignored.
 It is used for troubleshooting purposes only.</aside>
 
 ### Faceting
@@ -520,7 +520,7 @@ if (typeof doc.town == "string" && typeof doc.name == "string") {
 ```
 
 
-<aside class="warning">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
+<aside class="warning" role="complementary" aria-label="enablefacets">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
 
 If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement.
 
@@ -560,7 +560,7 @@ If each document does not contain all the fields for facets, it is recommended t
 The count facet syntax takes a list of fields,
 and returns the number of query results for each unique value of each named field.
 
-<aside class="warning">The count operation works only if the indexed values are strings.
+<aside class="warning" role="complementary" aria-label="stringsonly">The count operation works only if the indexed values are strings.
 The indexed values cannot be mixed types.
 For example,
 if 100 strings are indexed,
@@ -608,7 +608,7 @@ The range facet syntax reuses the standard Lucene syntax for ranges to return co
 Inclusive range queries are denoted by square brackets (`[`, `]`).
 Exclusive range queries are denoted by curly brackets (`{`, `}`).
 
-<aside class="warning">The range operation works only if the indexed values are numbers.
+<aside class="warning" role="complementary" aria-label="numbersonly">The range operation works only if the indexed values are numbers.
 The indexed values cannot be mixed types.
 For example,
 if 100 strings are indexed,
@@ -750,4 +750,4 @@ Sometimes it is useful to get the context in which a search term was mentioned s
 
 In the response, a `highlights` field will be added with one subfield per field name. For each field, you will receive an array of fragments with the search term highlighted.
 
-<aside>For highlighting to work, you need to have the field stored in the index by using the `store: true` option.</aside>
+<aside class="notice" role="complementary" aria-label="storefieldinindex">For highlighting to work, you need to have the field stored in the index by using the `store: true` option.</aside>

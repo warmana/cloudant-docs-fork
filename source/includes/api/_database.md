@@ -46,7 +46,7 @@ poor choice for configuration parameters can adversely affect database performan
 For more information about modifying database configuration in a dedicated database environment,
 please contact Cloudant support.
 
-<aside class="warning">It is not possible to modify the configuration used for databases on multi-tenant clusters.</aside>
+<aside class="warning" role="complementary" aria-label="noconfigmod">It is not possible to modify the configuration used for databases on multi-tenant clusters.</aside>
 
 #### Response
 
@@ -234,9 +234,9 @@ Argument | Description | Optional | Type | Default
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
-<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+<aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
-<aside class="warning">When using the `keys` argument,
+<aside class="warning" role="complementary" aria-label="usepostnotget">When using the `keys` argument,
 it might be easier to use `POST` rather than `GET` if you need a large number of strings to list the desired keys.</aside>
 
 <div></div>
@@ -327,7 +327,7 @@ Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | S
 `timeout` | Number of milliseconds to wait for data before terminating the response. If heartbeat supersedes timeout if both are supplied. | any positive number | |
 `doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. | A JSON array of document IDs | |
 
-<aside class="warning">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+<aside class="warning" role="complementary" aria-label="includedocsperformance2">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
 All arguments are optional.
 
@@ -492,7 +492,7 @@ account.db.destroy($DATABASE, function (err, body, headers) {
 
 To delete a databases and its contents, make a DELETE request to `https://$USERNAME.cloudant.com/$DATABASE`.
 
-<aside class="warning">There is no additional check to ensure that you really intended to delete the database ("Are you sure?").</aside>
+<aside class="warning" role="complementary" aria-label="deletecheck">There is no additional check to ensure that you really intended to delete the database ("Are you sure?").</aside>
 
 <div></div>
 

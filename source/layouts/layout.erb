@@ -287,7 +287,10 @@ under the License.
       <div class="content" role="main">
         <%
         def replace_blockquote(str)
-          str.gsub(/<blockquote>/, '<div class="blockquote" role="complementary" aria-label="' + SecureRandom.base64 + '">').gsub(/<\/blockquote>/, '</div>')
+          while str.include? "<blockquote>"
+            str.sub!(/<blockquote>/, '<div class="blockquote" role="complementary" aria-label="' + SecureRandom.base64 + '">')
+            str.sub!(/<\/blockquote>/, '</div>')
+          end
         end
         %>
         <% if current_page.data.includes %>
