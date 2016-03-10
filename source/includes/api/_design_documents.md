@@ -25,7 +25,7 @@ while design documents have an `_id` indicated by `$DESIGN_ID`.
 
 <aside class="warning" role="complementary" aria-label="designupdateaffectsindexes">If a design document is updated,
 Cloudant deletes the indexes from the previous version,
-and recreate the index from scratch.
+and recreates the index from scratch.
 If you need to make changes to a design document for a larger database,
 have a look at the [Design Document Management Guide](design_document_management.html#managing-changes-to-a-design-document).</aside>
 
