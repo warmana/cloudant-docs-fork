@@ -59,7 +59,8 @@ Method | Path | Description | Headers | Form Parameters
 `GET` | `/_session` | Returns cookie based login user information | AuthSession cookie returned by POST request | —
 `DELETE` | `/_session` | Logout cookie based user | AuthSession cookie returned by POST request | —
 
-<h3></h3>
+<div></div>
+
 #### Requesting a cookie
 
 > Request a cookie
@@ -148,8 +149,8 @@ x-couch-request-id: a638431d
 
 If your credentials are valid, the response contains a cookie which remains active for twenty-four hours.
 
+<div></div>
 
-<h3></h3>
 #### Getting cookie information
 
 > Example request for cookie information:

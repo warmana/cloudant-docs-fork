@@ -494,7 +494,7 @@ Now that you have the checkpoint ID and `recorded_seq`, you can start the new in
 
 ### Known limitations
 
-<aside class="warning" role="complementary" aria-label="betaonly">Daily incremental backup for Enterprise customers is currently a Beta capability.
+<aside class="warning" role="complementary" aria-label="betaonly2">Daily incremental backup for Enterprise customers is currently a Beta capability.
 It is not enabled by default.</aside>
 
 <ul>

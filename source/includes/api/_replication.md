@@ -107,7 +107,7 @@ Content-Type: application/json
 
 To start a replication, [add a replication document](#replication-document-format) to the `_replicator` database.
 
-<h3></h3>
+<div></div>
 
 #### Monitoring a replication
 
@@ -199,7 +199,7 @@ contact Cloudant support for assistance.
 
 For more details about the information provided by `_active_tasks`, see [Active tasks](active_tasks.html).
 
-<h3></h3>
+<div></div>
 
 #### Delete
 

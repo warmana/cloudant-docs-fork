@@ -100,7 +100,7 @@ A filter function takes two arguments:
 
 A filter function returns a true or false value. If the result is true, the document is replicated.
 
-<h3></h3>
+<div></div>
 
 > Simple example of storing a filter function in a design document:
 
@@ -115,7 +115,7 @@ A filter function returns a true or false value. If the result is true, the docu
 
 Filters are stored under the top-level `filters` key of the design document.
 
-<h3></h3>
+<div></div>
 
 > Example JSON for invoking a filtered replication:
 
@@ -133,7 +133,7 @@ Filters are invoked by using a JSON statement that identifies:
 - The target database.
 - The name of the filter stored under the `filters` key of the design document.
 
-<h3></h3>
+<div></div>
 
 > Example JSON for invoking a filtered replication with supplied parameters:
 

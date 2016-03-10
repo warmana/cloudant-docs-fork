@@ -1,6 +1,6 @@
 ## Third-party client libraries
 
-<aside class="warning" role="complementary" aria-label="notmaintained">Third-party client libraries are not maintained or supported by Cloudant.</aside>
+<aside class="warning" role="complementary" aria-label="notmaintained2">Third-party client libraries are not maintained or supported by Cloudant.</aside>
 
 ### Mobile
 

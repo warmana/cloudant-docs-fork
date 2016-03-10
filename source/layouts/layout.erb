@@ -160,15 +160,14 @@ under the License.
   <body class="<%= page_classes %>">
 
     <div class="main-header" role="complementary" aria-label="main-header">
-      <img src="images/ibm_cloudant.png" alt="Cloudant logo"/>
+      <a href="#maincontent"><img src="images/ibm_cloudant.png" alt="Cloudant logo"/></a>
       <div class="header-title" role="complementary" aria-label="header-title">Documentation</div>
     </div>
 
     <div class="tocify-wrapper" role="complementary" aria-label="tocify-wrapper">
       <div id="searchbox" role="complementary" aria-label="searchbox">
         <form>
-          <label for="searchinput">Search:</label>
-          <input type="text" name="search" placeholder="Search" id="searchinput">
+          <label for="searchinput"><input type="text" name="search" placeholder="Search" id="searchinput"></label>
           <button type="submit">
             <img src="images/search_icon.png" alt="submit"/>
           </button>
@@ -280,17 +279,18 @@ under the License.
     </div>
     <div class="page-wrapper" role="complementary" aria-label="page-wrapper">
       <div id="expand-collapse-code" role="complementary" aria-label="expand-collapse-code">
-        <button class="showHideButton" id="hideCodeButton" title="hide code column"><label for="hideCodeButton">hideCodeButton</label></button>
-        <button class="showHideButton" id="showCodeButton" title="show code column"><label for="showCodeButton">showCodeButton</label></button>
+        <button class="showHideButton" id="hideCodeButton" title="hide code column"><label for="hideCodeButton">&nbsp;</label></button>
+        <button class="showHideButton" id="showCodeButton" title="show code column"><label for="showCodeButton">&nbsp;</label></button>
       </div>
       <div class="dark-box" role="complementary" aria-label="dark-box-1"></div>
-      <div class="content" role="main">
+      <div class="content" role="main" id="maincontent">
         <%
         def replace_blockquote(str)
           while str.include? "<blockquote>"
             str.sub!(/<blockquote>/, '<div class="blockquote" role="complementary" aria-label="' + SecureRandom.base64 + '">')
             str.sub!(/<\/blockquote>/, '</div>')
           end
+          return str
         end
         %>
         <% if current_page.data.includes %>
