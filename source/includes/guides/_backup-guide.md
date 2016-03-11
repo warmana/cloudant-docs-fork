@@ -432,9 +432,13 @@ This checkpoint is another database with an internal name.
 The replication process for a database starts by finding the value of the `since_seq` parameter.
 The parameter indicates where the last replication finished.
 
-The following steps outline how incremental backups are created.
+The following steps outline how incremental backups are created:
 
-#### 1. Find the ID of the checkpoint document for the last replication.
+1.	[Find the ID of the checkpoint document for the last replication.](backup-guide.html#find-the-id-of-the-checkpoint-document-for-the-last-replication)
+2.	[Get the `recorded_seq` value.](backup-guide.html#get-the-recorded_seq-value)
+3.	[Run an incremental backup.](backup-guide.html#run-an-incremental-backup)
+
+#### Find the ID of the checkpoint document for the last replication
 
 > Get checkpoint ID of the last incremental backup for a database called `original`:
 
@@ -450,7 +454,7 @@ The checkpoint ID value is stored in the `_replication_id` field in the replicat
 
 <div></div>
 
-#### 2. Get `recorded_seq` value
+#### Get the `recorded_seq` value
 
 > Get `recorded_seq` from database called `original`
 
@@ -467,7 +471,7 @@ you use it to get the `recorded_seq` value from the first element of the history
 
 <div> </div>
 
-#### 3. Run an incremental backup
+#### Run an incremental backup
 
 > Start new incremental backup to an incremental database called `newbackup`:
 

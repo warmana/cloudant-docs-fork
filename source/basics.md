@@ -19,12 +19,6 @@ includes:
 
 ---
 
-<style>
-.content h2 {
-  padding-top: 4em !important;
-  margin-top: 0 !important;
-}
-</style>
 
 
 

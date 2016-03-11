@@ -4,7 +4,7 @@ The Cloudant API reference is intended to be a comprehensive and living catalog 
 Contributions are welcome through [Cloudant Labs on GitHub](https://github.com/cloudant-labs/slate).
 The API reference content is built with [Slate](https://github.com/tripit/slate).
 
-*For the cURL samples*
+#### For the cURL samples
 
 There are three ways you can supply the username and password data for a request.
 

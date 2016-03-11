@@ -67,7 +67,7 @@ Unsupported:<ul><li><a href="http://ektorp.org/">ektorp</a></li>
 <li>
 <a href="https://github.com/danwrong/restler">restler</a> delivers the best performance but is really barebones.</li>
 <li>
-<a href="http://cloudhead.io/cradle">cradle</a> is a high-level client is also available if you absolutely need ease of use at the cost of lower performance.</li>
+<a href="http://cloudhead.io/cradle">cradle</a> is a high-level client is also available if you absolutely need ease of use at the cost of reduced performance.</li>
 <li><a href="https://github.com/ddemichele/cane_passport">cane_passport</a> - Cloudant Angular Node Express with Bootstrap.</li>
 <li><a href="https://github.com/cloudant-labs/express-cloudant">express-cloudant</a> - a template for Node.js Express framework also using PouchDB and Grunt.</li>
 <li><a href="https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=nodejscloudantbp&fromCatalog=true">Node.js Cloudant DB Web Starter</a> - boilerplate for Bluemix.</li>

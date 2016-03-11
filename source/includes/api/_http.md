@@ -116,7 +116,8 @@ The cache control HTTP response header provides a suggestion for client caching 
 The length (in bytes) of the returned content.
 
 <div id="content-type-response"></div>
-##### Content-Type
+
+##### Content-Type field
 
 Specifies the MIME type of the returned data. For most request, the returned MIME type is `text/plain`. All text is encoded in Unicode (UTF-8), and this is explicitly stated in the returned `Content-type`, as `text/plain;charset=utf-8`.
 
