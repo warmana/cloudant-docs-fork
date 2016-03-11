@@ -14,7 +14,7 @@ documents can generally contain any other content that can be described using JS
 
 <div></div>
 
-> Example of JSON document attempting to create a top-level field with an underscore prefix:
+> Example of JSON document attempting to create a topmost field with an underscore prefix:
 
 ```json
 {
@@ -22,7 +22,7 @@ documents can generally contain any other content that can be described using JS
 }
 ```
 
-> Error message returned when attempting to create a top-level field with an underscore prefix:
+> Error message returned when attempting to create a topmost field with an underscore prefix:
 
 ```json
 {
@@ -50,7 +50,7 @@ but the field `_example` would result in a `doc_validation` error message.
 }
 ```
 
-> Example success message returned when creating a lower-level field with an underscore prefix:
+> Example success message returned when creating a nested field with an underscore prefix:
 
 ```json
 {

@@ -2,7 +2,7 @@
 
 <aside class="warning" role="complementary" aria-label="notmaintained2">Third-party client libraries are not maintained or supported by Cloudant.</aside>
 
-### Mobile
+### Third-party Mobile libraries
 
 Working with a Cloudant database: <a href="http://www.tricedesigns.com/2014/11/17/ibm-worklight-powered-native-objective-c-ios-apps/">IBM Worklight Powered Native Objective-C iOS Apps</a> with a Cloudant Adapter.
 

@@ -38,7 +38,7 @@ In particular, once replication starts, three new fields are added automatically
 Field | Detail
 ------|-------
 `_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `/_active_tasks/`.
-`_replication_state` | The current state of the replication. The possible states are:<dl><dt>`triggered`</dt><dd>The replication has started and is in progress.</dd><dt>`completed`</dt><dd>The replication completed successfully.</dd><dt>`error`</dt><dd>An error occurred during replication.</dd><dl>
+`_replication_state` | The current state of the replication. The possible states are:<dl><dt>`triggered`</dt><dd>The replication has started and is in progress.</dd><dt>`completed`</dt><dd>The replication completed successfully.</dd><dt>`error`</dt><dd>An error occurred during replication.</dd></dl>
 `_replication_state_time` | An <a href="https://www.ietf.org/rfc/rfc3339.txt" target="_blank">RFC 3339</a> compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
 
 > Example replication document once replication has completed:
@@ -113,7 +113,7 @@ A filter function returns a true or false value. If the result is true, the docu
 }
 ```
 
-Filters are stored under the top-level `filters` key of the design document.
+Filters are stored under the topmost `filters` key of the design document.
 
 <div></div>
 
@@ -236,7 +236,7 @@ As stated before, for admins the `user_ctx` property is optional, while for regu
 These options can be set for a replication by including them in the replication document.
 
 -   `worker_processes` - The number of processes the replicator uses (per replication) to transfer documents from the source to the target database. Higher values can imply better throughput (due to more parallelism of network and disk IO) at the expense of more memory and eventually CPU. Default value is 4.
--   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of ''\_changes'' feed rows). Larger batch sizes can offer better performance, while lower values imply that checkpointing is done more frequently. Default value is 500.
+-   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of ''\_changes'' feed rows). Larger values for the batch size might result in better performance. Smaller values mean that checkpointing is done more frequently. Default value is 500.
 -   `http_connections` - The maximum number of HTTP connections per replication. For push replications, the effective number of HTTP connections used is min(worker\_processes + 1, http\_connections). For pull replications, the effective number of connections used corresponds to this parameter's value. Default value is 20.
 -   `connection_timeout` - The maximum period of inactivity for a connection in milliseconds. If a connection is idle for this period of time, its current request will be retried. Default value is 30000 milliseconds (30 seconds).
 -   `retries_per_request` - The maximum number of retries per request. Before a retry, the replicator will wait for a short period of time before repeating the request. This period of time doubles between each consecutive retry attempt. This period of time never goes beyond 5 minutes and its minimum value (before the first retry is attempted) is 0.25 seconds. The default value of this parameter is 10 attempts.

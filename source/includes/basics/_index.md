@@ -69,8 +69,8 @@ Cloudant stores documents using JSON (JavaScript Object Notion) encoding, so any
 
 More information about JSON can be found in the [JSON Guide](json.html).
 
-<div id="distributed"></div>
 ## Distributed
+
 Cloudant's API enables you to interact with a collaboration of numerous machines, called a cluster. The machines in a cluster must be in the same datacenter, but can be within different 'pods' in that datacenter. Using different pods helps improve the High Availability characteristics of Cloudant.
 
 An advantage of clustering is that when you need more computing capacity, you just add more machines. This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.

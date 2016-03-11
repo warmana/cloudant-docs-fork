@@ -20,23 +20,3 @@ includes:
 ---
 
 
-<style>
-
-.content > form, .content > h1, .content > h2, .content > h3, .content > h4, .content > h5, .content > h6, .content > p, .content > table, .content > ul, .content > ol, .content > aside, .content > dl {
-  margin-right: 0;
-  width: 50%;
-  clear: left;
-}
-
-.content > form, .content > p, .content > table, .content > ul, .content > ol, .content > aside, .content > dl {
-  float: left;
-}
-
-.content pre, .content blockquote {
-  margin: 0 0 0 50%;
-  float: none;
-  clear: none;
-}
-
-</style>
-

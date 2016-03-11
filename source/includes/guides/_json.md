@@ -58,7 +58,7 @@ A `true` or `false` value.
 ["one", 2, "three", [], true, {"foo": "bar"}]
 ```
 
-A list of values enclosed in square brackets. The values enclosed can be any valid JSON.
+A list of values enclosed in brackets. The values enclosed can be any valid JSON.
 
 
 ### Objects

@@ -605,7 +605,7 @@ Using a drilldown parameter is similar to using `key:value` in the `q` parameter
 ```
 
 The range facet syntax reuses the standard Lucene syntax for ranges to return counts of results which fit into each specified category.
-Inclusive range queries are denoted by square brackets (`[`, `]`).
+Inclusive range queries are denoted by brackets (`[`, `]`).
 Exclusive range queries are denoted by curly brackets (`{`, `}`).
 
 <aside class="warning" role="complementary" aria-label="numbersonly">The range operation works only if the indexed values are numbers.

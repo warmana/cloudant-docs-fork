@@ -93,7 +93,6 @@ for filename in [
 'cloudant_query',
 'cors',
 'couchapps',
-'cqsearch',
 'creating_views',
 'database',
 'design_document_management',

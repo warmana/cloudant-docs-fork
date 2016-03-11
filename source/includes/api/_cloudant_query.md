@@ -28,7 +28,7 @@ You can create an index with one of two types:
 
 To create a JSON index in the database $DB, make a `POST` request to `/$DB/_index` with a JSON object describing the index in the request body. The `type` field of the JSON object has to be set to `"json"`.
 
-##### Request Body
+##### Request Body format
 
 -   **index**:
     -   **fields**: A JSON array of field names following the [sort syntax](#sort-syntax). Nested fields are also allowed, e.g. `"person.name"`.
@@ -251,7 +251,7 @@ Method | Path | Description
 
 When you make a `GET` request to `/db/_index`, you get a list of all indexes used by Cloudant Query in the database, including the primary index. In addition to the information available through this API, indexes are also stored in design documents &lt;index-functions&gt;. Design documents are regular documents that have an ID starting with `_design/`. Design documents can be retrieved and modified in the same way as any other document, although this is not necessary when using Cloudant Query.
 
-#### Response body
+#### Response body format
 
 -   **indexes**: Array of indexes
     -   **ddoc**: ID of the design document the index belongs to. This ID can be used to retrieve the design document containing the index,
@@ -475,7 +475,7 @@ There are two core types of operators in the selector syntax:
 - Combination operators
 - Condition operators
 
-In general, combination operators are applied at the top level of selection.
+In general, combination operators are applied at the topmost level of selection.
 They are used to combine conditions, or to create combinations of conditions, into one selector.
 
 Every explicit operator has the form:

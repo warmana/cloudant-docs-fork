@@ -12,7 +12,7 @@ Cloudant is a distributed JSON data store with an HTTP API which is run as a ser
 
 ![replication](images/replication_guide_1.png)
 
-Replication is complete when the latest version of each document in the source has made it to the destination database; this includes new documents, updates to existing documents and deletions. Only the latest version of a document will remain after replication; older versions are left behind.
+Replication is complete when the latest version of each document in the source has made it to the destination database; this includes new documents, updates to existing documents and deletions. Only the latest version of a document remains after replication; older versions are omitted.
 
 The source database remains unaltered by replication (apart from checkpoint data being written to it, to allow partial replications to resume from the last known position) and any pre-existing data in the destination database remains.
 
@@ -48,7 +48,7 @@ The source and target database names do not need to match.
 
 ### Do I run replication on the source or the destination?
 
-Replication can be initiated at either the source or the destination end. This means that you can decide whether account A is pushing data to account B, or account B is pulling data from account A. In some cases, it might not be possible to run replication in either configuration, for example when one account is behind a firewall. Replication happens over HTTP (or HTTPS) and so no non-standard ports need be opened. The decision as to which device initiates replication is left to you.
+Replication can be initiated at either the source or the destination end. This means that you can decide whether account A is pushing data to account B, or account B is pulling data from account A. In some cases, it might not be possible to run replication in either configuration, for example when one account is behind a firewall. Replication happens over HTTP (or HTTPS) and so no non-standard ports need be opened. The decision as to which device initiates replication is yours.
 
 ### How to initiate replication via the Cloudant API?
 
@@ -87,7 +87,7 @@ Every Cloudant account has a special database called `_replicator`, into which r
 
 ### Checkpoints
 
-Internally, the replication process writes its state in "checkpoint" documents stored in both the source and destination databases. This allows a replication task to be resumed from where it left off without having to start from the beginning. This feature can be switched off by supplying `"use_checkpoints": false` when starting replication, but it is helpful to leave the feature on if your replication is to resume efficiently from its last known position.
+Internally, the replication process writes its state in "checkpoint" documents stored in both the source and destination databases. This allows a replication task to be resumed from where it stopped, without having to start from the beginning. This feature can be switched off by supplying `"use_checkpoints": false` when starting replication, but it is helpful to leave the feature on if your replication is to resume efficiently from its last known position.
 
 ### Permissions
 
@@ -404,7 +404,7 @@ In order for replication to proceed optimally when replicating from database "a"
 *	`_writer` rights on database "b".
 
 API keys are generated in the Cloudant Dashboard or [through the API](authorization.html#creating-api-keys).
-Each key can be given individual rights relating to a specific Cloudant database. Cloudant must be able to write its checkpoint documents at the "read" end of replication, otherwise no state is saved and replication cannot resume from where it left off. If the state is not saved, it can lead to performance problems when resuming replications of large data sets. The reason is that without checkpoints, the replication process restarts from the beginning each time it is resumed.
+Each key can be given individual rights relating to a specific Cloudant database. Cloudant must be able to write its checkpoint documents at the "read" end of replication, otherwise no state is saved and replication cannot resume from where it stopped. If the state is not saved, it can lead to performance problems when resuming replications of large data sets. The reason is that without checkpoints, the replication process restarts from the beginning each time it is resumed.
 
 #### Replication document is conflicted
 
