@@ -303,7 +303,7 @@ You can try out requests and obtain output results in the code column. We have p
 <div class="test-form-container">
 
   <label for="request-type">Type of request</label>
-  <select name="request-type" class="request-type">
+  <select id="request-type" name="request-type" class="request-type">
     <option selected="selected" value="search">Search</option>
     <option value="analyzers">Search analyzers</option>
     <option value="cq">Cloudant Query</option>
@@ -311,39 +311,39 @@ You can try out requests and obtain output results in the code column. We have p
   <br>
   <form action="#" class="search">
     <label for="predefined">Predefined queries</label>
-    <select name="predefined" class="predefined">
+    <select id="predefined" name="predefined" class="predefined">
       <option selected="selected" value="author-is-john">Books written by John</option>
       <option value="sorting">Sorting by year</option>
       <option value="ranges">Year ranges</option>
       <option value="counts">Count authors</option>
       <option value="drilldown">Drilldown</option>
     </select>
-    <label for="query">Search query (q)</label>
+    <label for="test-search-query">Search query (q)</label>
     <input size="100" type="text" name="query" class="query" id="test-search-query">
-    <label for="counts">Counts</label>
+    <label for="search-counts">Counts</label>
     <input size="100" type="text" name="counts" class="counts" id="search-counts">
-    <label for="drilldown">Drilldown</label>
+    <label for="search-drilldown">Drilldown</label>
     <input size="100" type="text" name="drilldown" class="drilldown" id="search-drilldown">
-    <label for="groupfield">Group field</label>
+    <label for="search-group-field">Group field</label>
     <input size="100" type="text" name="groupfield" class="groupField" id="search-group-field">
-    <label for="group-limit">Group limit</label>
+    <label for="search-group-limit">Group limit</label>
     <input size="100" type="text" name="group-limit" class="groupLimit" id="search-group-limit">
-    <label for="group-sort">Group sort</label>
+    <label for="search-group-sort">Group sort</label>
     <input size="100" type="text" name="group-sort" class="groupSort" id="search-group-sort">
-    <label for="limit">Limit</label>
+    <label for="search-limit">Limit</label>
     <input size="100" type="text" name="limit" class="limit" id="search-limit">
-    <label for="ranges">Ranges</label>
+    <label for="search-ranges">Ranges</label>
     <input size="100" type="text" name="ranges" class="ranges" id="search-ranges">
-    <label for="sort">Sort</label>
+    <label for="search-sort">Sort</label>
     <input size="100" type="text" name="sort" class="sort" id="search-sort">
     
     <input type="checkbox" name="include-docs" class="includeDocs" id="search-include-docs">
-    <label style="margin-left: 0px;display: inline" for="include-docs">Include docs</label>
+    <label style="margin-left: 0px;display: inline" for="search-include-docs">Include docs</label>
   </form>
   
   <form action="#" class="cq">
-    <label for="predefined">Predefined queries</label>
-    <select name="predefined" class="predefined">
+    <label for="predefined2">Predefined queries</label>
+    <select name="predefined2" id="predefined2" class="predefined">
       <option selected="selected" value="actor-is-zoe-saldana">Movies with Zoe Saldana</option>
       <option value="sorting">Query with sorting</option>
       <option value="pg2010">2010 Movies rated PG or PG-13</option>
@@ -358,6 +358,7 @@ You can try out requests and obtain output results in the code column. We have p
       <option value="schwarzenegger">Schwarzenegger movies</option>
       
     </select>
+    <label for="requestBody">RequestBody</label>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
     <p style="margin-left: 40px;">The sample database contains 9,000 movie documents in the following format:</p>
 
@@ -396,8 +397,8 @@ You can try out requests and obtain output results in the code column. We have p
   </form>
   
   <form action="#" class="analyzers">
-    <label for="predefined">Predefined queries</label>
-    <select name="predefined" class="predefined">
+    <label for="predefined3">Predefined queries</label>
+    <select id="predefined3" name="predefined3" class="predefined">
       <option selected="selected" value="email-address">Email address analyzer</option>
       <option value="english">English analyzer</option>
       <option value="german">German analyzer</option>
@@ -405,6 +406,7 @@ You can try out requests and obtain output results in the code column. We have p
       <option value="standard">Standard analyzer</option>
       <option value="whitespace">Whitespace analyzer</option>
     </select>
+    <label for="analyzersRequestBody">AnalyzersRequestBody</label>
     <textarea rows="10" class="query" cols="80" id="analyzersRequestBody"></textarea><br /><br />
   </form>
     
