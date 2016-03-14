@@ -45,7 +45,7 @@ you run daily 'incremental' backups,
 backing up _only_ what has changed in the database since the last backup.
 This replication becomes a daily backup.
 
-<aside class="warning">You can configure a backup to trigger at regular intervals.
+<aside class="warning" role="complementary" aria-label="triggerintervals">You can configure a backup to trigger at regular intervals.
 However,
 each interval must be 24 hours or more.
 In other words,
