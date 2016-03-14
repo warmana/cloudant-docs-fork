@@ -85,7 +85,7 @@ Code | Description
 201 |	Database created successfully
 202 |	The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
 403 |	Invalid database name.
-412 |	Database aleady exists.
+412 |	Database already exists.
 
 ### Read
 
