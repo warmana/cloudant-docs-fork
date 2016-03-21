@@ -334,7 +334,7 @@ curl https://$USERNAME.cloudant.com/$DATABASE/_revs_limit \
 
 Gets the number of past revisions of a document that Cloudant stores information on.
 
-<aside class="warning" role="complementary" aria-label="tombstones1">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
+<aside class="warning" role="complementary" aria-label="tombstones1">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant deletes the tombstones of the oldest revisions.</aside>
 
 ### PUT /$DB/_revs_limit
 
@@ -380,7 +380,7 @@ account.request({
 
 Sets the maximum number of past revisions that Cloudant stores information on.
 
-<aside class="warning" role="complementary" aria-label="tombstones2">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant will delete the tombstones of the oldest revisions.</aside>
+<aside class="warning" role="complementary" aria-label="tombstones2">Although the documents associated with past revisions are automatically removed, "tombstones" remain with the `_rev` value for that revision. If a document has more revisions than the value of `_revs_limit`, Cloudant deletes the tombstones of the oldest revisions.</aside>
 
 ### GET /_membership
 
