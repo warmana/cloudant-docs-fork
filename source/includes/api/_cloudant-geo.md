@@ -30,6 +30,42 @@ The basic steps for working with geospatial data in Cloudant Geo is as follows:
 2.  Index the geometry object using Cloudant Geo defined `st_index` function.
 3.  Search the indexed geometry object by using various geometries and geometric relationships.
 
+### Using Cloudant Geospatial through the Dashboard
+ 
+The Dashboard lets you perform several geospatial tasks:
+ 
+*	Quick and easy visualisation of data stored in spatial indexes.
+*	Spatial query construction.
+*	Visualisation of spatial query results.
+
+Before using the geospatial capability through the dashboard,
+you must have some spatially indexed data within a database.
+
+To access the geospatial area of the dashboard,
+perform the following steps:
+
+1.	Select the database containing spatially indexed data.
+2.	Select the Design Documents menu.
+3.	Select the Design Document that contains the definition of the spatial index. A 'Geospatial Indexes' sub menu appears for the spatial index.
+4.	Select the Geospatial Index for your data. A map view appears, showing a small selection of the spatial features contained within the index.
+5.	To see a JSON view of the index, click the corresponding button of the map view.
+ 
+You can construct spatial queries using the drawing menu available on the map view.
+To construct a spatial query:
+
+1.	Open the drawing menu in the map view.
+2.	Select the geometry type you require.
+3.	Click in the map view to define the geospatial area.
+
+Depending on the geometry type you specify,
+a default spatial relation is chosen for you.
+The exact relation is visible by selecting the Options menu.
+ 
+The lower area of the map view provides tools that let you select how many spatial features are displayed at once,
+up to a maximum of 200 at a time.
+To see the other results from your geospatial query,
+page through them by clicking the left or right arrow buttons.
+
 ### GeoJSON
 
 [GeoJSON format](http://geojson.org/geojson-spec.html) is used to express a variety of geographic data structures, including:
@@ -381,7 +417,7 @@ You can use the following parameters to deal with the returned result set, such 
 </tbody>
 </table>
 
-#####Format Parameter Examples
+##### Format Parameter Examples
 
 > Example query to return results with `format=legacy`:
 
