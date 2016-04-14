@@ -66,6 +66,8 @@ up to a maximum of 200 at a time.
 To see the other results from your geospatial query,
 page through them by clicking the left or right arrow buttons.
 
+More information on using Cloudant Geospatial is available through the [Learning Center](http://www.cloudant.com/learning-center#geo).
+
 ### GeoJSON
 
 [GeoJSON format](http://geojson.org/geojson-spec.html) is used to express a variety of geographic data structures, including:
