@@ -325,7 +325,7 @@ This error prevents you overwriting data changed by other clients. If the write 
 
 The response contains the ID and the new revision of the document or an error message in case the update failed.
 
-#### Simple purging of 'tombstone' documents
+#### 'Tombstone' documents
 
 Tombstone documents are small documents left in place within a database when the original document is deleted.
 Their purpose is to allow the deletion to be replicated.
@@ -339,7 +339,18 @@ Nevertheless,
 tombstone documents are not automatically removed,
 or 'purged'.
 
+Over time,
+as documents are created and deleted,
+the number of tombstone documents increases.
+Each tombstone is small,
+but gradually they add to database disk space usage,
+and to the query time for the primary index.
+To reduce these effects,
+you might want to purge the tombstones.
+
 <div></div>
+#### Simple purging of 'tombstone' documents
+
 > Example filter to exclude deleted documents during a replication
 
 ```json
@@ -354,7 +365,7 @@ or 'purged'.
 To remove tombstones manually,
 perform the following steps:
 
-1.	Create a new database to hold the required documents. In other words, to hold all documents _except_ the tombstone documents.
+1.	Create a new database to hold the required documents. The new database is intended to hold all documents _except_ the tombstone documents.
 2.	Set up a [filtered replication](advanced_replication.html#filtered-replication) to replicate documents from the original database to the new database.  Configure the filter so that documents with the '`_deleted`' attribute are not replicated.
 3.	When replication is complete, switch your application logic to use the new database.
 4.	Verify that your applications work correctly with the new database. When you are satisfied that everything is working correctly, you might wish to delete the old database.
@@ -367,40 +378,37 @@ you should try to design and implement your applications to perform the minimum 
 The simple purging technique described previously works well so long as documents are not being updated in the source database while the replication takes place.
 
 If updates _are_ made during replication,
-it is possible that a complete document is replicated,
+it is possible that a complete document is replicated to the target database as normal,
 then deleted from the source database,
 leaving a tombstone.
+The problem is that the tombstone is not replicated across to the target database,
+because it is excluded by the filter.
+As a result,
+the document that was deleted from the source database is not deleted from the target database,
+causing an inconsistency.
+
+A solution is to perform more advanced purging of tombstones by using a `validate_doc_update` function.
 
 HERE
 
-Tombstone documents are small documents left in place within a database when the original document is deleted.
-Their purpose is to allow the deletion to be replicated.
-
-When the replication has completed,
-the tombstones are no longer required.
-Normally,
-this is not a problem,
-as automatic compaction helps ensure that only the minimal amount of data is retained and transferred during replication.
-Nevertheless,
-tombstone documents are not automatically removed,
-or 'purged'.
-
 <div></div>
-> Example filter to exclude deleted documents during a replication
+> Example `validate_doc_update` function to reject deleted documents not already present in the target database
 
-```json
-{
-  "_id": "_design/filters",
-  "filters": {
-      "deleted_filter": "function(doc, req) { return !doc._deleted; };"
-  }
+```
+function(newDoc, oldDoc, userCtx) {
+	// any update to an existing doc is OK
+	if(oldDoc) {
+		return;
+	}
+
+	// reject tombstones for docs we don’t know about
+	if(newDoc["_deleted"]) {
+		throw({forbidden : "Deleted document rejected"});
+	}
 }
 ```
 
-To remove tombstones manually,
-perform the following steps:
 
-1.	Create a new database to hold the required documents. In other words, to hold all documents _except_ the tombstone documents.
 
 ### Bulk Operations
 
