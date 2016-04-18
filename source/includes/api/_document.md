@@ -500,10 +500,10 @@ Each tombstone is small,
 but gradually they add to database disk space usage,
 and to the query time for the primary index.
 To reduce these effects,
-you might want to purge the tombstones.
+you might want to remove the tombstones.
 
 <div></div>
-#### Simple purging of 'tombstone' documents
+#### Simple removal of 'tombstone' documents
 
 > Example filter to exclude deleted documents during a replication
 
@@ -527,13 +527,14 @@ perform the following steps:
 <aside class="warning" role="complementary" aria-label="avoiddeletinglots">In general,
 you should try to design and implement your applications to perform the minimum necessary amount of deletion.</aside>
 
-#### Advanced purging of 'tombstone' documents
+#### Advanced removal of 'tombstone' documents
 
-The simple purging technique described previously works well so long as documents are not being updated in the source database while the replication takes place.
+The simple removal technique described previously works well,
+so long as documents are not being updated in the source database while the replication takes place.
 
 If updates _are_ made during replication,
 it is possible that a complete document is replicated to the target database as normal,
-then deleted from the source database,
+but is also deleted from the source database,
 leaving a tombstone.
 The problem is that the tombstone is not replicated across to the target database,
 because it is excluded by the filter.
@@ -541,11 +542,33 @@ As a result,
 the document that was deleted from the source database is not deleted from the target database,
 causing an inconsistency.
 
-A solution is to perform more advanced purging of tombstones by using a `validate_doc_update` function.
+A solution is to perform more advanced removal of tombstones using
+a [`validate_doc_update` function](http://docs.couchdb.org/en/1.6.1/couchapp/ddocs.html#validate-document-update-functions).
 
-HERE
+A `validate_doc_update` function is stored in a design document,
+and is used to prevent invalid or unauthorized document updates from being performed.
+The function works with:
+
+-	The new version of the document.
+-	The current version of the document in the database.
+-	A user context, which provides details about the user supplying the updated document.
+
+The function inspects the request to determine if the update should proceed.
+If the update is permitted,
+the function simply returns.
+If the update is not permitted,
+a suitable error object is returned.
+In particular,
+if the user is not authorized to make the update,
+an `unauthorized` error object is returned,
+along with an explanatory error message.
+Similarly,
+if the requested update is not allowed for some reason (such as some mandatory fields being absent from the new document),
+then a `forbidden` error object is returned,
+again with an explanatory error message.
 
 <div></div>
+
 > Example `validate_doc_update` function to reject deleted documents not already present in the target database
 
 ```
@@ -559,10 +582,53 @@ function(newDoc, oldDoc, userCtx) {
 	if(newDoc["_deleted"]) {
 		throw({forbidden : "Deleted document rejected"});
 	}
+
+	return; // Not strictly necessary, but clearer.
 }
 ```
 
+For tombstone removal,
+a suitable `validate_doc_update` function would work as follows:
 
+1.	If the update is to apply a change to an existing document (`oldDoc`) within the target database, the function allows this by simply returning. This same test allows a tombstone to pass through the replication process correctly the first time it is encountered, to enable proper deletion of the document from the target database.
+2.	If the target database does _not_ have a copy of the current document, _and_ the update document has the `_deleted` property (indicating that it is a tombstone), then the update must be a tombstone _and_ it has been encountered before, so the update should be rejected.
+3.	Finally, if the function has not yet returned or thrown an error, allow the update to replicate to the target database, as some other condition applies.
+
+To use a `validate-doc-update` function to remove tombstone documents:
+
+1.	Stop replication from the source to the target database.
+2.	If appropriate, delete the target database, then create a new target database.
+3.	Add a suitable `validate_doc_update` function, similar to the example provided. Add it to a design document in the target database.
+4.	Restart replication between the source and the (new) target database.
+
+A variation for using the `validate_doc_update` function to remove tombstone documents is possible.
+You might add some metadata to the tombstone documents,
+using it to record the deletion date.
+The function could then inspect the metadata and permit deletion documents through,
+in order to replicate the deletion correctly.
+
+#### Performance implications of tombstone removal
+
+Remember that tombstones are used for more consistent deletion of documents from databases.
+This is especially important for mobile devices:
+without tombstone documents,
+a deletion might not replicate correctly to a mobile device,
+with the result that documents might never be deleted from the device.
+
+If you recreate a database,
+for example to be a new target for a replication,
+any clients that use the target database as a server _must_ work through _all_ the changes again,
+because the database sequence numbers are likely to have changed.
+
+<aside class="warning" role="complementary" aria-label="avoidclientvdu">If you are using a `validate_doc_update` function,
+you should avoid replicating that function to clients.
+This is to prevent the possibility of unwanted side effects as a result of having the function present on the client.
+
+Cloudant Sync does not replicate design documents,
+so this should not normally be a problem for Cloudant.
+However,
+other clients might replicate design documents or `validate_doc_update` functions,
+potentially resulting in unwanted side effects.</aside>
 
 ### Bulk Operations
 
