@@ -58,29 +58,16 @@ The effect is that the query becomes:
 
   `q=red`
 
-The second parameter is the data to be indexed. The third parameter is an object that can contain the fields `store` and `index`. If the `store` field contains the value `true`, the value will be returned in search results, otherwise, it will only be indexed.
+The second parameter is the data to be indexed.
 
-<!-- Removed next paragraph as part of FB46834.
-
-The `index` field can have the following values describing whether and how the data is indexed:
-
--   `analyzed`: Index the tokens produced by running the field's value through an analyzer.
--   `analyzed_no_norms`: Index the tokens produced by running the field's value through an analyzer, and also separately disable the storing of norms.
--   `no`: Do not index the field value.
--   `not_analyzed`: Index the field's value without using an analyzer. This is necessary if the field will be used for sorting.
--   `not_analyzed_no_norms`: Index the field's value without an analyzer, and also disable the indexing of norms.
-
-This index function indexes only a single field in the document. You, however, compute the value to be indexed from several fields or index only part of a field (rather than its entire value).
-
--->
-
-The `index` function also provides a third 'options' parameter that receives a JavaScript Object with the following possible values and defaults:
+The third, optional parameter is a JavaScript object with the following fields:
 
 Option | Description | Values | Default
 -------|-------------|--------|---------
 `index` | Whether the data is indexed, and if so, how. If set to `false` or `no`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `false`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
 `facet` | Creates a faceted index. See [Faceting](#faceting) for more information. | `true`, `false` | `false`
 `store` | If `true`, the value is returned in the search result; otherwise, the value is not returned. | `true`, `false` | `false`
+`boost` | A number specifying the relevance in search results. Content indexed with a boost value above 1 is more relevant than content indexed without a boost value. Content with a boost value below 1 is less relevant. | A positive floating point number | 1 (no boosting)
 
 #### Index Guard Clauses
 
