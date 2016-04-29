@@ -1,8 +1,10 @@
 ## Metadata Discovery
 
-Metadata indexes allow you to learn about schemas of JSON documents in a database. It describes what kind of documents are present in a database as a collection of document fields with data types and frequencies. 
+Metadata indexes allow you to learn about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. 
 
 ### Creating a metadata index
+
+To create an index, you supply a filter function. When the filter function is applied, it passes a document as an argument. If the result is true, the document can be included in the index. If the result is false, the document cannot be included in the index. 
 
 #### Create filter functions
 
@@ -14,15 +16,13 @@ function(doc) {
 }
 ```
 
-> Filter function to index only documents where the value of the diet field is 'omnivore'.
+> Filter function to index only documents where the value of the diet field is `'omnivore'`.
 
 ```
 function(doc) {
  	return doc.diet == 'omnivore';
 }
 ```
-
-To create an index, you supply a filter function, which is used to decide which documents to add to the index and which documents to ignore. To do that, the function takes a document as an argument and returns true, if the document should be included in the index and false otherwise.
 
 <div> </div> 
 
@@ -119,7 +119,7 @@ The `schema` parameter controls how detailed the output will be.
 
 ### Schema variation
 
-If there are documents that implement a different set of attributes and values, then schema variation exists in the database. Schema variation can exist globally or locally as described in the following list:
+If there are documents that implement a different set of attributes and values, then schema variation exists in the database. Schema variation can exist globally or locally as described in the following list.
 
 *	Globally: Different documents implement different schemas, for example, `{'product': ...}` and `{'customer': ...}`. You can use the query parameter `schema` to merge different schemas into one by using `?schema=union`, or list all schemas individually by using `?schema=all`.
 
