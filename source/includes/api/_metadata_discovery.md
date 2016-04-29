@@ -131,13 +131,14 @@ If you query a `couch_md` index, the output includes a list of schemas. For the 
 
 The following elements are contained in the schema index.
 
- * `object` an array of schemas returned by the index 
+ * `object` An array of schemas returned by the index. 
 
-   * `__attributes` a set of named attributes contained in a schema
-   * `__type` a known attribute value data type (String, Float, Integer, Boolean) or userdefined for a complex attribute or an unknown attribute data type 
-   * `__freq` the number of times we count attribute values with this type
-   * `__length` the maximum value length (applies only to String attributes)
-   * `__repeated` equals true if the attribute is a JSON array, false otherwise
+   * `__attributes` A set of named attributes contained in a schema.
+   * `__type` A known attribute value data type (string, float, integer, and boolean) or user-defined for a complex attribute or an unknown attribute data type.
+   * `__freq` The number of times we count attribute values with this type.
+   * `__length` The maximum value length (applies only to string attributes).
+   * `__repeated` Equals true if the attribute is a JSON array, false otherwise.
+
 
 #### Output with `schema=union`
 
