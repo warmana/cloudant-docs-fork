@@ -15,6 +15,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - api/_metadata_discovery
+  - api/metadata_discovery
   
 ---
