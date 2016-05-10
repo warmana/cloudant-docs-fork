@@ -84,7 +84,7 @@ HOST examples.cloudant.com
 
 When the filter function is in place, any document that meets the filter criteria is added to the index. A modified document changes the index immediately and a deleted document is removed from the index.
 
-To query the index, you make a `GET` request to `/$DATABASE/$DESIGNDOC/_schema/$SCHEMANAME?schema=all` and insert the names of the database, the design document, and the schema to query. Optionally, you can add the `schema` query parameter to control the output format.
+To query the index, you make a `GET` request to `/$DATABASE/$DESIGNDOC/_schema/$SCHEMANAME?schema=all` and insert the names of the database, design document, and schema to query. Optionally, you can add the `schema` query parameter to control the output format.
 
 <div> </div>
 
