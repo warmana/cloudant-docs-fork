@@ -1,4 +1,4 @@
-# couch_md: Metadata Discovery with Cloudant
+## couch_md: Metadata Discovery with Cloudant
 
 Metadata, `couch_md`, indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, `couch_md` builds a special type of index that gets updated automatically by updating documents in a database.
 
@@ -6,9 +6,7 @@ Metadata, `couch_md`, indexes provide information about schemas of JSON document
 <li>[Querying a `couch_md` index](#id-section2)</li>
 <li>[Query Output](#id-section3)</li></ul>
 
-
-<div id='id-section1'/>
-## Creating a `couch_md` index
+###<a name="id-section1">Creating a `couch_md` index</a>
 
 To create a `couch_md` index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
 
@@ -59,9 +57,7 @@ where `filter.json` is a design document as shown above.
 	
 When you create the filter function, the documents that meet the filter criteria are added to the index. A modified document changes the index immediately, and a deleted document is removed from the index immediately.
 
-
-<div id='id-section2'/>
-## Querying a `couch_md` index
+###<a name="id-section2">Querying a `couch_md` index</a>
 
 A single end point queries the index with one optional query parameter to control the representation of the result. 
 
@@ -73,8 +69,7 @@ For example:
 or 
 `curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores`
 
-
-### Parameter `schema`
+#### Parameter `schema`
 
 The `schema`	 parameter controls the amount of detail returned by the index.
 
@@ -92,9 +87,10 @@ For example:
 
 
 <div id='id-section3'/>
-## Query output
 
-### Schema variation
+###<a name="id-section3">Query Output</a>
+
+#### Schema variation
 
 In general, schema variation exists in a database if there are documents that implement a different set of attributes or values. Schema variation can exist globally and locally. 
 
@@ -105,7 +101,7 @@ In general, schema variation exists in a database if there are documents that im
 2. Locally: Different data types are used for values in the same attribute, for example, `'age': 30` versus `'age': 'unknown'`. In this case, the index lists all used data types for the attribute values together with their frequencies. Frequencies are defined by how many values each particular data type contains.
 
 
-### Output interpretation
+#### Output interpretation
 
 The output of querying the `couch_md` index includes a list of schemas. The `union` end point contains only one schema in the list. The `all` end point can include from one to several schemas in the list. 
 
