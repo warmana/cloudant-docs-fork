@@ -1,10 +1,6 @@
 ## couch_md: Metadata Discovery with Cloudant
 Metadata, couch`_`md, indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, couch`_`md builds a special type of index that gets updated automatically by updating documents in a database.
 
-*	[Creating a couch`_`md index](#id-section1)
-*	[Querying a couch`_`md index](#id-section2)
-*	[Query Output](#id-section3)
-
 ### <a name="id-section1">Creating a couch`_`md index</a>
 To create a couch`_`md index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
 
@@ -12,16 +8,16 @@ The index is created using the following process.
 
 <ol><li> Compose a JavaScript filter function in the following format, <code>function(doc) -> (true | false)</code>.
 
-For example:
+<p>For example:</p>
 <p>
 <code>
 	    function(doc){
 	    	{return true};
 	    }
 </code>
-	    
+</p>	    
 or
-
+<p>
 <code>	
 	    function(doc){
 	    	if (doc.diet == 'omnivore') {return true} 
@@ -34,7 +30,8 @@ or
 
 > An example of a filter function represented as a separate index
 
-`	{
+```
+	{
 		"_id":"_design/metadata",
 	
 			"schemas":{
@@ -49,7 +46,7 @@ or
 				}
 			}
 		}
-`
+```
 
 
 <li>Add the _design document to your Cloudant database.
