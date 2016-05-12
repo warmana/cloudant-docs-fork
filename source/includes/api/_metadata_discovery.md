@@ -1,37 +1,40 @@
 ## couch_md: Metadata Discovery with Cloudant
+Metadata, couch`_`md, indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, couch`_`md builds a special type of index that gets updated automatically by updating documents in a database.
 
-Metadata, `couch_md`, indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, `couch_md` builds a special type of index that gets updated automatically by updating documents in a database.
+*	[Creating a couch`_`md index](#id-section1)
+*	[Querying a couch`_`md index](#id-section2)
+*	[Query Output](#id-section3)
 
-<ul><li>[Creating a `couch_md` index](#id-section1)</li>
-<li>[Querying a `couch_md` index](#id-section2)</li>
-<li>[Query Output](#id-section3)</li></ul>
-
-###<a name="id-section1">Creating a `couch_md` index</a>
-
-To create a `couch_md` index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
+### <a name="id-section1">Creating a couch`_`md index</a>
+To create a couch`_`md index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
 
 The index is created using the following process. 
 
-1. Compose a JavaScript filter function in the following format, `function(doc) -> (true | false)`.
+<ol><li> Compose a JavaScript filter function in the following format, <code>function(doc) -> (true | false)</code>.
 
 For example:
-	
+<p>
+<code>
 	    function(doc){
 	    	{return true};
 	    }
+</code>
 	    
 or
-	
+
+<code>	
 	    function(doc){
 	    	if (doc.diet == 'omnivore') {return true} 
 	    	else {return false};
 		}
-    
-2. Add filter functions as objects into a `schemas` array in a new `_design` document. Each filter function represents a separate index.
+</code></p>
+</li>    
 
-For example:
-	
-	    {
+<li> Add filter functions as objects into a <code>schemas</code> array in a new <code>_design</code> document. Each filter function represents a separate index.</li>
+
+> An example of a filter function represented as a separate index
+
+`	{
 		"_id":"_design/metadata",
 	
 			"schemas":{
@@ -46,64 +49,60 @@ For example:
 				}
 			}
 		}
+`
 
-3. Add the `_design` document to your Cloudant database.
 
- For example:
+<li>Add the _design document to your Cloudant database.
+
+For example:
+
+`curl -X PUT https://<account>.cloudant.com/<database>/_design/metadata -H 'Content-Type: application/json' -d @filter.json`
+
+where `filter.json` is a design document as shown above
+<p>When you create the filter function, the documents that meet the filter criteria are added to the index. A modified document changes the index immediately, and a deleted document is removed from the index immediately.</p></li></ol>
 	
-	`curl -X PUT https://<account>.cloudant.com/<database>/_design/metadata -H 'Content-Type: application/json' -d @filter.json`
-	
-where `filter.json` is a design document as shown above.
-	
-When you create the filter function, the documents that meet the filter criteria are added to the index. A modified document changes the index immediately, and a deleted document is removed from the index immediately.
 
-###<a name="id-section2">Querying a `couch_md` index</a>
 
-A single end point queries the index with one optional query parameter to control the representation of the result. 
+### <a name="id-section2">Querying a couch`_`md index</a>
+A single end point queries the index with one optional query parameter to control the representation of the result. Replace the account, database, design doc, and filter values with the names you use in your environment, as in the examples that follow. 
 
 `curl -X GET https://<account>.cloudant.com/<database>/<_design_doc>/_schema/<filter>`
 
 For example:
+
  `curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/allAnimals`
 
 or 
+
 `curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores`
 
 #### Parameter `schema`
+The `schema`	 parameter controls the amount of detail returned by the index using the `union` and `all` elements.
+<ul><li>`union` (default) Returns a single object that combines multiple schemas into a union output by adding them together. 
 
-The `schema`	 parameter controls the amount of detail returned by the index.
+<p>For example:</p>
+<p><code>curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=union</code></p>
+</li>
+<li>`all` Returns a set of objects where each object represents a distinct schema. 
+<p>For example:</p>
+<p><code>curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=all</code></p>
+</li></ul>
 
--  `union` (default) Returns a single object that combines multiple schemas into a union output by adding them together. 
-
-For example:
-
-	`curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=union`
-
--  `all` Returns a set of objects where each object represents a distinct schema. 
-
-For example:
-
-	`curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=all`
-
-
-<div id='id-section3'/>
-
-###<a name="id-section3">Query Output</a>
+### <a name="id-section3">Query Output</a>
 
 #### Schema variation
-
 In general, schema variation exists in a database if there are documents that implement a different set of attributes or values. Schema variation can exist globally and locally. 
-
-1. Globally: Different documents implement different schemas, for example, `{'product': ...}` and `{'customer': ...}`. The query parameter `schema` can be used to merge or list schemas.
-	* `?schema=union` Merge the different schemas into one.
-	* `?schema=all` List all schemas individually.
-
-2. Locally: Different data types are used for values in the same attribute, for example, `'age': 30` versus `'age': 'unknown'`. In this case, the index lists all used data types for the attribute values together with their frequencies. Frequencies are defined by how many values each particular data type contains.
-
+<ul><li>
+**Globally** <p>Different documents implement different schemas, for example, `{'product': ...}` and `{'customer': ...}`. The query parameter `schema` can be used to merge or list schemas.
+	<ul><li>`?schema=union` Merge the different schemas into one.</li>
+	<li>`?schema=all` List all schemas individually.</li></ul></p>
+</li>
+<li>
+**Locally** <p>Different data types are used for values in the same attribute, for example, `'age': 30` versus `'age': 'unknown'`. In this case, the index lists all used data types for the attribute values together with their frequencies. Frequencies are defined by how many values each particular data type contains.
+</p></li></ul>
 
 #### Output interpretation
-
-The output of querying the `couch_md` index includes a list of schemas. The `union` end point contains only one schema in the list. The `all` end point can include from one to several schemas in the list. 
+The output of querying the couch`_`md index includes a list of schemas. The `union` end point contains only one schema in the list. The `all` end point can include from one to several schemas in the list. 
 
 The schema output includes the following elements. 
 
@@ -118,6 +117,8 @@ Element | Description
 `__arrayFreq` | For an attribute of the array type, this shows the total number of elements in this array attribute, across all documents.
 
 The following example shows the output produced by the `?schema=union` query parameter. Notice the schema variation in attributes `max_length`, `max_weight`, `min_length`, and `min_weight`. For the `max_weight` attribute, this means that the database contains 2 documents where the `max_weight` attribute is of type `float`, and the database contains 7 documents where the `max_weight` attribute is of type `integer`. Since the database contains 10 filtered documents (`schema _docFreq = 10`), the `max_weight` attribute is missing in 1 of the documents.
+
+> An example of the `?schema=union` query parameter output
 
 ```js
 [
@@ -213,7 +214,10 @@ The following example shows the output produced by the `?schema=union` query par
   }
 ]
 ```
+
 As a comparison, the following example shows output produced with the `?schema=all` query parameter for the same design document. The output shows three distinct schemas in a database (with 1, 4, and 5 documents) defined by a unique set of attributes. 
+
+> An example of the `?schema=all` query parameter output
 
 ```js
 [
