@@ -1,460 +1,273 @@
-## Metadata Discovery
+# couch_md: Metadata Discovery with Cloudant
 
-Metadata indexes allow you to learn about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. 
+Metadata, `couch_md`, indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, `couch_md` builds a special type of index that gets updated automatically by updating documents in a database.
 
-### Creating a metadata index
+<ul><li>[Creating a `couch_md` index](#id-section1)</li>
+<li>[Querying a `couch_md` index](#id-section2)</li>
+<li>[Query Output](#id-section3)</li></ul>
 
-To create an index, you supply a filter function. When the filter function is applied, it passes a document as an argument. If the result is true, the document can be included in the index. If the result is false, the document cannot be included in the index. 
 
-#### Create filter functions
+<div id='id-section1'/>
+## Creating a `couch_md` index
 
-> Filter function to index all documents in a database
+To create a `couch_md` index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
 
-```
-function(doc) {
- 	return true;
-}
-```
+The index is created using the following process. 
 
-> Filter function to index only documents where the value of the diet field is `'omnivore'`.
+1. Compose a JavaScript filter function in the following format, `function(doc) -> (true | false)`.
 
-```
-function(doc) {
- 	return doc.diet == 'omnivore';
-}
-```
+For example:
+	
+	    function(doc){
+	    	{return true};
+	    }
+	    
+or
+	
+	    function(doc){
+	    	if (doc.diet == 'omnivore') {return true} 
+	    	else {return false};
+		}
+    
+2. Add filter functions as objects into a `schemas` array in a new `_design` document. Each filter function represents a separate index.
 
-<div> </div> 
+For example:
+	
+	    {
+		"_id":"_design/metadata",
+	
+			"schemas":{
+				"allAnimals":{
+					"filter":"function(doc){{return true};}"
+				},
+	
+				"omnivores":{
+	    			"filter":"function(doc){
+						if (doc.diet == 'omnivore') {return true} 
+						else {return false};}"
+				}
+			}
+		}
 
-#### Save the filter functions in a design document
+3. Add the `_design` document to your Cloudant database.
 
-> Adding a design document with filter functions
+ For example:
+	
+	`curl -X PUT https://<account>.cloudant.com/<database>/_design/metadata -H 'Content-Type: application/json' -d @filter.json`
+	
+where `filter.json` is a design document as shown above.
+	
+When you create the filter function, the documents that meet the filter criteria are added to the index. A modified document changes the index immediately, and a deleted document is removed from the index immediately.
 
-```shell
-curl -X PUT "https://$ACCOUNT.cloudant.com/$DATABASE/_design/metadata" -H 'Content-Type: application/json' -d '@filter.json'
-# where filter.json contains the following document:
-```
 
-```http
-PUT /$DATABASE/_design/metadata HTTP/1.1
-Host: $ACCOUNT.cloudant.com
-Content-Type: application/json
+<div id='id-section2'/>
+## Querying a `couch_md` index
 
-```
+A single end point queries the index with one optional query parameter to control the representation of the result. 
 
-```json
-{
-  "_id":"_design/metadata",
-  "schemas": {
-    "allAnimals": {
-      "filter":"function(doc) { return true; }"
-    },
-    "omnivores": {
-      "filter":"function(doc) { return doc.diet == 'omnivore'; }"
-    }
-  }
-}
-```
+`curl -X GET https://<account>.cloudant.com/<database>/<_design_doc>/_schema/<filter>`
 
-Once you have written the filter functions, you store them in a design document. The design document contains a `schema` field where each field defines a schema with a `filter` field for the filter function.
+For example:
+ `curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/allAnimals`
 
-### Querying an index
+or 
+`curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores`
 
-> Querying the allAnimals index
 
-```shell
-curl -X GET "https://examples.cloudant.com/animaldb/_design/metadata/_schema/allAnimals"
-```
+### Parameter `schema`
 
-```http
-GET /animaldb/_design/metadata/_schema/allAnimals HTTP/1.1
-HOST examples.cloudant.com
-```
+The `schema`	 parameter controls the amount of detail returned by the index.
 
-> Querying the omnivores index
+-  `union` (default) Returns a single object that combines multiple schemas into a union output by adding them together. 
 
-```shell
-curl -X GET "https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores"
-```
+For example:
 
-```http
-GET /animaldb/_design/metadata/_schema/omnivores HTTP/1.1
-HOST examples.cloudant.com
-```
+	`curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=union`
 
-When the filter function is in place, any document that meets the filter criteria is added to the index. A modified document changes the index immediately and a deleted document is removed from the index.
+-  `all` Returns a set of objects where each object represents a distinct schema. 
 
-To query the index, you make a `GET` request to `/$DATABASE/$DESIGNDOC/_schema/$SCHEMANAME?schema=all` and insert the names of the database, design document, and schema to query. Optionally, you can add the `schema` query parameter to control the output format.
+For example:
 
-<div> </div>
+	`curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=all`
 
-#### The `schema` parameter
 
-> Querying the allAnimals index with `schema=all`
-
-```shell
-curl -X GET "https://examples.cloudant.com/animaldb/_design/metadata/_schema/allAnimals?schema=all"
-```
-
-```http
-GET /animaldb/_design/metadata/_schema/allAnimals?schema=all HTTP/1.1
-HOST examples.cloudant.com
-```
-
-> Querying the allAnimals index with `schema=union`
-
-```shell
-curl -X GET "https://examples.cloudant.com/animaldb/_design/metadata/_schema/allAnimals?schema=union"
-```
-
-```http
-GET /animaldb/_design/metadata/_schema/allAnimals?schema=union HTTP/1.1
-HOST examples.cloudant.com
-```
-
-The `schema` parameter controls how detailed the output will be.
-
- - `all` (default): returns an array of objects, where each object represents a distinct schema.
- - `union`: returns a single object that combines multiple schemas into a union output by adding them together. For example `curl -X GET https://examples.cloudant.com/animaldb/_design/metadata/_schema/omnivores?schema=union`
+<div id='id-section3'/>
+## Query output
 
 ### Schema variation
 
-If there are documents that implement a different set of attributes and values, then schema variation exists in the database. Schema variation can exist globally or locally as described in the following list.
+In general, schema variation exists in a database if there are documents that implement a different set of attributes or values. Schema variation can exist globally and locally. 
 
-*	Globally: Different documents implement different schemas, for example, `{'product': ...}` and `{'customer': ...}`. You can use the query parameter `schema` to merge different schemas into one by using `?schema=union`, or list all schemas individually by using `?schema=all`.
+1. Globally: Different documents implement different schemas, for example, `{'product': ...}` and `{'customer': ...}`. The query parameter `schema` can be used to merge or list schemas.
+	* `?schema=union` Merge the different schemas into one.
+	* `?schema=all` List all schemas individually.
 
-*	Locally: Values for the same attribute use different data types, for example, `'age': 30` vs. `'age': 'unknown'`. In this case, the index lists all the data types used for the attribute values and their frequencies, including the number of values for each data type.
-
-### Index output
-
-If you query a `couch_md` index, the output includes a list of schemas. For the `union` endpoint, the list includes only one schema. For the `all` endpoint, the list includes one to several schemas
-
-The following elements are contained in the schema index.
-
- * `object` An array of schemas returned by the index. 
-
-   * `__attributes` A set of named attributes contained in a schema.
-   * `__type` A known attribute value data type (string, float, integer, and boolean) or user-defined for a complex attribute or an unknown attribute data type.
-   * `__freq` The number of times we count attribute values with this type.
-   * `__length` The maximum value length (applies only to string attributes).
-   * `__repeated` Equals true if the attribute is a JSON array, false otherwise.
+2. Locally: Different data types are used for values in the same attribute, for example, `'age': 30` versus `'age': 'unknown'`. In this case, the index lists all used data types for the attribute values together with their frequencies. Frequencies are defined by how many values each particular data type contains.
 
 
-#### Output with `schema=union`
+### Output interpretation
 
-```json
-    [
-    {
-        "object": [
-            {
-                "__type": "userdefined",
-                "__freq": 4,
-                "__attributes": {
-                    "diet": [
-                        {
-                            "__type": "String",
-                            "__freq": 4,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ],
-                    "class": [
-                        {
-                            "__type": "String",
-                            "__freq": 4,
-                            "__length": 6,
-                            "__repeated": false
-                        }
-                    ],
-                    "wiki_page": [
-                        {
-                            "__type": "String",
-                            "__freq": 4,
-                            "__length": 46,
-                            "__repeated": false
-                        }
-                    ],
-                    "latin_name": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 19,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 4,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 3,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 1,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 2,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 2,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 2,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 2,
-                            "__repeated": false
-                        }
-                    ],
-                    "_rev": [
-                        {
-                            "__type": "String",
-                            "__freq": 4,
-                            "__length": 34,
-                            "__repeated": false
-                        }
-                    ],
-                    "_id": [
-                        {
-                            "__type": "String",
-                            "__freq": 4,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ]
-                },
-                "__repeated": false
-            }
+The output of querying the `couch_md` index includes a list of schemas. The `union` end point contains only one schema in the list. The `all` end point can include from one to several schemas in the list. 
+
+The schema output includes the following elements. 
+
+Element | Description
+-----|------------
+`schema`| A schema object.
+`__type` | A data type of the attribute (field), including string, float, integer, boolean, user-defined for a complex attribute, array for an array attribute, and an unknown for attributes of undefined types, such as null values.
+`__docFreq` | The number of documents with this particular schema or attribute.
+`__attributes` | A set of named attributes contained in the schema. Also, for an attribute of the user-defined type, this describes attributes (fields) contained inside this complex attribute. 
+`__length` | For an attribute of the string type, this shows the maximum string length encountered by all values of this attribute.
+`__elements` | For an attribute of the array type, this describes elements in this array attribute across all documents.
+`__arrayFreq` | For an attribute of the array type, this shows the total number of elements in this array attribute, across all documents.
+
+The following example shows the output produced by the `?schema=union` query parameter. Notice the schema variation in attributes `max_length`, `max_weight`, `min_length`, and `min_weight`. For the `max_weight` attribute, this means that the database contains 2 documents where the `max_weight` attribute is of type `float`, and the database contains 7 documents where the `max_weight` attribute is of type `integer`. Since the database contains 10 filtered documents (`schema _docFreq = 10`), the `max_weight` attribute is missing in 1 of the documents.
+
+```js
+[
+  {
+    "schema": {
+      "__type": "Userdefined",
+      "__docFreq": 10,
+      "__attributes": {
+        "_id": [
+          {
+            "__type": "String",
+            "__docFreq": 10,
+            "__length": 10
+          }
+        ],
+        "_rev": [
+          {
+            "__type": "String",
+            "__docFreq": 10,
+            "__length": 34
+          }
+        ],
+        "class": [
+          {
+            "__type": "String",
+            "__docFreq": 10,
+            "__length": 6
+          }
+        ],
+        "diet": [
+          {
+            "__type": "String",
+            "__docFreq": 10,
+            "__length": 9
+          }
+        ],
+        "latin_name": [
+          {
+            "__type": "String",
+            "__docFreq": 5,
+            "__length": 19
+          }
+        ],
+        "max_length": [
+          {
+            "__type": "Float",
+            "__docFreq": 8
+          },
+          {
+            "__type": "Integer",
+            "__docFreq": 2
+          }
+        ],
+        "max_weight": [
+          {
+            "__type": "Float",
+            "__docFreq": 2
+          },
+          {
+            "__type": "Integer",
+            "__docFreq": 7
+          }
+        ],
+        "min_length": [
+          {
+            "__type": "Float",
+            "__docFreq": 7
+          },
+          {
+            "__type": "Integer",
+            "__docFreq": 3
+          }
+        ],
+        "min_weight": [
+          {
+            "__type": "Float",
+            "__docFreq": 2
+          },
+          {
+            "__type": "Integer",
+            "__docFreq": 7
+          }
+        ],
+        "wiki_page": [
+          {
+            "__type": "String",
+            "__docFreq": 10,
+            "__length": 46
+          }
         ]
+      }
     }
-	]
+  }
+]
 ```
+As a comparison, the following example shows output produced with the `?schema=all` query parameter for the same design document. The output shows three distinct schemas in a database (with 1, 4, and 5 documents) defined by a unique set of attributes. 
 
-This response is produced by querying the index with `?schema=union`. 
-
-<div> </div>
-
-#### Output with `schema=all`
-
-```json
-    [
-    {
-        "object": [
-            {
-                "__type": "userdefined",
-                "__freq": 1,
-                "__attributes": {
-                    "_id": [
-                        {
-                            "__type": "String",
-                            "__freq": 1,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ],
-                    "_rev": [
-                        {
-                            "__type": "String",
-                            "__freq": 1,
-                            "__length": 34,
-                            "__repeated": false
-                        }
-                    ],
-                    "wiki_page": [
-                        {
-                            "__type": "String",
-                            "__freq": 1,
-                            "__length": 46,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 1,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 1,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 1,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 1,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 1,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 0,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 1,
-                            "__repeated": false
-                        }
-                    ],
-                    "class": [
-                        {
-                            "__type": "String",
-                            "__freq": 1,
-                            "__length": 6,
-                            "__repeated": false
-                        }
-                    ],
-                    "diet": [
-                        {
-                            "__type": "String",
-                            "__freq": 1,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ]
-                },
-                "__repeated": false
-            }
-        ]
-    },
-    {
-        "object": [
-            {
-                "__type": "userdefined",
-                "__freq": 3,
-                "__attributes": {
-                    "_id": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ],
-                    "_rev": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 34,
-                            "__repeated": false
-                        }
-                    ],
-                    "wiki_page": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 46,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 2,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 2,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_weight": [
-                        {
-                            "__type": "Float",
-                            "__freq": 2,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 2,
-                            "__repeated": false
-                        }
-                    ],
-                    "min_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 2,
-                            "__repeated": false
-                        },
-                        {
-                            "__type": "Integer",
-                            "__freq": 1,
-                            "__repeated": false
-                        }
-                    ],
-                    "max_length": [
-                        {
-                            "__type": "Float",
-                            "__freq": 3,
-                            "__repeated": false
-                        }
-                    ],
-                    "latin_name": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 19,
-                            "__repeated": false
-                        }
-                    ],
-                    "class": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 6,
-                            "__repeated": false
-                        }
-                    ],
-                    "diet": [
-                        {
-                            "__type": "String",
-                            "__freq": 3,
-                            "__length": 8,
-                            "__repeated": false
-                        }
-                    ]
-                },
-                "__repeated": false
-            }
-        ]
+```js
+[
+  {
+    "schema": {
+      "__docFreq": 1,
+      "__attributes": [
+        "_id",
+        "_rev",
+        "wiki_page",
+        "min_length",
+        "max_length",
+        "class",
+        "diet",
+        "latin_name"
+      ]
     }
-	]
+  },
+  {
+    "schema": {
+      "__docFreq": 4,
+      "__attributes": [
+        "_id",
+        "_rev",
+        "wiki_page",
+        "min_length",
+        "max_length",
+        "min_weight",
+        "max_weight",
+        "class",
+        "diet",
+        "latin_name"
+      ]
+    }
+  },
+  {
+    "schema": {
+      "__docFreq": 5,
+      "__attributes": [
+        "_id",
+        "_rev",
+        "wiki_page",
+        "min_length",
+        "max_length",
+        "min_weight",
+        "max_weight",
+        "class",
+        "diet"
+      ]
+    }
+  }
+]
 ```
-
-This response is produced by querying the index with `?schema=all`. 
-
