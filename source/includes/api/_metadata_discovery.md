@@ -1,5 +1,5 @@
-## Metadata Discovery (couch_md) with Cloudant
-Metadata (couch_md) indexes provide information about schemas of JSON documents in a database. The metadata indexes describe what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, couch_md builds a special type of index that gets updated automatically by updating documents in a database.
+## Metadata Indexing
+Metadata indexing provides information about schemas of JSON documents in a database. With Cloudant, you can create a couch_md index for metadata discovery. The couch_md index describes what kind of documents are present in the database as a collection of document fields with data types and frequencies. For this, couch_md builds a special type of index that gets updated automatically by updating documents in a database.
 
 ### <a name="id-section1">Creating a couch_md index</a>
 To create a couch_md index, you must supply a filter function. The function determines which documents to add to the index and which documents to ignore. 
@@ -46,7 +46,7 @@ or
 }</code>
 </p></li>
 
-<li>Add the _design document to your Cloudant database (where <code>filter.json</code> is a design document as shown above).
+<li>Add the _design document to your Cloudant database (where <code>filter.json</code> is a design document like the one shown above).
 
 <p>For example:</p>
 
@@ -110,12 +110,12 @@ The schema output includes the following elements.
 Element | Description
 -----|------------
 `schema`| A schema object.
-`__type` | A data type of the attribute (field), including string, float, integer, boolean, user-defined for a complex attribute, array for an array attribute, and an unknown for attributes of undefined types, such as null values.
+`__type` | A data type of the attribute (field), including `String`, `Float`, `Integer`, `Boolean`, `Userdefined` for a complex attribute, `Array` for an array attribute, and an `Unknown` for attributes of undefined types such as null values.
 `__docFreq` | The number of documents with this particular schema or attribute.
-`__attributes` | A set of named attributes contained in the schema. Also, for an attribute of the user-defined type, this describes attributes (fields) contained inside this complex attribute. 
-`__length` | For an attribute of the string type, this shows the maximum string length encountered by all values of this attribute.
-`__elements` | For an attribute of the array type, this describes elements in this array attribute across all documents.
-`__arrayFreq` | For an attribute of the array type, this shows the total number of elements in this array attribute, across all documents.
+`__attributes` | A set of named attributes contained in the schema. Also, for an attribute of the `Userdefined` type, this describes attributes (fields) contained inside this complex attribute. 
+`__length` | For an attribute of the `String` type, this shows the maximum string length encountered by all values of this attribute.
+`__elements` | For an attribute of the `Array` type, this describes elements in this Array attribute across all documents.
+`__arrayFreq` | For an attribute of the `Array` type, this shows the total number of elements in this array attribute, across all documents.
 
 
 > An example of the `?schema=union` query parameter output
@@ -216,7 +216,7 @@ Element | Description
 
 
 
-The following example shows the output produced by the `?schema=union` query parameter. Notice the schema variation in attributes `max_length`, `max_weight`, `min_length`, and `min_weight`. For the `max_weight` attribute, this means that the database contains 2 documents where the `max_weight` attribute is of type `float`, and the database contains 7 documents where the `max_weight` attribute is of type `integer`. Since the database contains 10 filtered documents (`schema _docFreq = 10`), the `max_weight` attribute is missing in 1 of the documents.
+The following example shows the output produced by the `?schema=union` query parameter. Notice the schema variation in attributes `max_length`, `max_weight`, `min_length`, and `min_weight`. For the `max_weight` attribute, this means that the database contains 2 documents where the `max_weight` attribute is of type `Float`, and the database contains 7 documents where the `max_weight` attribute is of type `Integer`. Since the database contains 10 filtered documents (`schema _docFreq = 10`), the `max_weight` attribute is missing in 1 of the documents.
 
 <div></div>
 
