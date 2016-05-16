@@ -245,48 +245,16 @@ Provide an updated list of the usernames that have access permission.
 The updated list should _omit_ the API key.
 
 
-### Enabling the `_users` database with Cloudant
+### Enabling CouchDB Security Features in Cloudant
 
-> Modification request:
+You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security. You must `PUT` a JSON document (see the following example) to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
-```http
-PUT /$DATABASE/_security HTTP/1.1
-Content-Type: application/json
-{
+```{
   "couchdb_auth_only": true,
- "members": {
-   "names": ["member"],"roles":[]
-   },
-  "admins": {
-     "names": ["admin"],"roles":[]
-   }
- }
+  "members": {
+  	"names": ["demo"],"roles":[]
+    },
+	"admins": {...}
 }
 ```
 
-```shell
-curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
--X PUT \
--H "Content-Type: application/json" \
--d '{
-  "couchdb_auth_only": true,
- "members": {
-   "names": ["member"],"roles":[]
-   },
-  "admins": {
-     "names": ["admin"],"roles":[]
-   }
- }'
-```
-
-You can use the [_users database](http://docs.couchdb.org/en/1.6.1/intro/security.html#authentication-database) to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
-
-<div></div>
-
-> Example response:
-
-```json
-{
- "ok" : true
-}
-```
