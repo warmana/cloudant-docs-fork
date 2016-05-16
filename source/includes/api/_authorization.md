@@ -243,3 +243,18 @@ To remove the API key,
 send an HTTP `PUT` request to the same `_security` API endpoint you used to [create the API key](#creating-api-keys).
 Provide an updated list of the usernames that have access permission.
 The updated list should _omit_ the API key.
+
+
+### Enabling CouchDB Security Features in Cloudant
+
+You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security. You must `PUT` a JSON document (see the following example) to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+
+```{
+  "couchdb_auth_only": true,
+  "members": {
+  	"names": ["demo"],"roles":[]
+    },
+	"admins": {...}
+}
+```
+
