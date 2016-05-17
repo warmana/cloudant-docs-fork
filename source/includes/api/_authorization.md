@@ -247,14 +247,18 @@ The updated list should _omit_ the API key.
 
 ### Enabling CouchDB Security Features in Cloudant
 
-You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security and `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+> Example JSON document turns on CouchDB security
 
-<code>
+```json
 {
 	"couchdb_auth_only": true,
-		"members": {
+	"members": {
  		"names": ["demo"],"roles":[]
- 		},
- 		"admins": {...}
+ 	},
+ 	"admins": {...}
 }
-<code>
+```
+
+You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security and `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+
+<div></div>
