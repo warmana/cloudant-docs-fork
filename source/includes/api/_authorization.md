@@ -247,7 +247,7 @@ The updated list should _omit_ the API key.
 
 ### Enabling CouchDB Security Features in Cloudant
 
-> Example JSON document turns on CouchDB security
+> Example JSON document turns off Cloudant security
 
 ```json
 {
@@ -259,6 +259,6 @@ The updated list should _omit_ the API key.
 }
 ```
 
-You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security and `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+You can use CouchDB security features, such as the `_users` database, security objects, and validation functions with Cloudant. However, first, you must turn off Cloudant security for the roles you want to manage with the `_users` database. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
