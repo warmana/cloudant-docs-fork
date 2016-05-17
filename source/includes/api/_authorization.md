@@ -249,14 +249,12 @@ The updated list should _omit_ the API key.
 
 You can use CouchDB security features, such as the `_users` database, security objects, and validation functions. However, before you enable them, you must turn off Cloudant security and `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
-> Example JSON document for the `security` endpoint
-
-```{
+<code>
+{
 	"couchdb_auth_only": true,
 		"members": {
  		"names": ["demo"],"roles":[]
  		},
  		"admins": {...}
-	}
-```
-<div></div>
+}
+<code>
