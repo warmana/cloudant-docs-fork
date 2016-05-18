@@ -259,6 +259,6 @@ The updated list should _omit_ the API key.
 }
 ```
 
-You can use the `_users` database with Cloudant. However, first, you must turn off Cloudant security for the roles you want to manage with the `_users` database. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+You can use the `_users` database to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
