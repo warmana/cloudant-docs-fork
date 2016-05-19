@@ -109,6 +109,10 @@ To start a replication, [add a replication document](#replication-document-forma
 
 <div></div>
 
+####(Optional) Creating a replication to two Bluemix environments
+
+You can replicate a Cloudant database to multiple Bluemix environments. When you set up the replication job for each environment, the source database and target database names you provide must use this format, `https://$USERNAME:$PASSWORD@$REMOTE_USERNAME.cloudant.com/$DATABASE_NAME`. You create the database name, `$DATABASE_NAME`, and add it to the URL format. Do not copy the `URL` field from the `VCAP_SERVICES` environment variable. 
+
 #### Monitoring a replication
 
 > Example instructions for monitoring a replication:
