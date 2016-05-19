@@ -3,7 +3,7 @@
 ## Replication
 
 Cloudant replication is the process that synchronizes ('syncs') the state of two databases.
-Any change which has occured in the source database is reproduced in the target database.
+Any change which has occurred in the source database is reproduced in the target database.
 You can create replications between any number of databases, whether continuous or not.
 
 Depending on your application requirements, you use replication to share and aggregate state and content.
@@ -306,7 +306,7 @@ Accept: application/json
 }
 ```
 
-> Example error reponse if one of the requested databases for a replication does not exist:
+> Example error response if one of the requested databases for a replication does not exist:
 
 ```json
 {
@@ -505,7 +505,7 @@ Database accesses are counted as part of the work performed by a multi-tenant da
 
 Cancel continuous replication by including the `cancel` field in the JSON request object, and setting the value to `true`.
 
-<aside class="warning" role="complementary" aria-label="identicalrequest">For the cancelation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
+<aside class="warning" role="complementary" aria-label="identicalrequest">For the cancellation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
 
 Requesting cancellation of a replication that does not exist results in a 404 error.
 
