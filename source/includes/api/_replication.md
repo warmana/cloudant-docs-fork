@@ -3,7 +3,7 @@
 ## Replication
 
 Cloudant replication is the process that synchronizes ('syncs') the state of two databases.
-Any change which has occured in the source database is reproduced in the target database.
+Any change which has occurred in the source database is reproduced in the target database.
 You can create replications between any number of databases, whether continuous or not.
 
 Depending on your application requirements, you use replication to share and aggregate state and content.
@@ -108,6 +108,10 @@ Content-Type: application/json
 To start a replication, [add a replication document](#replication-document-format) to the `_replicator` database.
 
 <div></div>
+
+####(Optional) Creating a replication to two Bluemix environments
+
+You can replicate a Cloudant database to multiple Bluemix environments. When you set up the replication job for each environment, the source database and target database names you provide must use this format, `https://$USERNAME:$PASSWORD@$REMOTE_USERNAME.cloudant.com/$DATABASE_NAME`. You create the database name, `$DATABASE_NAME`, and add it to the URL format. Do not copy the `URL` field from the `VCAP_SERVICES` environment variable. 
 
 #### Monitoring a replication
 
@@ -302,7 +306,7 @@ Accept: application/json
 }
 ```
 
-> Example error reponse if one of the requested databases for a replication does not exist:
+> Example error response if one of the requested databases for a replication does not exist:
 
 ```json
 {
@@ -501,7 +505,7 @@ Database accesses are counted as part of the work performed by a multi-tenant da
 
 Cancel continuous replication by including the `cancel` field in the JSON request object, and setting the value to `true`.
 
-<aside class="warning" role="complementary" aria-label="identicalrequest">For the cancelation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
+<aside class="warning" role="complementary" aria-label="identicalrequest">For the cancellation request to succeed, the structure of the request must be identical to the original request. In particular, if you requested continuous replication, the cancellation request must also contain the `continuous` field.</aside>
 
 Requesting cancellation of a replication that does not exist results in a 404 error.
 
@@ -569,7 +573,7 @@ Content-Type: application/json
 }
 ```
 
-A simple example of creating a replication task, then canceling it.
+A simple example of creating a replication task, then cancelling it.
 
 ### Replication database maintenance
 
