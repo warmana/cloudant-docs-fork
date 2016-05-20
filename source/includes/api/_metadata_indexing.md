@@ -59,7 +59,7 @@ When you create the filter function, the documents that meet the filter criteria
 
 
 ### <a name="id-section2">Querying a couch_md index</a>
-A single end point queries the index with one optional query parameter to control the representation of the result. Replace the account, database, design doc, and filter values with the names you use in your environment, as in the examples that follow. 
+A single endpoint queries the index with one optional query parameter to control the representation of the result. Replace the account, database, design doc, and filter values with the names you use in your environment, as in the examples that follow. 
 
 `curl -X GET https://<account>.cloudant.com/<database>/<_design_doc>/_schema/<filter>`
 
@@ -103,7 +103,7 @@ In general, schema variation exists in a database if there are documents that im
 </li></ul>
 
 #### Output interpretation
-The output of querying the couch_md index includes a list of schemas. The `union` end point contains only one schema in the list. The `all` end point can include from one to several schemas in the list. 
+The output of querying the couch_md index includes a list of schemas. The `union` endpoint contains only one schema in the list. The `all` endpoint can include from one to several schemas in the list. 
 
 The schema output includes the following elements. 
 
