@@ -573,7 +573,7 @@ Content-Type: application/json
 }
 ```
 
-A simple example of creating a replication task, then canceling it.
+A simple example of creating a replication task, then cancelling it.
 
 ### Replication database maintenance
 
