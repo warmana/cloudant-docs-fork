@@ -264,9 +264,7 @@ The updated list should _omit_ the API key.
 ```http
 PUT /$DATABASE/_security HTTP/1.1
 Content-Type: application/json
-
 {
-
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
@@ -277,13 +275,13 @@ Content-Type: application/json
    }
  }
 }
-
 ```
-```curl
+
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
      -X PUT \
      -H "Content-Type: application/json" \
-     -d "$JSON"
+     -d "$JSON"     
 {
 
   "couchdb_auth_only": true,
