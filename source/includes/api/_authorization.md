@@ -259,7 +259,53 @@ The updated list should _omit_ the API key.
 }
 ```
 
+> Modification request:
+
+```http
+PUT /$DATABASE/_security HTTP/1.1
+Content-Type: application/json
+{
+  "couchdb_auth_only": true,
+ "members": {
+   "names": ["member"],"roles":[]
+
+   },
+  "admins": {
+     "names": ["admin"],"roles":[]
+   }
+ }
+}
+```
+
+```shell
+curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
+     -X PUT \
+     -H "Content-Type: application/json" \
+     -d "$JSON"     
+{
+
+  "couchdb_auth_only": true,
+ "members": {
+   "names": ["member"],"roles":[]
+
+   },
+  "admins": {
+     "names": ["admin"],"roles":[]
+   }
+ }
+}
+```
+
 You can use the `_users` database to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
+
+> Example response:
+
+```json
+{
+ "ok" : true
+}
+```
+
 
