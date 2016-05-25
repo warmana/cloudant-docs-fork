@@ -247,18 +247,6 @@ The updated list should _omit_ the API key.
 
 ### Enabling the `_users` database with Cloudant
 
-> Example JSON document turns off Cloudant security
-
-```json
-{
-	"couchdb_auth_only": true,
-	"members": {
- 		"names": ["demo"],"roles":[]
- 	},
- 	"admins": {...}
-}
-```
-
 > Modification request:
 
 ```http
@@ -268,7 +256,6 @@ Content-Type: application/json
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
-
    },
   "admins": {
      "names": ["admin"],"roles":[]
@@ -283,11 +270,9 @@ curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
      -H "Content-Type: application/json" \
      -d "$JSON"     
 {
-
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
-
    },
   "admins": {
      "names": ["admin"],"roles":[]
