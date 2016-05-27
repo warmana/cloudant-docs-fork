@@ -266,10 +266,9 @@ Content-Type: application/json
 
 ```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
-     -X PUT \
-     -H "Content-Type: application/json" \
-     -d "$JSON"     
-{
+-X PUT \      
+-H "Content-Type: application/json" \      
+-d '{
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
@@ -277,11 +276,10 @@ curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
   "admins": {
      "names": ["admin"],"roles":[]
    }
- }
-}
+ }'
 ```
 
-You can use the `_users` database to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+You can use the [_users database](http://docs.couchdb.org/en/1.6.1/intro/security.html#authentication-database) to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
 
