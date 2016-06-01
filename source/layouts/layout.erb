@@ -214,7 +214,6 @@ under the License.
               Page.new('Documents', 'document.html', []),
               Page.new('Attachments', 'attachments.html', []),
               Page.new('Query', 'cloudant_query.html', []),
-              Page.new('Metadata Indexing', 'metadata_discovery.html', []),
               Page.new('Design Documents', 'design_documents.html', []),
               Page.new('Views (MapReduce)', 'creating_views.html', []),
               Page.new('Search', 'search.html', []),
@@ -241,7 +240,7 @@ under the License.
               Page.new('CouchApps', 'couchapps.html', []),
               Page.new('Design document management', 'design_document_management.html', [])
             ])
-          ].each { |page| 
+          ].each { |page|
             %>
 <li class="tocify-item"><a href="<%=page.link%>"><%=page.name%></a>
 				    <%
