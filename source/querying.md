@@ -1,5 +1,9 @@
 ---
-title: Cloudant Documentation - Ruby
+title: Cloudant Documentation - Querying
+
+thebe:
+  codemirror_mode_name: shell
+  kernel_name: metakernel_bash
 
 language_tabs:
 #  - http
@@ -15,6 +19,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - libraries/ruby
+  - guides/querying
 
 ---
