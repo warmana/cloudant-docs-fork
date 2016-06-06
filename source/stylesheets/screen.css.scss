@@ -49,7 +49,7 @@ html, body {
   z-index: 1024;
   background: #0c161f;
   box-shadow: 0 1px 3px #000;
-  
+
   img {
     display: inline-block;
     margin: $logo-margin;
@@ -80,13 +80,13 @@ html, body {
   background-color: $nav-bg;
   font-size: 18px;
   font-weight: 500;
-  
+
   .tocify-header {
     overflow-y: auto;
     overflow-x: hidden;
 
   }
-  
+
   .tocify-item>a {
     padding: 0 $nav-padding 0 $nav-padding;
     display: block;
@@ -112,19 +112,19 @@ html, body {
     @include transition-timing-function('linear');
     @include transition-duration(230ms);
   }
-  
+
   // Adjust top of first toc header for search box, and
   // bottom of last header for footer
   .first-header {
     margin-top: 80px;
     height: calc(100% - 166px);
   }
-  
+
   a, a:visited {
     text-decoration: none;
     color: $nav-text;
   }
-  
+
   // This is the currently selected ToC entry
   .tocify-focus, .tocify-focus a {
     @include box-shadow(0px 1px 0px $nav-active-shadow);
@@ -193,7 +193,7 @@ html, body {
       margin-left: 18px;
     }
   }
-  
+
   // typeahead search box
   #searchbox {
     width: $nav-width;
@@ -201,13 +201,13 @@ html, body {
     padding: 28px 0 28px 0;
     position: fixed;
     background-color: $nav-bg;
-    
+
     form {
       margin: 0;
-      
+
       input {
         width: 140px;
-        
+
         &:focus {
           outline: none;
         }
@@ -243,7 +243,7 @@ html, body {
   position: relative;
   z-index: 10;
   background-color: $main-bg;
-  
+
   top: 50px;
 
   padding-bottom: 1px; // prevent margin overflow
@@ -261,7 +261,7 @@ html, body {
     top: 0;
     bottom: 0;
   }
-  
+
   .err {
     background-color: inherit;
     color: inherit;
@@ -327,9 +327,23 @@ body, html {
   min-height: 100%;
   padding-bottom: 60px;
 
-  &>form, &>h1, &>h2, &>h3, &>h4, &>p, &>table, &>ul, &>ol, &>aside, &>dl{
+  &>form, &>h1, &>h2, &>h3, &>h4, &>p, &>ul, &>ol, &>aside, &>dl{
     margin-right: $examples-width;
     padding: 0 $main-padding;
+    @include box-sizing(border-box);
+    display: block;
+    @include text-shadow($main-embossed-text-shadow);
+  }
+
+  &>table {
+    margin-right: 0;
+    thead {
+      background-color: darken($main-bg,2.4%);
+    }
+    clear: both;
+    background-color: darken($main-bg,4.2%);
+    padding: 0;
+    border: $main-padding solid darken($main-bg,4.2%);
     @include box-sizing(border-box);
     display: block;
     @include text-shadow($main-embossed-text-shadow);
@@ -353,7 +367,7 @@ body, html {
     margin-top: 2em;
     margin-bottom: $h1-margin-bottom;
   }
-  
+
   h1:first-of-type, h2:first-of-type {
     margin-top: 12px;
   }
@@ -374,7 +388,7 @@ body, html {
     padding-top: 1.2em;
     padding-bottom: 1.2em;
   }
-  
+
   // h2s right after h1s should bump right up
   // against the h1s.
   h1 + h2, h1 + div + h2 {
@@ -389,18 +403,18 @@ body, html {
     margin-bottom: 0.8em;
     text-transform: uppercase;
   }
-  
+
   h4 {
     @extend %header-font;
     font-size: 14px;
     margin-top: 1.5em;
     margin-bottom: 0.5em;
   }
-  
+
   h5 {
     padding-left: 40px;
   }
-  
+
   h6 {
     visibility:hidden;
     margin-top: 0;
@@ -415,7 +429,6 @@ body, html {
   }
 
   table {
-    margin-bottom: 1em;
     overflow: auto;
     th,td {
       text-align: left;
@@ -431,10 +444,6 @@ body, html {
 
     td {
       padding: 10px;
-    }
-
-    tr:last-child {
-      border-bottom: 1px solid #ccc;
     }
 
     tr:nth-child(odd)>td {
@@ -476,7 +485,7 @@ body, html {
   }
 
   aside {
-    background: $aside-notice-bg; 
+    background: $aside-notice-bg;
     line-height: 1.7;
     font-weight: 400;
     font-size: 16px;
@@ -554,13 +563,13 @@ body, html {
   }
   pre {
     @extend %code-font;
-    
+
     &:last-of-type {
       border-top: 0.2em solid $examples-bg;
       margin-top: -0.2em;
     }
   }
-  
+
   blockquote:before {
     content: "";
     display: inline-block;
@@ -573,7 +582,7 @@ body, html {
     top: 0px;
     z-index: 1000;
   }
-  
+
   blockquote {
     border-top: 1em solid $examples-bg;
     &>p {
@@ -621,14 +630,14 @@ body, html {
     right: 40px;
     background: url("../images/code_expand_icon.png");
   }
-  
+
   &.hide-code-column {
     left: calc(100% - 38px);
   }
 }
 
 /////////////////////////////////////////////////////////////////////
-//THIRD COLUMN CODE COLORS 
+//THIRD COLUMN CODE COLORS
 /////////////////////////////////////////////////////////////////////
 
 .highlight .s, .highlight .sb, .highlight .sc, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {

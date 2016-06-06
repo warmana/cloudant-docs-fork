@@ -7,9 +7,9 @@ are permitted to perform certain tasks. This is called authorization.
 
 Role&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description
 -------------------|------------
-`_reader`          | Gives the user permission to read documents (except design documents) from the database.
+`_reader`          | Gives the user permission to read documents from the database.
 `_writer`          | Gives the user permission to create, update, and delete documents (except design documents) in the database.
-`_admin`           | Gives the user all permissions, including setting permissions.
+`_admin`           | Gives the user the ability to change security settings, including adding roles.
 `_replicator`      | Gives the user permission to replicate a database, including creating checkpoints.
 `_db_updates`      | Gives the user permission to use the global changes feed.
 `_design`          | Gives the user permission to read design documents.
@@ -204,8 +204,8 @@ account.request({
 
 ```json
 {
-  "password": "YPNCaIX1sJRX5upaL3eqvTfi", 
-  "ok": true, 
+  "password": "YPNCaIX1sJRX5upaL3eqvTfi",
+  "ok": true,
   "key": "blentfortedsionstrindigl"
 }
 ```
@@ -266,10 +266,9 @@ Content-Type: application/json
 
 ```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
-     -X PUT \
-     -H "Content-Type: application/json" \
-     -d "$JSON"     
-{
+-X PUT \
+-H "Content-Type: application/json" \
+-d '{
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
@@ -277,11 +276,10 @@ curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
   "admins": {
      "names": ["admin"],"roles":[]
    }
- }
-}
+ }'
 ```
 
-You can use the `_users` database to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+You can use the [_users database](http://docs.couchdb.org/en/1.6.1/intro/security.html#authentication-database) to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
 
@@ -292,5 +290,3 @@ You can use the `_users` database to manage roles in Cloudant. However, you must
  "ok" : true
 }
 ```
-
-

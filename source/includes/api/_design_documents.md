@@ -69,12 +69,19 @@ Content-Type: application/json
 Destination: /recipes/_design/recipelist
 ```
 
+```shell
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes" \
+     -X COPY \
+     -H 'Content-Type: application/json' \
+     -H 'Destination: /recipes/_design/recipelist'
+```
+
 > Example response to copy command:
 
 ```json
 {
-  "id" : "recipes/_design/recipelist"
-  "rev" : "1-9c65296036141e575d32ba9c034dd3ee",
+  "id": "recipes/_design/recipelist",
+  "rev": "1-9c65296036141e575d32ba9c034dd3ee"
 }
 ```
 
@@ -120,6 +127,13 @@ Content-Type: application/json
 Destination: recipes/_design/recipelist
 ```
 
+```shell
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes?rev=1-e23b9e942c19e9fb10ff1fde2e50e0f5" \
+     -X COPY \
+     -H 'Content-Type: application/json' \
+     -H 'Destination: /recipes/_design/recipelist'
+```
+
 To copy *from* a specific version, add the `rev` argument to the query
 string.
 
@@ -136,6 +150,13 @@ the source document.
 COPY /recipes/_design/recipes
 Content-Type: application/json
 Destination: recipes/_design/recipelist?rev=1-9c65296036141e575d32ba9c034dd3ee
+```
+
+```shell
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes" \
+     -X COPY \
+     -H 'Content-Type: application/json' \
+     -H 'Destination: /recipes/_design/recipelist?rev=1-9c65296036141e575d32ba9c034dd3ee'
 ```
 
 > Example response to overwriting successfully an existing design document:
@@ -159,16 +180,20 @@ The return value is the new revision of the copied document.
 
 ```http
 DELETE /recipes/_design/recipes?rev=2-ac58d589b37d01c00f45a4418c5a15a8 HTTP/1.1
-Content-Type: application/json
+```
+
+```shell
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes?rev=2-ac58d589b37d01c00f45a4418c5a15a8" \
+     -X DELETE
 ```
 
 > Example response, containing the delete document ID and revision:
 
 ```json
 {
-  "id" : "recipe/_design/recipes"
-  "ok" : true,
-  "rev" : "3-7a05370bff53186cb5d403f861aca154",
+  "id": "recipe/_design/recipes",
+  "ok": true,
+  "rev": "3-7a05370bff53186cb5d403f861aca154"
 }
 ```
 
@@ -397,12 +422,11 @@ function (head, req) {
 
 ```http
 GET /$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX HTTP/1.1
-Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX \
-     -u $USERNAME
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX" \
+     -u "$USERNAME:$PASSWORD"
 ```
 
 ```javascript
@@ -419,7 +443,7 @@ db.view_with_list($DESIGN_ID, $MAPREDUCE_INDEX, $LIST_FUNCTION, function (err, b
 
 Use list functions to customize the format of [MapReduce](creating_views.html#using-views) query results.
 They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
-You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`. 
+You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`.
 
 <aside class="warning" role="complementary" aria-label="listresultnotstored">The result of a list function is not stored. This means that the function is executed every time a request is made.
 As a consequence, using map-reduce functions might be more efficient.
@@ -559,15 +583,14 @@ function(doc, req){
 
 ```http
 POST /$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER HTTP/1.1
-Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER \
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER" \
      -X POST \
-     -H "Content-Type: application/json" \
-     -u $USERNAME
+     -H 'Content-Type: application/json' \
+     -u "$USERNAME:$PASSWORD"
      -d "$JSON"
 ```
 
@@ -664,12 +687,11 @@ More details about the `req` parameter are available [here](#req).
 
 ```http
 GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION HTTP/1.1
-Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION \
-     -u $USERNAME
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION" \
+     -u "$USERNAME:$PASSWORD"
 ```
 
 To apply a filter function to the changes feed,
@@ -682,12 +704,11 @@ providing the name of the filter to use.
 
 ```http
 GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new HTTP/1.1
-Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new \
-     -u $USERNAME
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new" \
+     -u "$USERNAME:$PASSWORD"
 ```
 
 > Example filter function that uses the `req` argument:
@@ -758,29 +779,28 @@ There are two endpoints available that provide you with more information: `_info
 
 ```http
 GET /recipes/_design/recipesdd/_info HTTP/1.1
-Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/recipes/_design/recipesdd/_info \
-     -u $USERNAME
+curl "https://$ACCOUNT.cloudant.com/recipes/_design/recipesdd/_info" \
+     -u "$USERNAME:$PASSWORD"
 ```
 
 > Example JSON structure response:
 
 ```json
 {
-   "name" : "recipesdd"
-   "view_index" : {
-      "compact_running" : false,
-      "updater_running" : false,
-      "language" : "javascript",
-      "purge_seq" : 10,
-      "waiting_commit" : false,
-      "waiting_clients" : 0,
-      "signature" : "fc65594ee76087a3b8c726caf5b40687",
-      "update_seq" : 375031,
-      "disk_size" : 16491
+   "name" : "recipesdd",
+   "view_index": {
+      "compact_running": false,
+      "updater_running": false,
+      "language": "javascript",
+      "purge_seq": 10,
+      "waiting_commit": false,
+      "waiting_clients": 0,
+      "signature": "fc65594ee76087a3b8c726caf5b40687",
+      "update_seq": 375031,
+      "disk_size": 16491
    },
 }
 ```
@@ -810,12 +830,11 @@ The individual fields in the returned JSON structure are as follows:
 
 ```http
 GET /foundbite/_design/app/_search_info/description HTTP/1.1
-Host: $USERNAME.cloudant.com
 ```
 
 ```shell
-curl https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/description \
-     -u $USERNAME
+curl "https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/description" \
+     -u "$USERNAME:$PASSWORD"
 ```
 
 > Example JSON structure response:

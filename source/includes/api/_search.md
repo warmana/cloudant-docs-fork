@@ -362,7 +362,7 @@ Argument | Description | Optional | Type | Supported Values
 `stale` | Don't wait for the index to finish building to return results. | yes | string | ok
 `highlight_fields` | Specifies which fields should be highlighted. If specified, the result object will contain a `highlights` field with an entry for each specified field. | yes | Array of strings |
 `highlight_pre_tag` | A string inserted before the highlighted word in the highlights output | yes, defaults to `<em>` | String |
-`highlight_post_tag` | A string inserted after the highlighted word in the highlights output | yes, defaults to `<em>` | String |
+`highlight_post_tag` | A string inserted after the highlighted word in the highlights output | yes, defaults to `</em>` | String |
 `highlight_number` | Number of fragments returned in highlights. If the search term occurs less often than the number of fragments specified, longer fragments are returned. | yes, defaults to 1 | Numeric |
 `highlight_size` | Number of characters in each fragment for highlights. | yes, defaults to 100 characters | Numeric |
 `include_fields` | A JSON array of field names to include in search results. Any fields included must have been indexed with the `store:true` option. | yes, the default is all fields | Array of strings |
@@ -710,20 +710,19 @@ You can combine sorting by distance with any other search query, such as range s
 > Search query with highlighting enabled
 
 ```http
-GET /movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=\[\"movie_name\"\]&highlight_pre_tag=\"<b>\"&highlight_post_tag=\"b/>\""&highlights_size=30&highlights_number=2 HTTP/1.1
-HOST: account.cloudant.com
+GET /movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=["movie_name"]&highlight_pre_tag="<b>"&highlight_post_tag="</b>"&highlights_size=30&highlights_number=2 HTTP/1.1
+HOST: <account>.cloudant.com
 Authorization: ...
 ```
 
 ```shell
-curl "https://user:password@account.cloudant.com/movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=\[\"movie_name\"\]&highlight_pre_tag=\"<b>\"&highlight_post_tag=\"b/>\""&highlights_size=30&highlights_number=2
+curl "https://$user:$password@$account.cloudant.com/movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=\[\"movie_name\"\]&highlight_pre_tag=\"<b>\"&highlight_post_tag=\"</b>\"&highlights_size=30&highlights_number=2
 ```
 
 > Search result with highlights
 
 ```json
 {
-
   "highlights": {
     "movie_name": [
       " on the <b>Azazel</b> Orient Express",
