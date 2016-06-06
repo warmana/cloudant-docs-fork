@@ -23,7 +23,7 @@ function activateLanguage(language) {
   $(".highlight." + language).show();
   $(".highlight.plaintext").show();
   $(".highlight.json").show();
-  
+
 }
 
 function setupLanguages(l) {
@@ -47,7 +47,7 @@ function setupLanguages(l) {
 
   // if we click on a language tab, reload the page with that language in the URL
   $("#lang-selector a").bind("click", function() {
-    window.location.replace("?" + $(this).data("language-name") + window.location.hash);
+    activateLanguage($(this).data("language-name"));
     return false;
   });
 
