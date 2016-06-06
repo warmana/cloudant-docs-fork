@@ -95,6 +95,9 @@ the index immediately after use, it can be useful to set this to `3`, so that a 
 used for the creation. It does not affect anything other than index creation.
 -->
 
+For more details on how text indexes work,
+see the [note about `text` indexes](cloudant_query.html#note-about-text-indexes).
+
 > Example index creation request
 
 ```json
@@ -144,7 +147,6 @@ as it might be a very resource-consuming activity.</aside>
 }
 ```
 
-
 ##### The `default_field` field
 
 The `default_field` value specifies how the `$text` operator can be used with the index.
@@ -187,8 +189,33 @@ The acceptable types are:
 -	`"string"`
 -	`"number"`
 
-For more details on how text indexes work,
-see the [note about `text` indexes](#note-about-text-indexes).
+##### The `index_array_lengths` field
+
+> Suggested settings to optimize performance on production systems
+
+```json
+default_field": {
+   "enabled": false
+},
+"index_array_lengths": false
+```
+
+Cloudant Query text indexes have a property `index_array_lengths`.
+If the property is not explicitly set,
+the default value is `true`.
+
+If the field is set to `true`,
+the index performs additional work,
+scanning every document for any arrays and creating a field to hold the length for each array found.
+
+You might prefer to set the `index_array_lengths` field to `false` if:
+
+-	You do not need to know the length of an array.
+- You do not use the [`$size` operator](cloudant_query.html#the-$size-operator).
+-	The documents in your database are complex, or not completely under your control, making it difficult to estimate the impact of the extra processing overhead to determine and store the array lengths.
+
+<aside class="warning" role="complementary" aria-label="sizerequiresindexarraylengthstrue">The [`$size` operator](cloudant_query.html#the-$size-operator) requires that the `index_array_lengths` field is set to `true`,
+otherwise the operator cannot work.</aside>
 
 ### Query Parameters
 
