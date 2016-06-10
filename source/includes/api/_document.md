@@ -257,6 +257,10 @@ To update (or create) a document, make a PUT request with the updated JSON conte
 <aside class="warning" role="complementary" aria-label="uselatestrev1">If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
 This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
+<aside class="warning" role="complementary" aria-label="updateconflicts">
+Any document update can lead to a conflict - espescially if you replicate updated documents. To learn more about avoiding and resolving conflicts, check out our [Document Versioning and MVCC guide](mvcc.html).
+</aside>
+
 <div></div>
 
 > Example response:

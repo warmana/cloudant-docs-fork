@@ -737,3 +737,38 @@ Sometimes it is useful to get the context in which a search term was mentioned s
 In the response, a `highlights` field will be added with one subfield per field name. For each field, you will receive an array of fragments with the search term highlighted.
 
 <aside class="notice" role="complementary" aria-label="storefieldinindex">For highlighting to work, you need to have the field stored in the index by using the `store: true` option.</aside>
+
+### Search index metadata
+
+> Example request
+
+```http
+GET /<DATABASE>/_design/<DDOC>/_search_info/<INDEX> HTTP/1.1
+```
+
+```shell
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_design/$DDOC/_search_info/$INDEX" \
+     -X GET -u "$USERNAME:$PASSWORD"
+```
+
+To retrieve information about a search index, you can send a `GET` request to the `_search_info`
+endpoint as shown in the example. `DDOC` refers to the design document that contains the index and
+`INDEX` is the name of the index.
+
+> Example response
+
+```json
+{
+  "name": "_design/DDOC/INDEX",
+  "search_index": {
+    "pending_seq": 7125496,
+    "doc_del_count": 129180,
+    "doc_count": 1066173,
+    "disk_size": 728305827,
+    "committed_seq": 7125496
+  }
+}
+```
+
+The response contains information about your index such as the number of document in the index and
+its size on disk.
