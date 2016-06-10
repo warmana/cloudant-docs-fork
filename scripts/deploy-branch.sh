@@ -28,6 +28,7 @@ then
     security='
       {
         "cloudant": {
+          "mgroenen": ["_reader"],
 		      "kimstebel": ["_reader"],
 		      "warmanaibm": ["_reader"],
 		      "bradnoble": ["_reader"],
