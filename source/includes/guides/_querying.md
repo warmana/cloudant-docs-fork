@@ -28,10 +28,13 @@ The following code sets up a few variables to authenticate to Cloudant. If you d
 yet, you can [sign up](https://console.ng.bluemix.net/catalog/services/ibm-graph/) and copy your
 credentials into the script.
 
-Once the variables are set, the script sends a request to the [`/_session` endpoint](api.html#authentication). The response is a JSON object with the session token in the `gds-token` field. We use [jq](https://stedolan.github.io/jq/) to extract the token and save it in `$TOKEN`.
+Once the variables are set, the script sends a request to the [`/_session` endpoint](api.html#authentication).
+The response contains your session token in the `SET-COOKIE` header, which curl stores in `cookie.txt`.
+
+We use [jq](https://stedolan.github.io/jq/) to parse and display the JSON response.
 
 <pre class="thebe">
-# Copy your credentials(username, password, and account name) here. We recommend that you use an API key.
+# Copy your credentials(username, password, and account name) here.
 USER='your username or api key here'
 PASS='your password goes here'
 URL='https://your-account-name.cloudant.com'
@@ -108,6 +111,10 @@ curl "$URL/_replicate" \
 | jq '.'
 </pre>
 
+This response to the replication request will give you a lot of stats about the replication job,
+such has how many documents were replicated and whether there were any write failures. You can safely
+ignore those details for now as long as you see `"ok": true`, indicating that the replication was successful.
+
 Let's check that the list of your databases contains the one we just created.
 To do that, we send a `GET` request to [`/_all_dbs`](database.html#get-databases).
 
@@ -131,10 +138,13 @@ newly created movies database containing a description of the index we want to c
 body.
 
 <pre class="thebe">
-curl "$URL/movies/_index" -X POST -d '{
-  "type": "text",
-  "index": {}
-}' \
+curl "$URL/movies/_index" \
+     -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{
+           "type": "text",
+           "index": {}
+         }' \
 | jq '.'
 </pre>
 
@@ -175,7 +185,7 @@ provides more in depth information about different querying options.
 #### Sorting
 
 To sort your results, just specify a field name and its type (`string` or `number`) to sort by. In
-this example, we sort alphabetically my movie title. Setting `fields` to `["title"]` let's us
+this example, we sort alphabetically by movie title. Setting `fields` to `["title"]` let's us
 retrieve only the `title` field of each document.
 
 <pre class="thebe">
@@ -229,7 +239,7 @@ curl "$URL/movies/_find" \
                 "$in": [ "Zoe Saldana" ]
               }
             },
-            "fields": [ "title", "cast", "director" ]
+            "fields": [ "title", "cast", "director" ],
             "limit": 3
           }' \
 | jq '.'
