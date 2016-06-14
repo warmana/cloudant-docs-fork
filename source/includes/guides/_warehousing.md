@@ -72,17 +72,23 @@ the topic applies equally if you are using an instance of DB2.</aside>
 When you first create a warehouse from within Cloudant,
 dashDB creates the best possible schema for the data within the database,
 helping ensure that each of the fields within your JSON documents has a corresponding entry within the new schema.
+Optionally,
+when creating the warehouse,
+you can choose to [customize the schema](#customizing_the_warehouse_schema) manually.
 
 Once the schema is created,
 the warehouse is able to hold your data in a relational format.
-Cloudant then uses [replication](http://docs.cloudant.com/replication.html) to load the database documents into the warehouse,
+Cloudant then [replicates](http://docs.cloudant.com/replication.html) to perform
+an 'initial load' of the database documents into the warehouse,
 giving you a working collection of your data in the dashDB relational database.
 
 #### Working with your warehouse
 
 With Cloudant warehousing,
 you can run 'traditional' SQL queries,
-and view the results in the dashDB console.
+and view the results,
+all from within the dashDB console.<br/>
+![Screenshot of the "dashDB dashboard" within Bluemix](images/useDashDBdashboard.png)
 
 External applications can interact with the data in the same way as with any other relational database.
 
@@ -104,10 +110,10 @@ see the [IBM dashDB Cloud Data Warehouse documentation](https://www.ibm.com/supp
 
 Data is loaded from Cloudant into dashDB using a [replication](http://docs.cloudant.com/replication.html) process.
 This means that if your Cloudant data is updated or modified in some way,
-replication into dashDB must take place again to ensure your analytic tasks continue to work using the most up-to-date information.
+replication of the documents into dashDB must take place again to ensure your analytic tasks continue to work using the most up-to-date information.
 
 As with normal Cloudant replication,
-data is transferred one-way only: from Cloudant to dashDB.
+data is transferred one-way only: for a warehouse the transfer is from Cloudant to dashDB.
 After the initial load of data,
 the warehouse subscribes to changes in the Cloudant database.
 Any changes are replicated from the Cloudant source to the dashDB target.
@@ -128,3 +134,28 @@ and determines the new schema required in dashDB.
 The old tables within dashDB are then dropped,
 new tables created using the new schema,
 and finally the current Cloudant data is loaded as a fresh replication.
+
+To use the rescan facility,
+first ensure that your warehouse is not running.
+Do this by:
+
+1.	Selecting the 'Warehouse' tab within the Cloudant dashboard.
+2.	Find your warehouse:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](images/selectWarehouse.png)
+3.	Click on the warehouse link, which opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](images/viewWarehouseDetail.png)
+4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the square `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](images/stopWarehouseDatabase.png)
+5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](images/rescanIcon.png)
+
+##### Rescanning the source database
+
+![Screenshot of the window enabling you to rescan the warehouse source database.](images/rescanSource.png)
+
+When you click the `Rescan` icon,
+you have two choices:
+
+-	A straightforward scan of your database. This is the default action, and is very similar to the initial scan of your database performed when the warehouse was first created.
+-	Customize the warehouse schema. 
+
+To manually customize the warehouse schema, enabled the `Customize Schema` checkbox then click the `Rescan` button.
+
+##### Customizing the warehouse schema
+
