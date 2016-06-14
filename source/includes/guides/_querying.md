@@ -34,7 +34,7 @@ The response contains your session token in the `SET-COOKIE` header, which curl 
 We use [jq](https://stedolan.github.io/jq/) to parse and display the JSON response.
 
 <pre class="thebe">
-# Copy your credentials(username, password, and account name) here.
+# Copy your credentials (username, password, and account name) here.
 USER='your username or api key here'
 PASS='your password goes here'
 URL='https://your-account-name.cloudant.com'
