@@ -72,7 +72,7 @@ curl
 ```json
 {
   "_id": "weekly_backup",
-  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "source": "https://username:password@myaccount1.cloudant.com/source",
   "target": "https://username:password@myaccount2.cloudant.com/destination",
   "create_target": true
 }
@@ -137,7 +137,7 @@ curl
 ```json
 {
   "_id": "weekly_continuous_backup",
-  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "source": "https://username:password@myaccount1.cloudant.com/source",
   "target": "https://username:password@myaccount2.cloudant.com/destination",
   "continuous": true
 }
@@ -280,7 +280,7 @@ curl
 ```json
 {
   "_id": "weekly_backup",
-  "source": "https://username:password@myaccount1.cloudant..com/source",
+  "source": "https://username:password@myaccount1.cloudant.com/source",
   "target": "https://username:password@myaccount2.cloudant.com/destination",
   "filter": "mydesigndoc/myfilter",
   "query_params": {
