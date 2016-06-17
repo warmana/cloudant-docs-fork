@@ -67,7 +67,7 @@ you can create a DB2 warehouse instance instead of dashDB. Do this by using the 
 
 <aside class="notify">The remainder of this topic refers to dashDB as the warehouse instance.
 However,
-the topic applies equally if you are using an instance of DB2.</aside> 
+the topic applies equally if you are using an instance of DB2.</aside>
 
 When you first create a warehouse from within Cloudant,
 dashDB creates the best possible schema for the data within the database,
@@ -118,10 +118,10 @@ After the initial load of data,
 the warehouse subscribes to changes in the Cloudant database.
 Any changes are replicated from the Cloudant source to the dashDB target.
 Therefore,
-warehousing is a form of continuous replication from Cloudant to dashDB. 
+warehousing is a form of continuous replication from Cloudant to dashDB.
 
 Over time,
-your Cloudant database might also have structural changes. 
+your Cloudant database might also have structural changes.
 This might include the addition or removal of fields from the JSON documents.
 When this happens,
 the schema used by the warehouse might become invalid,
@@ -153,9 +153,10 @@ When you click the `Rescan` icon,
 you have two choices:
 
 -	A straightforward scan of your database. This is the default action, and is very similar to the initial scan of your database performed when the warehouse was first created.
--	Customize the warehouse schema. 
+-	Customize the warehouse schema.
 
 To manually customize the warehouse schema, enabled the `Customize Schema` checkbox then click the `Rescan` button.
 
 ##### Customizing the warehouse schema
 
+It is possible to modify the database schema that is determined automatically during the warehouse creation process.
