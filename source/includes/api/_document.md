@@ -303,16 +303,6 @@ db.destroy($JSON._id, $REV, function (err, body, headers) {
 });
 ```
 
-To delete a document, make a DELETE request with the document's latest `_rev` in the querystring, to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
-
-<aside class="warning" role="complementary" aria-label="uselatestrev2">If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
-This error prevents you overwriting data changed by other clients. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
-
-<aside class="warning" role="complementary" aria-label="notcompletedelete">CouchDB doesn’t completely delete the specified document. Instead, it leaves a tombstone with very basic information about the document. The tombstone is required so that the delete action can be replicated. Since the tombstones stay in the database indefinitely, creating new documents and deleting them increases the disk space usage of a database and the query time for the primary index, which is used to look up documents by their ID.
-</aside>
-
-<div></div>
-
 > Deletion response:
 
 ```json
@@ -323,9 +313,17 @@ This error prevents you overwriting data changed by other clients. If the write 
 }
 ```
 
+To delete a document, make a DELETE request with the document's latest `_rev` in the querystring, to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
+
 The response contains the ID and the new revision of the document or an error message in case the update failed.
 
-#### 'Tombstone' documents
+<aside class="warning" role="complementary" aria-label="uselatestrev2">If you fail to provide the latest `_rev`, Cloudant responds with a [409 error](http.html#409).
+This error prevents you overwriting data changed by other clients. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
+
+<aside class="warning" role="complementary" aria-label="notcompletedelete">CouchDB doesn’t completely delete the specified document. Instead, it leaves a tombstone with very basic information about the document. The tombstone is required so that the delete action can be replicated. Since the tombstones stay in the database indefinitely, creating new documents and deleting them increases the disk space usage of a database and the query time for the primary index, which is used to look up documents by their ID.
+</aside>
+
+### 'Tombstone' documents
 
 Tombstone documents are small documents left in place within a database when the original document is deleted.
 Their purpose is to allow the deletion to be replicated.
@@ -349,6 +347,7 @@ To reduce these effects,
 you might want to remove the tombstones.
 
 <div></div>
+
 #### Simple removal of 'tombstone' documents
 
 > Example filter to exclude deleted documents during a replication
