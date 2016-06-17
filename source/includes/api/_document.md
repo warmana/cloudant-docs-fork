@@ -391,9 +391,11 @@ causing an inconsistency.
 A solution is to perform more advanced removal of tombstones using
 a [`validate_doc_update` function](http://docs.couchdb.org/en/1.6.1/couchapp/ddocs.html#validate-document-update-functions).
 
-A `validate_doc_update` function is stored in a design document,
-and is used to prevent invalid or unauthorized document updates from being performed.
-The function works with:
+A `validate_doc_update` function is stored in a design document.
+The function is executed every time a document is updated in the database.
+The function can be used to prevent invalid or unauthorized document updates from being performed.
+
+The function works using the following parameters:
 
 -	The new version of the document.
 -	The current version of the document in the database.
@@ -436,7 +438,7 @@ function(newDoc, oldDoc, userCtx) {
 For tombstone removal,
 a suitable `validate_doc_update` function would work as follows:
 
-1.	If the update is to apply a change to an existing document (`oldDoc`) within the target database, the function allows this by simply returning. This same test allows a tombstone to pass through the replication process correctly the first time it is encountered, to enable proper deletion of the document from the target database.
+1.	If the update is to apply a change to an existing document (`oldDoc`) within the target database, the function allows this by simply returning.  The reason is that the update is to a document that was copied to the target database during the replication, but has subsequently changed in the source database during the replication. It is possible that the change is a 'Delete', which results in a tombstone record in the target database.  The tombstone record is removed by a subsequent replication process at some point in the future.
 2.	If the target database does _not_ have a copy of the current document, _and_ the update document has the `_deleted` property (indicating that it is a tombstone), then the update must be a tombstone _and_ it has been encountered before, so the update should be rejected.
 3.	Finally, if the function has not yet returned or thrown an error, allow the update to replicate to the target database, as some other condition applies.
 
@@ -446,6 +448,8 @@ To use a `validate-doc-update` function to remove tombstone documents:
 2.	If appropriate, delete the target database, then create a new target database.
 3.	Add a suitable `validate_doc_update` function, similar to the example provided. Add it to a design document in the target database.
 4.	Restart replication between the source and the (new) target database.
+5.	When replication is complete, switch your application logic to use the new database.
+6.	Verify that your applications work correctly with the new database. When you are satisfied that everything is working correctly, you might wish to delete the old database. 
 
 A variation for using the `validate_doc_update` function to remove tombstone documents is possible.
 You might add some metadata to the tombstone documents,
