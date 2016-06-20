@@ -341,16 +341,17 @@ under the License.
               codemirror_mode_name: '<%= current_page.data.thebe.codemirror_mode_name %>'
             });
           }
-          $.ajax('https://tmpnb2.kimstebel.com:8000/api/stats', {
+          var tmpnbHosts = [https://tmpnb2.kimstebel.com:8000, 'https://tmpnb.kimstebel.com:8000'];
+          $.ajax(tmpnbHosts[0] + '/api/stats', {
             success: function(data) {
               if (data.available > 0) {
-                startThebe('https://tmpnb2.kimstebel.com:8000');
+                startThebe(tmpnbHosts[0]);
               } else {
-                startThebe('https://tmpnb.kimstebel.com:8000');
+                startThebe(tmpnbHosts[1]);
               }
             },
             error: function() {
-              startThebe('https://tmpnb.kimstebel.com:8000');
+              startThebe(tmpnbHosts[1]);
             },
             dataType: 'json',
             timeout: 2000
