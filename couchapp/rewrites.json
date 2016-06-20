@@ -43,6 +43,7 @@
 {"from": "/api/cors.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "api.html#cors"} },
 {"from": "/api/design-documents-get-put-delete-copy.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "api.html#rewrite-rules"} },
 {"from": "/databases.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "database.html"} },
+{"from": "/functiony.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {
     "from": "",
     "to": "index.html",
@@ -51,11 +52,11 @@
 },{
     "from": "/root/*",
     "to": "/../../*",
-    "query": {} 
+    "query": {}
 },{
     "from": "/root",
     "to": "/../../",
-    "query": {} 
+    "query": {}
 },{
     "from": "/*",
     "to": "/*",
