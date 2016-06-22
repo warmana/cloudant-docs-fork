@@ -5,4 +5,4 @@ IBM offers other versions of Cloudant, including Cloudant Data Layer Local Editi
 
 *	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team. 
 
-These additional versions are described in more detail in this section. 
+These versions are described in more detail in this section. 
