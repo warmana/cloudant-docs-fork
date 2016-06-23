@@ -36,7 +36,7 @@ changes and updates to their clusters in Bluemix Local.</p>
 **What name will display in the catalog for Cloudant service?**
 <p>The Cloudant service name will display as "Local".</p>
 
-*How many Cloudant clusters does I need?*
+*How many Cloudant clusters do I need?*
 <p>Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
 powers the Bluemix platform, while the other cluster powers external customer accounts and data.</p>
 
