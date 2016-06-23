@@ -1,6 +1,74 @@
 #### Hardware Requirements for Cloudant on Bluemix Local
 Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware, cluster,  requirements, Cloudant virtual machine distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
 
+
+[
+            Page.new('Overview', 'index.html', [
+              Page.new('Contents', 'index.html#contents', []),
+              Page.new('Contribute', 'index.html#contribute', [])
+            ]),
+            Page.new('Cloudant Basics', 'basics.html', [
+              Page.new('Database as a Service', 'basics.html#database-as-a-service', []),
+              Page.new('IBM Bluemix', 'basics.html#ibm-bluemix', []),
+              Page.new('HTTP API', 'basics.html#http-api', []),
+              Page.new('JSON', 'basics.html#json', []),
+              Page.new('How do I find data?', 'basics.html#how-do-i-find-data?', []),
+              Page.new('Distributed', 'basics.html#distributed', []),
+              Page.new('Replication', 'basics.html#replication', []),
+            ]),
+              Page.new('Versions of Cloudant', 'versions_cloudant.html#versions-cloudant', [
+              	Page.new('Cloudant Local', 'cloudant_local.html#cloudant-local', []),
+              	Page.new('Cloudant on Bluemix Local', 'cloudant_bluemix_local.html#cloudant-bluemix-local', [])
+            ]),
+            Page.new('Client Libraries', 'libraries.html', [
+              Page.new('Supported', 'libraries.html#supported-client-libraries', []),
+              Page.new('Third party', 'libraries.html#third-party-client-libraries', [])
+            ]),
+            Page.new('API Reference', 'api.html', [
+              Page.new('HTTP', 'http.html', []),
+              Page.new('Account', 'account.html', []),
+              Page.new('Authentication', 'authentication.html', []),
+              Page.new('Authorization', 'authorization.html', []),
+              Page.new('CORS', 'cors.html', []),
+              Page.new('Databases', 'database.html', []),
+              Page.new('Documents', 'document.html', []),
+              Page.new('Attachments', 'attachments.html', []),
+              Page.new('Query', 'cloudant_query.html', []),
+              Page.new('Design Documents', 'design_documents.html', []),
+              Page.new('Views (MapReduce)', 'creating_views.html', []),
+              Page.new('Search', 'search.html', []),
+              Page.new('Cloudant Geospatial', 'geo.html', []),
+              Page.new('Replication', 'replication.html', []),
+              Page.new('Advanced Replication', 'advanced_replication.html', []),
+              Page.new('Active tasks', 'active_tasks.html', []),
+              Page.new('Virtual hosts', 'vhosts.html', []),
+              Page.new('Advanced', 'advanced.html', []),
+              Page.new('Monitoring', 'monitoring.html', []),
+              Page.new('Backup', 'backup.html', []),
+              Page.new('Try it', 'try.html', [])
+            ]),
+            Page.new('Guides', 'guides.html', [
+              Page.new('JSON', 'json.html', []),
+              Page.new('Replication', 'replication_guide.html', []),
+              Page.new('Managing tasks', 'managing_tasks.html', []),
+              Page.new('Document versioning and conflicts', 'mvcc.html', []),
+              Page.new('Grouping related documents together in Cloudant', 'transactions.html', []),
+              Page.new('CAP theorem', 'cap_theorem.html', []),
+              Page.new('AcID', 'acid.html', []),
+              Page.new('Backup', 'backup-guide.html', []),
+              Page.new('Backup using Replication', 'backup-guide-using-replication.html', []),
+              Page.new('CouchApps', 'couchapps.html', []),
+              Page.new('Design document management', 'design_document_management.html', [])
+            ])
+          ].
+
+
+
+
+
+
+
+
 ##### Operating system
 Cloudant uses Debian version 8 operating system exclusively.
 
