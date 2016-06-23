@@ -163,5 +163,18 @@ To manually customize the warehouse schema, enabled the `Customize Schema` check
 
 It is possible to modify the database schema that is determined automatically during the warehouse creation process.
 To do this,
-ensure that you check the `Customize Schema` option during the creation process:
+ensure that you check the `Customize Schema` option during the creation process:<br/>
 ![Screen shot of warehouse creation panel, showing the 'Customize Schema' option enabled.](images/customizeSchema01.png)
+
+The warehouse is created in dashDB as normal,
+however it is not started immediately.
+Instead,
+you have the opportunity to customize the schema before proceeding.
+
+To do this,
+click the link for your warehouse:<br/>
+![Screen shot of `Open in dashDB` button.](images/openInDashDB.png)
+
+The resulting display gives you a button to customize the schema used for your source database:<br/>
+![Screen shot of `Customize <source database name>` button.](images/customizeSchema02.png)
+
