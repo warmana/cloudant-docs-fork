@@ -175,6 +175,25 @@ To do this,
 click the link for your warehouse:<br/>
 ![Screen shot of `Open in dashDB` button.](images/openInDashDB.png)
 
-The resulting display gives you a button to customize the schema used for your source database:<br/>
+The resulting display gives you a button to customize the schema used for your source database.
+Hovering over the Status indicator confirms that the schema is ready for customization:<br/>
 ![Screen shot of `Customize <source database name>` button.](images/customizeSchema02.png)
 
+Clicking on the 'Customize' button results in a panel where you can modify the fields in the database schema:<br/>
+![Screen shot of Customize Schema panel.](images/customizeSchema03.png)
+
+To reset the schema to the default,
+click the `Rescan` button:<br/>
+![Screen shot of `Rescan` button.](images/customizeSchema04.png)
+
+When you are happy with the database schema for the warehouse,
+simply click the `Run` button:<br/>
+![Screen shot of `Run` button.](images/customizeSchema05.png)
+
+The schema is saved,
+and the warehouse is started.
+
+##### Customizing an existing warehouse schema
+
+If the database schema for your warehouse already exists,
+you have the [option to customize it](#keeping-the-data-and-structure-fresh).
