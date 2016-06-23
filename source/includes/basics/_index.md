@@ -112,20 +112,43 @@ including:
 
 
 ### Cloudant on Bluemix Local
-<a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant on Bluemix Local</a> is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
+Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
+
+####Supported platforms
+Cloudant on Bluemix Local supports the following software.
+
+*	Operating system requirements - Cloudant uses Debian version 8 operating system exclusively.   
+*	Supported VMware versions - Cloudant on Bluemix Local supports VMware versions 5.5 an 6.0.  
+
+####Requirements 
+In order to run Cloudant on Bluemix Local, you must meet the following requirements.
+
+<table>
+<tr>
+<th>Type</th>
+<th>Requirement</th>
+</tr>
+<tr><td>Cluster requirements   </td>
+<td>Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
+powers the Bluemix platform, while the other cluster powers external customer accounts and data.   </td>
+</tr>
+<tr><td>Network setting for virtual switches   </td>
+<td>Set the maximum transmission unit (MTU) value to 9000 for virtual switches.   </td>
+</tr>
+<tr><td>External internet access requirement</td>
+<td>External internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies in to the local deployment, eliminating this requirement.    </td>
+</tr>
+<tr><td>Virtual machine</td>
+<td>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
+This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must be prepared to use 8 TB virtual disk space out of the box.
+<ul><li>Set up VMs using a thick provision eager zeroed disk.</li>
+<li>Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.</li></ul></td>
+</tr>
+</table>
 
 #### Hardware Requirements for Cloudant on Bluemix Local
 Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware, cluster,  requirements, Cloudant virtual machine distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
 
-##### Operating system
-Cloudant uses Debian version 8 operating system exclusively.
-
-##### Clusters
-Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
-powers the Bluemix platform, while the other cluster powers external customer accounts and data.
-
-#####Hardware requirements	
- 
 <table>
 <tr>
 <th>Type</th>
@@ -410,26 +433,8 @@ infra1.bml-customer</td>
 </tr>
 </table>
 
-##### Virtual machine requirements
-In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
-
-*	Set up VMs using a thick provision eager zeroed disk.
-*	Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.
-
-This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must prepare to use 8 TB virtual disk space out of the box.
-
-###### Supported VMware versions
-Cloudant on Bluemix Local supports VMware versions 5.5 an 6.0. 
-
-##### Network requirements for Cloudant
-Set the maximum transmission unit (MTU) value to 9000 for virtual switches.
-
-##### External internet access requirement 
-External internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies in to the local deployment, eliminating this requirement.
-
 #### Frequently Asked Questions about Cloudant on Bluemix Local
-
-*Does Cloudant have an architecture diagram for deployments in Bluemix Local?*
+**Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
 <p>Yes, it can be found here: https://ibm.box.com/s/7kycwiiyyoz4a651l6lkuafkylu0eo6p</p>
 
 **How is Cloudant for Bluemix Local deployed?**
@@ -452,9 +457,6 @@ changes and updates to their clusters in Bluemix Local.</p>
 **What about changes that are disruptive?**
 <p>While the vast majority of updates are non-disruptive, Cloudant might deploy changes that cause a temporary outage. These outages are rare. In the event of an outage, Cloudant support will coordinate with you to find a maintenance window that is the least disruptive to deploy these types of releases.</p>
 
-*What operating systems are available for Cloudant?*
-<p>Cloudant uses Debian 8 exclusively.</p>
-
 **Where are the Cloudant VMs being deployed?**
 <p>The VMs deploy within the private VLANs inside of your Bluemix Local deployment.</p>
 
@@ -464,17 +466,9 @@ changes and updates to their clusters in Bluemix Local.</p>
 **What name will display in the catalog for Cloudant service?**
 <p>The Cloudant service name will display as "Local".</p>
 
-*How many Cloudant clusters do I need?*
-<p>Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
-powers the Bluemix platform, while the other cluster powers external customer accounts and data.</p>
-
 **Who is responsible for the Cloudant service broker?**
 <p>Support will make the appropriate changes to the service broker. If you have an existing dedicated cluster, support must configure the broker to point to the new local cluster. Support will follow the normal Bluemix
 CR/DR process.</p>
-
-*Does Cloudant require external internet access?*
-<p>Yes, external internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies into the local deployment, eliminating this requirement.
-</p>
 
 **How does the Cloudant operations team access my Bluemix Local environment?**
 <p>The Cloudant team uses the existing tether/relay provided by Bluemix. No new networking
@@ -489,30 +483,13 @@ share the same Logmet instance.</p>
 **Where do you send metrics and monitoring information?**
 <p>Metrics and monitoring information is sent to Cloudant through the tether. Without it, you could not properly maintain your local cluster.<p>
 
-*Is thick provision eager zeroed required?*
-<p>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
-
-*	Set up VMs using a thick provision eager zeroed disk.
-*	Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.
-
-This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must prepare to use 8 TB virtual disk space out of the box.</p>
-
-*How much disk space will I need on day 1?*
-<p>Initially, you must prepare to use 8 TB virtual disk space out of the box.</p>
-
 **How is VMware clustering set up for Cloudant, Logmet, and Bluemix?**
 <p>Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
 problems. Logmet must be in the same cluster with Bluemix.</p>
 
-*Which versions of VMware are supported?*
-<p>Versions 5.5 and 6.0.</p>
-
 **How are VMs distributed across hosts?**
 <p>Cloudant determines which VMs deploy and on which hosts. The goal is to keep database nodes and
 load balancers separate, so if one host goes down, the cluster continues to operate. Research is in progress to  determine how to enable DRS with specific rules in order to keep VMs separated.</p>
-
-*Are there any network requirements specific to Cloudant?*
-<p>Yes. You must set the MTU to 9000 on the virtual switches.</p>
 
 **Does Cloudant feed logs to the QRadar deployment that is included with Bluemix Local?**
 <p>Yes. Cloudant sends `auth` and `auditd` logs to QRadar and stores them for 1 year.</p>
