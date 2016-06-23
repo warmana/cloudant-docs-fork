@@ -55,7 +55,7 @@ examining the structure of data when it is loaded.
 For more information,
 see the [IBM dashDB Cloud Data Warehouse documentation](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html).
 
-#### Creating a warehouse
+### Creating a warehouse
 
 There are two ways you can create a warehouse.
 
@@ -84,7 +84,7 @@ Cloudant then [replicates](http://docs.cloudant.com/replication.html) to perform
 an 'initial load' of the database documents into the warehouse,
 giving you a working collection of your data in the dashDB relational database.
 
-#### Working with your warehouse
+### Working with your warehouse
 
 With Cloudant warehousing,
 you can run 'traditional' SQL queries,
@@ -108,7 +108,7 @@ then run using your data.
 For more information about working with dashDB,
 see the [IBM dashDB Cloud Data Warehouse documentation](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html).
 
-#### Keeping the data and structure fresh
+### Keeping the data and structure fresh
 
 Data is loaded from Cloudant into dashDB using a [replication](http://docs.cloudant.com/replication.html) process.
 This means that if your Cloudant data is updated or modified in some way,
@@ -133,9 +133,9 @@ To solve this problem,
 Cloudant warehousing has a 'rescan' facility.
 This rescans the structure of the Cloudant database,
 and determines the new schema required in dashDB.
-The old tables within dashDB are then dropped,
+The old tables within dashDB that were created during the previous scan are then dropped,
 new tables created using the new schema,
-and finally the current Cloudant data is loaded as a fresh replication.
+and finally the current Cloudant data is loaded as a fresh 'initial load'.
 
 To use the rescan facility,
 first ensure that your warehouse is not running.
@@ -147,7 +147,7 @@ Do this by:
 4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the square `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](images/stopWarehouseDatabase.png)
 5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](images/rescanIcon.png)
 
-##### Rescanning the source database
+#### Rescanning the source database
 
 ![Screenshot of the window enabling you to rescan the warehouse source database.](images/rescanSource.png)
 
@@ -157,11 +157,56 @@ you have two choices:
 -	A straightforward scan of your database. This is the default action, and is very similar to the initial scan of your database performed when the warehouse was first created.
 -	Customize the warehouse schema.
 
-To manually customize the warehouse schema, enabled the `Customize Schema` checkbox then click the `Rescan` button.
+If you choose the default action of a simple rescan,
+your source database is inspected and a fresh warehouse database schema is generated.
+As soon as the rescan completes,
+the warehouse is started.
 
-##### Customizing the warehouse schema
+If you want to customize the warehouse schema,
+enable the `Customize Schema` checkbox,
+before clicking the `Rescan` button.
 
-It is possible to modify the database schema that is determined automatically during the warehouse creation process.
+![Screen shot of 'Rescan Source' panel, showing the 'Customize Schema' option enabled.](images/rescanSource2.png)
+
+The `Customize Schema` checkbox enables two options.
+
+1.  The discovery algorithm used.
+2. The sample size.
+
+#### The discovery algorithm
+
+The default option for rescanning is the `Union` algorithm.
+This uses all the attributes in all the sampled Cloudant database documents to create a single set of tables in the warehouse database.
+The result is that all the Cloudant database documents can be stored in the warehouse database,
+but some rows in the database might not have content in some of the fields.
+
+The alternative option for rescanning is the `Cluster` algorithm.
+This identifies documents within the Cloudant database that have the same set of attributes,
+then creates corresponding warehouse database table schemas.
+
+#### The sample size
+
+This option determines how many documents within the Cloudant database are inspected as part of the schema determination.
+
+The default value is 10,000 documents.
+
+Setting the value too low introduces the risk that some Cloudant documents have attributes that are not detected,
+and are therefore omitted from the warehouse database structure.
+
+Setting the value too high means that the scanning process to determine the warehosue database structure will take longer to complete.
+
+#### After the rescan
+
+Once the Cloudant database rescan has finished,
+the warehouse is not autoamtically started.
+Instead,
+it is left in halted state,
+so that the warehouse database can be customized.
+
+### Customizing the warehouse schema
+
+It is possible to modify the database schema that is determined automatically during the initial warehouse creation process,
+or after a rescan.
 To do this,
 ensure that you check the `Customize Schema` option during the creation process:<br/>
 ![Screen shot of warehouse creation panel, showing the 'Customize Schema' option enabled.](images/customizeSchema01.png)
@@ -193,7 +238,7 @@ simply click the `Run` button:<br/>
 The schema is saved,
 and the warehouse is started.
 
-##### Customizing an existing warehouse schema
+#### Customizing an existing warehouse schema
 
 If the database schema for your warehouse already exists,
 you have the [option to customize it](#keeping-the-data-and-structure-fresh).
