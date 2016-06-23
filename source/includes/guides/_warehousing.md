@@ -67,14 +67,16 @@ you can create a DB2 warehouse instance instead of dashDB. Do this by using the 
 
 <aside class="notify">The remainder of this topic refers to dashDB as the warehouse instance.
 However,
-the topic applies equally if you are using an instance of DB2.</aside>
+the topic applies equally if you are using an instance of DB2.
+A tutorial is also available describing how to "[Load JSON Data from Cloudant into dashDB](https://developer.ibm.com/clouddataservices/docs/dashdb/get/load-json-from-cloudant-database-in-to-dashdb/)",
+and includes examples of using DB2 as the warehouse database.</aside>
 
 When you first create a warehouse from within Cloudant,
 dashDB creates the best possible schema for the data within the database,
 helping ensure that each of the fields within your JSON documents has a corresponding entry within the new schema.
 Optionally,
 when creating the warehouse,
-you can choose to [customize the schema](#customizing_the_warehouse_schema) manually.
+you can choose to [customize the schema](#customizing-the-warehouse-schema) manually.
 
 Once the schema is created,
 the warehouse is able to hold your data in a relational format.
@@ -160,3 +162,6 @@ To manually customize the warehouse schema, enabled the `Customize Schema` check
 ##### Customizing the warehouse schema
 
 It is possible to modify the database schema that is determined automatically during the warehouse creation process.
+To do this,
+ensure that you check the `Customize Schema` option during the creation process:
+![Screen shot of warehouse creation panel, showing the 'Customize Schema' option enabled.](images/customizeSchema01.png)
