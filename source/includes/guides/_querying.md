@@ -26,7 +26,8 @@ requests will take longer because the service will need to verify your credentia
 
 The following code sets up a few variables to authenticate to Cloudant. If you don't have an account
 yet, you can [sign up](https://console.ng.bluemix.net/catalog/services/ibm-graph/) and copy your
-credentials into the script.
+credentials into the script. You can also use the 'docs-playground' account, if you don't want to
+replicate the data into your own account.
 
 Once the variables are set, the script sends a request to the [`/_session` endpoint](api.html#authentication).
 The response contains your session token in the `SET-COOKIE` header, which curl stores in `cookie.txt`.
@@ -34,12 +35,12 @@ The response contains your session token in the `SET-COOKIE` header, which curl 
 We use [jq](https://stedolan.github.io/jq/) to parse and display the JSON response.
 
 <pre class="thebe">
-# Copy your credentials (username, password, and account name) here.
-USER='your username or api key here'
-PASS='your password goes here'
-URL='https://your-account-name.cloudant.com'
+# You can replace those with your credentials (username, password, and account name).
+USER='docs-playground'
+PASS='docs-playground'
+URL='https://docs-playground.cloudant.com'
 # some defaults for curl
-alias curl='curl --max-time 60 --connect-timeout 5 --silent --show-error --cookie cookie.txt'
+alias curl='curl --max-time 180 --connect-timeout 5 --silent --show-error --cookie cookie.txt'
 # get the session cookie and store it in cookie.txt
 curl "${URL}/_session" -X POST -d "name=$USER" -d "password=$PASS" -c cookie.txt | jq '.'
 </pre>
@@ -90,12 +91,14 @@ The sample database contains 9,000 movie documents like the following one:
 ```
 
 <pre class="thebe">
+# make a timestamped database name
+DBNAME="movies$(date '+%s')"
 # write everything until ENDREPLICATION into replication.json
 cat << ENDREPLICATION >replication.json
 {
   "source": "https://examples.cloudant.com/query-movies",
   "target": {
-    "url": "$URL/movies",
+    "url": "$URL/$DBNAME",
     "headers": {
       "Cookie": "AuthSession=$(tail -1 cookie.txt | cut -f 7)"
     }
@@ -138,7 +141,7 @@ newly created movies database containing a description of the index we want to c
 body.
 
 <pre class="thebe">
-curl "$URL/movies/_index" \
+curl "$URL/$DBNAME/_index" \
      -X POST \
      -H 'Content-Type: application/json' \
      -d '{
@@ -165,7 +168,7 @@ getting all movies with an IMDB rating of exactly 8. This time we send a `POST` 
 query in the request body. We limit our query to 3 so that the output won't be too long.
 
 <pre class="thebe">
-curl "$URL/movies/_find" \
+curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
      -d '{
@@ -189,7 +192,7 @@ this example, we sort alphabetically by movie title. Setting `fields` to `["titl
 retrieve only the `title` field of each document.
 
 <pre class="thebe">
-curl "$URL/movies/_find" \
+curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
      -d  '{
@@ -210,7 +213,7 @@ entire document. The `$text` operator does just that (and more), as the followin
 illustrates:
 
 <pre class="thebe">
-curl "$URL/movies/_find" \
+curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
      -d  '{
@@ -230,7 +233,7 @@ the `$in` operator to find out whether a value is present in the array of actors
 of the `cast` field.
 
 <pre class="thebe">
-curl "$URL/movies/_find" \
+curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
      -d  '{
