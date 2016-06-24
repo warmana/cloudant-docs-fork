@@ -92,13 +92,11 @@ Continuous replication can be used for backups of data, aggregation across multi
 <a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 =======
 ## Versions of Cloudant
-IBM offers other versions of Cloudant, including Cloudant Data Layer Local Edition and Cloudant on Bluemix Local. 
+IBM offers two more versions of Cloudant Data Layer Local Edition and Cloudant on Bluemix Local. 
 
 *	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
 
-*	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team. 
-
-These versions are described in more detail in this section. 
+*	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team.  
 
 ### Cloudant Local
 <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
@@ -133,25 +131,27 @@ In order to run Cloudant on Bluemix Local, you must meet the following requireme
 <th>Requirement</th>
 </tr>
 <tr><td>Cluster requirements   </td>
-<td>Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
+<td>Cloudant on Bluemix Local requires two clusters minimum. One cluster internally
 powers the Bluemix platform, while the other cluster powers external customer accounts and data.   </td>
 </tr>
 <tr><td>Network setting for virtual switches   </td>
 <td>Set the maximum transmission unit (MTU) value to 9000 for virtual switches.   </td>
 </tr>
 <tr><td>External internet access requirement</td>
-<td>External internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies in to the local deployment, eliminating this requirement.    </td>
+<td>External internet access is required. However, there is no need to change your network settings. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies into the local deployment, eliminating this requirement.    </td>
 </tr>
 <tr><td>Virtual machine</td>
 <td>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
-This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must be prepared to use 8 TB virtual disk space out of the box.
+
 <ul><li>Set up VMs using a thick provision eager zeroed disk.</li>
-<li>Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.</li></ul></td>
+<li>Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.</li></ul>
+
+This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must be prepared to use 8 TB virtual disk space out of the box.</td>
 </tr>
 </table>
 
 #### Hardware Requirements for Cloudant on Bluemix Local
-Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware, cluster,  requirements, Cloudant virtual machine distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
+Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware and cluster  requirements, Cloudant VM distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
 
 <table>
 <tr>
@@ -164,10 +164,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <th>min RAM (GB)</th>
 <th>recommended RAM (GB)</th>
 <th>Disk-OS (GB)</th>
-<th>Disk Config - OS</th>
-<th>min Disk - Data (GB)</th>
-<th>recommended min Disk - Data (GB)</th>
-<th>Disk Config - Data</th>
+<th>Disk Config-OS</th>
+<th>min Disk-Data (GB)</th>
+<th>recommended min Disk-Data (GB)</th>
+<th>Disk Config-Data</th>
 <th>Network (Gbps)</th>
 </tr>
 
@@ -181,10 +181,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>16</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>3000</td>
 <td>3000</td>
-<td>VMDK - thin/independent persistent</td>
+<td>VMDK-thin/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -198,7 +198,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>4</td>
 <td>4</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -215,7 +215,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -232,7 +232,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -249,10 +249,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>16</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>800</td>
 <td>800</td>
-<td>VMDK - thick eager-zeroed / independent persistent</td>
+<td>VMDK-thick eager zeroed/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -266,10 +266,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>64</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>800</td>
 <td>1000</td>
-<td>VMDK - thick eager-zeroed/independent persistent</td>
+<td>VMDK-thick eager zeroed/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -283,7 +283,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -300,10 +300,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>64</td>
 <td>10</td>
-<td>VMDK - thick eager-zeroed</td>
+<td>VMDK-thick eager zeroed</td>
 <td>800</td>
 <td>18000</td>
-<td>VMDK - thin/independent persistent</td>
+<td>VMDK-thin/independent persistent</td>
 <td>1</td>
 </tr>
 
