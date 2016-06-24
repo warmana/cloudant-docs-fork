@@ -1,97 +1,11 @@
-# ![alt tag](images/cloudantbasics_icon.png) Cloudant Basics
-
-If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know some basic things about Cloudant.
-
-## Database as a Service
-
-As a hosted and managed database-as-a-service (DBaaS),
-Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
-and 24-hour operational support and maintenance.
-Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
-and is delivered as a multi-tenant, dedicated, and installed service.
-
-## IBM Bluemix
-
-Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
-Bluemix is an open-standards, cloud platform for building, running, and managing applications.
-Find out more,
-and get started with Bluemix,
-at the [home page](https://console.ng.bluemix.net/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
-
-## HTTP API
-All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
-
-Specific details about how Cloudant uses HTTP is provided in the [HTTP topic of the API Reference](http.html).
-
-Cloudant supports the following HTTP request methods:
-
--   `GET`
-
-    Request the specified item. As with normal HTTP requests, the format of the URL defines what is returned. With Cloudant this can include static items, database documents, and configuration and statistical information. In most cases the information is returned in the form of a JSON document.
-
--   `HEAD`
-
-    The `HEAD` method is used to get the HTTP header of a `GET` request without the body of the response.
-
--   `POST`
-
-    Upload data. Within Cloudant's API, `POST` is used to set values, including uploading documents, setting document values, and starting certain administration commands.
-
--   `PUT`
-
-    Used to put a specified resource. In Cloudant's API, `PUT` is used to create new objects, including databases, documents, views and design documents.
-
--   `DELETE`
-
-    Deletes the specified resource, including documents, views, and design documents.
-
--   `COPY`
-
-    A special method that can be used to copy documents and objects.
-
-If the client (such as some web browsers) does not support using these HTTP methods, `POST` can be used instead with the `X-HTTP-Method-Override` request header set to the actual HTTP method.
-
-### Method not allowed error
-
-> Example error message
-
-```json
-{
-    "error":"method_not_allowed",
-    "reason":"Only GET,HEAD allowed"
-}
-```
-
-If you use an unsupported HTTP request type with a URL that does not support the specified type, a [405](http.html#405) error is returned, listing the supported HTTP methods, as shown in the example.
-
-## JSON
-Cloudant stores documents using JSON (JavaScript Object Notion) encoding, so anything encoded into JSON can be stored as a document. Files like images, videos, and audio are called BLObs (binary large objects) and can be stored as attachments within documents.
-
-More information about JSON can be found in the [JSON Guide](json.html).
-
-## Distributed
-
-Cloudant's API enables you to interact with a collaboration of numerous machines, called a cluster. The machines in a cluster must be in the same datacenter, but can be within different 'pods' in that datacenter. Using different pods helps improve the High Availability characteristics of Cloudant.
-
-An advantage of clustering is that when you need more computing capacity, you just add more machines. This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.
-
-For more information about Cloudant and distributed system concepts, see the [CAP Theorem](cap_theorem.html) guide.
-
-## Replication
-
-[Replication](replication.html) is a procedure followed by Cloudant, [CouchDB](http://couchdb.apache.org/), [PouchDB](http://pouchdb.com/), and others. It synchronizes the state of two databases so that their contents are identical.
-
-You can continuously replicate. This means that a target database updates every time the source database changes. Testing for source changes involves ongoing internal calls.
-Continuous replication can be used for backups of data, aggregation across multiple databases, or for sharing data.
-
-<aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
-
 ## Versions of Cloudant
-IBM offers two more versions of Cloudant Data Layer Local Edition and Cloudant on Bluemix Local. 
+IBM offers other versions of Cloudant, including Cloudant Data Layer Local Edition and Cloudant on Bluemix Local. 
 
 *	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
 
-*	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team.  
+*	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team. 
+
+These versions are described in more detail in this section. 
 
 ### Cloudant Local
 <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
@@ -110,45 +24,20 @@ including:
 
 
 ### Cloudant on Bluemix Local
-Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
-
-####Supported platforms
-Cloudant on Bluemix Local supports the following platforms.
-
-*	Debian version 8 operating system exclusively   
-*	VMware versions 5.5 and 6.0  
-
-####Requirements 
-In order to run Cloudant on Bluemix Local, you must meet the following requirements.
-
-<table>
-<tr>
-<th>Type</th>
-<th>Requirement</th>
-</tr>
-<tr><td>Cluster requirements   </td>
-<td>Cloudant on Bluemix Local requires two clusters minimum. One cluster internally
-powers the Bluemix platform, while the other cluster powers external customer accounts and data.   </td>
-</tr>
-<tr><td>Network setting for virtual switches   </td>
-<td>Set the maximum transmission unit (MTU) value to 9000 for virtual switches.   </td>
-</tr>
-<tr><td>External internet access requirement</td>
-<td>External internet access is required. However, there is no need to change your network settings. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies into the local deployment, eliminating this requirement.    </td>
-</tr>
-<tr><td>Virtual machine</td>
-<td>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
-
-<ul><li>Set up VMs using a thick provision eager zeroed disk.</li>
-<li>Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.</li></ul>
-
-This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must be prepared to use 8 TB virtual disk space out of the box.</td>
-</tr>
-</table>
+<a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant on Bluemix Local</a> is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
 
 #### Hardware Requirements for Cloudant on Bluemix Local
-Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware and cluster  requirements, Cloudant VM distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
+Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware, cluster,  requirements, Cloudant virtual machine distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
 
+##### Operating system
+Cloudant uses Debian version 8 operating system exclusively.
+
+##### Clusters
+Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
+powers the Bluemix platform, while the other cluster powers external customer accounts and data.
+
+#####Hardware requirements	
+ 
 <table>
 <tr>
 <th>Type</th>
@@ -160,10 +49,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <th>min RAM (GB)</th>
 <th>recommended RAM (GB)</th>
 <th>Disk-OS (GB)</th>
-<th>Disk Config-OS</th>
-<th>min Disk-Data (GB)</th>
-<th>recommended min Disk-Data (GB)</th>
-<th>Disk Config-Data</th>
+<th>Disk Config - OS</th>
+<th>min Disk - Data (GB)</th>
+<th>recommended min Disk - Data (GB)</th>
+<th>Disk Config - Data</th>
 <th>Network (Gbps)</th>
 </tr>
 
@@ -177,10 +66,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>16</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>3000</td>
 <td>3000</td>
-<td>VMDK-thin/independent persistent</td>
+<td>VMDK - thin/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -194,7 +83,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>4</td>
 <td>4</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -211,7 +100,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -228,7 +117,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -245,10 +134,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>16</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>800</td>
 <td>800</td>
-<td>VMDK-thick eager zeroed/independent persistent</td>
+<td>VMDK - thick eager-zeroed / independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -262,10 +151,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>64</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>800</td>
 <td>1000</td>
-<td>VMDK-thick eager zeroed/independent persistent</td>
+<td>VMDK - thick eager-zeroed/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -279,7 +168,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>8</td>
 <td>8</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>N/A</td>
 <td>N/A</td>
 <td>N/A</td>
@@ -296,10 +185,10 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>16</td>
 <td>64</td>
 <td>10</td>
-<td>VMDK-thick eager zeroed</td>
+<td>VMDK - thick eager-zeroed</td>
 <td>800</td>
 <td>18000</td>
-<td>VMDK-thin/independent persistent</td>
+<td>VMDK - thin/independent persistent</td>
 <td>1</td>
 </tr>
 
@@ -433,8 +322,27 @@ infra1.bml-customer</td>
 </tr>
 </table>
 
+##### Virtual machine requirements
+In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
+
+*	Set up VMs using a thick provision eager zeroed disk.
+*	Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.
+
+This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must prepare to use 8 TB virtual disk space out of the box.
+
+###### Supported VMware versions
+Cloudant on Bluemix Local supports VMware versions 5.5 an 6.0. 
+
+##### Network requirements for Cloudant
+Set the maximum transmission unit (MTU) value to 9000 for virtual switches.
+
+##### External internet access requirement 
+External internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies in to the local deployment, eliminating this requirement.
+
 #### Frequently Asked Questions about Cloudant on Bluemix Local
-**Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
+
+
+*Does Cloudant have an architecture diagram for deployments in Bluemix Local?*
 <p>Yes, it can be found here: https://ibm.box.com/s/7kycwiiyyoz4a651l6lkuafkylu0eo6p</p>
 
 **How is Cloudant for Bluemix Local deployed?**
@@ -457,6 +365,9 @@ changes and updates to their clusters in Bluemix Local.</p>
 **What about changes that are disruptive?**
 <p>While the vast majority of updates are non-disruptive, Cloudant might deploy changes that cause a temporary outage. These outages are rare. In the event of an outage, Cloudant support will coordinate with you to find a maintenance window that is the least disruptive to deploy these types of releases.</p>
 
+*What operating systems are available for Cloudant?*
+<p>Cloudant uses Debian 8 exclusively.</p>
+
 **Where are the Cloudant VMs being deployed?**
 <p>The VMs deploy within the private VLANs inside of your Bluemix Local deployment.</p>
 
@@ -466,9 +377,17 @@ changes and updates to their clusters in Bluemix Local.</p>
 **What name will display in the catalog for Cloudant service?**
 <p>The Cloudant service name will display as "Local".</p>
 
+*How many Cloudant clusters do I need?*
+<p>Cloudant in Bluemix Local requires two clusters minimum. One cluster internally
+powers the Bluemix platform, while the other cluster powers external customer accounts and data.</p>
+
 **Who is responsible for the Cloudant service broker?**
 <p>Support will make the appropriate changes to the service broker. If you have an existing dedicated cluster, support must configure the broker to point to the new local cluster. Support will follow the normal Bluemix
 CR/DR process.</p>
+
+*Does Cloudant require external internet access?*
+<p>Yes, external internet access is required. However, there is no need to make any networking changes. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies into the local deployment, eliminating this requirement.
+</p>
 
 **How does the Cloudant operations team access my Bluemix Local environment?**
 <p>The Cloudant team uses the existing tether/relay provided by Bluemix. No new networking
@@ -483,13 +402,30 @@ share the same Logmet instance.</p>
 **Where do you send metrics and monitoring information?**
 <p>Metrics and monitoring information is sent to Cloudant through the tether. Without it, you could not properly maintain your local cluster.<p>
 
+*Is thick provision eager zeroed required?*
+<p>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
+
+*	Set up VMs using a thick provision eager zeroed disk.
+*	Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.
+
+This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must prepare to use 8 TB virtual disk space out of the box.</p>
+
+*How much disk space will I need on day 1?*
+<p>Initially, you must prepare to use 8 TB virtual disk space out of the box.</p>
+
 **How is VMware clustering set up for Cloudant, Logmet, and Bluemix?**
 <p>Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
 problems. Logmet must be in the same cluster with Bluemix.</p>
 
+*Which versions of VMware are supported?*
+<p>Versions 5.5 and 6.0.</p>
+
 **How are VMs distributed across hosts?**
 <p>Cloudant determines which VMs deploy and on which hosts. The goal is to keep database nodes and
 load balancers separate, so if one host goes down, the cluster continues to operate. Research is in progress to  determine how to enable DRS with specific rules in order to keep VMs separated.</p>
+
+*Are there any network requirements specific to Cloudant?*
+<p>Yes. You must set the MTU to 9000 on the virtual switches.</p>
 
 **Does Cloudant feed logs to the QRadar deployment that is included with Bluemix Local?**
 <p>Yes. Cloudant sends `auth` and `auditd` logs to QRadar and stores them for 1 year.</p>
