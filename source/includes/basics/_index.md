@@ -115,8 +115,8 @@ Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from th
 ####Supported platforms
 Cloudant on Bluemix Local supports the following platforms.
 
-*	Operating system requirements - Cloudant uses Debian version 8 operating system exclusively.   
-*	Supported VMware versions - Cloudant on Bluemix Local supports VMware versions 5.5 an 6.0.  
+*	Debian version 8 operating system exclusively   
+*	VMware versions 5.5 and 6.0  
 
 ####Requirements 
 In order to run Cloudant on Bluemix Local, you must meet the following requirements.
