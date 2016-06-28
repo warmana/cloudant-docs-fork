@@ -17,8 +17,6 @@ activate :syntax
 activate :relative_assets
 set :relative_links, true
 
-page "/libraries*", :layout => "libraries"
-
 # Build-specific configuration
 configure :build do
   # For example, change the Compass output style for deployment
