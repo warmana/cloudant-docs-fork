@@ -47,6 +47,10 @@ updates are made to those older versions of documents,
 the effect might be to introduce disagreement or 'conflicts' as to the correct,
 definitive content for the document.
 
+<div></div>
+
+#### Finding conflicts
+
 To find conflicts,
 add the query parameter `conflicts=true` when retrieving a document.
 When returned,
@@ -166,15 +170,15 @@ similar to the following example:
 ```
 
 If the document has any conflicts,
-you would get response similar to the example provided,
+you would get a response similar to the example provided,
 which is based on the changed description or changed price problem.
 
 The version with the changed price has been chosen _arbitrarily_ as the latest version of the document.
 You should not assume that the most recently updated version of the document is considered to be the latest version for conflict resolution purposes.
 
 In this example,
-a conflict is considered to exist between the retrieved document which has the `_id` value `74b2be56045bed0c8c9d24b939000dbe`,
-and another document which has the `_id` value `2-61ae00e029d4f5edd2981841243ded13`.
+a conflict is considered to exist between the retrieved document which has the `_rev` value `2-f796915a291b37254f6df8f6f3389121`,
+and another document which has the `_rev` value `2-61ae00e029d4f5edd2981841243ded13`.
 The conflicting document details are noted in the `_conflicts` array.
 
 Often,
@@ -190,21 +194,29 @@ effectively merging the correct and valid updates to produce a single,
 non-conflicting version of the document.
 
 To compare the revisions and identify what has been changed,
-your application gets all of the versions from the database with URLs similar to the following:
+your application must retrieve all of the versions from the database.
+This is done by issuing requests similar to the following:
 
 *	`http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
 *	`http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13`
 *	`http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299`
 
-The first document retrieval includes the `_conflicts` array,
-which lists all the other conflicting documents that must also be retrieved,
+The first document retrieval also requests the `_conflicts` array.
+This gives us a current version of the document,
+_and_ a list of all the other conflicting documents that must also be retrieved,
 for example `...rev=2-61ae00e029d4f5edd2981841243ded13` and `...rev=1-7438df87b632b312c53a08361a7c3299`.
+Each of these other conflicting versions is also retrieved.
+
+Once you have all of the conflicting revisions of a document available,
+you can proceed to resolve the conflicts.
 
 In our example,
 the differences between the versions of the document were for different fields within the document,
 making it easier to merge them.
 
-You might chose from a variety of different conflict resolution strategies,
+More complicated conflicts are likely to require correspondingly more analysis.
+To help,
+you might choose from a variety of different conflict resolution strategies,
 such as:
 
 *	Time based: using a simple test of the first or most recent edit.
@@ -213,11 +225,11 @@ such as:
 
 For a practical example of how to implement these changes, see [this project with sample code](https://github.com/glynnbird/deconflict).
 
+<div></div>
+
 #### Upload the new revision
 
-In this example, you create a document similar to the example provided, and update the database with it.
-
-> third revision, merging changes from the two conflicting second revisions
+> Final revision, after resolving and merging changes from the previous conflicting revisions.
 
 ```json
 {
@@ -229,18 +241,28 @@ In this example, you create a document similar to the example provided, and upda
 }
 ```
 
+After assessing and resolving the conflicts,
+you create a document containing the current and definitive data.
+This fresh document is uploaded into the database.
+
+<div></div>
+
 #### Delete old revisions
 
-Then to delete the old revisions, send a DELETE request to the URLs with the revisions we want to delete.
-
-> example requests to delete old revisions
+> Example requests to delete the old revisions.
 
 ```http
 DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
-```
 
-```http
 DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-f796915a291b37254f6df8f6f3389121
 ```
 
-After this, conflicts are resolved and you can verify this by getting the document again with the conflicts parameter set to true.
+The final step is where you delete the old revisions.
+You do this by sending a `DELETE` request,
+specifying the revisions to delete.
+
+When the older versions of a document are deleted,
+the conflicts associated with that document are marked as resolved.
+You can verify that no conflicts remain by requesting the document again,
+with the `conflicts` parameter set to true,
+[as before](mvcc.html#finding-conflicts).
