@@ -1,8 +1,8 @@
 ## Querying data
 
-In this guide you learn how to create a database by replicating some sample data, and make queries
-using Cloudant Query or map-reduce indexes. You can follow along and run our curl commands from
-the browser.
+In this guide we look at how to query data using Cloudant Query. We create a database by replicating
+some sample data, create an index, and finally execute some queries. You can follow along and run
+our curl commands from the browser.
 
 ## How to use the interactive guide
 
@@ -12,8 +12,9 @@ not work. For example, if you don't run the first step, creating a session token
 code snippets will work because you need the session token to authenticate. We encourage you to
 change the examples and see how the service will respond.
 
-Note: The interactive guide is only intended as a "playground" to try out Cloudant.
+<aside class="warning"> Note: The interactive guide is only intended as a "playground" to try out Cloudant.
 *Don't use it with sensitive data!*
+</aside>
 
 You can find instructions on [how to run the code snippets locally](#running-code-locally) towards
 the end of this guide.
@@ -24,13 +25,15 @@ Before you can do anything with the service, you need to obtain a session token.
 authentication to get the token and then use the session token to authenticate. Otherwise,
 requests will take longer because the service will need to verify your credentials at each step.
 
-The following code sets up a few variables to authenticate to Cloudant. If you don't have an account
-yet, you can [sign up](https://console.ng.bluemix.net/catalog/services/ibm-graph/) and copy your
+The following code contains all we need for the initial connection to Cloudant. It sets up variables
+for the credentials and the base URL of a Cloudant account and it sets some defaults parameters for curl.
+If you don't have an account yet, you can [sign up](https://console.ng.bluemix.net/catalog/services/ibm-graph/) and copy your
 credentials into the script. You can also use the 'docs-playground' account, if you don't want to
-replicate the data into your own account.
+use your own account.
 
 Once the variables are set, the script sends a request to the [`/_session` endpoint](api.html#authentication).
-The response contains your session token in the `SET-COOKIE` header, which curl stores in `cookie.txt`.
+The response contains your session token in the `SET-COOKIE` header, which curl stores in `cookie.txt`
+and which we'll use for authentication in subsequent requests.
 
 We use [jq](https://stedolan.github.io/jq/) to parse and display the JSON response.
 
@@ -42,18 +45,17 @@ URL='https://docs-playground.cloudant.com'
 # some defaults for curl
 alias curl='curl --max-time 180 --connect-timeout 5 --silent --show-error --cookie cookie.txt'
 # get the session cookie and store it in cookie.txt
+echo 'logging in...'
 curl "${URL}/_session" -X POST -d "name=$USER" -d "password=$PASS" -c cookie.txt | jq '.'
+echo "Here is our session cookie: $(tail -1 cookie.txt | cut -f 7)"
 </pre>
 
 #### Things you might want to try - logging in
 
- * Change your user name or password and see what errors you get.
- * Look at the response header with `curl -v`.
+ * Change the user name or password and see what errors you get.
+ * Look at the response headers with `curl -v`.
 
 ### Replicating sample data
-
-After successfully logging in, we create a new database by replicating a sample dataset from
-examples.cloudant.com. We pipe the response through `jq '.'` for nicer output formatting.
 
 The sample database contains 9,000 movie documents like the following one:
 
@@ -90,10 +92,18 @@ The sample database contains 9,000 movie documents like the following one:
 }
 ```
 
+We create a new database by replicating the sample dataset from
+`examples.cloudant.com`. We pipe the response through `jq '.'` for nicer output formatting.
+
 <pre class="thebe">
-# make a timestamped database name
+echo "creating the replicator database... (will fail if it already exists, but that's okay)"
+curl "$URL/_replicator" \
+     -X PUT \
+| jq '.'
+
+# make a timestamped database name (or use any database name if you're using your own account)
 DBNAME="movies$(date '+%s')"
-# write everything until ENDREPLICATION into replication.json
+# write our replication request into replication.json
 cat << ENDREPLICATION >replication.json
 {
   "source": "https://examples.cloudant.com/query-movies",
@@ -107,29 +117,45 @@ cat << ENDREPLICATION >replication.json
 }
 ENDREPLICATION
 
-curl "$URL/_replicate" \
-     -X POST \
+echo "creating the replication job to copy data to $DBNAME ..."
+curl "$URL/_replicator/$DBNAME" \
+     -X PUT \
      -H 'Content-Type: application/json' \
      -d @replication.json \
 | jq '.'
 </pre>
 
-This response to the replication request will give you a lot of stats about the replication job,
-such has how many documents were replicated and whether there were any write failures. You can safely
-ignore those details for now as long as you see `"ok": true`, indicating that the replication was successful.
+This does two things: It creates a special database called `_replicator` to hold our replication jobs.
+Don't worry if this first step fails - the database might already exist. Then we create a new document
+in `_replicator` that describes our replication job, setting a source and a target and telling the
+service to create the target database.
 
-Let's check that the list of your databases contains the one we just created.
-To do that, we send a `GET` request to [`/_all_dbs`](database.html#get-databases).
+Now that the replication job has been created, we can check on its status by running the following commands:
 
 <pre class="thebe">
-curl "$URL/_all_dbs" | jq '.'
+echo 'querying the replication document...'
+curl "$URL/_replicator/$DBNAME" | jq '.'
+
+echo 'getting more information about the replication status...'
+curl "$URL/_active_tasks" | jq ". | map(select(.doc_id == \"$DBNAME\"))"
 </pre>
 
-#### Things you might want to try - creating a database
+When the replication job has been started, the document in the replicator databse will have been updated with `"replication_state": "triggered"`
+allowing you to monitor its status. You can run the above snippet again until you see `"replication_state": "completed"`
+indicating all data has been copied to your target database. The second command queries the `_active_tasks` endpoint
+and filters the result by `doc_id` in order to get more information about the status of the replication job,
+such as the number of documents written.
+
+<aside class="warning">
+The replication job might take a minute or two. Just run the above snippet again to see when it's done.
+There is no need to wait though, you can continue on with the tutorial while it's still running.
+</aside>
+
+#### Things you might want to try - replicating sample data
 
  * Changing the database name.
  * Creating multiple databases.
- * Using `curl "$URL/movies" -X DELETE` to remove the movies database.
+ * Using `curl "$URL/$DBNAME" -X DELETE` to remove the replicated database and start over.
 
 ### Creating an index
 
@@ -141,6 +167,7 @@ newly created movies database containing a description of the index we want to c
 body.
 
 <pre class="thebe">
+echo 'creating an index...'
 curl "$URL/$DBNAME/_index" \
      -X POST \
      -H 'Content-Type: application/json' \
@@ -168,6 +195,7 @@ getting all movies with an IMDB rating of exactly 8. This time we send a `POST` 
 query in the request body. We limit our query to 3 so that the output won't be too long.
 
 <pre class="thebe">
+echo 'getting movies with rating = 8 ...'
 curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
@@ -192,6 +220,7 @@ this example, we sort alphabetically by movie title. Setting `fields` to `["titl
 retrieve only the `title` field of each document.
 
 <pre class="thebe">
+echo 'getting 2001 movies sorted by title...'
 curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
@@ -213,6 +242,7 @@ entire document. The `$text` operator does just that (and more), as the followin
 illustrates:
 
 <pre class="thebe">
+echo 'getting bond movies...'
 curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
@@ -233,6 +263,7 @@ the `$in` operator to find out whether a value is present in the array of actors
 of the `cast` field.
 
 <pre class="thebe">
+echo 'getting movies featuring Zoe Saldana...'
 curl "$URL/$DBNAME/_find" \
      -X 'POST' \
      -H 'Content-Type: application/json' \
