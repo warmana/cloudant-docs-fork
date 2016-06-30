@@ -87,11 +87,12 @@ Continuous replication can be used for backups of data, aggregation across multi
 <aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
 ## Versions of Cloudant
-IBM offers two more versions of Cloudant Data Layer Local Edition and Cloudant on Bluemix Local. 
+IBM offers additional versions of Cloudant.
 
 *	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
-
 *	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team.  
+
+You can read more information in the following sections. 
 
 ### Cloudant Local
 <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
@@ -112,14 +113,14 @@ including:
 ### Cloudant on Bluemix Local
 Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
 
-####Supported platforms
-Cloudant on Bluemix Local supports the following platforms.
+####Prerequisites
+Before you install Cloudant on Bluemix Local, ensure that your environment adheres to the following requirements.  
 
-*	Debian version 8 operating system exclusively   
-*	VMware versions 5.5 and 6.0  
+*	Use a Debian version 8 operating system for deployed virtual machines.   
+*	Use one of the supported VMware platforms, either version 5.5 or 6.0.  
 
 ####Requirements 
-In order to run Cloudant on Bluemix Local, you must meet the following requirements.
+You must meet the following requirements to run Cloudant on Bluemix Local.
 
 <table>
 <tr>
@@ -154,7 +155,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <th>Type</th>
 <th>Count</th>
 <th>Optional?</th>
-<th>Name format</th>
+<th>VM name format</th>
 <th>min vCPU</th>
 <th>recommended vCPU</th>
 <th>min RAM (GB)</th>
@@ -375,7 +376,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 </table>
 
 ##### Cloudant virtual machine distribution and physical host recommendations			
-These recommendations assume that you are using the previously outlined required hardware and a backup cluster.		
+These recommendations assume that you are using the required hardware for Cloudant on Bluemix Local and a backup cluster.		
 
 <table>
 <tr>
@@ -436,14 +437,14 @@ infra1.bml-customer</td>
 #### Frequently Asked Questions about Cloudant on Bluemix Local
 
 **How is Cloudant for Bluemix Local deployed?**
-<p>You must download the OVA and ISO files and upload them to the datastore. You must
-provide your network, datastore, and locations of the OVA and ISO files to Cloudant. Cloudant runs a script and wraps the ovftool. This process creates VMs with the proper settings and ISOs mounted. A startup script, packaged in the OVA, configures the networking and sets up reverse SSH tunneling. Chef configuration management runs the remaining provisioning tasks.</p>
+<p>You must download the OVA and ISO files and upload them to the datastore. You then
+provide your network, datastore, and locations of the OVA and ISO files to Cloudant. Cloudant runs a script and wraps the ovftool, which creates VMs that are ISO mounted and use the proper settings. A startup script, packaged in the OVA, configures the networking and sets up reverse SSH tunneling. The remaining provisioning tasks are run by Chef configuration management.</p>
 
-**Where are the Cloudant VMs deployed?**
+**Where are the Cloudant virtual machines deployed?**
 <p>The VMs deploy within the private VLANs inside your Bluemix Local deployment.</p>
 
 **Can Cloudant be deployed within a normal customer maintenance window?**
-<p>Deploying Cloudant in your data center is a lengthy process. Currently, Cloudant needs about 1-2 weeks time to deploy and verify your installation. Support is working to improve the deployment and automation process. </p>
+<p>Deploying Cloudant in your data center is a lengthy process. Currently, Cloudant needs approximately 1-2 weeks to deploy and verify your installation. Support is working to improve the deployment and automation process. </p>
 
 **Does Cloudant follow the same Bluemix CR/DR process? Can I decide when changes are deployed?**
 **Can I review the changes before they are deployed?**
@@ -455,16 +456,16 @@ bound to predetermined maintenance windows. Cloudant does not require customer s
 changes and updates to their clusters in Bluemix Local.</p>
 
 **What about changes that are potentially disruptive?**
-<p>While the vast majority of updates are not disruptive, Cloudant may deploy changes that cause a temporary outage. These outages are rare. If an outage occurs, Cloudant coordinates with you to find a maintenance window that minimizes any disruption to your business.</p>
+<p>While the vast majority of updates are not disruptive, Cloudant may deploy changes that cause a temporary outage. These outages are rare. If an outage occurs, Cloudant will coordinate with you to find a maintenance window that minimizes any disruption to your business.</p>
 
 **What name displays in the catalog for Cloudant service?**
 <p>The Cloudant service name displays as "Local".</p>
 
-**How does Cloudant obtain IP addresses for the VMs?**
+**How does Cloudant obtain IP addresses for the virtual machines?**
 <p>Cloudant is on the private network inside Bluemix Local and only requires private IPs, which are provided by the Bluemix team.</p>
 
 **Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
-<p>Yes, it can be found here, https://ibm.box.com/s/7kycwiiyyoz4a651l6lkuafkylu0eo6p.</p>
+<p>Yes, it can be found here, ![alt tag](images/bml_architecture_diagram.png).</p>
 
 **Who is responsible for the Cloudant service broker?**
 <p>Cloudant makes the appropriate changes to the service broker. If you have an existing dedicated cluster, Cloudant configures the broker to point to the new local cluster and follows the normal Bluemix
@@ -486,7 +487,7 @@ Logmet deployment per Cloudant cluster. All Cloudant clusters, within one Bluemi
 <p>Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
 problems. Logmet must be in the same cluster with Bluemix.</p>
 
-**How are VMs distributed across hosts?**
+**How are virtual machines distributed across hosts?**
 <p>Cloudant determines which VMs deploy and on which hosts. The goal is to keep database nodes and
 load balancers separate, so if one host goes down, the cluster continues to operate. Research is in progress to  determine how to enable DRS with specific rules in order to keep VMs separate.</p>
 
