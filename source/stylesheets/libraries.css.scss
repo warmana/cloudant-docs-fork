@@ -1,0 +1,83 @@
+@charset "utf-8";
+@import 'variables';
+@import 'compass';
+
+.content {
+  pre, blockquote {
+    float: none;
+    top: 0;
+    margin: 10px 60px 10px 40px;
+    width: auto;
+    border-radius: 10px;
+    padding: 10px;
+    @include box-sizing(border-box);
+  }
+  blockquote {
+    border-top: 0;
+  }
+
+  blockquote:before {
+    display:none;
+  }
+
+  h1,h2,h3,h4,h5,p,table,ul,ol,aside,dl {
+    margin-right: 20px;
+  }
+}
+
+.dark-box {
+  display: none;
+}
+
+#expand-collapse-code {
+  display: none;
+}
+
+.thebe_controls button {
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  position: relative;
+  margin: 10px 20px 20px 0px;
+  border-width: 1px;
+  border-color: #888;
+  border-style: solid;
+  padding:10px;
+  left:0;
+  background-color: #fff;
+  color: #000;
+  font-weight: bold;
+}
+
+.output_prompt, .output_result {
+  display:none;
+}
+
+.output_subarea pre {
+  background-color: #fff;
+  color: #000;
+}
+
+.output_subarea pre, pre.thebe {
+  border-radius: 0;
+  margin: 10px 0 0 0;
+  padding: 0 0 0 30px;
+  font-family: monospace;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+div.thebe_wrap {
+  margin: 0 40px;
+}
+
+div#searchbox input {
+  margin-top: -5px;
+}
+
+.content pre.thebe {
+  padding-top: 4px;
+  padding-left: 74px;
+  background-color: white;
+  color: black;
+}

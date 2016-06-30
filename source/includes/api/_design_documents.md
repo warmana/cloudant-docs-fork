@@ -304,7 +304,7 @@ Each rule is a JSON object with 4 fields:
 <tr>
 <td><code>{"from": "/a/b", "to": "/some/"}</code></td>
 <td><code>/$DATABASE/_design/doc/_rewrite/a/b?k=v</code></td>
-<td><code>/$DATABASE/_design/doc/some/k=v</code></td>
+<td><code>/$DATABASE/_design/doc/some?k=v</code></td>
 <td>k = v</td>
 </tr>
 <tr>
