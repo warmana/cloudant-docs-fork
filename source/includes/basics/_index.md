@@ -92,6 +92,7 @@ Continuous replication can be used for backups of data, aggregation across multi
 <a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 =======
 ## Versions of Cloudant
+
 IBM offers additional versions of Cloudant.
 
 *	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
@@ -118,7 +119,7 @@ including:
 Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
 
 ####Prerequisites
-Before you install Cloudant on Bluemix Local, ensure that your environment adheres to the following requirements.  
+To ensure that Cloudant on Bluemix Local functions properly, ensure that you follow these requirements with your installation.  
 
 *	Use a Debian version 8 operating system for deployed virtual machines.   
 *	Use one of the supported VMware platforms, either version 5.5 or 6.0.  
@@ -176,7 +177,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Infra</td>
 <td>1</td>
 <td>No</td>
-<td>infra1.bml-<customer></td>
+<td>infra1.bml-<\customer\></td>
 <td>8</td>
 <td>8</td>
 <td>16</td>
@@ -193,7 +194,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>SAPI</td>
 <td>2</td>
 <td>No</td>
-<td>sapi<#>.bml-<customer></td>
+<td>sapi<\#\>.bml-<\customer\></td>
 <td>4</td>
 <td>4</td>
 <td>4</td>
@@ -210,7 +211,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Bluemix Ops Cluster)</td>
 <td>2</td>
 <td>No</td>
-<td>lb<#>.bml-ops-<customer>001</td>
+<td>lb<\#\>.bml-ops-<\customer\>001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -227,7 +228,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Customer Cluster)</td>
 <td>2</td>
 <td>No</td>
-<td>lb<#>.bml-<customer>001</td>
+<td>lb<\#\>.bml-<\customer\>001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -244,7 +245,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Bluemix Ops Cluster)</td>
 <td>3</td>
 <td>No</td>
-<td>db<#>.bml-ops-<customer>001</td>
+<td>db<\#\>.bml-ops-<\customer\>001</td>
 <td>8</td>
 <td>8</td>
 <td>16</td>
@@ -261,7 +262,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Customer Cluster) </td>
 <td>3</td>
 <td>No</td>
-<td>db<#>.bml-<customer>001</td>
+<td>db<\#\>.bml-<\customer\>001</td>
 <td>8</td>
 <td>48</td>
 <td>16</td>
@@ -278,7 +279,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Backup Cluster)</td>
 <td>2</td>
 <td>Yes</td>
-<td>lb<#>.bml-<customer>-bk001</td>
+<td>lb<\#\>.bml-<\customer\>-bk001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -295,7 +296,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Backup Cluster)</td>
 <td>3</td>
 <td>Yes</td>
-<td>db<#>.bml-<customer>-bk001</td>
+<td>db<\#\>.bml-<\customer\>-bk001</td>
 <td>8</td>
 <td>24</td>
 <td>16</td>
@@ -307,7 +308,6 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>VMDK-thin/independent persistent</td>
 <td>1</td>
 </tr>
-
 </table>
 
 ###### Logmet hardware requirements							
