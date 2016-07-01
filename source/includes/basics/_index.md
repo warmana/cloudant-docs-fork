@@ -177,7 +177,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Infra</td>
 <td>1</td>
 <td>No</td>
-<td>infra1.bml-<\customer\></td>
+<td>infra1.bml-&lt;customer&gt;</td>
 <td>8</td>
 <td>8</td>
 <td>16</td>
@@ -194,7 +194,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>SAPI</td>
 <td>2</td>
 <td>No</td>
-<td>sapi<\#\>.bml-<\customer\></td>
+<td>sapi&lt;#&gt;.bml-&lt;customer&gt;</td>
 <td>4</td>
 <td>4</td>
 <td>4</td>
@@ -211,7 +211,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Bluemix Ops Cluster)</td>
 <td>2</td>
 <td>No</td>
-<td>lb<\#\>.bml-ops-<\customer\>001</td>
+<td>lb&lt;#&gt;.bml-ops-&lt;customer&gt;001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -228,7 +228,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Customer Cluster)</td>
 <td>2</td>
 <td>No</td>
-<td>lb<\#\>.bml-<\customer\>001</td>
+<td>lb&lt;#&gt;.bml-&lt;customer&gt;001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -245,7 +245,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Bluemix Ops Cluster)</td>
 <td>3</td>
 <td>No</td>
-<td>db<\#\>.bml-ops-<\customer\>001</td>
+<td>db&lt;#&gt;.bml-ops-&lt;customer&gt;001</td>
 <td>8</td>
 <td>8</td>
 <td>16</td>
@@ -262,7 +262,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Customer Cluster) </td>
 <td>3</td>
 <td>No</td>
-<td>db<\#\>.bml-<\customer\>001</td>
+<td>db&lt;#&gt;.bml-&lt;customer&gt;001</td>
 <td>8</td>
 <td>48</td>
 <td>16</td>
@@ -279,7 +279,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>Load Balancer (Backup Cluster)</td>
 <td>2</td>
 <td>Yes</td>
-<td>lb<\#\>.bml-<\customer\>-bk001</td>
+<td>lb&lt;#&gt;.bml-&lt;customer&gt;-bk001</td>
 <td>8</td>
 <td>8</td>
 <td>8</td>
@@ -296,7 +296,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 <td>DB Node (Backup Cluster)</td>
 <td>3</td>
 <td>Yes</td>
-<td>db<\#\>.bml-<\customer\>-bk001</td>
+<td>db&lt;#&gt;.bml-&lt;customer&gt;-bk001</td>
 <td>8</td>
 <td>24</td>
 <td>16</td>
