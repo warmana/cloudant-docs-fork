@@ -125,11 +125,58 @@ For more information, see the [IBM DB2 on Cloud documentation](https://console.n
 
 There are two ways you can create a warehouse.
 
--	Provide IBM Bluemix credentials in your Cloudant dashboard, then use the Cloudant Warehousing feature to create a dashDB warehouse instance for you within Bluemix. Do this using the "Create a dashDB Warehouse" task within your Cloudant dashboard.<br/>![Screenshot of the "Create a dashDB warehouse" task within the Cloudant dashboard](images/createDashDBWH.png)
--	Alternatively, create a dashDB warehouse instance within Bluemix, then go to your Cloudant account dashboard and connect to that instance.<br/>![Screenshot of the "Connect to an existing dashDB warehouse" task within the Cloudant dashboard](images/connectDashDBWH.png)
+#### Use Cloudant to create a dashDB warehouse
+
+The simplest method for creating a warehouse is for Cloudant to create a dashDB warehouse instance for you within Bluemix.
+Do this by clicking the `Create Warehouse` button on the `Warehouse` task within the `Integrations` tab of your Cloudant dashboard.
+
+![Screenshot of the "Create a dashDB warehouse" task within the Cloudant dashboard](images/createDashDBWH.png)
+
+You are asked to login in to Bluemix.
+
+![Screenshot of the "Authenticate to Bluemix" task within the Cloudant dashboard](images/authenticateToBluemix.png)
+
+When you have authenticated,
+you can request that a new dashDB instance is created using your Bluemix account.
+To do this,
+provide:
+
+- The name you would like to use for the Warehouse in the `Warehouse Name` field.
+- The name of your existing database within Cloudant, in the `Data Sources` field.
+
+Finally,
+ensure that the `Create new dashDB instance` option is selected on the form,
+then click the `Create Warehouse` button.
+
+![Screenshot of the "Create Warehouse" task within the Cloudant dashboard](images/createWarehouse.png)
+
+#### Connect Cloudant to an existing warehouse
+
+Instead of using Cloudant to create the dashDB warehouse database,
+you can connect to an existing dashDB instance.
+
+The process is similar to [using Cloudant to create a dashDB warehouse](warehousing.html#use-cloudant-to-create-a-dashdb-warehouse),
+however instead of selecting the `Create new dashDB instance` option,
+select the `dashDB service instance` and select the dashDB warehouse that already exists within Bluemix.
+
+![Screenshot of the "Connect to existing dashDB instance" task within the Cloudant dashboard](images/existingDashDBInstance.png)
+
+#### Using a DB2 warehouse instance
 
 If you prefer,
-you can create a DB2 warehouse instance instead of dashDB. Do this by using the "Create a DB2 Warehouse" task within your Cloudant dashboard to connect to an existing DB2 instance.<br/>![Screenshot of the Create a DB2 warehouse" task within the Cloudant dashboard](images/createDB2WH.png)
+you can connect to an existing DB2 warehouse instance instead of dashDB.
+Do this by selecting the `DB2` option within your Cloudant dashboard to connect to an existing DB2 instance.
+
+![Screenshot of the Create a DB2 warehouse" task within the Cloudant dashboard](images/createDB2WH.png)
+
+If you want to connect to a DB2 instance,
+you must provide the following details:
+
+- Host address
+- Port number
+- Database name
+- User ID for the database
+- Password for the User ID
 
 <aside class="notify">The remainder of this topic refers to dashDB as the warehouse instance.
 However,
@@ -205,11 +252,11 @@ and finally the current Cloudant data is loaded as a fresh 'initial load'.
 
 To use the rescan facility,
 first ensure that your warehouse is not running.
-Do this by:
+Do this as follows:
 
-1.	Selecting the 'Warehouse' tab within the Cloudant dashboard.
-2.	Find your warehouse:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](images/selectWarehouse.png)
-3.	Click on the warehouse link, which opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](images/viewWarehouseDetail.png)
+1.	Select the `Integrations` tab within the Cloudant dashboard.
+2.	Find the name of the Warehouse you want to rescan on the `Warehouse` task:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](images/selectWarehouse.png)
+3.	Click on the name of the Warehouse. It is a link, and when clicked it opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](images/viewWarehouseDetail.png)
 4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the square `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](images/stopWarehouseDatabase.png)
 5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](images/rescanIcon.png)
 
