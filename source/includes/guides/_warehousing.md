@@ -16,14 +16,56 @@ it makes sense to extend standard database capabilities with additional features
 supporting tasks such as reporting,
 or analytics.
 
-When we provide enterprise abilities as part of a database service,
-we create what is often called a 'Data Warehouse'.
-
+For nearly 30 years,
+'Data Warehouses' have been the industry standard for data storage,
+reporting,
+and analytics,
+based on relational database technology.
 In general,
 a [data warehouse is](https://en.wikipedia.org/wiki/Data_warehouse):
 "... a central repository of integrated data from one or more sources. It stores current and historical data. It can be used for performing analysis and creating reports for knowledge workers throughout the enterprise."
 
-{Need discussion on the business benefit of Cloudant/DashDB/DB2 integration here. Use cases, etc. Input from Holger and Mike?}
+The technologies that enable data storage,
+reporting,
+and analytics have emerged in recent years as a response to the need to process '[Big Data](https://en.wikipedia.org/wiki/Big_data)'.
+"Big data is a term for data sets that are so large or complex that traditional data processing applications are inadequate."
+
+At the same time,
+the properties and characteristics of Data Warehouses and related products mean that using relational database technology to enable the Data Warehouses is a popular choice,
+even for big data tasks.
+
+There are many use cases that nicely illustrate the benefits of integrating Cloudant capabilities with a relational data warehouse,
+such as the following examples.
+
+### Joining data from multiple data stores for cross-domain analysis
+
+This is a task that can be performed easily and efficiently using a relational data warehouse.
+
+Data from different sources is prepared and transformed to a common format during the load of a data warehouse.
+Records are stored in tables,
+and operations are available to join those tables to enable combined analysis.
+
+Doing the join in a relational data warehouse is especially useful if some of the data is already available in relational representation,
+for example master data or reference data.
+
+### Flexibility in data representation
+
+Cloudant databases are flexible at representing data.
+For example,
+they do not enforce a schema during read or write.
+
+By contrast,
+a well-defined and rigorously enforced model is required for reporting and analytics tasks.
+
+With your documents available in a relational warehouse you can base your model on a fixed set of table definitions. Only documents that fit the table schema can get loaded while violations are rejected. You can train your models with consistent data using a fixed relational schema.
+
+
+
+3 - Data Warehouses can assert data integrity through constraints. No two records can have the same primary key, foreign keys guarantee that records are complete, and functions are available to validate the record against business rules. Uniqueness, correctness, and completeness are key requirements for any enterprise service and loading your Cloudant documents into a data warehouse will help you meet these requirements.
+
+
+
+`Data Warehouses` are a mature and important technology and Cloudant provides a tight integration with relational data warehouses.
 
 ### Cloudant and Data Warehousing
 
