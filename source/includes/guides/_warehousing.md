@@ -37,9 +37,9 @@ even for big data tasks.
 There are many use cases that nicely illustrate the benefits of integrating Cloudant capabilities with a relational data warehouse,
 such as the following examples.
 
-### Joining data from multiple data stores for cross-domain analysis
+### Joining data
 
-This is a task that can be performed easily and efficiently using a relational data warehouse.
+Joining data from multiple data stores for cross-domain analysis is a task that can be performed easily and efficiently using a relational data warehouse.
 
 Data from different sources is prepared and transformed to a common format during the load of a data warehouse.
 Records are stored in tables,
@@ -48,7 +48,7 @@ and operations are available to join those tables to enable combined analysis.
 Doing the join in a relational data warehouse is especially useful if some of the data is already available in relational representation,
 for example master data or reference data.
 
-### Flexibility in data representation
+### Flexibility
 
 Cloudant databases are flexible at representing data.
 For example,
@@ -59,21 +59,30 @@ a well-defined and rigorously enforced model is required for reporting and analy
 
 With your documents available in a relational warehouse you can base your model on a fixed set of table definitions. Only documents that fit the table schema can get loaded while violations are rejected. You can train your models with consistent data using a fixed relational schema.
 
+### Data integrity assertion
 
+Data Warehouses can use constraints to assert data integrity.
+For example:
+- No two records can have the same primary key.
+- Foreign keys guarantee that records are complete.
+- Functions are available to validate records against business rules.
 
-3 - Data Warehouses can assert data integrity through constraints. No two records can have the same primary key, foreign keys guarantee that records are complete, and functions are available to validate the record against business rules. Uniqueness, correctness, and completeness are key requirements for any enterprise service and loading your Cloudant documents into a data warehouse will help you meet these requirements.
-
-
-
-`Data Warehouses` are a mature and important technology and Cloudant provides a tight integration with relational data warehouses.
+Uniqueness,
+correctness,
+and completeness are essential requirements for any enterprise service.
+Loading your Cloudant documents into a data warehouse helps you meet these requirements.
 
 ### Cloudant and Data Warehousing
 
-IBM Cloudant has a basic warehousing capability,
+Data Warehouses are a mature and important technology.
+Cloudant provides a tight integration with relational data warehouses,
+giving you the benefit of this technology.
+
+IBM Cloudant has a basic warehousing capability built in,
 in the form of [MapReduce views](using_views.html) that enable you to perform a range of basic analytical tasks.
 
 For more advanced warehousing tasks,
-it helps to have the additional capabilities provided by warehousing services such as [IBM dashDB](http://www-01.ibm.com/software/data/dashdb/).
+you can leverage the full capabilities provided by the IBM cloud-based warehousing service [IBM dashDB](http://www-01.ibm.com/software/data/dashdb/).
 
 When you use IBM Cloudant,
 you have integrated and easy access to advanced warehousing capabilities,
@@ -86,6 +95,11 @@ such as:
 These advanced warehousing capabilities are enabled through services such as IBM dashDB,
 which is a natural complement to Cloudant.
 
+Alternatively,
+if you only need a relational data store for your documents,
+without the warehousing capabilities,
+you can load your Cloudant documents into the [IBM DB2 on Cloud](warehousing.html#ibm-db2-on-cloud) service.
+
 ### IBM dashDB
 
 IBM dashDB is a cloud-based data warehouse service,
@@ -96,6 +110,16 @@ examining the structure of data when it is loaded.
 
 For more information,
 see the [IBM dashDB Cloud Data Warehouse documentation](https://www.ibm.com/support/knowledgecenter/SS6NHC/com.ibm.swg.im.dashdb.kc.doc/welcome.html).
+
+### IBM DB2 on Cloud
+
+[IBM DB2 on Cloud](https://console.ng.bluemix.net/catalog/services/ibm-db2-on-cloud) provides you with a database on IBM's SoftLayer® global cloud infrastructure.
+It offers you the rich features of an on-premise DB2 deployment,
+but without the cost,
+complexity,
+and risk of managing your own infrastructure.
+
+For more information, see the [IBM DB2 on Cloud documentation](https://console.ng.bluemix.net/docs/services/DB2OnCloud/index.html#DB2OnCloud)
 
 ### Creating a warehouse
 
@@ -283,4 +307,21 @@ and the warehouse is started.
 #### Customizing an existing warehouse schema
 
 If the database schema for your warehouse already exists,
-you have the [option to customize it](#keeping-the-data-and-structure-fresh).
+you have the [option to customize it](warehousing.html#keeping-the-data-and-structure-fresh).
+
+### Troubleshooting
+
+From time-to-time,
+you might encounter problems when using the warehousing facility.
+Information on some of these problems is provided later in this topic.
+
+Additionally,
+discussion of some common errors or problems,
+as well as details of how to troubleshoot them,
+is available in [Stack Overflow](http://stackoverflow.com/questions/tagged/cloudant+dashdb).
+
+If you need further help,
+and can't find solutions in Stack Overflow,
+please contact [Cloudant support](mailto:support@cloudant.com).
+
+### Exceptions visible in the dashboard
