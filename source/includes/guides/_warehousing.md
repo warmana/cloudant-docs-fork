@@ -388,3 +388,23 @@ and can't find solutions in Stack Overflow,
 please contact [Cloudant support](mailto:support@cloudant.com).
 
 ### Exceptions visible in the dashboard
+
+Sometimes,
+the warehouse encounters an error condition.
+For example,
+if you try to create a warehouse using an existing DB2 database,
+but fail to enter the correct database details,
+then warehouse cannot be created successfully.
+
+When an error condition exists,
+the status of the warehouse is changed to a red circle,
+indicating that there is a problem requiring your attention:<br/>
+![Screen shot of error status indicator.](images/errorIndicator1.png)
+
+If you 'hover' over the indicator,
+a little more information is supplied:<br/>
+![Screen shot showing hover summary of error status.](images/errorIndicator2.png)
+
+When you click on the indicator,
+a window appears giving you more details about exactly what the problem is:<br/>
+![Screen shot showing hover summary of error status.](images/errorIndicator3.png)
