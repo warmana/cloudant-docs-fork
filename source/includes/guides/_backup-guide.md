@@ -8,9 +8,14 @@ This capability:
 <li>Is only available to Enterprise customers, who must specifically request it.</li>
 <li>Must be explicitly configured before it is operational.</li>
 <li>Is subject to [known limitations](backup-guide.html#known-limitations).</li>
+<li>Is not applicable to [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html).</li>
 </ul>
 For more information,
 please contact the <a href="mailto:support@cloudant.com">IBM Cloudant support team</a>.</aside>
+
+<aside class="warning" role="complementary" aria-label="notCloudantLocal">The daily incremental backup capability is not applicable for [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html).
+To back up data in Cloudant Local,
+use [replication](https://docs.cloudant.com/replication.html) to make a copy of your database.</aside>
 
 IBM Cloudant creates three copies of each document
 and stores it on three different servers in a cluster to ensure high availability.
@@ -84,7 +89,7 @@ you must maintain them in your preferred source control tool.</aside>
 *	Daily backup: See Backup run.
 *	Backup rollup: Daily backups are combined into weekly rolled up databases. These combine the daily deltas into a coarser (less granular) backup. Similarly, weekly databases are rolled up into monthly databases, and monthly databases into yearly databases.
 *	Backup cleanup: After a delta database has been rolled up, the delta database is removed after a configurable time period. This allows you to balance data retention at a high granularity against the cost of storage.
-*	High/low granularity: This indicates how precisely you can specify the period of change for a document. A high granularity rollup has a short timescale for the period of change, for example a day in the case of a daily backup. A low granularity rollup has a long timescale for the period of change, for example a year in the case of a yearly backup. 
+*	High/low granularity: This indicates how precisely you can specify the period of change for a document. A high granularity rollup has a short timescale for the period of change, for example a day in the case of a daily backup. A low granularity rollup has a long timescale for the period of change, for example a year in the case of a yearly backup.
 
 ### Incremental backups
 
@@ -254,7 +259,7 @@ You can specify the format used in the response by using the `format` parameter.
 ```
 
 The default response format is a list.
-You can request this format directly by using the `...backup/task?format=list` parameter. 
+You can request this format directly by using the `...backup/task?format=list` parameter.
 The response contains a simple list of the backup tasks defined for the user.
 
 For example, you might request a list format response using either of the following commands:
