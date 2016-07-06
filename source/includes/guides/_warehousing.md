@@ -387,7 +387,7 @@ If you need further help,
 and can't find solutions in Stack Overflow,
 please contact [Cloudant support](mailto:support@cloudant.com).
 
-### Exceptions visible in the dashboard
+#### Exceptions visible in the dashboard
 
 Sometimes,
 the warehouse encounters an error condition.
@@ -406,5 +406,7 @@ a little more information is supplied:<br/>
 ![Screen shot showing hover summary of error status.](images/errorIndicator2.png)
 
 When you click on the indicator,
-a window appears giving you more details about exactly what the problem is:<br/>
+a window appears giving you more details about exactly what the problem is.
+In this example,
+the host details entered for the DB2 connection were not valid:<br/>
 ![Screen shot showing hover summary of error status.](images/errorIndicator3.png)
