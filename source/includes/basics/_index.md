@@ -129,8 +129,6 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 <li>External internet access via the Bluemix tether.</li>
 <li>A Logmet deployment sized to support Cloudant. Logmet is based on the ELK stack and houses all of the logs created on the local Cloudant clusters.  This data stays local to your environment but is accessible by the Cloudant team.</li></ul></li></ul>
 
-
-
 #### Hardware Requirements for Cloudant on Bluemix Local
 <table>
 <tr>
