@@ -129,30 +129,7 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 <li>External internet access via the Bluemix tether.</li>
 <li>A Logmet deployment sized to support Cloudant. Logmet is based on the ELK stack and houses all of the logs created on the local Cloudant clusters.  This data stays local to your environment but is accessible by the Cloudant team.</li></ul></li></ul>
 
-<table>
-<tr>
-<th>Type</th>
-<th>Requirement</th>
-</tr>
-<tr><td>Cluster requirements   </td>
-<td>Cloudant on Bluemix Local requires two clusters minimum. One cluster internally
-powers the Bluemix platform, while the other cluster powers external customer accounts and data.   </td>
-</tr>
-<tr><td>Network setting for virtual switches   </td>
-<td>Set the maximum transmission unit (MTU) value to 9000 for virtual switches.   </td>
-</tr>
-<tr><td>External internet access requirement</td>
-<td>External internet access is required. However, there is no need to change your network settings. The Cloudant initial architecture design routes external internet traffic to pypi, rubygems, github, and dynect through the tether. Future versions will pull all dependencies into the local deployment, eliminating this requirement.    </td>
-</tr>
-<tr><td>Virtual machine</td>
-<td>In order to ensure the highest possible performance for your database deployment, Cloudant requires that each virtual machine meet the following specifications.  
 
-<ul><li>Set up VMs using a thick provision eager zeroed disk.</li>
-<li>Configure the infra-auxiliary VM and the three data partitions for the backup database VMs using thin provisioning.</li></ul>
-
-This configuration equals 7 TB thick and 21 TB thin virtual disks. Initially, you must be prepared to use 8 TB virtual disk space out of the box.</td>
-</tr>
-</table>
 
 #### Hardware Requirements for Cloudant on Bluemix Local
 Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware and cluster  requirements, Cloudant VM distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
@@ -388,8 +365,8 @@ These recommendations assume that you are using the required hardware for Clouda
 <tr>
 <th>Host</th>
 <th>vCPU</th>
-<th>RAM used (GB) </th>
-<th>VMs deployed</th>
+<th>RAM used (GB)</th>
+<th>VMs deployed (number of cores)</th>
 </tr>
 
 <tr><td>1</td>
