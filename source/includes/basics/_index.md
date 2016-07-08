@@ -101,7 +101,7 @@ IBM offers additional versions of Cloudant.
 You can read more information in the following sections. 
 
 ### Cloudant Local
-<a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH/SSTPQH_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
+<a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 
 Cloudant Local provides you with the same basic capabilities as the full Cloudant single-tenant offering,
 but hosted within your own data center installation.
@@ -116,16 +116,22 @@ including:
 - <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_tuning_parameters_replication_cases.html?lang=en" target="_blank">Tuning replication parameters</a>
 
 ### Cloudant on Bluemix Local
-Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
+Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability. 
 
-####Prerequisites
-To ensure that Cloudant on Bluemix Local functions properly, ensure that you follow these requirements with your installation.  
+Cloudant on Bluemix Local is a service that is managed inside your data center. This service offers peace of mind by having Cloudant in-house without having to worry about day-to-day operations and maintenance.
 
-*	Use a Debian version 8 operating system for deployed virtual machines.   
-*	Use one of the supported VMware platforms, either version 5.5 or 6.0.  
+#### Requirements 
+To ensure that the Cloudant on Bluemix Local installation functions properly, you must meet the following requirements.
 
-####Requirements 
-You must meet the following requirements to run Cloudant on Bluemix Local.
+<ul><li>Customer-owned environment requirements
+<ul><li>VMWare versions 5.5 or 6.0. </li>
+<li>MTU set to 9000 on all virtual switches.</li> 
+<li>Provide five customer facing IP addresses to Cloudant for our DNS servers and our load balancers.</li></ul></li></ul>
+
+<ul><li>Cloudant-owned deployment requirements 
+<ul><li>The Bluemix Local platform requires a small internal cluster to run.  This cluster is required and is not available in your Bluemix catalog. If you would like Cloudant to be listed as a local service in the Bluemix catalog, you must purchase a separate cluster.</li>
+<li>External internet access via the Bluemix tether.</li>
+<li>A Logmet deployment sized to support Cloudant. Logmet is based on the ELK stack and houses all of the logs created on the local Cloudant clusters.  This data stays local to your environment but is accessible by the Cloudant team.</li></ul></li></ul>
 
 <table>
 <tr>
@@ -310,7 +316,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 </tr>
 </table>
 
-###### Logmet hardware requirements							
+#### Hardware Requirements for Logmet to support Cloudant on Bluemix Local							
 <table>
 <tr>
 <th>Type</th>
@@ -379,14 +385,14 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 </tr>
 </table>
 
-##### Cloudant virtual machine distribution and physical host recommendations			
+#### Cloudant virtual machine distribution and physical host recommendations			
 These recommendations assume that you are using the required hardware for Cloudant on Bluemix Local and a backup cluster.		
 
 <table>
 <tr>
 <th>Host</th>
 <th>vCPU</th>
-<th>RAM used</th>
+<th>RAM used (GB) </th>
 <th>VMs deployed</th>
 </tr>
 
