@@ -121,7 +121,7 @@ Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from th
 Cloudant on Bluemix Local is a service that is managed inside your data center. This service offers peace of mind by having Cloudant in-house without having to worry about day-to-day operations and maintenance.
 
 #### Requirements 
-To ensure that the Cloudant on Bluemix Local installation functions properly, you must meet the following requirements.
+To ensure that Cloudant on Bluemix Local installs correctly, you must meet the following requirements.
 
 <ul><li>Customer-owned environment requirements
 <ul><li>VMWare versions 5.5 or 6.0. </li>
