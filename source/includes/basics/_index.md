@@ -132,8 +132,6 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 
 
 #### Hardware Requirements for Cloudant on Bluemix Local
-Before you install Cloudant® on Bluemix Local, confirm that your system meets these requirements. The requirements include hardware and cluster  requirements, Cloudant VM distribution and physical host recommendations, and Logmet hardware requirements for installing the product.
-
 <table>
 <tr>
 <th>Type</th>
@@ -289,7 +287,7 @@ Before you install Cloudant® on Bluemix Local, confirm that your system meets t
 </tr>
 </table>
 
-#### Hardware Requirements for Logmet to support Cloudant on Bluemix Local							
+#### Hardware Requirements for Logmet to support Cloudant on Bluemix Local
 <table>
 <tr>
 <th>Type</th>
