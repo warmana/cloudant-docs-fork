@@ -410,3 +410,55 @@ a window appears giving you more details about exactly what the problem is.
 In this example,
 the host details entered for the DB2 connection were not valid:<br/>
 ![Screen shot showing hover summary of error status.](images/errorIndicator3.png)
+
+#### Warnings and Errors
+
+Changes in the Cloudant database are replicated across into the warehouse database.
+It is possible that a change might not fit into the warehouse or its schema.
+Problems of this kind are detected and logged in the `OVERFLOW` table of the warehouse database.
+
+For example,
+if the warehouse schema has a `name` field of type `VARCHAR`,
+and can hold up to 32 characters,
+but a change in the Cloudant database requires storage of 40 characters,
+then the field 'overflows'.
+This would produce a 'warning' condtion,
+which is indicated in the status icon of the warehouse dashboard:<br/>
+![Screen shot showing warning message in status icon.](images/overflowWarning.png)
+
+Looking in the indicated overflow table in the warehouse database,
+you see more details about the warning:<br/>
+![Screen shot showing warning message detail in the Overflow table of the warehouse database.](images/overflowWarningDetail.png)<br/>
+In this example,
+the warning makes it clear that a truncation has occurred,
+affecting the `Movie-earnings_rank` field of the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
+
+The solution in this example would be to correct the overflowing field in the Cloudant database.
+
+A more significant problem is if an entirely new field is introduced into a document in the Cloudant database,
+but the field does not have a counterpart in the warehouse database schema.
+This introduces an 'error' condition.
+
+For example,
+a document in the Cloudant database might 'gain' an extra field called `my key` that does not exist within the warehouse database schema:<br/>
+![Screen shot showing additional 'my key' field in a document.](images/extraField.png)
+
+The result is an error condition,
+which is indicated in the status icon of the warehouse dashboard:<br/>
+![Screen shot showing error message in status icon.](images/overflowError.png)
+
+Looking in the indicated overflow table in the warehouse database,
+you see more details about the error:<br/>
+![Screen shot showing error message detail in the Overflow table of the warehouse database.](images/overflowErrorDetail.png)<br/>
+In this example,
+the error makes it clear that a field has been encountered that was not present when the warehouse database schema was created.
+The field itself was detected in the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
+
+There are two possible options:
+
+* Remove the extra field from the Cloudant document.
+* [Update the warehouse schema](warehousing.html#customizing-the-warehouse-schema).
+
+The option you choose depends on whether the extra field is intentional or not.
+If you do require the extra field for your application,
+then it is necessary to [update the warehouse schema](warehousing.html#customizing-the-warehouse-schema) to remove the error condition.
