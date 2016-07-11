@@ -431,13 +431,20 @@ you see more details about the warning:<br/>
 ![Screen shot showing warning message detail in the Overflow table of the warehouse database.](images/overflowWarningDetail.png)<br/>
 In this example,
 the warning makes it clear that a truncation has occurred,
-affecting the `Movie-earnings_rank` field of the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
+affecting the `Movie_earnings_rank` field of the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
 
-The solution in this example would be to correct the overflowing field in the Cloudant database.
+There are two possible solution options:
+
+* Correct the overflowing field within the Cloudant document.
+* [Update the warehouse schema](warehousing.html#customizing-the-warehouse-schema).
+
+The option you choose depends on whether the extra content in the field is intentional or not.
+If you do require the extra content for your application,
+then it is necessary to [update the warehouse schema](warehousing.html#customizing-the-warehouse-schema) to remove the warning condition.
 
 A more significant problem is if an entirely new field is introduced into a document in the Cloudant database,
 but the field does not have a counterpart in the warehouse database schema.
-This introduces an 'error' condition.
+This causes an 'error' condition.
 
 For example,
 a document in the Cloudant database might 'gain' an extra field called `my key` that does not exist within the warehouse database schema:<br/>
@@ -454,7 +461,7 @@ In this example,
 the error makes it clear that a field has been encountered that was not present when the warehouse database schema was created.
 The field itself was detected in the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
 
-There are two possible options:
+There are two possible solution options:
 
 * Remove the extra field from the Cloudant document.
 * [Update the warehouse schema](warehousing.html#customizing-the-warehouse-schema).
