@@ -418,7 +418,7 @@ It is possible that a change might not fit into the warehouse or its schema.
 Problems of this kind are detected and logged in the `OVERFLOW` table of the warehouse database.
 
 For example,
-if the warehouse schema has a `name` field of type `VARCHAR`,
+if the warehouse schema has a `Movie_earnings_rank` field of type `VARCHAR`,
 and can hold up to 32 characters,
 but a change in the Cloudant database requires storage of 40 characters,
 then the field 'overflows'.
