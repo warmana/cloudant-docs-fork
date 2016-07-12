@@ -1,9 +1,9 @@
 ---
-title: Cloudant Documentation - Visual Guides
+title: Cloudant Documentation - Visual Guide
 
 language_tabs:
-#  - http
-#  - shell: curl
+  - http
+  - shell: curl
 #  - javascript: node.js
 #  - python
 
@@ -19,4 +19,13 @@ includes:
 
 ---
 
-
+<script>
+fragments = {
+  '#dashboard': 'dashboard.html'
+}
+fragment = window.location.hash;
+dest = fragments[fragment];
+if (dest) {
+  window.location = dest;
+}
+</script>

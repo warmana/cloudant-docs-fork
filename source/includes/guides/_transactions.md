@@ -71,12 +71,8 @@ When the customer places an order, typically when the customer enters the "check
 ###Generating your own unique identifiers (UUIDs)
  
 In a relational database, sequential "auto incrementing" numbers are often used, but in distributed databases, where data is spread around of cluster of servers, longer UUIDs are used to ensure that documents are stored with their own unique id.
- 
-To create a unique identifier to use in your application, such as an `order_id`, call the `GET _uuids` endpoint on the Cloudant API and the database will generate an identifier for you. Refer to [Get/_UUIDS](advanced.html#get-/_uuids)  in the Advanced section of Cloudant API reference. The same endpoint can be used to generate multiple ids by adding a `count` parameter, for example, `/_uuids?count=10`.
-
-
-advanced.html#get-/_uuids
-
+   
+To create a unique identifier to use in your application, such as an `order_id`, call the `GET _uuids` endpoint on the Cloudant API and the database will generate an identifier for you. Refer to [Get/_UUIDS](advanced.html#get-/_uuids)  in the Advanced section of the Cloudant API reference. The same endpoint can be used to generate multiple ids by adding a `count` parameter, for example, `/_uuids?count=10`.
 
 ###Recording payments
 

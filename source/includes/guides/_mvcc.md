@@ -1,13 +1,9 @@
 ## Document Versioning and MVCC
 
-Multi-version concurrency control (MVCC) is how Cloudant databases ensure that all of the nodes in a database's cluster contain only the [newest version](document.html) of a document.
-Since Cloudant databases are [eventually consistent](cap_theorem.html),
-this is necessary to prevent inconsistencies arising between nodes as a result of synchronizing between outdated documents.
+Multi-version concurrency control (MVCC) is how Cloudant databases ensure that all of the nodes in a database's cluster contain only the [newest version](document.html) of a document. Since Cloudant databases are [eventually consistent](cap_theorem.html), this is necessary to prevent inconsistencies arising between nodes as a result of synchronizing between outdated documents.
 
-Multi-Version Concurrency Control (MVCC) enables concurrent read and write access to a Cloudant database.
-MVCC is a form of [optimistic concurrency](http://en.wikipedia.org/wiki/Optimistic_concurrency_control).
-It makes both read and write operations on Cloudant databases faster because there is no need for database locking on either read or write operations.
-MVCC also enables synchronization between Cloudant database nodes.
+Multi-Version Concurrency Control (MVCC) enables concurrent read and write access to a Cloudant database. MVCC is a form of <a href="http://en.wikipedia.org/wiki/Optimistic_concurrency_control" target="_blank">optimistic concurrency</a>.
+It makes both read and write operations on Cloudant databases faster because there is no need for database locking on either read or write operations. MVCC also enables synchronization between Cloudant database nodes.
 
 ### Revisions
 
@@ -26,40 +22,21 @@ You must specify the previous `_rev` when [updating a document](document.html#up
 
 <aside class="warning" role="complementary" aria-label="revnotVCS">`_rev` should not be used to build a version control system.
 The reason is that it is an internal value used by the server.
-In addition,
-older revisions of a document are transient,
-and therefore removed regularly.</aside>
+In addition, older revisions of a document are transient, and therefore removed regularly.</aside>
 
-You can query a particular revision using its `_rev`,
-however,
-older revisions are regularly deleted by a process called [compaction](http://en.wikipedia.org/wiki/Data_compaction).
-A consequence of compaction is that you cannot rely on a successful response when querying a particular document revision using its `_rev` to obtain a history of revisions to your document.
-If you need a version history of your documents,
-a solution is to [create a new document](document.html#documentCreate) for each revision.
+You can query a particular revision using its `_rev`, however, older revisions are regularly deleted by a process called <a href="http://en.wikipedia.org/wiki/Data_compaction" target="blank">compaction</a>.
+A consequence of compaction is that you cannot rely on a successful response when querying a particular document revision using its `_rev` to obtain a history of revisions to your document. If you need a version history of your documents, a solution is to [create a new document](document.html#documentCreate) for each revision.
 
 ### Distributed Databases and Conflicts
 
-Distributed databases work do not require a constant connection to a 'main' database.
-This means that changes made to a document might not instantly update or replicate to other parts of the replicated database.
-If other,
-independent,
-updates are made to those older versions of documents,
-the effect might be to introduce disagreement or 'conflicts' as to the correct,
-definitive content for the document.
+Distributed databases work without a constant connection to the main database on Cloudant, which is itself distributed, so updates based on the same previous version can still be in conflict.
 
-<div></div>
+To find conflicts, add the query parameter `conflicts=true` when retrieving a document. The document will contain a `_conflicts` array with all conflicting revisions.
 
-#### Finding conflicts
+To find conflicts for multiple documents in a database, write a view. An example map function is provided, that emits all conflicting revisions for every document with a conflict.
 
-To find conflicts,
-add the query parameter `conflicts=true` when retrieving a document.
-When returned,
-the resulting document contains a `_conflicts` array,
-which includes a list of all the conflicting revisions.
 
-<div></div>
-
-> Example map function to find document conflicts:
+> map function to find conflicts:
 
 ```
 function (doc) {
@@ -69,28 +46,20 @@ function (doc) {
 }
 ```
 
-To find conflicts for multiple documents in a database,
-write a [view](creating_views.html).
-An example map function is provided,
-that emits all revisions for every document with a conflict.
-
-When you have such a view,
-you can regularly query this view and resolve conflicts as needed.
-Alternatively,
-you might query the view after each replication to identify and resolve conflicts immediately.
+You can then regularly query this view and resolve conflicts as needed, or query the view after each replication.
 
 ### How to resolve conflicts
 
-Once you've found a conflict, you can resolve it by following 4 steps:
+Once you've found a conflict, you can resolve it in 4 steps.
 
-1.	[Get](mvcc.html#get-conflicting-revisions) the conflicting revisions.
-2.	[Merge](mvcc.html#merge-the-changes) them in your application or ask the user what he wants to do.
-3.	[Upload](mvcc.html#upload-the-new-revision) the new revision.
-4.	[Delete](mvcc.html#delete-old-revisions) old revisions.
+ * [Get](#get-conflicting-revisions) the conflicting revisions.
+ * [Merge](#merge-the-changes) them in your application or ask the user what he wants to do.
+ * [Upload](#upload-the-new-revision) the new revision.
+ * [Delete](#delete-old-revisions) old revisions.
 
-<div></div>
+Let's consider an example of how this can be done. Suppose you have a database of products for an online shop. The first version of a document might look like this example provided.
 
-> Example first version of the document.
+> first revision of the document
 
 ```json
 {
@@ -102,13 +71,9 @@ Once you've found a conflict, you can resolve it by following 4 steps:
 }
 ```
 
-Let's consider an example of how this can be done.
-Suppose you have a database of products for an online shop.
-The first version of a document might look like the example provided.
+As the document doesn't have a description yet, someone might add one.
 
-<div></div>
-
-> Second version (first revision) of the document, adding a description.
+> second revision of the document
 
 ```json
 {
@@ -120,12 +85,9 @@ The first version of a document might look like the example provided.
 }
 ```
 
-The document doesn't have a description yet,
-so someone might add one.
+At the same time, someone else - working with a replicated database - reduces the price.
 
-<div></div>
-
-> _Alternative_ second version, introducing a price reduction data change that conflicts with the addition of a description.
+> also second revision, conflicts with the previous one
 
 ```json
 {
@@ -137,26 +99,17 @@ so someone might add one.
 }
 ```
 
-At the same time, someone else - working with a replicated database - reduces the price.
-
-<div></div>
-
-When the two databases are replicated,
-it is not clear which of the two alternative versions of the document is correct,
-leading to a conflict.
+Then the two databases are replicated, leading to a conflict.
 
 #### Get conflicting revisions
 
-To find the conflicting revisions for a document,
-retrieve the document,
-including the `conflicts=true` parameter,
-similar to the following example:
+You get the document with `conflicts=true` like this:
 
 `http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
 
-<div></div>
+And get the following response:
 
-> Example response to document retrieval, showing conflicting revisions
+> example response showing conflicting revisions
 
 ```json
 {
@@ -169,67 +122,31 @@ similar to the following example:
 }
 ```
 
-If the document has any conflicts,
-you would get a response similar to the example provided,
-which is based on the changed description or changed price problem.
-
-The version with the changed price has been chosen _arbitrarily_ as the latest version of the document.
-You should not assume that the most recently updated version of the document is considered to be the latest version for conflict resolution purposes.
-
-In this example,
-a conflict is considered to exist between the retrieved document which has the `_rev` value `2-f796915a291b37254f6df8f6f3389121`,
-and another document which has the `_rev` value `2-61ae00e029d4f5edd2981841243ded13`.
-The conflicting document details are noted in the `_conflicts` array.
-
-Often,
-you might find that the array has only one element,
-but it is possible for there to be many conflicting revisions,
-each of which is listed in the array.
+The version with the changed price has been chosen arbitrarily as the latest version of the document and the conflict is noted in the `_conflicts` array. In most cases this array has only one element, but there can be many conflicting revisions.
 
 #### Merge the changes
 
-Your application must identify all the potential changes,
-and reconcile them,
-effectively merging the correct and valid updates to produce a single,
-non-conflicting version of the document.
+To compare the revisions to see what has been changed, your application gets all of the versions from the database with URLs like this:
 
-To compare the revisions and identify what has been changed,
-your application must retrieve all of the versions from the database.
-This is done by issuing requests similar to the following:
+* `http://$USERNAME.cloudant.com/products/$_ID`
+* `http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13`
+* `http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299`
 
-*	`http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
-*	`http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13`
-*	`http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299`
+Since these two changes are for different fields of the document, it is easy to merge them.
 
-The first document retrieval also requests the `_conflicts` array.
-This gives us a current version of the document,
-_and_ a list of all the other conflicting documents that must also be retrieved,
-for example `...rev=2-61ae00e029d4f5edd2981841243ded13` and `...rev=1-7438df87b632b312c53a08361a7c3299`.
-Each of these other conflicting versions is also retrieved.
+Other conflict resolution strategies are:
 
-Once you have all of the conflicting revisions of a document available,
-you can proceed to resolve the conflicts.
-
-In our example,
-the differences between the versions of the document were for different fields within the document,
-making it easier to merge them.
-
-More complicated conflicts are likely to require correspondingly more analysis.
-To help,
-you might choose from a variety of different conflict resolution strategies,
-such as:
-
-*	Time based: using a simple test of the first or most recent edit.
-*	User assessment: the conflicts are reported to users, who then decide on the best resolution.
-*	Sophisticated merging algorithms: these are often used in [version control systems](https://en.wikipedia.org/wiki/Merge_%28version_control%29). An example is the [3-way merge](https://en.wikipedia.org/wiki/Merge_%28version_control%29#Three-way_merge).
+* time based: first or last edit
+* reporting conflicts to users and letting them decide on the best resolution
+* more sophisticated merging algorithms, e.g. 3-way merges of text fields
 
 For a practical example of how to implement these changes, see [this project with sample code](https://github.com/glynnbird/deconflict).
 
-<div></div>
-
 #### Upload the new revision
 
-> Final revision, after resolving and merging changes from the previous conflicting revisions.
+In this example, you create a document similar to the example provided, and update the database with it.
+
+> third revision, merging changes from the two conflicting second revisions
 
 ```json
 {
@@ -241,28 +158,18 @@ For a practical example of how to implement these changes, see [this project wit
 }
 ```
 
-After assessing and resolving the conflicts,
-you create a document containing the current and definitive data.
-This fresh document is uploaded into the database.
-
-<div></div>
-
 #### Delete old revisions
 
-> Example requests to delete the old revisions.
+Then to delete the old revisions, send a DELETE request to the URLs with the revisions we want to delete.
+
+> example requests to delete old revisions
 
 ```http
 DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
+```
 
+```http
 DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-f796915a291b37254f6df8f6f3389121
 ```
 
-The final step is where you delete the old revisions.
-You do this by sending a `DELETE` request,
-specifying the revisions to delete.
-
-When the older versions of a document are deleted,
-the conflicts associated with that document are marked as resolved.
-You can verify that no conflicts remain by requesting the document again,
-with the `conflicts` parameter set to true,
-[as before](mvcc.html#finding-conflicts).
+After this, conflicts are resolved and you can verify this by getting the document again with the conflicts parameter set to true.

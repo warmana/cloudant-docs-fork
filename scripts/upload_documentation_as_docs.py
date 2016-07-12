@@ -112,8 +112,7 @@ for filename in [
 'search',
 'transactions',
 'try',
-'using_views',
-'warehousing'
+'using_views'
 ]:
 	index_file(filename)
 

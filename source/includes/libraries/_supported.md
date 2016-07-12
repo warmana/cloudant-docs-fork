@@ -103,7 +103,8 @@ The couchdb-meteor package provides:
 + Serialization and deserialization of updates to the DDP format
 
 
-**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Pre-built binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the pre-built binaries are available.
+**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Prebuilt binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the prebuilt binaries are available.
+
 
 To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
 
@@ -116,8 +117,8 @@ See [API Reference](api.html) for more information about meteor-couchdb APIs.
 
 A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
 
-The current Python release, version 2.0.3, is stable. You can find more information [here](https://www.python.org/about/). 
-
+The library is a preview (alpha version).
+As such it does not currently have complete API coverage, nor is the documentation 100% complete.
 
 ### Objective C and Swift
 
@@ -135,3 +136,4 @@ is available [here](https://github.com/cloudant/objective-cloudant).
 
 The library is an early release version.
 As such it does not currently have complete Cloudant API coverage.
+

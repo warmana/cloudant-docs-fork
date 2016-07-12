@@ -72,8 +72,8 @@ To see who has permissions to read, write, and manage the database, make a GET r
 }
 ```
 
-The `cloudant` field in the response object contains an object with keys that are the user names that have permission to interact with the database.
-The `nobody` user name indicates what rights are available to unauthenticated users -- that is, any request made without authentication credentials.
+The `cloudant` field in the response object contains an object with keys that are the usernames that have permission to interact with the database.
+The `nobody` username indicates what rights are available to unauthenticated users -- that is, any request made without authentication credentials.
 In the example response, for instance, `nobody` has `_reader` permissions, making the database publicly readable.
 
 ### Modifying Permissions
@@ -130,7 +130,7 @@ account.request({
 
 To modify who has permissions to read, write, and manage a database, make a PUT request against `https://$USERNAME.cloudant.com/_api/v2/db/$DB/_security`. To see what roles you can assign, see [Roles](#roles).
 
-The request object's `cloudant` field contains an object whose keys are user names with permissions to interact with the database. The `nobody` user name indicates what rights are available to unauthenticated users -- that is, anybody. In the example request, for instance, `nobody` has `_reader` permissions, making the database publicly readable.
+The request object's `cloudant` field contains an object whose keys are usernames with permissions to interact with the database. The `nobody` username indicates what rights are available to unauthenticated users -- that is, anybody. In the example request, for instance, `nobody` has `_reader` permissions, making the database publicly readable.
 
 <div></div>
 
@@ -149,7 +149,7 @@ The response tells you whether the update has been successful.
 <aside class="warning" role="complementary" aria-label="apibypostdeprecated">The earlier method of generating API keys by `POST`ing to `https://cloudant.com/api/generate_api_key` is now deprecated.</aside>
 
 API keys allow you to give access to a person or application without having to create a new Cloudant account.
-An API key consists of a randomly generated user name and password.
+An API key consists of a randomly generated username and password.
 The key is given the desired access permissions.
 Once generated,
 the API key can be used in the same way as a normal user account,
@@ -241,7 +241,7 @@ the effect is to delete the API key.
 
 To remove the API key,
 send an HTTP `PUT` request to the same `_security` API endpoint you used to [create the API key](#creating-api-keys).
-Provide an updated list of the user names that have access permission.
+Provide an updated list of the usernames that have access permission.
 The updated list should _omit_ the API key.
 
 
@@ -266,10 +266,9 @@ Content-Type: application/json
 
 ```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
-     -X PUT \
-     -H "Content-Type: application/json" \
-     -d "$JSON"     
-{
+-X PUT \
+-H "Content-Type: application/json" \
+-d '{
   "couchdb_auth_only": true,
  "members": {
    "names": ["member"],"roles":[]
@@ -277,11 +276,10 @@ curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
   "admins": {
      "names": ["admin"],"roles":[]
    }
- }
-}
+ }'
 ```
 
-You can use the `_users` database to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
+You can use the [_users database](http://docs.couchdb.org/en/1.6.1/intro/security.html#authentication-database) to manage roles in Cloudant. However, you must turn off Cloudant security for those roles first. To do this, `PUT` a JSON document to the `_security` endpoint of the database. For example, `https://<username>.cloudant.com/<database>/_security`.
 
 <div></div>
 
@@ -292,4 +290,3 @@ You can use the `_users` database to manage roles in Cloudant. However, you must
  "ok" : true
 }
 ```
-
