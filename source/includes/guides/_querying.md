@@ -27,7 +27,7 @@ requests will take longer because the service will need to verify your credentia
 
 The following code contains all we need for the initial connection to Cloudant. It sets up variables
 for the credentials and the base URL of a Cloudant account and it sets some defaults parameters for curl.
-If you don't have an account yet, you can [sign up](https://console.ng.bluemix.net/catalog/services/ibm-graph/) and copy your
+If you don't have an account yet, you can [sign up](https://cloudant.com/sign-up/) and copy your
 credentials into the script. You can also use the 'docs-playground' account, if you don't want to
 use your own account.
 
