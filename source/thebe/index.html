@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Thebe - Jupyter javascript plugin for static sites</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="static/thebe/site.css" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.6.0/codemirror.min.css" type="text/css"/>
+    
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- or -->
+    <!-- // <script src="../static/components/jquery/jquery.min.js" type="text/javascript" charset="utf-8"></script> -->
+    <script src="static/main-built.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <script>
+      $(function(){
+          window.thebe = new Thebe({
+              selector:"pre[data-executable]",
+              add_interrupt_button: true,
+              kernel_name: "python3",
+              url:"https://tmp39.tmpnb.org",
+              // url:"https://192.168.99.100:8000",
+              debug: true
+          });
+      });
+
+    </script>
+
+</head>
+
+<body>
+
+<noscript>
+<div id='noscript'>
+      This page requires JavaScript.<br>
+      Please enable it to proceed.
+  </div>
+</noscript>
+
+<h1>Thebe</h1>
+<h2>Jupyter javascript plugin for static sites</h2>
+
+<p> A really simple example:</p>
+
+<pre data-executable id="hello-example">
+hey = "hello world", 38+4
+print(hey)
+
+</pre>
+
+<p>More complicated examples:</p>
+
+<pre data-executable>
+x = [1,1]
+for i in range(10):    
+    x.append(x[-1] + x[-2]) 
+print(', '.join(str(y) for y in x))
+</pre>
+
+<pre data-executable>
+%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.linspace(0, 3*np.pi, 500)
+plt.plot(x, np.sin(x**2))
+plt.title('A simple chirp');
+</pre>
+
+<br> <br>
+<p>There are still more complicated examples in the <a href="https://github.com/oreillymedia/thebe/tree/master/examples"> examples directory</a> but you'll need to run a notebook server with the appropriate dependencies installed for them to work.</p>
+
+<br><br>
+
+<p> An example of code that is not executable</p>
+<pre data-not-executable>
+print("Na, you cannot run this sorry")
+</pre>
+
+<p> An example of code that is read only but executable</p>
+<pre data-read-only data-executable>
+print("Nope, you can't edit this sorry! But you can run it.")
+</pre>
+
+<p> Mathjax support built in:</p>
+
+<p>\begin{align}
+\dot{x} &amp; = \sigma(y-x) \
+\dot{y} &amp; = \rho x - y - xz \
+\dot{z} &amp; = -\beta z + xy
+\end{align}</p>
+
+</body>
+
+</html>
