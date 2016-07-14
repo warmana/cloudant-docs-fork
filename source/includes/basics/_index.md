@@ -86,8 +86,16 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 <aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
-## Cloudant Local
+## Versions of Cloudant
 
+IBM offers additional versions of Cloudant.
+
+*	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
+*	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team.  
+
+You can read more information in the following sections. 
+
+### Cloudant Local
 <a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 
 Cloudant Local provides you with the same basic capabilities as the full Cloudant single-tenant offering,
@@ -474,4 +482,3 @@ backup product, you are responsible for backing up your data.</p>
 
 **Where can I find Bluemix Local documentation?**
 <p>Blue Mix documentation is located here, https://console.ng.bluemix.net/docs/local/index.html#local.</p>
-
