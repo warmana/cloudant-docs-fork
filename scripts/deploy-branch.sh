@@ -37,7 +37,8 @@ then
 		      "ten-eleven": ["_reader"],
 		      "elsmore": ["_reader"],
 		      "rajsingh": ["_reader"],
-		      "docs-testb":["_reader","_writer","_admin","_replicator"]
+          "kelepirstantoneatessolit":["_reader"],
+          "docs-testb":["_reader","_writer","_admin","_replicator"]
 		    }
 		  }'
     if [ "${TRAVIS_BRANCH}" = "content-review" ]; then
