@@ -47,6 +47,7 @@
 {"from": "/BluemixLocal.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {"from": "/BluemixLocalHardware.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {"from": "/CCM.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
+{"from": "/CCMbilling.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {
     "from": "",
     "to": "index.html",
