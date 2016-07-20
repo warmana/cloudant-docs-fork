@@ -29,6 +29,7 @@ then
       {
         "cloudant": {
           "mgroenen": ["_reader"],
+          "dbsgrl": ["_reader"],
 		      "kimstebel": ["_reader"],
 		      "warmanaibm": ["_reader"],
 		      "bradnoble": ["_reader"],
