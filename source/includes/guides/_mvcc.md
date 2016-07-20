@@ -39,19 +39,24 @@ a solution is to [create a new document](document.html#documentCreate) for each 
 
 ### Distributed Databases and Conflicts
 
-Distributed databases work do not require a constant connection to a 'main' database.
-This means that changes made to a document might not instantly update or replicate to other parts of the replicated database.
+Distributed databases do not require a constant connection to a 'main' or 'central' database.
+This is because there can be more than one location for the data within the database.
+In other words,
+some or all of the database can be stored at a given location.
+
+While this structure offers considerable benefits in terms of performance and reliability,
+it can also mean that changes made to a document stored in one location might not instantly update or replicate to other parts of the replicated database.
 If other,
 independent,
 updates are made to those older versions of documents,
-the effect might be to introduce disagreement or 'conflicts' as to the correct,
+the effect might be to introduce disagreement or 'conflicts' as to what is the correct,
 definitive content for the document.
 
 <div></div>
 
 #### Finding conflicts
 
-To find conflicts,
+To find any conflicts that might be affecting a document,
 add the query parameter `conflicts=true` when retrieving a document.
 When returned,
 the resulting document contains a `_conflicts` array,
@@ -71,11 +76,11 @@ function (doc) {
 
 To find conflicts for multiple documents in a database,
 write a [view](creating_views.html).
-An example map function is provided,
-that emits all revisions for every document with a conflict.
+Using a map function such as the example provided,
+you can find all the revisions for every document with a conflict.
 
 When you have such a view,
-you can regularly query this view and resolve conflicts as needed.
+you can use it to find and resolve conflicts as needed.
 Alternatively,
 you might query the view after each replication to identify and resolve conflicts immediately.
 
@@ -84,13 +89,13 @@ you might query the view after each replication to identify and resolve conflict
 Once you've found a conflict, you can resolve it by following 4 steps:
 
 1.	[Get](mvcc.html#get-conflicting-revisions) the conflicting revisions.
-2.	[Merge](mvcc.html#merge-the-changes) them in your application or ask the user what he wants to do.
+2.	[Merge](mvcc.html#merge-the-changes) them in your application or ask the user what they want to do.
 3.	[Upload](mvcc.html#upload-the-new-revision) the new revision.
-4.	[Delete](mvcc.html#delete-old-revisions) old revisions.
+4.	[Delete](mvcc.html#delete-old-revisions) the old revisions.
 
 <div></div>
 
-> Example first version of the document.
+> Example document - the first version.
 
 ```json
 {
@@ -125,7 +130,7 @@ so someone might add one.
 
 <div></div>
 
-> _Alternative_ second version, introducing a price reduction data change that conflicts with the addition of a description.
+> _Alternative_ second version, introducing a price reduction data change to the first version of the document.
 
 ```json
 {
@@ -138,18 +143,22 @@ so someone might add one.
 ```
 
 At the same time, someone else - working with a replicated database - reduces the price.
+This change is made to the first version of the document.
+Therefore,
+the price reduction change does not 'know' about the description change.
 
 <div></div>
 
-When the two databases are replicated,
-it is not clear which of the two alternative versions of the document is correct,
-leading to a conflict.
+Later,
+when the two databases are replicated,
+it might not be clear which of the two alternative versions of the document is correct.
+This is a conflict scenario.
 
 #### Get conflicting revisions
 
-To find the conflicting revisions for a document,
-retrieve the document,
-including the `conflicts=true` parameter,
+To find any conflicting revisions for a document,
+retrieve that document as normal,
+but include the `conflicts=true` parameter,
 similar to the following example:
 
 `http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
