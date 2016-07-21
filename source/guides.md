@@ -2,7 +2,7 @@
 title: Cloudant Documentation - Guides
 
 language_tabs:
-  - http 
+  - http
   - shell: curl
 #  - javascript: node.js
 #  - python
@@ -25,6 +25,7 @@ fragments = {
   '#monitoring-replication28': 'managing_tasks.html',
   '#managing-tasks': 'managing-tasks.html',
   '#document-versioning-and-mvcc': 'mvcc.html',
+  '#conflicts': 'conflicts.html',
   '#transactions-in-cloudant': 'transactions.html',
   '#cap-theorem': 'cap_theorem.html',
   '#acid': 'acid.html',
