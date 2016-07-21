@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - Multiversion Concurrency Control
+title: Cloudant Documentation - Conflicts
 
 language_tabs:
   - http
@@ -15,6 +15,6 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - guides/mvcc
+  - guides/conflicts
 
 ---

@@ -74,7 +74,7 @@ def index_file(filename):
 		#	file_docs[_id]['_rev'] = rev
 		#response = database.bulk_docs(*file_docs.values())
 		#response.raise_for_status()
-	
+
 
 
 for filename in [
@@ -91,6 +91,7 @@ for filename in [
 'basics',
 'cap_theorem',
 'cloudant_query',
+'conflicts',
 'cors',
 'couchapps',
 'creating_views',
@@ -116,5 +117,3 @@ for filename in [
 'warehousing'
 ]:
 	index_file(filename)
-
-				
