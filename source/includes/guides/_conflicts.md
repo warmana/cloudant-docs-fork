@@ -10,6 +10,76 @@ if independent updates are made to different copies of documents,
 the effect might be to introduce disagreement or 'conflicts' as to what is the correct,
 definitive content for the document.
 
+Cloudant tries to help you avoid conflicts by warning you of potential problems.
+It does this by returning a [`409` response](http.html#409) to a problematic update request.
+However,
+a `409` response might not be received if the database update is requested on a
+system that is not currently connected to the network.
+For example,
+the database might be on a mobile device that is temporarily disconnected from
+the Internet,
+making it impossible at that moment to check if other potentially conflicting
+updates have been made.
+
+If you request a document that is in a conflict situation,
+Cloudant returns the document as expected.
+However,
+the version returned is determined by an internal algorithm that considers a
+number of factors;
+you should not assume that the returned document is always the most recent version,
+for example.
+
+If you do not check for conflicts,
+or fail to address them,
+your Cloudant database begins to exhibit several behaviors:
+
+* Increasing inconsistencies in document content, because there are more and more conflicting documents.
+* Increasing database size, because all conflicting documents must be retained until the conflict is resolved.
+* Decreasing performance, because Cloudant must work harder in response to each and every request as it tries to identify the 'best possible' version of a conflicted document.
+
+The following suggested practices might help you decide when to check for,
+and resolve,
+conflicts:
+
+<table>
+<tr>
+<th>Application characteristic</th>
+<th>Frequency of document update</th>
+<th>Check for conflicts at retrieval?</th>
+<th>Check for conflicts at update?</th>
+</tr>
+<tr>
+<td>Always connected to the network, for example a server.</td>
+<td>Often</td>
+<td>Y</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Always connected to the network.</td>
+<td>Occasionally</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Often but not always connected to the network, for example a laptop.</td>
+<td>Often</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Often but not always connected to the network.</td>
+<td>Occasionally</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Occasionally connected to the network, for example a tablet.</td>
+<td>Often</td>
+<td>-</td>
+<td>Y</td>
+</tr>
+</table>
+
 ### Finding conflicts
 
 To find any conflicts that might be affecting a document,
@@ -158,22 +228,26 @@ non-conflicting version of the document.
 
 To compare the revisions and identify what has been changed,
 your application must retrieve all of the versions from the database.
-This is done by issuing requests similar to the following:
+As described previously,
+we begin by retrieving a document and details of any conflicting versions.
+We do this using a command similar to the following,
+which also requests the `_conflicts` array:
 
-*	`http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
-*	`http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13`
-*	`http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299`
+`http://$USERNAME.cloudant.com/products/$_ID?conflicts=true`
 
-The first document retrieval also requests the `_conflicts` array.
-This gives us a current version of the document,
+This retrieval gives us a current version of the document which we store,
 _and_ a list of all the other conflicting documents that must also be retrieved,
 for example `...rev=2-61ae00e029d4f5edd2981841243ded13` and `...rev=1-7438df87b632b312c53a08361a7c3299`.
-Each of these other conflicting versions is also retrieved.
+Each of these other conflicting versions is also retrieved and stored,
+for example:
+
+  `http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13`
+  `http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299`
 
 Once you have all of the conflicting revisions of a document available,
 you can proceed to resolve the conflicts.
 
-In our example,
+In our earlier scenario,
 the differences between the versions of the document were for different fields within the document,
 making it easier to merge them.
 

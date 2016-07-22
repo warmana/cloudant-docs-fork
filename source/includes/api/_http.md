@@ -198,7 +198,7 @@ A list of the error codes returned by Cloudant and generic descriptions of the r
 
 -   `409 - Conflict`
 
-    Request resulted in an update conflict.
+    Fulfilling the request would result in an update conflict. This means that the document you are trying to update has already been edited 'elsewhere', therefore updating the document with your changes might result in the loss of data. A `409` response is not an indicator of an actual conflict, but instead indicates that you might have a conflict situation. More information about how to deal with conflicts is [available](conflicts.html).
 
 -   `412 - Precondition Failed`
 
