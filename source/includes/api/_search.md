@@ -65,7 +65,7 @@ The third, optional parameter is a JavaScript object with the following fields:
 Option | Description | Values | Default
 -------|-------------|--------|---------
 `index` | Whether the data is indexed, and if so, how. If set to `false` or `no`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `false`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
-`facet` | Creates a faceted index. See [Faceting](#faceting) for more information. | `true`, `false` | `false`
+`facet` | Creates a faceted index. See [Faceting](search.html#faceting) for more information. | `true`, `false` | `false`
 `store` | If `true`, the value is returned in the search result; otherwise, the value is not returned. | `true`, `false` | `false`
 `boost` | A number specifying the relevance in search results. Content indexed with a boost value above 1 is more relevant than content indexed without a boost value. Content with a boost value below 1 is less relevant. | A positive floating point number | 1 (no boosting)
 
@@ -336,10 +336,9 @@ Once you've got an index written, you can query it with a `GET` request to `http
 
 #### Query Parameters
 
-<aside class="warning" role="complementary" aria-label="enablebeforeuse">You must enable faceting before you can use the following parameters:
+<aside class="warning" role="complementary" aria-label="enablebeforeuse">You must enable [faceting](search.html#faceting) before you can use the following parameters:
 <ul>
 <li> `counts`
-<li> `ridges`
 <li> `drilldown`
 </ul>
 </aside>
@@ -348,24 +347,24 @@ Once you've got an index written, you can query it with a `GET` request to `http
 
 Argument | Description | Optional | Type | Supported Values
 ---------|-------------|----------|------|------------------
-`bookmark` | A bookmark that was received from a previous search. This allows you to page through the results. If there are no more results after the bookmark, you will get a response with an empty rows array and the same bookmark. That way you can determine that you have reached the end of the result list. | yes | string |
-`counts` | This field defines an array of names of string fields, for which counts should be produced. The response will contain counts for each unique value of this field name among the documents matching the search query. | yes | JSON | A JSON array of field names
-`drilldown` | This field can be used several times. Each use defines a pair of a field name and a value. The search will only match documents that have the given value in the field name. It differs from using `"fieldname:value"` in the q parameter only in that the values are not analyzed. | yes | JSON | A JSON array with two elements, the field name and the value.
+`bookmark` | A bookmark that was received from a previous search. This allows you to page through the results. If there are no more results after the bookmark, you get a response with an empty rows array and the same bookmark. That way you can determine that you have reached the end of the result list. | yes | string |
+`counts` | This field defines an array of names of string fields, for which counts should be produced. The response contains counts for each unique value of this field name among the documents matching the search query. [Faceting](search.html#faceting) must be enabled for this parameter to function. | yes | JSON | A JSON array of field names
+`drilldown` | This field can be used several times. Each use defines a pair of a field name and a value. The search only matches documents that have the given value in the field name. It differs from using `"fieldname:value"` in the `q` parameter only in that the values are not analyzed. [Faceting](search.html#faceting) must be enabled for this parameter to function. | yes | JSON | A JSON array with two elements, the field name and the value.
 `group_field` | Field by which to group search matches. | yes | String | A string containing the name of a string field. Fields containing other data (numbers, objects, arrays) can not be used.
-`group_limit` | Maximum group count. This field can only be used if group_field is specified. | yes | Numeric |
-`group_sort` | This field defines the order of the groups in a search using group_field. The default sort order is relevance. | yes | JSON | This field can have the same values as the sort field, so single fields as well as arrays of fields are supported.
-`include_docs` | Include the full content of the documents in the response | yes | boolean |
-`limit` | Limit the number of the returned documents to the specified number. In case of a grouped search, this parameter limits the number of documents per group. | yes | numeric | The limit value can be any positive integer number up to and including 200.
-`query` | A Lucene query | no | string or number |
-`ranges` | This field defines ranges for faceted, numeric search fields. The value is a JSON object where the fields names are numeric, faceted search fields and the values of the fields are again JSON objects. Their field names are names for ranges. The values are Strings describing the range, for example `"[0 TO 10]"` | yes | JSON | The value must be on object whose fields again have objects as their values. These objects must have string describing ranges as their field values.
-`sort` | Specifies the sort order of the results. In a grouped search (i.e. when group_field is used), this specifies the sort order within a group. The default sort order is relevance. | yes | JSON | A JSON string of the form `"fieldname<type>"` or `-fieldname<type>` for descending order, where fieldname is the name of a string or number field and type is either number or string or a JSON array of such strings. The type part is optional and defaults to number. Some examples are `"foo"`, `"-foo"`, `"bar<string>"`, `"-foo<number>"` and `["-foo<number>", "bar<string>"]`. String fields used for sorting must not be analyzed fields. The field(s) used for sorting must be indexed by the same indexer used for the search query.
-`stale` | Don't wait for the index to finish building to return results. | yes | string | ok
-`highlight_fields` | Specifies which fields should be highlighted. If specified, the result object will contain a `highlights` field with an entry for each specified field. | yes | Array of strings |
+`group_limit` | Maximum group count. This field can only be used if `group_field` is specified. | yes | Numeric |
+`group_sort` | This field defines the order of the groups in a search using `group_field`. The default sort order is relevance. | yes | JSON | This field can have the same values as the sort field, so single fields as well as arrays of fields are supported.
+`highlight_fields` | Specifies which fields should be highlighted. If specified, the result object contains a `highlights` field with an entry for each specified field. | yes | Array of strings |
 `highlight_pre_tag` | A string inserted before the highlighted word in the highlights output | yes, defaults to `<em>` | String |
 `highlight_post_tag` | A string inserted after the highlighted word in the highlights output | yes, defaults to `</em>` | String |
 `highlight_number` | Number of fragments returned in highlights. If the search term occurs less often than the number of fragments specified, longer fragments are returned. | yes, defaults to 1 | Numeric |
 `highlight_size` | Number of characters in each fragment for highlights. | yes, defaults to 100 characters | Numeric |
+`include_docs` | Include the full content of the documents in the response | yes | boolean |
 `include_fields` | A JSON array of field names to include in search results. Any fields included must have been indexed with the `store:true` option. | yes, the default is all fields | Array of strings |
+`limit` | Limit the number of the returned documents to the specified number. In case of a grouped search, this parameter limits the number of documents per group. | yes | numeric | The limit value can be any positive integer number up to and including 200.
+`query` | A Lucene query | no | string or number |
+`ranges` | This field defines ranges for faceted, numeric search fields. The value is a JSON object where the fields names are numeric, faceted search fields and the values of the fields are again JSON objects. Their field names are names for ranges. The values are Strings describing the range, for example `"[0 TO 10]"` | yes | JSON | The value must be on object whose fields again have objects as their values. These objects must have string describing ranges as their field values.
+`sort` | Specifies the sort order of the results. In a grouped search (when `group_field` is used), this parameter specifies the sort order within a group. The default sort order is relevance. | yes | JSON | A JSON string of the form `"fieldname<type>"` or `-fieldname<type>` for descending order, where `fieldname` is the name of a string or number field, and `type` is either number or string or a JSON array of such strings. The type part is optional and defaults to number. Some examples are `"foo"`, `"-foo"`, `"bar<string>"`, `"-foo<number>"` and `["-foo<number>", "bar<string>"]`. String fields used for sorting must not be analyzed fields. Fields used for sorting must be indexed by the same indexer used for the search query.
+`stale` | Don't wait for the index to finish building to return results. | yes | string | ok
 
 <aside class="warning" role="complementary" aria-label="donotcombine">Do not combine the `bookmark` and `stale` options. The reason is that both these options constrain the choice of shard replicas to use for determining the response. When used together, the options can result in problems when attempting to contact slow or unavailable replicas.</aside>
 
