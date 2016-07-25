@@ -115,7 +115,7 @@ See [API Reference](api.html) for more information about meteor-couchdb APIs.
 
 A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
 
-Download the current Python release [here](https://pypi.python.org/pypi/cloudant/). Learn more information about the Python language at [python.org](https://www.python.org/about/). 
+Download the current library release [here](https://pypi.python.org/pypi/cloudant/). Learn more information about the Python language at [python.org](https://www.python.org/about/). 
 
 ### Objective C and Swift
 
