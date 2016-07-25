@@ -125,10 +125,9 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 
 <ul><li>Customer-owned environment requirements
 <ul><li>VMWare versions 5.5 or 6.0. </li>
-<li>MTU set to 9000 on all virtual switches.</li> 
-<li>Provide five customer facing IP addresses to Cloudant for our DNS servers and our load balancers.</li></ul></li></ul>
+<li>MTU set to 9000 on all virtual switches.</li></ul></li></ul>
 
-<ul><li>Cloudant-owned deployment requirements 
+<ul><li>Cloudant-owned deployment and maintenance requirements
 <ul><li>The Bluemix Local platform requires a small internal cluster to run.  This cluster is required and is not available in your Bluemix catalog. If you would like Cloudant to be listed as a local service in the Bluemix catalog, you must purchase a separate cluster.</li>
 <li>External internet access via the Bluemix tether.</li>
 <li>A Logmet deployment sized to support Cloudant. Logmet is based on the ELK stack and houses all of the logs created on the local Cloudant clusters.  This data stays local to your environment but is accessible by the Cloudant team.</li></ul></li></ul>
@@ -448,7 +447,7 @@ changes and updates to their clusters in Bluemix Local.</p>
 <p>Cloudant is on the private network inside Bluemix Local and only requires private IPs, which are provided by the Bluemix team.</p>
 
 **Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
-<p>Yes, it can be found here, ![alt tag](images/bml_architecture_diagram.png).</p>
+<p>Yes, it can be found here, ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png).</p>
 
 **Who is responsible for the Cloudant service broker?**
 <p>Cloudant makes the appropriate changes to the service broker. If you have an existing dedicated cluster, Cloudant configures the broker to point to the new local cluster and follows the normal Bluemix
@@ -464,7 +463,7 @@ Logmet so that your information can be stored locally. Logmet is a separate depl
 Logmet deployment per Cloudant cluster. All Cloudant clusters, within one Bluemix Local environment, share the same Logmet instance.</p>
 
 **Where do you send metrics and monitoring information?**
-<p>Cloudant receives metrics and monitoring information through the tether. Without it, you cannot properly maintain your local cluster.<p>
+<p>Cloudant receives metrics and monitoring information through the tether. Without it, we cannot properly maintain your local cluster.<p>
 
 **How is VMware clustering set up for Cloudant, Logmet, and Bluemix?**
 <p>Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
