@@ -447,7 +447,7 @@ changes and updates to their clusters in Bluemix Local.</p>
 <p>Cloudant is on the private network inside Bluemix Local and only requires private IPs, which are provided by the Bluemix team.</p>
 
 **Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
-<p>Yes, it can be found here, ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png).</p>
+<p>Yes, it can be found here. ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png)</p>
 
 **Who is responsible for the Cloudant service broker?**
 <p>Cloudant makes the appropriate changes to the service broker. If you have an existing dedicated cluster, Cloudant configures the broker to point to the new local cluster and follows the normal Bluemix
