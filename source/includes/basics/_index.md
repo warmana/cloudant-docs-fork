@@ -86,11 +86,11 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 <aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
-<<<<<<< 8777a5f1d0c5fa1ff6a1028d920da04ff6aef4a4
 ## Cloudant Local
 
 <a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
-=======
+
+
 ## Versions of Cloudant
 
 IBM offers additional versions of Cloudant.
