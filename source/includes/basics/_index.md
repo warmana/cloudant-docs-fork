@@ -146,7 +146,7 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 <th>Disk-OS (GB)</th>
 <th>Disk Config-OS</th>
 <th>min Disk-Data (GB)</th>
-<th>recommended min Disk-Data (GB)</th>
+<th>recommended Disk-Data (GB)</th>
 <th>Disk Config-Data</th>
 <th>Network (Gbps)</th>
 </tr>
@@ -248,7 +248,7 @@ To ensure that Cloudant on Bluemix Local installs correctly, you must meet the f
 <td>10</td>
 <td>VMDK-thick eager zeroed</td>
 <td>800</td>
-<td>1000</td>
+<td>1600</td>
 <td>VMDK-thick eager zeroed/independent persistent</td>
 <td>1</td>
 </tr>
@@ -371,46 +371,46 @@ These recommendations assume that you are using the required hardware for Clouda
 <tr><td>1</td>
 <td>48</td>
 <td>64</td>
-<td>db1.bml-<customer>001</td>
+<td>db1.bml-&lt;customer&gt;001</td>
 </tr>
 <tr><td>2</td>
 <td>48</td>
 <td>64</td>
-<td>db2.bml-<customer>001</td>
+<td>db2.bml-&lt;customer&gt;001</td>
 </tr>
 <tr><td>3</td>
 <td>48</td>
 <td>64</td>
-<td>db3.bml-<customer>001</td>
+<td>db3.bml-&lt;customer&gt;001</td>
 </tr>
 <tr><td>4</td>
 <td>48</td>
 <td>96</td>
-<td>lb1.bml-<customer>001
-lb1.bml-ops-<customer>001
-db1.bml-ops-<customer>001
-db1.bml-<customer>-bk0011</td>
+<td>lb1.bml-&lt;customer&gt;001
+lb1.bml-ops-&lt;customer&gt;001
+db1.bml-ops-&lt;customer&gt;001
+db1.bml-&lt;customer&gt;-bk0011</td>
 </tr>
 <tr><td>5</td>
 <td>48</td>
 <td>96</td>
-<td>lb2.bml-<customer>001
-lb2.bml-ops-<customer>001
-db2.bml-ops-<customer>001
-db2.bml-<customer>-bk0011</td>
+<td>lb2.bml-&lt;customer&gt;001
+lb2.bml-ops-&lt;customer&gt;001
+db2.bml-ops-&lt;customer&gt;001
+db2.bml-&lt;customer&gt;-bk0011</td>
 </tr>
 <tr><td>6</td>
 <td>44</td>
 <td>92</td>
-<td>lb1.bml-<customer>-bk001
-db3.bml-ops-<customer>001
-db3.bml-<customer>-bk001
-sapi1.bml-<customer></td>
+<td>lb1.bml-&lt;customer&gt;-bk001
+db3.bml-ops-&lt;customer&gt;001
+db3.bml-&lt;customer&gt;-bk001
+sapi1.bml-&lt;customer&gt;</td>
 </tr>
 <tr><td>7</td>
 <td>20</td>
 <td>38</td>
-<td>lb2.bml-<customer>-bk001
+<td>lb2.bml-&lt;customer&gt;-bk001
 sapi2.bml-customer
 infra1.bml-customer</td>
 </tr>
