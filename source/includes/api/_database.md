@@ -35,7 +35,7 @@ The database name must start with a lowercase letter and contain only the follow
  - Lowercase characters (a-z)
  - Digits (0-9)
  - Any of the characters _, $, (, ), +, -, and /
- 
+
 #### Database topology
 
 It is possible to modify the configuration of a database sharding topology of a database on dedicated database clusters.
@@ -223,14 +223,19 @@ The `_all_docs` endpoint accepts these query arguments:
 
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
+`conflicts` | Includes conflicts information in the response. This option is ignored if the `include_docs` argument is `true`. | yes | boolean | false
+`deleted_conflicts` | Returns information about deleted conflicted revisions | yes | boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | boolean | false
 `inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
 `key` | Return only documents with IDs that match the specified key | yes | string |  
 `keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
-`limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
+`limit` | Limit the number of the returned documents to the specified number | yes | numeric |
+`meta` | Short-hand combination of all three arguments: `conflicts`, `deleted_conflicts`, and `revs_info`. Using `meta=true` is the same as using `conflicts=true&deleted_conflicts=true&revs_info=true` | yes | boolean | false
+`r` | Specify the [read quorum](document.html#quorum---writing-and-reading-data) value | yes | numeric | 2
+`revs_info` | Includes detailed information for all known document revisions | yes | boolean | false
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
@@ -313,17 +318,17 @@ These responses are combined and returned to the original requesting client.
 
 `_changes` accepts these query arguments:
 
-Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default 
+Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default
 ---------|-------------|------------------|---------
-`descending` | Return the changes in sequential order | boolean | false | 
+`descending` | Return the changes in sequential order | boolean | false |
 `feed` | Type of feed | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
 `filter` | Name of filter function from a design document to get updates | string | no filter
-`heartbeat` | Time in milliseconds after which an empty line is sent during longpoll or continuous if there have been no changes | any positive number | no heartbeat | 
+`heartbeat` | Time in milliseconds after which an empty line is sent during longpoll or continuous if there have been no changes | any positive number | no heartbeat |
 `include_docs` | Include the document with the result | boolean | false |
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false
 `limit` | Maximum number of rows to return | any non-negative number | none |  
-`since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. If it is `now`, only changes made after the time of the request will be emitted. | sequence identifier or `now` | 0 | 
-`style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
+`since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. If it is `now`, only changes made after the time of the request will be emitted. | sequence identifier or `now` | 0 |
+`style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` |
 `timeout` | Number of milliseconds to wait for data before terminating the response. If heartbeat supersedes timeout if both are supplied. | any positive number | |
 `doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. | A JSON array of document IDs | |
 
