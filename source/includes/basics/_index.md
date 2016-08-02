@@ -411,8 +411,8 @@ sapi1.bml-&lt;customer&gt;</td>
 <td>20</td>
 <td>38</td>
 <td>lb2.bml-&lt;customer&gt;-bk001
-sapi2.bml-customer
-infra1.bml-customer</td>
+sapi2.bml-&lt;customer&gt;
+infra1.bml-&lt;customer&gt;</td>
 </tr>
 </table>
 
