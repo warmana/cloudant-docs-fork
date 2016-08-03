@@ -44,8 +44,8 @@
 {"from": "/api/design-documents-get-put-delete-copy.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "api.html#rewrite-rules"} },
 {"from": "/databases.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "database.html"} },
 {"from": "/functiony.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
-{"from": "/BluemixLocal.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
-{"from": "/BluemixLocalHardware.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
+{"from": "/BluemixLocal.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "basics.html#cloudant-on-bluemix-local"} },
+{"from": "/BluemixLocalHardware.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "basics.html#requirements"} },
 {"from": "/CCM.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {"from": "/CCMbilling.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {
