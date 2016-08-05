@@ -32,6 +32,17 @@ To move to a different plan,
 login to Bluemix using your Account details,
 then go to the Service Catalog page for Cloudant.
 
+<div id="servicetier"></div>
+
+You can see details of the tiers within the plans available for your Account,
+and select the tier you wish to use,
+through the Account tab of your Cloudant account Dashboard.
+![Account Dashboard](images/AccountsCCM01.png)
+
+To move to a different plan,
+login to Bluemix using your Account details,
+then go to the Service Catalog page for Cloudant.
+
 The following table summarizes the price and performance measures for each of the tiers.
 
 <aside class="warning" role="complementary" aria-label="indicativetierpricing">Note that the details in the table are indicative as at August 2016.
