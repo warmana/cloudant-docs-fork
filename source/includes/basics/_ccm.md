@@ -185,6 +185,7 @@ By default,
 all plans are based on multi-tenant clusters.
 As part of your plan selection,
 you can choose from the following [Softlayer data centers](http://www.softlayer.com/data-centers):
+
 -	Softlayer Dallas
 - Softlayer London
 - Softlayer Sydney
