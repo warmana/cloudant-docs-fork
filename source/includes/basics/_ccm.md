@@ -15,9 +15,20 @@ through to several thousand dollars per month,
 depending on the storage capacity,
 and the read and write capacity.
 
+<div id="servicetier"></div>
+
+You can see details of the tiers within the plans available for your Account,
+and select the tier you wish to use,
+through the Account tab of your Cloudant account Dashboard.
+![Account Dashboard](images/AccountsCCM01.png)
+
+To move to a different plan,
+login to Bluemix using your Account details,
+then go to the Service Catalog page for Cloudant.
+
 The following table summarizes the price and performance measures for each of the tiers.
 
-<aside class="warning" role="complementary" aria-label="indicativetierpricing">Note that the details in the table are indicative as at July 2016.
+<aside class="warning" role="complementary" aria-label="indicativetierpricing">Note that the details in the table are indicative as at August 2016.
 For current values,
 please contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
@@ -161,6 +172,19 @@ applications receive an HTTP [`429` Too Many Requests](http.html#429) response.
 The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have provision for handling a `429` response.
 If your application uses another library or language,
 you should ensure you have made adequate provision for handling a `429` response correctly.
+
+### Monitoring usage
+
+Information about your usage is available in the Usage panel of the Activity tab within your Cloudant Dashboard.
+![Monitoring usage on the dashboard](images/MonitoringCCM08.png).
+
+Details are provided there,
+illustrating your current [throughput](ccm.html#throughput),
+and quantity of [stored data](ccm.html#disk-space-included).
+
+If your monitoring indicates that a change to your service tier might be advisable,
+for example if you are frequently approaching the maximum number of database lookups for your current tier,
+then you can modify the tier through the [Service Tier panel](ccm.html#servicetier) on the Account tab of the Dashboard.
 
 ### Service Level Agreement
 
