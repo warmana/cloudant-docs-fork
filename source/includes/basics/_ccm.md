@@ -9,11 +9,17 @@ At present:
 <li>Not all Cloudant clusters support the model.</li>
 </ul></aside>
 
-The CCM offers a number of performance and pricing tiers.
+The Cloud Consumption Model (CCM) offers a number of performance and pricing tiers
+for using [Cloudant on Bluemix](https://www.ng.bluemix.net/docs/#services/Cloudant/index.html#Cloudant).
+The tiers are distinguished by the maximum number of Lookups,
+Writes,
+and Queries.
+Each tier has a base 20GB storage allocation,
+with additional storage available
+at $1 per GB per month (indicative pricing as at August 2016) .
 The tier prices range from free,
 through to several thousand dollars per month,
-depending on the storage capacity,
-and the read and write capacity.
+depending on the configuration you choose.
 
 <div id="servicetier"></div>
 
@@ -44,22 +50,22 @@ please contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <tr>
 <td colspan="2">Base Price (monthly)</td>
 <td>$0</td>
-<td>$50</td>
-<td>$500</td>
-<td>$5,000</td>
-<td>$25,000</td>
+<td>$65</td>
+<td>$375</td>
+<td>$3,000</td>
+<td>$16,000</td>
 </tr>
 <tr>
 <td colspan="2">Disk Space Included (GB)</td>
 <td>1</td>
 <td>5</td>
-<td>100</td>
-<td>1000</td>
-<td>6000</td>
+<td>20</td>
+<td>20</td>
+<td>20</td>
 </tr>
 <tr>
 <td colspan="2">Disk Space Overflow (per GB)</td>
-<td>Not possible in this tier</td>
+<td><!--Not possible in this tier-->$1</td>
 <td>$1</td>
 <td>$1</td>
 <td>$1</td>
@@ -71,15 +77,15 @@ please contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <td>10</td>
 <td>20</td>
 <td>200</td>
-<td>3000</td>
-<td>20000</td>
+<td>3,000</td>
+<td>20,000</td>
 </tr>
 <td>Writes (per sec)</td>
 <td>10</td>
 <td>20</td>
 <td>150</td>
-<td>2000</td>
-<td>12000</td>
+<td>2,000</td>
+<td>12,000</td>
 </tr>
 <tr>
 <td>Queries (per sec)</td>
@@ -87,7 +93,7 @@ please contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <td>10</td>
 <td>50</td>
 <td>250</td>
-<td>1000</td>
+<td>1,000</td>
 </tr>
 <tr>
 <td colspan="2">Service SLA</td>
@@ -145,7 +151,7 @@ you would be billed an additional $1 x 15GB x ( 1 / (28 x 24) ) = $1 x 15GB x 0.
 Throughput is measured and identified as one of three kinds of events:
 
 1.	A lookups which is a read of a specific document, based on its `_id`.
-2.	A write, which is a write of an individual document. Currently, a write due to an index build is not included in the event count.
+2.	A write, which is a write of an individual document, or a write due to an index build.
 3.	A query, which is a request made to one of the Cloudant query endpoints, including the following:
 	-	Primary Index ([`_all_docs`](database.html#get-documents))
 	-	MapReduce View ([`_view`](creating_views.html#using-views))
@@ -172,6 +178,44 @@ applications receive an HTTP [`429` Too Many Requests](http.html#429) response.
 The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have provision for handling a `429` response.
 If your application uses another library or language,
 you should ensure you have made adequate provision for handling a `429` response correctly.
+
+#### Locations
+
+By default,
+all plans are based on multi-tenant clusters.
+As part of your plan selection,
+you can choose from the following [Softlayer data centers](http://www.softlayer.com/data-centers):
+-	Softlayer Dallas
+- Softlayer London
+- Softlayer Sydney
+-	Softlayer Washington DC
+
+Alternatively,
+a dedicated single-tenant environment can be provided in any Softlayer data center,
+for an additional $5000 per month, per data center (indicative as at August 2016).
+
+#### Security, Encryption and Compliance
+
+All plans are provided on servers with [at-rest](https://en.wikipedia.org/wiki/Data_at_rest) disk encryption.
+Access is encrypted over a network connection using HTTPS.
+For more detail,
+see [DBaaS Security](https://cloudant.com/product/cloudant-features/dbaas-security/).
+
+The plans also offer [Security Compliance Certification](https://cloudant.com/product/cloudant-features/cloudant-compliance/).
+[HIPAA](https://en.wikipedia.org/wiki/Health_Insurance_Portability_and_Accountability_Act) compliance requires a [single-tenant environment](ccm.html#locations),
+so you should request this before provisioning.
+
+#### High Availability, Disaster Recovery, and Backup
+
+To provide High Availability (HA) and Disaster Recovery (DR) within a data center,
+all data is stored in triplicate across three separate physical servers in a cluster.
+You can provision accounts in multiple data centers,
+then use continuous data replication to provide HA/DR across data centers.
+
+Cloudant data is not automatically backed up.
+You can request enablement of an [incremental backup feature](https://docs.cloudant.com/backup-guide.html),
+or alternatively implement your own solution using one of several possible techniques
+described [here](https://developer.ibm.com/clouddataservices/2016/03/22/simple-couchdb-and-cloudant-backup/).  
 
 ### Monitoring usage
 
@@ -202,7 +246,7 @@ The tiers are currently available in all [Bluemix](https://console.ng.bluemix.ne
 Availability in [`cloudant.com`](https://cloudant.com/) regions is subject to demand.
 
 An isolated environment can be provided in a Softlayer data center,
-for an additional $5000 per month (indicative price, as at July 2016).
+for an additional $5000 per month (indicative price, as at August 2016).
 
 ### Support
 
@@ -210,7 +254,7 @@ All tiers (_except_ the Lite tier) include best effort support during business h
 with a 24 hour Service Level Objective (SLO).
 
 Additionally,
-Gold Support offering a one hour response time SLA for Severity 1 issues can be purchased for a supplementary $500 per month (indicative price, as at July 2016).
+Gold Support offering a one hour response time SLA for Severity 1 issues can be purchased for a supplementary $500 per month (indicative price, as at August 2016).
 
 Severity 1 issues are defined as being where business-critical functionality is inoperable,
 or a business-critical interface has failed.
