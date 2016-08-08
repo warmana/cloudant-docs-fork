@@ -67,7 +67,7 @@ Option | Description | Values | Default
 `index` | Whether the data is indexed, and if so, how. If set to `false` or `no`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `false`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
 `facet` | Creates a faceted index. See [Faceting](search.html#faceting) for more information. | `true`, `false` | `false`
 `store` | If `true`, the value is returned in the search result; otherwise, the value is not returned. | `true`, `false` | `false`
-`boost` | A number specifying the relevance in search results. Content indexed with a boost value above 1 is more relevant than content indexed without a boost value. Content with a boost value below 1 is less relevant. | A positive floating point number | 1 (no boosting)
+`boost` | A number specifying the relevance in search results. Content indexed with a boost value greater than 1 is more relevant than content indexed without a boost value. Content with a boost value less than one is not so relevant. | A positive floating point number | 1 (no boosting)
 
 #### Index Guard Clauses
 

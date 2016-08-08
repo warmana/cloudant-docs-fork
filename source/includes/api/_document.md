@@ -325,7 +325,7 @@ This error prevents you overwriting data changed by other clients. If the write 
 
 ### 'Tombstone' documents
 
-Tombstone documents are small documents left in place within a database when the original document is deleted.
+Tombstone documents are small documents retained in place within a database when the original document is deleted.
 Their purpose is to allow the deletion to be replicated.
 
 When the replication has completed,

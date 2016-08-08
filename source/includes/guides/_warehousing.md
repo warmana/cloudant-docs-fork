@@ -273,7 +273,7 @@ Do this as follows:
 1.	Select the `Integrations` tab within the Cloudant dashboard.
 2.	Find the name of the Warehouse you want to rescan on the `Warehouse` task:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](images/selectWarehouse.png)
 3.	Click on the name of the Warehouse. It is a link, and when clicked it opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](images/viewWarehouseDetail.png)
-4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the square `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](images/stopWarehouseDatabase.png)
+4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](images/stopWarehouseDatabase.png)
 5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](images/rescanIcon.png)
 
 #### Rescanning the source database
@@ -327,9 +327,9 @@ Setting the value too high means that the scanning process to determine the ware
 #### After the rescan
 
 Once the Cloudant database rescan has finished,
-the warehouse is not autoamtically started.
+the warehouse is not automatically started.
 Instead,
-it is left in halted state,
+it remains in a halted state,
 so that the warehouse database can be customized.
 
 ### Customizing the warehouse schema

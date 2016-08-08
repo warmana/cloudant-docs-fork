@@ -86,21 +86,17 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 <aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
-## Cloudant Local
-
-<a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
-
-
 ## Versions of Cloudant
 
 IBM offers additional versions of Cloudant.
 
-*	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering. 
+*	Cloudant Data Layer Local Edition is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 *	Cloudant on Bluemix Local is delivered as-a-service and in constant collaboration with your IT team.  
 
-You can read more information in the following sections. 
+You can read more information in the following sections.
 
 ### Cloudant Local
+
 <a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 
 Cloudant Local provides you with the same basic capabilities as the full Cloudant single-tenant offering,
@@ -116,11 +112,11 @@ including:
 - <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_tuning_parameters_replication_cases.html?lang=en" target="_blank">Tuning replication parameters</a>
 
 ### Cloudant on Bluemix Local
-Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability. 
+Cloudant on Bluemix Local is a NoSQL database-as-a-service (DBaaS) built from the ground up to scale globally, run non-stop, and handle a wide variety of data types like JSON, full-text, and geospatial. Cloudant is an operational data store optimized to handle concurrent reads & writes, and provide high availability and data durability.
 
 Cloudant on Bluemix Local is a service that is managed inside your data center. This service offers peace of mind by having Cloudant in-house without having to worry about day-to-day operations and maintenance.
 
-#### Requirements 
+#### Requirements
 To ensure that Cloudant on Bluemix Local installs correctly, you must meet the following requirements.
 
 <ul><li>Customer-owned environment requirements
@@ -418,70 +414,90 @@ infra1.bml-&lt;customer&gt;</td>
 
 #### Frequently Asked Questions about Cloudant on Bluemix Local
 
-**How is Cloudant for Bluemix Local deployed?**
-<p>You must download the OVA and ISO files and upload them to the datastore. You then
-provide your network, datastore, and locations of the OVA and ISO files to Cloudant. Cloudant runs a script and wraps the ovftool, which creates VMs that are ISO mounted and use the proper settings. A startup script, packaged in the OVA, configures the networking and sets up reverse SSH tunneling. The remaining provisioning tasks are run by Chef configuration management.</p>
+##### How is Cloudant for Bluemix Local deployed?
 
-**Where are the Cloudant virtual machines deployed?**
-<p>The VMs deploy within the private VLANs inside your Bluemix Local deployment.</p>
+You must download the OVA and ISO files and upload them to the datastore. You then
+provide your network, datastore, and locations of the OVA and ISO files to Cloudant. Cloudant runs a script and wraps the ovftool, which creates VMs that are ISO mounted and use the proper settings. A startup script, packaged in the OVA, configures the networking and sets up reverse SSH tunneling. The remaining provisioning tasks are run by Chef configuration management.
 
-**Can Cloudant be deployed within a normal customer maintenance window?**
-<p>Deploying Cloudant in your data center is a lengthy process. Currently, Cloudant needs approximately 1-2 weeks to deploy and verify your installation. Support is working to improve the deployment and automation process. </p>
+##### Where are the Cloudant virtual machines deployed?
 
-**Does Cloudant follow the same Bluemix CR/DR process? Can I decide when changes are deployed?**
-**Can I review the changes before they are deployed?**
-<p>Cloudant does not follow the CR/DR process. Cloudant is delivered as a service and manages thousands of
-machines between public DBaaS and Bluemix Local. Support uses Chef to handle configuration management across
-our infrastructure, including clusters in Bluemix Local. As a result, non-disruptive changes are delivered
-regularly multiple times a week and sometimes multiple times per day. Therefore, changes and updates are not
+The VMs deploy within the private VLANs inside your Bluemix Local deployment.
+
+##### Can Cloudant be deployed within a normal customer maintenance window?
+
+Deploying Cloudant in your data center is a lengthy process. Currently, Cloudant needs approximately 1-2 weeks to deploy and verify your installation. Support is working to improve the deployment and automation process.
+
+##### Does Cloudant follow the same Bluemix CR/DR process?
+
+Cloudant does not follow the Bluemix CR/DR process.
+
+##### Can I decide when changes are deployed? Can I review the changes before they are deployed?
+
+Cloudant is delivered as a service and manages thousands of
+machines between public DBaaS and Bluemix Local. Support uses [`Chef`](https://en.wikipedia.org/wiki/Chef_(software)) to handle configuration management across
+the infrastructure, including clusters in Bluemix Local. As a result, non-disruptive changes are delivered
+regularly multiple times a week and potentially several times per day. Therefore, changes and updates are not
 bound to predetermined maintenance windows. Cloudant does not require customer sign-off on
-changes and updates to their clusters in Bluemix Local.</p>
+changes and updates to their clusters in Bluemix Local.
 
-**What about changes that are potentially disruptive?**
-<p>While the vast majority of updates are not disruptive, Cloudant may deploy changes that cause a temporary outage. These outages are rare. If an outage occurs, Cloudant will coordinate with you to find a maintenance window that minimizes any disruption to your business.</p>
+##### What about changes that are potentially disruptive?
 
-**What name displays in the catalog for Cloudant service?**
-<p>The Cloudant service name displays as "Local".</p>
+While the vast majority of updates are not disruptive, Cloudant may deploy changes that cause a temporary outage. These outages are rare. If an outage occurs, Cloudant will coordinate with you to find a maintenance window that minimizes any disruption to your business.
 
-**How does Cloudant obtain IP addresses for the virtual machines?**
-<p>Cloudant is on the private network inside Bluemix Local and only requires private IPs, which are provided by the Bluemix team.</p>
+##### What name displays in the catalog for Cloudant service?
 
-**Does Cloudant have an architecture diagram for deployments in Bluemix Local?**
-<p>Yes, it can be found here. ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png)</p>
+The Cloudant service name displays as "Local".
 
-**Who is responsible for the Cloudant service broker?**
-<p>Cloudant makes the appropriate changes to the service broker. If you have an existing dedicated cluster, Cloudant configures the broker to point to the new local cluster and follows the normal Bluemix
-CR/DR process.</p>
+##### How does Cloudant obtain IP addresses for the virtual machines?
 
-**How will Cloudant operations access my Bluemix Local environment?**
-<p>The Cloudant team uses the existing tether/relay provided by Bluemix. No new networking
-requirements are required for Cloudant to access your environment.</p>
+Cloudant is on the private network inside Bluemix Local and only requires private IPs, which are provided by the Bluemix team.
 
-**What is Logmet? Why does Cloudant need it?**
-<p>Logmet is our logging infrastructure. Logmet requires its own hardware resources. Cloudant sends logs to
+##### Does Cloudant have an architecture diagram for deployments in Bluemix Local?
+
+Yes, it can be found here: ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png).
+
+##### Who is responsible for the Cloudant service broker?
+
+Cloudant makes the appropriate changes to the service broker. If you have an existing dedicated cluster, Cloudant configures the broker to point to the new local cluster and follows the normal Bluemix
+CR/DR process.
+
+##### How will Cloudant operations access my Bluemix Local environment?
+
+The Cloudant team uses the existing tether/relay provided by Bluemix. No new networking
+requirements are required for Cloudant to access your environment.
+
+##### What is Logmet? Why does Cloudant need it?
+
+Logmet is our logging infrastructure. Logmet requires its own hardware resources. Cloudant sends logs to
 Logmet so that your information can be stored locally. Logmet is a separate deployment. You do not need one
-Logmet deployment per Cloudant cluster. All Cloudant clusters, within one Bluemix Local environment, share the same Logmet instance.</p>
+Logmet deployment per Cloudant cluster. All Cloudant clusters, within one Bluemix Local environment, share the same Logmet instance.
 
-**Where do you send metrics and monitoring information?**
-<p>Cloudant receives metrics and monitoring information through the tether. Without it, we cannot properly maintain your local cluster.<p>
+##### Where do you send metrics and monitoring information?
 
-**How is VMware clustering set up for Cloudant, Logmet, and Bluemix?**
-<p>Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
-problems. Logmet must be in the same cluster with Bluemix.</p>
+Cloudant receives metrics and monitoring information through the tether. Without it, we cannot properly maintain your local cluster.
 
-**How are virtual machines distributed across hosts?**
-<p>Cloudant determines which VMs deploy and on which hosts. The goal is to keep database nodes and
-load balancers separate, so if one host goes down, the cluster continues to operate. Research is in progress to  determine how to enable DRS with specific rules in order to keep VMs separate.</p>
+##### How is VMware clustering set up for Cloudant, Logmet, and Bluemix?
 
-**Does Cloudant feed logs to the QRadar deployment that is included with Bluemix Local?**
-<p>Yes. Cloudant sends `auth` and `auditd` logs to QRadar and stores them for 1 year.</p>
+Cloudant must be on a VMware cluster separate from Bluemix to prevent noisy neighbor
+problems. Logmet must be in the same cluster with Bluemix.
 
-**How does backup work?**
-<p>Cloudant offers a backup service that schedules and runs incremental backups of your data. It is strongly
-recommended that you purchase a separate cluster, specifically dedicated to storing backup data. The Cloudant backup cluster must be inside the same Bluemix Local environment. More information on backing up your data can be found here, https://docs.cloudant.com/backup-guide.html.</p>
+##### How are virtual machines distributed across hosts?
 
-<p>Both the customer and ops cluster can backup to the same location. If you do not want to use the Cloudant
-backup product, you are responsible for backing up your data.</p>
+Cloudant determines which VMs deploy and on which hosts. The goal is to keep database nodes and
+load balancers separate, so if one host goes down, the cluster continues to operate. Research is in progress to  determine how to enable DRS with specific rules in order to keep VMs separate.
 
-**Where can I find Bluemix Local documentation?**
-<p>Blue Mix documentation is located here, https://console.ng.bluemix.net/docs/local/index.html#local.</p>
+##### Does Cloudant feed logs to the QRadar deployment that is included with Bluemix Local?
+
+Yes. Cloudant sends `auth` and `auditd` logs to QRadar and stores them for one year.
+
+##### How does backup work?
+
+Cloudant offers a backup service that schedules and runs incremental backups of your data. It is strongly
+recommended that you purchase a separate cluster, specifically dedicated to storing backup data. The Cloudant backup cluster must be inside the same Bluemix Local environment. More information on backing up your data can be found [here](https://docs.cloudant.com/backup-guide.html).
+
+Both the customer and ops cluster can backup to the same location. If you do not want to use the Cloudant
+backup product, you are responsible for backing up your data.
+
+##### Where can I find Bluemix Local documentation?
+
+Blue Mix documentation is located [here](https://console.ng.bluemix.net/docs/local/index.html#local).

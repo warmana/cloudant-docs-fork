@@ -31,9 +31,9 @@ The basic steps for working with geospatial data in Cloudant Geo is as follows:
 3.  Search the indexed geometry object by using various geometries and geometric relationships.
 
 ### Using Cloudant Geospatial through the Dashboard
- 
+
 The Dashboard lets you perform several geospatial tasks:
- 
+
 *	Quick and easy visualisation of data stored in spatial indexes.
 *	Spatial query construction.
 *	Visualisation of spatial query results.
@@ -49,7 +49,7 @@ perform the following steps:
 3.	Select the Design Document that contains the definition of the spatial index. A 'Geospatial Indexes' sub menu appears for the spatial index.
 4.	Select the Geospatial Index for your data. A map view appears, showing a small selection of the spatial features contained within the index.
 5.	To see a JSON view of the index, click the corresponding button of the map view.
- 
+
 You can construct spatial queries using the drawing menu available on the map view.
 To construct a spatial query:
 
@@ -60,8 +60,8 @@ To construct a spatial query:
 Depending on the geometry type you specify,
 a default spatial relation is chosen for you.
 The exact relation is visible by selecting the Options menu.
- 
-The lower area of the map view provides tools that let you select how many spatial features are displayed at once,
+
+The bottom area of the map view provides tools that let you select how many spatial features are displayed at once,
 up to a maximum of 200 at a time.
 To see the other results from your geospatial query,
 page through them by clicking the left or right arrow buttons.
@@ -147,7 +147,7 @@ For example, you could create a design document with the `_id` value `"_design/g
 
 #### Geospatial indexing
 
-There are a number of different algorithms for indexing geospatial data. Some algorithms are simple to understand and implement, but do not produce fast results. 
+There are a number of different algorithms for indexing geospatial data. Some algorithms are simple to understand and implement, but do not produce fast results.
 
 The basic algorithm used by Cloudant Geo is [R\*\_tree](http://en.wikipedia.org/wiki/R*_tree). Although it has a slightly higher resource requirement for building the index, the resulting index offers much better performance in responding to geospatial queries.
 

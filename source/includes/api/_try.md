@@ -110,7 +110,7 @@
           return 'curl "https://examples.cloudant.com' + this.buildUrl() + '"';
         },
         doAjaxRequest: function() {
-        
+
         },
         submitForm: function(event) {
           var query = this.queryInput.val();
@@ -165,7 +165,7 @@
           });
           event.preventDefault();
         }
-    
+
       }
     };
     var saveFormState = function() {
@@ -179,11 +179,11 @@
       outputField.text(result);
       highlight(outputField);
     }
-    
+
     for (var rt in requestTypes) {
       requestTypes[rt].form.submit(requestTypes[rt].submitForm);
     }
-    
+
     var requestChanged = function(formName) {
       httpRequestField.text(requestTypes[formName].renderHttpRequest());
       highlight(httpRequestField);
@@ -191,7 +191,7 @@
       highlight(curlRequestField);
       requestTypes[formName].submitForm({preventDefault:function(){}});
     }
-    
+
     var requestTypeSelect = $('div.test-form-container select.request-type');
     var showSelectedType = function() {
       for (var requestType in requestTypes) {
@@ -208,7 +208,7 @@
       initForm(rt, requestTypes[rt].queries[defaultQuery]);
       requestChanged(rt);
     });
-    
+
     var initForm = function(formName, request) {
       $('form.' + formName + ' input[type=text]').val('');
       for (var field in request) {
@@ -254,7 +254,7 @@
       activateLanguage(language);
       event.preventDefault();
     });
-  
+
   });
 </script>
 
@@ -336,11 +336,12 @@ You can try out requests and obtain output results in the code column. We have p
     <input size="100" type="text" name="ranges" class="ranges" id="search-ranges">
     <label for="search-sort">Sort</label>
     <input size="100" type="text" name="sort" class="sort" id="search-sort">
-    
+
     <input type="checkbox" name="include-docs" class="includeDocs" id="search-include-docs">
     <label style="margin-left: 0px;display: inline" for="search-include-docs">Include docs</label>
+    <img src="#" alt="Empty image"/>
   </form>
-  
+
   <form action="#" class="cq">
     <label for="predefined2">Predefined queries</label>
     <select name="predefined2" id="predefined2" class="predefined">
@@ -356,7 +357,7 @@ You can try out requests and obtain output results in the code column. We have p
       <option value="after2010">Movies released after 2010</option>
       <option value="2010-by-title">2010 movies sorted by title</option>
       <option value="schwarzenegger">Schwarzenegger movies</option>
-      
+
     </select>
     <label for="requestBody">RequestBody</label>
     <textarea rows="10" class="query" cols="80" id="requestBody"></textarea><br /><br />
@@ -395,7 +396,7 @@ You can try out requests and obtain output results in the code column. We have p
 }
     </code>
   </form>
-  
+
   <form action="#" class="analyzers">
     <label for="predefined3">Predefined queries</label>
     <select id="predefined3" name="predefined3" class="predefined">
@@ -409,13 +410,13 @@ You can try out requests and obtain output results in the code column. We have p
     <label for="analyzersRequestBody">AnalyzersRequestBody</label>
     <textarea rows="10" class="query" cols="80" id="analyzersRequestBody"></textarea><br /><br />
   </form>
-    
+
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 <style type="text/css">
   .test-form-container textarea {
-  
+
   }
   div.test-form-container {
     clear:none;
@@ -443,11 +444,11 @@ You can try out requests and obtain output results in the code column. We have p
   .test-form-container form.search {
     display: block;
   }
-  
+
   .test-form-container input[type=text] {
     padding-left: 5px;
   }
-  
+
   .test-form-container input[type=checkbox] {
     display: inline;
     margin-left: 40px;
@@ -465,7 +466,7 @@ You can try out requests and obtain output results in the code column. We have p
   #hideCodeButton {
     display: none;
   }
-  
-  
-    
+
+
+
 </style>

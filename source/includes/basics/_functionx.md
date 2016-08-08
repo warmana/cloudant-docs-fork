@@ -1,3 +1,3 @@
-## This page intentionally left blank.
+## This page intentionally kept blank.
 
-This page intentionally left blank.
+This page intentionally kept blank.

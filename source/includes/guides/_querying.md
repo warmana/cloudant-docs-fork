@@ -187,7 +187,7 @@ any fields to index, Cloudant Query will index everything.
  * Indexing only some fields
  * Have a look at the API reference to learn more about [creating Cloudant Query indexes](cloudant_query.html#creating-an-index)
 
-### Querying data
+### Querying your data
 
 With Cloudant Query, you can do far more complex queries, but let's start with something simple -
 getting all movies with an IMDB rating of exactly 8. This time we send a `POST` request to the
