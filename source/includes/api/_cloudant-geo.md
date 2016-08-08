@@ -61,7 +61,7 @@ Depending on the geometry type you specify,
 a default spatial relation is chosen for you.
 The exact relation is visible by selecting the Options menu.
 
-The bottom area of the map view provides tools that let you select how many spatial features are displayed at once,
+The lowest area of the map view provides tools that let you select how many spatial features are displayed at once,
 up to a maximum of 200 at a time.
 To see the other results from your geospatial query,
 page through them by clicking the left or right arrow buttons.
@@ -259,7 +259,7 @@ A query geometry parameter must be provided for a Cloudant Geo search. There are
 
 <tr class="odd">
 <td align="left"><code>bbox</code></td>
-<td align="left">Specify a bounding box with two coordinates of bottom-left and top-right corners.</td>
+<td align="left">Specify a bounding box with two coordinates of lower-left and upper-right corners.</td>
 </tr>
 
 <tr class="even">

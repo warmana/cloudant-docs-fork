@@ -339,7 +339,8 @@ You can try out requests and obtain output results in the code column. We have p
 
     <input type="checkbox" name="include-docs" class="includeDocs" id="search-include-docs">
     <label style="margin-left: 0px;display: inline" for="search-include-docs">Include docs</label>
-    <img src="#" alt="Empty image"/>
+
+    <label for="minimumButton">&zwj;<button type="submit" id="minimumButton"><img src="#" alt="No submit button required"/></button></label>
   </form>
 
   <form action="#" class="cq">
