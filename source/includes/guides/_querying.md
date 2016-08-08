@@ -50,8 +50,6 @@ curl "${URL}/_session" -X POST -d "name=$USER" -d "password=$PASS" -c cookie.txt
 echo "Here is our session cookie: $(tail -1 cookie.txt | cut -f 7)"
 </pre>
 
-<div></div>
-
 #### Things you might want to try - logging in
 
  * Change the user name or password and see what errors you get.
