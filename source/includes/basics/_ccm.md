@@ -15,6 +15,8 @@ The plan prices range from free,
 through to several thousand dollars per month,
 depending on the configuration of plan and tier you choose.
 
+<aside class="warning" role="complementary" aria-label="pricing">All currency values in this document are in US dollars ($).</aside>
+
 <div id="servicetier"></div>
 
 You can see details of the tiers within the plans available for your Account,
@@ -28,7 +30,7 @@ then go to the Service catalog page for Cloudant.
 
 The following table summarizes the price and performance measures for each of the plans and tiers.
 
-<aside class="warning" role="complementary" aria-label="indicativetierpricing">Note that the details in the table are indicative as at August 2016.
+<aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at August 2016.
 For current values,
 contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
@@ -94,7 +96,7 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
 #### Disk Space Included
 
-This describes the storage capacity included in the plan.
+This section describes the storage capacity included in the plan.
 It is used for both data and index storage.
 
 #### Disk Space Overflow
@@ -142,7 +144,7 @@ The total bill for the month would be $0.1232 + $7.4928 = $7.62.
 
 #### Throughput
 
-Throughput is measured and identified as 1 of 3 kinds of events:
+Throughput is measured and identified as one of three kinds of events:
 
 1.	A lookup, which is a read of a specific document, based on its `_id`.
 2.	A write, which is a write of an individual document, or a write due to an index build.
@@ -158,8 +160,8 @@ The measurement of throughput is a simple count of the number of events of each 
 per second,
 where the second is a sliding window.
 If your account exceeds the number of events for the tier,
-requests are rejected until the number of events within the sliding window no longer exceeds that available within the tier.
-It might be easier to think of the sliding 1 second window as being any consecutive period of 1,000 milliseconds.
+requests are rejected until the number of events within the sliding window no longer exceeds the number available within the tier.
+It might be easier to think of the sliding one second window as being any consecutive period of 1,000 milliseconds.
 
 For example,
 if you are on the Standard-2 tier,
@@ -239,6 +241,7 @@ All data is stored in triplicate,
 across three separate physical nodes for High Availability and Data Recovery.
 
 The plans are currently available in all [Bluemix](https://console.ng.bluemix.net/registration/) Public regions.
+
 <!--Availability in [`cloudant.com`](https://cloudant.com/) regions is subject to demand.
 
 An isolated environment can be provided in a SoftLayer data center,
@@ -246,23 +249,14 @@ for an extra $5000 per month (indicative price, as at August 2016).-->
 
 ### Support
 
-All Standard tier plans (_except_ the Lite plan) include best effort support during business hours,
-with a 24-hour Service Level Objective (SLO).
+Support for Standard tier plans (_not_ the Lite plan) is provided by purchasing "Bluemix Standard Support".
+The monthly cost (as at August 2016) is the greater of 10% of the account charge,
+or $200.
 
-<!--
-Additionally,
-Gold Support offering a one hour response time SLA for Severity 1 issues can be purchased for a supplementary $500 per month (indicative price, as at August 2016).
-
-Severity 1 issues are defined as being where business-critical functionality is inoperable,
-or a business-critical interface has failed.
-The failure usually applies to a production environment,
-and results in an inability to access services,
-causing a critical impact on operations.
-The failure condition requires an immediate solution.
--->
-
-All support correspondence is enabled through the Support tab of the Cloudant Dashboard,
-or through [Cloudant Support email](mailto:support@cloudant.com).
+A pricing calculator for Bluemix Standard Support is available
+[here](https://console.ng.bluemix.net/?direct=classic/#/pricing/cloudOEPaneId=pricing&paneId=pricingSheet).
+Information about the details of the Support Service Level Agreement (SLA) is available
+[here](http://www-03.ibm.com/software/sla/sladb.nsf/pdf/6606-08/$file/i126-6606-08_05-2016_en_US.pdf).
 
 ### CCM Accounts
 
@@ -271,8 +265,8 @@ accounts created on [`cloudant.com`](https://cloudant.com/) do not use the CCM.
 As the CCM is made available on Cloudant clusters,
 you are able to create an account directly that specifies use of the CCM and your chosen plan tier.
 
-If you already have a Cloudant account on [Bluemix](https://console.ng.bluemix.net/registration/),
-that is an account created before CCM was made available,
+If you already have a Cloudant account on [Bluemix](https://console.ng.bluemix.net/registration/)
+that was created before CCM was made available),
 the account is not using the CCM tiered plans.
 To create a Bluemix account with a CCM tiered plan,
 create a new account on Bluemix,
@@ -281,7 +275,7 @@ then replicate your data from the old Bluemix account into the new Bluemix accou
 When your account is using CCM,
 plan changes can be made at any time during the month.
 However,
-you are charged at the rate of the highest priced plan that is used during that hour.
+you are charged at the rate of the highest priced plan that is used during the hour when the plan changes.
 Also,
 a slight delay normally occurs between the opening of plan change request,
 and the fulfillment of the provisioned throughput capacity.
