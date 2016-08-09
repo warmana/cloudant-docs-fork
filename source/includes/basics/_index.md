@@ -454,7 +454,7 @@ Cloudant is on the private network inside Bluemix Local and only requires privat
 
 ##### Does Cloudant have an architecture diagram for deployments in Bluemix Local?
 
-Yes, it can be found here: ![Bluemix Local architecture diagram](images/bml_architecture_diagram.png).
+![Bluemix Local architecture diagram](images/bml_architecture_diagram.png).
 
 ##### Who is responsible for the Cloudant service broker?
 
