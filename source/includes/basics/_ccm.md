@@ -170,7 +170,7 @@ It might be easier to think of the sliding one second window as being any consec
 For example,
 if you are on the Personal tier,
 your account could make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (one second).
-Subsequent lookup requests issued during the sliding 1,000 millisecond period are rejected until the number of loopup requests in that period drops below 200 again.
+Subsequent lookup requests issued during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
 
 When the a request is rejected because the number of events has been exceeded,
 applications receive an HTTP [`429` Too Many Requests](http.html#429) response.
