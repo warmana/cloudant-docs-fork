@@ -1,40 +1,39 @@
 ## Cloud Consumption Model
 
-<aside role="complementary" aria-label="availability">The Cloud Consumption Model (CCM) is a new plan- and tier-based pricing model,
+<aside role="complementary" aria-label="availability">The Cloud Consumption Model (CCM) is a new plan-based pricing model,
 available on Bluemix Public regions.</aside>
 
 The CCM offers a number of performance and pricing plans
 for using [Cloudant on Bluemix](https://www.ng.bluemix.net/docs/#services/Cloudant/index.html#Cloudant).
-The standard plan tiers are distinguished by the maximum number of Lookups,
-Writes,
-and Queries.
-Each standard plan has a base 20 GB storage allocation,
-with extra storage available
-at $0.0014 per GB per hour (indicative pricing as at August 2016).
+The Standard plan includes 20GB of data storage.
+Above 20GB,
+you are charged $0.0014 per GB per hour.
+On the Standard plan,
+you can also change the amount of provisioned throughput capacity for lookups, writes and queries.
 The plan prices range from free,
 through to several thousand dollars per month,
-depending on the configuration of plan and tier you choose.
+depending on the configuration you choose.
 
 <aside class="warning" role="complementary" aria-label="pricing">All currency values in this document are in US dollars ($).</aside>
 
 <div id="servicetier"></div>
 
-You can see details of the tiers within the plans available for your account,
-and select the tier that you want to use,
+You can see details of the throughput capacity within the plans available for your account,
+and select the level of provisioning that you want to use,
 through the Account tab of your Cloudant account Dashboard.
 ![Account Dashboard](images/AccountsCCM01.png)
 
-To move to a different plan or tier,
+To move to a different plan,
 use your account details to log in to Bluemix,
 then go to the Service catalog page for Cloudant.
 
-The following table summarizes the price and performance measures for each of the plans and tiers.
+The following table summarizes the price and performance measures for each of the plans.
 
 <aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at August 2016.
 For current values,
 contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
-<table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans and tiers of service.">
+<table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans of service.">
 <tr valign="top">
 <th colspan="2" id="planCharacteristic">Plans</th>
 <th id="litePlan">Lite</th>
@@ -141,7 +140,7 @@ The total overage bill for the month would be $0.1232 + $7.4928 = $7.62.
 
 #### Throughput
 
-Throughput is identified and measured as one of three kinds of events:
+Throughput capacity is identified and measured as one of three kinds of events:
 
 1.	A lookup, which is a read of a specific document, based on its `_id`.
 2.	A write, which is a write of an individual document, or a write due to an index build.
@@ -156,21 +155,21 @@ Throughput is identified and measured as one of three kinds of events:
 The measurement of throughput is a simple count of the number of events of each type,
 per second,
 where the second is a _sliding_ window.
-If your account exceeds the number of events for the plan configuration,
-requests are rejected until the number of events within the sliding window no longer exceeds the number available within the plan configuration.
+If your account exceeds the number of throughput events that are provisioned for the plan,
+requests are rejected until the number of events within the sliding window no longer exceeds the number provisioned.
 It might help to think of the sliding one-second window as being any consecutive period of 1,000 milliseconds.
 
 For example,
-if you are on the Standard plan and have selected the tier that offers 200 lookups per second,
+if you are on the Standard plan and have provisioned 200 lookups per second,
 your account might make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (1 second).
 Subsequent lookup requests made during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
 
 When a request is rejected because the number of events is exceeded,
 applications receive an HTTP response: [`429` Too Many Requests](http.html#429).
 
-The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have provision for handling a `429` response.
+The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have the ability to handle a `429` response.
 If your application uses another library or language,
-ensure that you make adequate provision for handling a `429` response correctly.
+ensure that it is able to handle a `429` response correctly.
 
 #### Locations
 
@@ -182,11 +181,6 @@ you can choose from the following Bluemix Public regions:
 -	US South
 - United Kingdom
 - Sydney
-
-<!-- Alternatively,
-a dedicated single-tenant environment can be provided in any SoftLayer data center,
-for an additional $5000 per month, per data center (indicative as at August 2016).
--->
 
 #### Security, Encryption, and Compliance
 
@@ -219,17 +213,9 @@ Details are provided there,
 illustrating your current [throughput](ccm.html#throughput),
 and quantity of [stored data](ccm.html#disk-space-included).
 
-If your monitoring indicates that a change to your service tier might be advisable,
-for example if you are frequently approaching the maximum number of database lookups for your current tier,
-then you can modify the tier through the [Service Tier pane](ccm.html#servicetier) on the Account tab of the Dashboard.
-
-<!--
-### Service Level Agreement
-
-The Service Level Agreement (SLA) is 99.9% for Cloudant-hosted plans.
-If your Cloudant account is hosted on [Bluemix](https://console.ng.bluemix.net/registration/),
-your SLA is determined by your Bluemix account.
--->
+If your monitoring indicates that a change to the provisioning in your plan might be advisable,
+for example if you are frequently approaching the maximum number of database lookups,
+then you can modify the provisioning through the [Service pane](ccm.html#servicetier) on the Account tab of the Dashboard.
 
 ### Hardware specification
 
@@ -237,16 +223,9 @@ All plans are implemented on multi-tenant clusters.
 All data is stored in triplicate,
 across three separate physical nodes for High Availability and Data Recovery.
 
-The plans are currently available in all [Bluemix](https://console.ng.bluemix.net/registration/) Public regions.
-
-<!--Availability in [`cloudant.com`](https://cloudant.com/) regions is subject to demand.
-
-An isolated environment can be provided in a SoftLayer data center,
-for an extra $5000 per month (indicative price, as at August 2016).-->
-
 ### Support
 
-Support for Standard tier plans (_not_ the Lite plan) is provided by purchasing "Bluemix Standard Support".
+Support for Standard plan (_not_ the Lite plan) is optional and provided by purchasing "Bluemix Standard Support".
 The monthly cost (as at August 2016) is the greater of 10% of the account charge,
 or $200.
 
@@ -260,19 +239,19 @@ Information about the details of the Support Service Level Agreement (SLA) is av
 By default,
 accounts created on [`cloudant.com`](https://cloudant.com/) do not use the CCM.
 As the CCM is made available on Cloudant clusters,
-you are able to create an account directly that specifies use of the CCM and your chosen plan tier.
+you are able to create an account directly that specifies use of the CCM and your chosen plan.
 
 If you already have a Cloudant account on [Bluemix](https://console.ng.bluemix.net/registration/)
 that was created before CCM was made available),
-the account is not using the CCM tiered plans.
-To create a Bluemix account with a CCM tiered plan,
+the account is not using the CCM plans.
+To create a Bluemix account with a CCM plan,
 create a new account on Bluemix,
 then replicate your data from the old Bluemix account into the new Bluemix account.
 
 When your account is using CCM,
 plan changes can be made at any time during the month.
 However,
-you are charged at the rate of the highest priced plan that is used during the hour when the plan changes.
+you are charged at the rate of the highest priced plan configuration that is used during the hour when the plan changes.
 Also,
 a slight delay normally occurs between the opening of plan change request,
 and the fulfillment of the provisioned throughput capacity.
