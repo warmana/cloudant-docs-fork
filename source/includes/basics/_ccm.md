@@ -1,14 +1,14 @@
 ## Cloud Consumption Model
 
-<aside role="complementary" aria-label="availability">The Cloud Consumption Model (CCM) is a new tier-based pricing model,
-available on Bluemix public regions.</aside>
+<aside role="complementary" aria-label="availability">The Cloud Consumption Model (CCM) is a new plan- and tier-based pricing model,
+available on Bluemix Public regions.</aside>
 
-The CCM offers a number of performance and pricing tiers
+The CCM offers a number of performance and pricing plans
 for using [Cloudant on Bluemix](https://www.ng.bluemix.net/docs/#services/Cloudant/index.html#Cloudant).
 The standard plan tiers are distinguished by the maximum number of Lookups,
 Writes,
 and Queries.
-Each tier has a base 20 GB storage allocation,
+Each standard plan has a base 20 GB storage allocation,
 with extra storage available
 at $0.0014 per GB per hour (indicative pricing as at August 2016).
 The plan prices range from free,
@@ -19,13 +19,13 @@ depending on the configuration of plan and tier you choose.
 
 <div id="servicetier"></div>
 
-You can see details of the tiers within the plans available for your Account,
+You can see details of the tiers within the plans available for your account,
 and select the tier that you want to use,
 through the Account tab of your Cloudant account Dashboard.
 ![Account Dashboard](images/AccountsCCM01.png)
 
 To move to a different plan or tier,
-login to Bluemix by using your Account details,
+use your account details to log in to Bluemix,
 then go to the Service catalog page for Cloudant.
 
 <div id="servicetier"></div>
@@ -46,92 +46,89 @@ For current values,
 contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
 <table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans and tiers of service.">
-<tr>
+<tr valign="top">
 <th colspan="2" id="planCharacteristic">Plans</th>
 <th id="litePlan">Lite</th>
-<th id="starterPlan">Standard-1</th>
-<th id="personalPlan">Standard-2</th>
-<th id="professionalPlan">Standard-3</th>
-<th id="enterprisePlan">Standard-4</th>
+<th colspan="4" id="standardPlan">Standard</th>
 </tr>
 <tr>
 <td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (monthly)</td>
 <td headers="litePlan basePrice">$0</td>
-<td headers="starterPlan basePrice">$65</td>
-<td headers="personalPlan basePrice">$375</td>
-<td headers="professionalPlan basePrice">$3,000</td>
-<td headers="enterprisePlan basePrice">$16,000</td>
+<td headers="standardPlan basePrice">$65</td>
+<td headers="standardPlan basePrice">$375</td>
+<td headers="standardPlan basePrice">$3,000</td>
+<td headers="standardPlan basePrice">$16,000</td>
 </tr>
 <tr>
 <td colspan="2" headers="planCharacteristic" id="diskSpace">Disk Space Included (GB)</td>
 <td headers="litePlan diskSpace">1</td>
-<td headers="starterPlan diskSpace">20</td>
-<td headers="personalPlan diskSpace">20</td>
-<td headers="professionalPlan diskSpace">20</td>
-<td headers="enterprisePlan diskSpace">20</td>
+<td headers="standardPlan diskSpace">20</td>
+<td headers="standardPlan diskSpace">20</td>
+<td headers="standardPlan diskSpace">20</td>
+<td headers="standardPlan diskSpace">20</td>
 </tr>
 <tr>
-<td colspan="2" headers="planCharacteristic" id="diskSpaceOverflow">Disk Space Overflow (per GB/hour)</td>
-<td headers="litePlan diskSpaceOverflow">Not available</td>
-<td headers="starterPlan diskSpaceOverflow">$0.0014</td>
-<td headers="personalPlan diskSpaceOverflow">$0.0014</td>
-<td headers="professionalPlan diskSpaceOverflow">$0.0014</td>
-<td headers="enterprisePlan diskSpaceOverflow">$0.0014</td>
+<td colspan="2" headers="planCharacteristic" id="diskOverage">Disk Overage (per GB/hour)</td>
+<td headers="litePlan diskOverage">Not available</td>
+<td headers="standardPlan diskOverage">$0.0014</td>
+<td headers="standardPlan diskOverage">$0.0014</td>
+<td headers="standardPlan diskOverage">$0.0014</td>
+<td headers="standardPlan diskOverage">$0.0014</td>
 </tr>
 <tr>
 <td rowspan="3" valign="top" headers="planCharacteristic" id="throughputLabel">Throughput</td>
 <td headers="planCharacteristic throughputLabel" id="lookups">Lookups (per sec)</td>
 <td headers="litePlan throughputLabel lookups">10</td>
-<td headers="starterPlan throughputLabel lookups">20</td>
-<td headers="personalPlan throughputLabel lookups">200</td>
-<td headers="professionalPlan throughputLabel lookups">3,000</td>
-<td headers="enterprisePlan throughputLabel lookups">20,000</td>
+<td headers="standardPlan throughputLabel lookups">20</td>
+<td headers="standardPlan throughputLabel lookups">200</td>
+<td headers="standardPlan throughputLabel lookups">3,000</td>
+<td headers="standardPlan throughputLabel lookups">20,000</td>
 </tr>
 <tr>
 <td headers="planCharacteristic throughputLabel" id="writes">Writes (per sec)</td>
 <td headers="litePlan throughputLabel writes">10</td>
-<td headers="starterPlan throughputLabel writes">20</td>
-<td headers="personalPlan throughputLabel writes">150</td>
-<td headers="professionalPlan throughputLabel writes">2,000</td>
-<td headers="enterprisePlan throughputLabel writes">12,000</td>
+<td headers="standardPlan throughputLabel writes">20</td>
+<td headers="standardPlan throughputLabel writes">150</td>
+<td headers="standardPlan throughputLabel writes">2,000</td>
+<td headers="standardPlan throughputLabel writes">12,000</td>
 </tr>
 <tr>
 <td headers="planCharacteristic throughputLabel" id="queries">Queries (per sec)</td>
 <td headers="litePlan throughputLabel queries">5</td>
-<td headers="starterPlan throughputLabel queries">10</td>
-<td headers="personalPlan throughputLabel queries">50</td>
-<td headers="professionalPlan throughputLabel queries">250</td>
-<td headers="enterprisePlan throughputLabel queries">1,000</td>
+<td headers="standardPlan throughputLabel queries">10</td>
+<td headers="standardPlan throughputLabel queries">50</td>
+<td headers="standardPlan throughputLabel queries">250</td>
+<td headers="standardPlan throughputLabel queries">1,000</td>
 </tr>
 </table>
 
 #### Disk Space Included
 
-This section describes the storage capacity included in the plan.
+This value is the storage capacity included in the plan.
 It is used for both data and index storage.
 
-#### Disk Space Overflow
+#### Disk Overage
 
 All standard plans are monitored for disk space used.
-If the account uses more than the amount of storage that is indicated for the tier,
+If the account uses more than the amount of storage that is provided in your plan configuration,
 it is considered to 'overflow'.
-An overflow causes the account to be billed at the indicated price for each extra GB used beyond the initial tier allocation.
-The overflow use is calculated on an hourly basis.
+An overflow causes the account to be billed at the indicated price for each extra GB used beyond the plan allocation.
+The extra amount of money that you must pay for using more disk space than is provided in the plan is called an 'overage'.
+Overage is calculated on an hourly basis.
 It is not possible to overflow the disk space available in the Lite plan.
 
 For example,
-assume that you are on the Standard-2 tier.
-Your project increases disk usage to 107 GB for half a day (12 hours).
-This change means your project overflowed by 87 GB more than the 20 GB tier allocation,
+assume that your Standard plan project increases disk usage to 107 GB for half a day (12 hours).
+This change means your project caused an overflow of 87 GB more than the 20 GB plan allocation,
 for 12 hours.
 Therefore,
-you would be billed an overflow charge of $0.0014 x 87 GB x 12 = $1.46 for that overflow.
+you would be billed an overage charge of $0.0014 x 87 GB x 12 hours = $1.46 for that extra space.
 
-Overflow is measured as the maximum number of GB above the initial tier allocation during a single hour within the billing cycle.
+Overage is calculated by using the maximum number of GB above the plan allocation during a particular hour within the billing cycle.
 
 ##### A worked example
 
-Assume that you start a month of 30 days with a project that uses 9 GB of storage in a Standard-2 tier.
+Assume that you start a month of 30 days with a Standard plan project that uses 9 GB of storage.
 Next,
 your storage increases to 21.5 GB for 15 minutes during the hour beginning at 02:00 of day 3.
 The project drops back to 9.5 GB for the next 10 minutes of hour 02:00,
@@ -139,23 +136,23 @@ then increases to 108 GB for the next 25 minutes of hour 02:00.
 Finally,
 your project finishes the hour and indeed the rest of month by dropping down to 28 GB.
 
-This pattern means the maximum number of GB above the initial tier allocation was 88 GB during hour 2 of day 3.
+This pattern means the maximum number of GB above the plan allocation was 88 GB during hour 2 of day 3.
 For hour 03:00 of day 3,
 and for the rest of the month,
-your project was 8 GB above the initial tier allocation.
+your project was 8 GB above the plan allocation.
 
 Therefore,
 for hour 02:00 of day 3,
-you would be billed an extra $0.0014 x 88 GB x 1 = $0.1232.
+you would be billed an overage of $0.0014 x 88 GB x 1 hour = $0.1232.
 
 For hour 03:00 of day 3 to the end of the month,
-you would be billed an extra ($0.0014 * 8 GB * 21 hours * 1 day) + ($0.0014 * 8 GB * 24 hours * 27 days) = $0.2352 + $7.2576 = $7.4928.
+you would be billed an overage of ($0.0014 * 8 GB * 21 hours * 1 day) + ($0.0014 * 8 GB * 24 hours * 27 days) = $0.2352 + $7.2576 = $7.4928.
 
-The total bill for the month would be $0.1232 + $7.4928 = $7.62.
+The total overage bill for the month would be $0.1232 + $7.4928 = $7.62.
 
 #### Throughput
 
-Throughput is measured and identified as one of three kinds of events:
+Throughput is identified and measured as one of three kinds of events:
 
 1.	A lookup, which is a read of a specific document, based on its `_id`.
 2.	A write, which is a write of an individual document, or a write due to an index build.
@@ -169,13 +166,13 @@ Throughput is measured and identified as one of three kinds of events:
 
 The measurement of throughput is a simple count of the number of events of each type,
 per second,
-where the second is a sliding window.
-If your account exceeds the number of events for the tier,
-requests are rejected until the number of events within the sliding window no longer exceeds the number available within the tier.
-It might be easier to think of the sliding one second window as being any consecutive period of 1,000 milliseconds.
+where the second is a _sliding_ window.
+If your account exceeds the number of events for the plan configuration,
+requests are rejected until the number of events within the sliding window no longer exceeds the number available within the plan configuration.
+It might help to think of the sliding one-second window as being any consecutive period of 1,000 milliseconds.
 
 For example,
-if you are on the Standard-2 tier,
+if you are on the Standard plan and have selected the tier that offers 200 lookups per second,
 your account might make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (1 second).
 Subsequent lookup requests made during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
 
