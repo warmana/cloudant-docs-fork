@@ -51,12 +51,12 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <th colspan="4" id="standardPlan">Standard</th>
 </tr>
 <tr>
-<td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (monthly)</td>
+<td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (per hour)</td>
 <td headers="litePlan basePrice">$0</td>
-<td headers="standardPlan basePrice">$65</td>
-<td headers="standardPlan basePrice">$375</td>
-<td headers="standardPlan basePrice">$3,000</td>
-<td headers="standardPlan basePrice">$16,000</td>
+<td headers="standardPlan basePrice">$0.089</td>
+<td headers="standardPlan basePrice">$0.5317</td>
+<td headers="standardPlan basePrice">$4.1096</td>
+<td headers="standardPlan basePrice">$21.9178</td>
 </tr>
 <tr>
 <td colspan="2" headers="planCharacteristic" id="diskSpace">Disk Space Included (GB)</td>
@@ -125,7 +125,7 @@ you would be billed an overage charge of $0.0014 x 87 GB x 12 hours = $1.46 for 
 
 Overage is calculated by using the maximum number of GB above the plan allocation during a particular hour within the billing cycle.
 
-##### A worked example
+##### A worked overage example
 
 Assume that you start a month of 30 days with a Standard plan project that uses 9 GB of storage.
 Next,
@@ -151,7 +151,7 @@ The total overage bill for the month would be $0.1232 + $7.4928 = $7.62.
 
 #### Throughput
 
-Throughput capacity is identified and measured as one of three kinds of events:
+Throughput provision is identified and measured as one of three kinds of events:
 
 1.	A lookup, which is a read of a specific document, based on its `_id`.
 2.	A write, which is a write of an individual document, or a write due to an index build.
