@@ -35,37 +35,21 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
 <table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans of service.">
 <tr valign="top">
-<th colspan="2" id="planCharacteristic">Plans</th>
-<th id="litePlan">Lite</th>
-<th colspan="4" id="standardPlan">Standard</th>
+<td colspan="2" id="planCharacteristic"><b>Plans</b></td>
+<td id="litePlan"><b>Lite</b></td>
+<td colspan="4" id="standardPlan" align="center"><b>Standard</b></td>
 </tr>
 <tr>
 <td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (per hour)</td>
-<td headers="litePlan basePrice">$0</td>
-<td headers="standardPlan basePrice">$0.089</td>
-<td headers="standardPlan basePrice">$0.5317</td>
-<td headers="standardPlan basePrice">$4.1096</td>
-<td headers="standardPlan basePrice">$21.9178</td>
+<td headers="litePlan basePrice">$0.00</td>
+<td headers="standardPlan basePrice">$0.09</td>
+<td headers="standardPlan basePrice">$0.52</td>
+<td headers="standardPlan basePrice">$4.17</td>
+<td headers="standardPlan basePrice">$22.22</td>
 </tr>
 <tr>
-<td colspan="2" headers="planCharacteristic" id="diskSpace">Disk Space Included (GB)</td>
-<td headers="litePlan diskSpace">1</td>
-<td headers="standardPlan diskSpace">20</td>
-<td headers="standardPlan diskSpace">20</td>
-<td headers="standardPlan diskSpace">20</td>
-<td headers="standardPlan diskSpace">20</td>
-</tr>
-<tr>
-<td colspan="2" headers="planCharacteristic" id="diskOverage">Disk Overage (per GB/hour)</td>
-<td headers="litePlan diskOverage">Not available</td>
-<td headers="standardPlan diskOverage">$0.0014</td>
-<td headers="standardPlan diskOverage">$0.0014</td>
-<td headers="standardPlan diskOverage">$0.0014</td>
-<td headers="standardPlan diskOverage">$0.0014</td>
-</tr>
-<tr>
-<td rowspan="3" valign="top" headers="planCharacteristic" id="throughputLabel">Throughput</td>
-<td headers="planCharacteristic throughputLabel" id="lookups">Lookups (per sec)</td>
+<td rowspan="3" valign="center" headers="planCharacteristic" id="throughputLabel">Provisioned Throughput<br/>Capacity<br/>(per second)</td>
+<td headers="planCharacteristic throughputLabel" id="lookups">Lookups</td>
 <td headers="litePlan throughputLabel lookups">10</td>
 <td headers="standardPlan throughputLabel lookups">20</td>
 <td headers="standardPlan throughputLabel lookups">200</td>
@@ -73,7 +57,7 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <td headers="standardPlan throughputLabel lookups">20,000</td>
 </tr>
 <tr>
-<td headers="planCharacteristic throughputLabel" id="writes">Writes (per sec)</td>
+<td headers="planCharacteristic throughputLabel" id="writes">Writes</td>
 <td headers="litePlan throughputLabel writes">10</td>
 <td headers="standardPlan throughputLabel writes">20</td>
 <td headers="standardPlan throughputLabel writes">150</td>
@@ -81,14 +65,58 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <td headers="standardPlan throughputLabel writes">12,000</td>
 </tr>
 <tr>
-<td headers="planCharacteristic throughputLabel" id="queries">Queries (per sec)</td>
+<td headers="planCharacteristic throughputLabel" id="queries">Queries</td>
 <td headers="litePlan throughputLabel queries">5</td>
 <td headers="standardPlan throughputLabel queries">10</td>
 <td headers="standardPlan throughputLabel queries">50</td>
 <td headers="standardPlan throughputLabel queries">250</td>
 <td headers="standardPlan throughputLabel queries">1,000</td>
 </tr>
+<tr>
+<td rowspan="2" headers="planCharacteristic" id="diskSpace">Disk Space</td>
+<td headers="planCharacteristic" id="diskSpaceIncluded">Included</td>
+<td headers="litePlan diskSpaceIncluded">1 GB</td>
+<td colspan="4" headers="standardPlan diskSpace" align="center">20 GB</td>
+</tr>
+<tr>
+<td headers="planCharacteristic" id="diskOverage">Disk Overage<br/>(per GB/hour)</td>
+<td headers="litePlan diskOverage">Not available</td>
+<td colspan="4" headers="standardPlan diskOverage" align="center">$0.0014</td>
+</tr>
 </table>
+
+#### Provisioned throughput capacity
+
+Throughput provision is identified and measured as one of three kinds of events:
+
+1.	A lookup, which is a read of a specific document, based on its `_id`.
+2.	A write, which is a write of an individual document, or a write due to an index build.
+3.	A query, which is a request made to one of the Cloudant query endpoints, including the following types:
+	-	Primary Index ([`_all_docs`](database.html#get-documents))
+	-	MapReduce View ([`_view`](creating_views.html#using-views))
+	-	Search Index ([`_search`](search.html#queries))
+	-	Geospatial Index ([`_geo`](geo.html#querying-a-cloudant-geo-index))
+	-	Cloudant Query ([`_find`](cloudant_query.html#finding-documents-using-an-index))
+	-	Changes ([`_changes`](database.html#get-changes))
+
+The measurement of throughput is a simple count of the number of events of each type,
+per second,
+where the second is a _sliding_ window.
+If your account exceeds the number of throughput events that are provisioned for the plan,
+requests are rejected until the number of events within the sliding window no longer exceeds the number provisioned.
+It might help to think of the sliding one-second window as being any consecutive period of 1,000 milliseconds.
+
+For example,
+if you are on the Standard plan and have provisioned 200 lookups per second,
+your account might make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (1 second).
+Subsequent lookup requests made during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
+
+When a request is rejected because the number of events is exceeded,
+applications receive an HTTP response: [`429` Too Many Requests](http.html#429).
+
+The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have the ability to handle a `429` response.
+If your application uses another library or language,
+ensure that it is able to handle a `429` response correctly.
 
 #### Disk Space Included
 
@@ -137,39 +165,6 @@ For hour 03:00 of day 3 to the end of the month,
 you would be billed an overage of ($0.0014 * 8 GB * 21 hours * 1 day) + ($0.0014 * 8 GB * 24 hours * 27 days) = $0.2352 + $7.2576 = $7.4928.
 
 The total overage bill for the month would be $0.1232 + $7.4928 = $7.62.
-
-#### Throughput
-
-Throughput provision is identified and measured as one of three kinds of events:
-
-1.	A lookup, which is a read of a specific document, based on its `_id`.
-2.	A write, which is a write of an individual document, or a write due to an index build.
-3.	A query, which is a request made to one of the Cloudant query endpoints, including the following types:
-	-	Primary Index ([`_all_docs`](database.html#get-documents))
-	-	MapReduce View ([`_view`](creating_views.html#using-views))
-	-	Search Index ([`_search`](search.html#queries))
-	-	Geospatial Index ([`_geo`](geo.html#querying-a-cloudant-geo-index))
-	-	Cloudant Query ([`_find`](cloudant_query.html#finding-documents-using-an-index))
-	-	Changes ([`_changes`](database.html#get-changes))
-
-The measurement of throughput is a simple count of the number of events of each type,
-per second,
-where the second is a _sliding_ window.
-If your account exceeds the number of throughput events that are provisioned for the plan,
-requests are rejected until the number of events within the sliding window no longer exceeds the number provisioned.
-It might help to think of the sliding one-second window as being any consecutive period of 1,000 milliseconds.
-
-For example,
-if you are on the Standard plan and have provisioned 200 lookups per second,
-your account might make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (1 second).
-Subsequent lookup requests made during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
-
-When a request is rejected because the number of events is exceeded,
-applications receive an HTTP response: [`429` Too Many Requests](http.html#429).
-
-The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have the ability to handle a `429` response.
-If your application uses another library or language,
-ensure that it is able to handle a `429` response correctly.
 
 #### Locations
 
