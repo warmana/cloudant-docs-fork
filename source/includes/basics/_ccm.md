@@ -1,7 +1,7 @@
 ## Cloud Consumption Model
 
 <aside role="complementary" aria-label="availability">The Cloud Consumption Model (CCM) is a new plan-based pricing model,
-available on Bluemix Public regions.</aside>
+available on [Bluemix Public regions](ccm.html#locations).</aside>
 
 The CCM offers a number of performance and pricing plans
 for using [Cloudant on Bluemix](https://www.ng.bluemix.net/docs/#services/Cloudant/index.html#Cloudant).
@@ -21,24 +21,16 @@ depending on the configuration you choose.
 You can see details of the throughput capacity within the plans available for your account,
 and select the level of provisioning that you want to use,
 through the Account tab of your Cloudant account Dashboard.
-![Account Dashboard](images/AccountsCCM01.png)
+![Account Dashboard](images/cloudant_capacity.png)
 
-To move to a different plan,
-use your account details to log in to Bluemix,
-then go to the Service catalog page for Cloudant.
+To move to a different throughput capacity,
+select the provisioning you want,
+then click the `Change Capacity` button.
+You are asked to confirm the change,
+and reminded that the provisioning change can take up to 24 hours to complete.
+![Account Dashboard](images/cloudant_capacity_change.png)
 
-<div id="servicetier"></div>
-
-You can see details of the tiers within the plans available for your Account,
-and select the tier you wish to use,
-through the Account tab of your Cloudant account Dashboard.
-![Account Dashboard](images/AccountsCCM01.png)
-
-To move to a different plan,
-login to Bluemix using your Account details,
-then go to the Service Catalog page for Cloudant.
-
-The following table summarizes the price and performance measures for each of the tiers.
+The following table summarizes the price and performance measures for each of the plans.
 
 <aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at August 2016.
 For current values,
@@ -172,10 +164,13 @@ Therefore,
 for hour 02:00 of day 3,
 you would be billed an overage of $0.0014 x 88 GB x 1 hour = $0.1232.
 
-For hour 03:00 of day 3 to the end of the month,
-you would be billed an overage of ($0.0014 * 8 GB * 21 hours * 1 day) + ($0.0014 * 8 GB * 24 hours * 27 days) = $0.2352 + $7.2576 = $7.4928.
+For hour 03:00 of day 3 to the end of day 3,
+you would be billed an overage of $0.0014 * 8 GB * 21 hours = $0.2352.
 
-The total overage bill for the month would be $0.1232 + $7.4928 = $7.62.
+For hour 00:00 of day 4 to the end of the month (of 30 days),
+you would be billed an overage of $0.0014 * 8 GB * 24 hours * 27 days = $7.2576.
+
+The total overage bill for the month would be $0.1232 + $0.2352 + $7.2576 = $7.62.
 
 #### Locations
 
@@ -213,7 +208,7 @@ or alternatively implement your own solution by using one of several possible te
 ### Monitoring usage
 
 Information about your usage is available in the Usage pane of the Activity tab within your Cloudant Dashboard.
-![Monitoring usage on the dashboard](images/MonitoringCCM08.png).
+![Monitoring usage on the dashboard](images/cloudant_usage.png).
 
 Details are provided there,
 illustrating your current [throughput](ccm.html#throughput),
@@ -231,9 +226,11 @@ across three separate physical nodes for High Availability and Data Recovery.
 
 ### Support
 
-Support for Standard plan (_not_ the Lite plan) is optional and provided by purchasing "Bluemix Standard Support".
+Support for Standard plan configurations is optional.
+It is provided by purchasing "Bluemix Standard Support".
 The monthly cost (as at August 2016) is the greater of 10% of the account charge,
 or $200.
+Support is not available for the Lite plan.
 
 A pricing calculator for Bluemix Standard Support is available
 [here](https://console.ng.bluemix.net/?direct=classic/#/pricing/cloudOEPaneId=pricing&paneId=pricingSheet).
