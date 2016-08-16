@@ -20,14 +20,14 @@ depending on the configuration you choose.
 
 You can see details of the throughput capacity within the plans available for your account,
 and select the level of provisioning that you want to use,
-through the Account tab of your Cloudant account Dashboard.
+through the Account tab of your Cloudant account Dashboard.<br/>
 ![Account Dashboard](images/cloudant_capacity.png)
 
 To move to a different throughput capacity,
 select the provisioning you want,
 then click the `Change Capacity` button.
 You are asked to confirm the change,
-and reminded that the provisioning change can take up to 24 hours to complete.
+and reminded that the provisioning change can take up to 24 hours to complete.<br/>
 ![Account Dashboard](images/cloudant_capacity_change.png)
 
 The following table summarizes the price and performance measures for each of the plans.
@@ -170,7 +170,7 @@ you would be billed an overage of $0.0014 * 8 GB * 21 hours = $0.2352.
 For hour 00:00 of day 4 to the end of the month (of 30 days),
 you would be billed an overage of $0.0014 * 8 GB * 24 hours * 27 days = $7.2576.
 
-The total overage bill for the month would be $0.1232 + $0.2352 + $7.2576 = $7.62.
+The total overage bill for the month would be $0.1232 + $0.2352 + $7.2576 = $7.616, or approximately $7.62.
 
 #### Locations
 
@@ -207,7 +207,7 @@ or alternatively implement your own solution by using one of several possible te
 
 ### Monitoring usage
 
-Information about your usage is available in the Usage pane of the Activity tab within your Cloudant Dashboard.
+Information about your usage is available in the Usage pane of the Activity tab within your Cloudant Dashboard.<br/>
 ![Monitoring usage on the dashboard](images/cloudant_usage.png).
 
 Details are provided there,
