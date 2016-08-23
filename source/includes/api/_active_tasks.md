@@ -162,5 +162,5 @@ In the `phase` field, the value indicates the stage that compaction has reached:
 #### Specific response fields for indexing tasks
 
 -   **design\_document**: The design document containing the view or index function or functions.
--   **total\_changes**: The index counts the number of changes (unindexed) from its current location. This count includes deleted documents, because deleted documents do not get inserted into the index. The index uses the following formula to calculate the total number of changes: `N * (doc_del_count+doc_count)` where `N=3`.
+-   **total\_changes**: The index counts the number of changes (unindexed) from its current location. This count includes deleted documents, because deleted documents do not get inserted into the index. The index uses the following formula to calculate the total changes: `N * (doc_del_count+doc_count)` where `N=3`.
 -   **changes\_done**: Number of document revisions processed by this task. A document can have one or more revisions.
