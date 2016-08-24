@@ -1,8 +1,8 @@
 ---
-title: Cloudant Documentation - Cloud Consumption Model
+title: Cloudant Documentation - Cloudant offerings
 
 language_tabs:
-  - http
+  - http 
   - shell: curl
 #  - javascript: node.js
 #  - python
@@ -15,6 +15,11 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - offerings/ccm
-
+  - offerings/index
+    
 ---
+
+
+
+
+

@@ -46,8 +46,8 @@
 {"from": "/functiony.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "functionx.html"} },
 {"from": "/BluemixLocal.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "basics.html#cloudant-on-bluemix-local"} },
 {"from": "/BluemixLocalHardware.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "basics.html#requirements"} },
-{"from": "/CCM.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "ccm.html"} },
-{"from": "/CCMbilling.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "ccm.html"} },
+{"from": "/CCM.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "offerings.html#ibm-bluemix"} },
+{"from": "/CCMbilling.html", "to": "/_show/redirect", "method": "GET", "query": {"target": "offerings.html#ibm-bluemix"} },
 {
     "from": "",
     "to": "index.html",
