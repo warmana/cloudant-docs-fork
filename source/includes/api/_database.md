@@ -356,7 +356,7 @@ Additionally, there is a built-in filter available:
  * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
 -->
 
- * `_design`: The _design filter accepts only changes to design documents.
+ * `_design`: The `_design` filter accepts only changes to design documents.
 
 <div id="changes_responses"></div>
 
