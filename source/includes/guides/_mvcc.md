@@ -165,11 +165,11 @@ Then to delete the old revisions, send a DELETE request to the URLs with the rev
 > example requests to delete old revisions
 
 ```http
-DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
+DELETE https://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
 ```
 
-```http
-DELETE http://$USERNAME.cloudant.com/products/$_ID?rev=2-f796915a291b37254f6df8f6f3389121
+```shell
+curl "https://$USERNAME.cloudant.com/products/$_ID?rev=2-f796915a291b37254f6df8f6f3389121" -X DELETE
 ```
 
 After this, conflicts are resolved and you can verify this by getting the document again with the conflicts parameter set to true.
