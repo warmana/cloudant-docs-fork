@@ -135,15 +135,21 @@ When a request is rejected because the number of events is exceeded,
 applications receive an HTTP response:
 [`429` Too Many Requests](http.html#429).
 
-The supported client libraries (for [Java](libraries.html#java),
+Recent versions of the supported client libraries (for [Java](libraries.html#java),
 [node.js](libraries.html#node.js),
-and [Python](libraries.html#python) languages) all have an ability to handle a `429` response.
+and [Python](libraries.html#python) languages) have an ability to handle a `429` response.
+For example,
+the Java library throws a [`TooManyRequestsException`](http://static.javadoc.io/com.cloudant/cloudant-client/2.5.1/com/cloudant/client/org/lightcouch/TooManyRequestsException.html).
 
 By default,
 the supported client libraries do not automatically attempt to retry
 a request when a `429` response is received.
+
+<!--
 It is possible to configure the client libraries to retry a request automatically,
 however this is only suitable for temporary rather than frequent transgressions.
+-->
+
 It is better to ensure that your application handles `429` responses correctly.
 The reason is that the number of retries is limited;
 regularly transgressing the number of requests is a strong indicator
