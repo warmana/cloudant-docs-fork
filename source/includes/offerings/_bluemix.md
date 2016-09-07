@@ -11,9 +11,9 @@ at the [home page](https://console.ng.bluemix.net/).
 Cloudant on Bluemix is available as a free [Lite](offerings.html#lite-plan) service,
 and as several configurations within the paid [Standard plan](offerings.html#standard-plan).
 
-The following table summarizes the price and performance measures for each of the plans.
+The following table summarizes the performance measures for each of the plans.
 
-<aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at August 2016.
+<aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at September 2016.
 For current values,
 contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
@@ -28,10 +28,7 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <tr>
 <td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (per hour)</td>
 <td headers="litePlan basePrice">$0.00</td>
-<td headers="standardPlan basePrice">$0.09</td>
-<td headers="standardPlan basePrice">$0.52</td>
-<td headers="standardPlan basePrice">$4.17</td>
-<td headers="standardPlan basePrice">$22.22</td>
+<td colspan="4" headers="standardPlan basePrice">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
 </tr>
 <tr>
 <td rowspan="3" valign="center" headers="planCharacteristic" id="throughputLabel">Provisioned Throughput<br/>Capacity<br/>(per second)</td>
@@ -67,7 +64,7 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <tr>
 <td headers="planCharacteristic" id="diskOverage">Disk Overage<br/>(per GB/hour)</td>
 <td headers="litePlan diskOverage">Not available</td>
-<td colspan="4" headers="standardPlan diskOverage" align="center">$0.0014</td>
+<td colspan="4" headers="standardPlan diskOverage" align="center">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
 </tr>
 </table>
 
@@ -85,7 +82,8 @@ you should move to the [Standard plan](offerings.html#standard-plan).
 
 The Standard plan includes 20GB of data storage.
 Above 20GB,
-you are charged $0.0014 per GB per hour.
+you are charged a defined cost per GB per hour.
+See the <a href="http://cloudant.com/bluemix" target="_blank">Pricing</a> information for the current cost.
 On the Standard plan,
 you can also change the amount of provisioned throughput capacity for lookups, writes and queries.
 
@@ -123,20 +121,40 @@ The measurement of throughput is a simple count of the number of events of each 
 per second,
 where the second is a _sliding_ window.
 If your account exceeds the number of throughput events that are provisioned for the plan,
-requests are rejected until the number of events within the sliding window no longer exceeds the number provisioned.
+requests are rejected until the number of events within the sliding window
+no longer exceeds the number provisioned.
 It might help to think of the sliding one-second window as being any consecutive period of 1,000 milliseconds.
 
 For example,
 if you are on the Standard plan and have provisioned 200 lookups per second,
 your account might make a maximum of 200 lookup requests during a consecutive period of 1,000 milliseconds (1 second).
-Subsequent lookup requests made during the sliding 1,000 millisecond period are rejected until the number of lookup requests in that period drops below 200 again.
+Subsequent lookup requests made during the sliding 1,000 millisecond period
+are rejected until the number of lookup requests in that period drops below 200 again.
 
 When a request is rejected because the number of events is exceeded,
-applications receive an HTTP response: [`429` Too Many Requests](http.html#429).
+applications receive an HTTP response:
+[`429` Too Many Requests](http.html#429).
 
-The supported client libraries (for [Java](libraries.html#java), [node.js](libraries.html#node.js), and [Python](libraries.html#python) languages) all have the ability to handle a `429` response.
-If your application uses another library or language,
-ensure that it is able to handle a `429` response correctly.
+The supported client libraries (for [Java](libraries.html#java),
+[node.js](libraries.html#node.js),
+and [Python](libraries.html#python) languages) all have an ability to handle a `429` response.
+
+By default,
+the supported client libraries do not automatically attempt to retry
+a request when a `429` response is received.
+It is possible to configure the client libraries to retry a request automatically,
+however this is only suitable for temporary rather than frequent transgressions.
+It is better to ensure that your application handles `429` responses correctly.
+The reason is that the number of retries is limited;
+regularly transgressing the number of requests is a strong indicator
+that you should move to a different plan configuration.
+
+<aside class="warning" role="complementary" aria-label="movingFromNonCCM">If you are migrating an existing application,
+it might not be configured to handle a `429` response correctly.
+You should check this as part of your migration verification.</aside>
+
+In summary,
+you must ensure that your application is able to handle a `429` response correctly.
 
 ##### Disk Space Included
 
@@ -149,6 +167,7 @@ All standard plans are monitored for disk space used.
 If the account uses more than the amount of storage that is provided in your plan configuration,
 it is considered to 'overflow'.
 An overflow causes the account to be billed at the indicated price for each extra GB used beyond the plan allocation.
+
 The extra amount of money that you must pay for using more disk space than is provided in the plan is called an 'overage'.
 Overage is calculated on an hourly basis.
 It is not possible to overflow the disk space available in the Lite plan.
@@ -158,7 +177,7 @@ assume that your Standard plan project increases disk usage to 107 GB for half a
 This change means your project caused an overflow of 87 GB more than the 20 GB plan allocation,
 for 12 hours.
 Therefore,
-you would be billed an overage charge of $0.0014 x 87 GB x 12 hours = $1.46 for that extra space.
+you would be billed an overage charge based on 87 GB x 12 hours = 1044 GB hours for that extra space.
 
 Overage is calculated by using the maximum number of GB above the plan allocation during a particular hour within the billing cycle.
 
@@ -179,15 +198,15 @@ your project was 8 GB above the plan allocation.
 
 Therefore,
 for hour 02:00 of day 3,
-you would be billed an overage of $0.0014 x 88 GB x 1 hour = $0.1232.
+you would be billed an overage based on 88 GB x 1 hour = 88 GB hours.
 
 For hour 03:00 of day 3 to the end of day 3,
-you would be billed an overage of $0.0014 * 8 GB * 21 hours = $0.2352.
+you would be billed an overage based on 8 GB x 21 hours = 168 GB hours.
 
 For hour 00:00 of day 4 to the end of the month (of 30 days),
-you would be billed an overage of $0.0014 * 8 GB * 24 hours * 27 days = $7.2576.
+you would be billed an overage based on 8 GB x 24 hours x 27 days = 5184 GB hours.
 
-The total overage bill for the month would be $0.1232 + $0.2352 + $7.2576 = $7.616, or approximately $7.62.
+The total overage bill for the month would be based on a total of 88 + 168 + 5184 = 5440 GB hours.
 
 ##### Locations
 
@@ -245,8 +264,6 @@ across three separate physical nodes for High Availability and Data Recovery.
 
 Support for Standard plan configurations is optional.
 It is provided by purchasing "Bluemix Standard Support".
-The monthly cost (as at August 2016) is the greater of 10% of the account charge,
-or $200.
 Support is not available for the Lite plan.
 
 A pricing calculator for Bluemix Standard Support is available
