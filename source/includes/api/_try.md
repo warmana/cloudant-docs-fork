@@ -11,15 +11,15 @@
     var requestTypes = {
       analyzers: {
         queries: {
-          'classic': {query: '{\n  "analyzer":"classic",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' },
-          'email-address': {query: '{\n  "analyzer": "email",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}'},
+          'classic': {query: '{\n  "analyzer":"classic",\n  "text":"The brown fox jumps over the lazy dog, then emails a classic analyzer result to the lazy@dog.com address."\n}' },
+          'email-address': {query: '{\n  "analyzer": "email",\n  "text":"The fox jumps over the lazy dog, then emails a message to the lazy@dog.com address."\n}'},
           'english': {query: '{\n  "analyzer": "english",\n  "text":"Peter Piper picked a peck of pickled peppers. A peck of pickled peppers Peter Piper picked. If Peter Piper picked a peck of pickled peppers. Where’s the peck of pickled peppers Peter Piper picked?"\n}'},
           'german': {query: '{\n  "analyzer": "german",\n  "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."\n}'},
           'default': 'standard',
-          'keyword': {query: '{\n  "analyzer":"keyword",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' },
-          'simple': {query: '{\n  "analyzer":"simple",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' },
+          'keyword': {query: '{\n  "analyzer":"keyword",\n  "text":"The quick fox runs away from the lazy dog, then emails a keyword analyzer result to the lazy@dog.com address."\n}' },
+          'simple': {query: '{\n  "analyzer":"simple",\n  "text":"The fox run past the lazy dog, then emails a simple analyzer result to the lazy@dog.com address."\n}' },
           'standard': {query: '{\n  "analyzer":"standard",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' },
-          'whitespace': {query: '{\n  "analyzer":"whitespace",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' }
+          'whitespace': {query: '{\n  "analyzer":"whitespace",\n  "text":"The rare arctic fox jumps over the lazy dog, then emails a whitespace analyzer result to the lazy@dog.com address."\n}' }
         },
         form: $('form.analyzers'),
         queryInput: $('form.analyzers .query'),
