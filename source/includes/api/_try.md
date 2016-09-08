@@ -17,7 +17,7 @@
           'german': {query: '{\n  "analyzer": "german",\n  "text":"Fischers Fritz fischt frische Fische, frische Fische fischt Fischers Fritz."\n}'},
           'default': 'standard',
           'keyword': {query: '{\n  "analyzer":"keyword",\n  "text":"The quick fox runs away from the lazy dog, then emails a keyword analyzer result to the lazy@dog.com address."\n}' },
-          'simple': {query: '{\n  "analyzer":"simple",\n  "text":"The fox run past the lazy dog, then emails a simple analyzer result to the lazy@dog.com address."\n}' },
+          'simple': {query: '{\n  "analyzer":"simple",\n  "text":"The fox runs past the lazy dog, then emails a simple analyzer result to the lazy@dog.com address."\n}' },
           'standard': {query: '{\n  "analyzer":"standard",\n  "text":"The quick brown fox jumps over the lazy dog, then emails a video to the lazy@dog.com address."\n}' },
           'whitespace': {query: '{\n  "analyzer":"whitespace",\n  "text":"The rare arctic fox jumps over the lazy dog, then emails a whitespace analyzer result to the lazy@dog.com address."\n}' }
         },
