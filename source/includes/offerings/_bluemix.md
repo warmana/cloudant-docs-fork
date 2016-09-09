@@ -8,7 +8,7 @@ at the [home page](https://console.ng.bluemix.net/).
 
 ### Bluemix Public
 
-Cloudant on Bluemix is available as a free [Lite](offerings.html#lite-plan) service,
+Cloudant on Bluemix is available as a free [Lite plan](offerings.html#lite-plan),
 and as several configurations within the paid [Standard plan](offerings.html#standard-plan).
 
 The following table summarizes the performance measures for each of the plans.
@@ -33,24 +33,24 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 <tr>
 <td rowspan="3" valign="center" headers="planCharacteristic" id="throughputLabel">Provisioned Throughput<br/>Capacity<br/>(per second)</td>
 <td headers="planCharacteristic throughputLabel" id="lookups">Lookups</td>
-<td headers="litePlan throughputLabel lookups">10</td>
-<td headers="standardPlan throughputLabel lookups">20</td>
-<td headers="standardPlan throughputLabel lookups">200</td>
-<td headers="standardPlan throughputLabel lookups">3,000</td>
+<td headers="litePlan throughputLabel lookups">20</td>
+<td headers="standardPlan throughputLabel lookups">100</td>
+<td headers="standardPlan throughputLabel lookups">1,000</td>
+<td headers="standardPlan throughputLabel lookups">5,000</td>
 <td headers="standardPlan throughputLabel lookups">20,000</td>
 </tr>
 <tr>
 <td headers="planCharacteristic throughputLabel" id="writes">Writes</td>
 <td headers="litePlan throughputLabel writes">10</td>
-<td headers="standardPlan throughputLabel writes">20</td>
-<td headers="standardPlan throughputLabel writes">150</td>
-<td headers="standardPlan throughputLabel writes">2,000</td>
-<td headers="standardPlan throughputLabel writes">12,000</td>
+<td headers="standardPlan throughputLabel writes">50</td>
+<td headers="standardPlan throughputLabel writes">500</td>
+<td headers="standardPlan throughputLabel writes">2,500</td>
+<td headers="standardPlan throughputLabel writes">10,000</td>
 </tr>
 <tr>
 <td headers="planCharacteristic throughputLabel" id="queries">Queries</td>
 <td headers="litePlan throughputLabel queries">5</td>
-<td headers="standardPlan throughputLabel queries">10</td>
+<td headers="standardPlan throughputLabel queries">5</td>
 <td headers="standardPlan throughputLabel queries">50</td>
 <td headers="standardPlan throughputLabel queries">250</td>
 <td headers="standardPlan throughputLabel queries">1,000</td>
@@ -169,7 +169,7 @@ It is used for both data and index storage.
 
 ##### Disk Overage
 
-All standard plans are monitored for disk space used.
+All Standard and Lite plan service instances are monitored for disk space used.
 If the account uses more than the amount of storage that is provided in your plan configuration,
 it is considered to 'overflow'.
 An overflow causes the account to be billed at the indicated price for each extra GB used beyond the plan allocation.
@@ -179,8 +179,8 @@ Overage is calculated on an hourly basis.
 It is not possible to overflow the disk space available in the Lite plan.
 
 For example,
-assume that your Standard plan project increases disk usage to 107 GB for half a day (12 hours).
-This change means your project caused an overflow of 87 GB more than the 20 GB plan allocation,
+assume that your Standard plan instance increases disk usage to 107 GB for half a day (12 hours).
+This change means your instance caused an overflow of 87 GB more than the 20 GB plan allocation,
 for 12 hours.
 Therefore,
 you would be billed an overage charge based on 87 GB x 12 hours = 1044 GB hours for that extra space.
@@ -189,18 +189,18 @@ Overage is calculated by using the maximum number of GB above the plan allocatio
 
 ##### A worked overage example
 
-Assume that you start a month of 30 days with a Standard plan project that uses 9 GB of storage.
+Assume that you start a month of 30 days with a Standard plan service instance that uses 9 GB of storage.
 Next,
 your storage increases to 21.5 GB for 15 minutes during the hour beginning at 02:00 of day 3.
-The project drops back to 9.5 GB for the next 10 minutes of hour 02:00,
+The instance drops back to 9.5 GB for the next 10 minutes of hour 02:00,
 then increases to 108 GB for the next 25 minutes of hour 02:00.
 Finally,
-your project finishes the hour and indeed the rest of month by dropping down to 28 GB.
+your instance finishes the hour and indeed the rest of month by dropping down to 28 GB.
 
 This pattern means the maximum number of GB above the plan allocation was 88 GB during hour 2 of day 3.
 For hour 03:00 of day 3,
 and for the rest of the month,
-your project was 8 GB above the plan allocation.
+your instance was 8 GB above the plan allocation.
 
 Therefore,
 for hour 02:00 of day 3,
@@ -268,7 +268,7 @@ across three separate physical nodes for High Availability and Data Recovery.
 
 #### Support
 
-Support for Standard plan configurations is optional.
+Support for Standard plan service instances is optional.
 It is provided by purchasing "Bluemix Standard Support".
 Support is not available for the Lite plan.
 
