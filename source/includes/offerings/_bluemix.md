@@ -19,7 +19,7 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
 <aside class="warning" role="complementary" aria-label="pricing2">All currency values in this document are in US dollars ($).</aside>
 
-<table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans of service.">
+<table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans of service." role="presentation">
 <tr valign="top">
 <td colspan="2" id="planCharacteristic"><b>Plans</b></td>
 <td id="litePlan"><b>Lite</b></td>
