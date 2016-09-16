@@ -12,7 +12,7 @@ not work. For example, if you don't run the first step, creating a session token
 code snippets will work because you need the session token to authenticate. We encourage you to
 change the examples and see how the service will respond.
 
-<aside class="warning"> Note: The interactive guide is only intended as a "playground" to try out Cloudant.
+<aside class="warning" role="complementary" aria-label="notForSensitiveData"> Note: The interactive guide is only intended as a "playground" to try out Cloudant.
 *Don't use it with sensitive data!*
 </aside>
 
@@ -141,14 +141,14 @@ curl "$URL/_active_tasks" | jq ". | map(select(.doc_id == \"$DBNAME\"))"
 </pre>
 
 When the replication job has been started, the document in the replicator databse will have been updated with `"replication_state": "triggered"`
-allowing you to monitor its status. You can run the above snippet again until you see `"replication_state": "completed"`
+allowing you to monitor its status. You can run the earlier snippet again until you see `"replication_state": "completed"`
 indicating all data has been copied to your target database. The second command queries the `_active_tasks` endpoint
 and filters the result by `doc_id` in order to get more information about the status of the replication job,
 such as the number of documents written.
 
-<aside class="warning">
-The replication job might take a minute or two. Just run the above snippet again to see when it's done.
-There is no need to wait though, you can continue on with the tutorial while it's still running.
+<aside class="warning" role="complementary" aria-label="bePatient">
+The replication job might take a minute or two. Just run the earlier snippet again to see when it is done.
+There is no need to wait though; you can continue with the tutorial while the snippet is still running.
 </aside>
 
 #### Things you might want to try - replicating sample data
@@ -187,7 +187,7 @@ any fields to index, Cloudant Query will index everything.
  * Indexing only some fields
  * Have a look at the API reference to learn more about [creating Cloudant Query indexes](cloudant_query.html#creating-an-index)
 
-### Querying data
+### Querying your data
 
 With Cloudant Query, you can do far more complex queries, but let's start with something simple -
 getting all movies with an IMDB rating of exactly 8. This time we send a `POST` request to the

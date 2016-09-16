@@ -88,7 +88,10 @@ for filename in [
 'authentication',
 'authorization',
 'backup',
+'backup-guide',
+'backup-guide-using-replication',
 'basics',
+'bluemix',
 'cap_theorem',
 'cloudant_query',
 'cors',
@@ -107,12 +110,15 @@ for filename in [
 'managing_tasks',
 'monitoring',
 'mvcc',
+'offerings',
+'querying',
 'replication_guide',
 'replication',
 'search',
 'transactions',
 'try',
 'using_views',
+'vhosts',
 'warehousing'
 ]:
 	index_file(filename)

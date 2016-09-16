@@ -325,7 +325,7 @@ This error prevents you overwriting data changed by other clients. If the write 
 
 ### 'Tombstone' documents
 
-Tombstone documents are small documents left in place within a database when the original document is deleted.
+Tombstone documents are small documents retained in place within a database when the original document is deleted.
 Their purpose is to allow the deletion to be replicated.
 
 When the replication has completed,
@@ -720,9 +720,13 @@ The content and structure of the returned JSON depends on the transaction semant
 
 > Example request to perform bulk update:
 
-```
+``` http
 POST /test/_bulk_docs HTTP/1.1
 Accept: application/json
+```
+
+``` shell
+curl -X POST "https://$USERNAME.cloudant.com/$DATABASE/_bulk_docs" -d @request.json
 ```
 
 > Example JSON to bulk update documents:
