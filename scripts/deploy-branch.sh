@@ -42,15 +42,6 @@ then
           "docs-testb":["_reader","_writer","_admin","_replicator"]
 		    }
 		  }'
-    if [ "${TRAVIS_BRANCH}" = "content-review" ]; then
-      security='
-        {
-          "cloudant": {
-            "kelepirstantoneatessolit":["_reader"],
-            "docs-testb":["_reader","_writer","_admin","_replicator"]
-          }
-        }'
-    fi
     curl -X PUT "https://$1:$2@docs-testb.cloudant.com/${TRAVIS_BRANCH}/_security" -d "${security}"
   fi
 else

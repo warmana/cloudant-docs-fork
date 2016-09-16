@@ -90,35 +90,11 @@ Unsupported:<ul><li><a href="http://ektorp.org/">ektorp</a></li>
 </tr>
 </table>
 
-### Couchdb
-
-<a href="https://atmospherejs.com/cloudant/couchdb">cloudant:couchdb</a> is the official Cloudant library for the couchdb-meteor package. Since Apache CouchDB does not ship with Meteor or the couchdb package, you must provide a URL for Meteor to connect to and a running CouchDB or Cloudant server instance before you install Meteor. Add this package to your Meteor application:
-
-`meteor add cloudant:couchdb`
-
-The couchdb-meteor package provides:
-
-+ Livequery implementation and real-time updates from the database by consuming the CouchDB `_changes` feed
-+ Distributed Data Protocol (DDP) RPC endpoints that update data from clients connected locally
-+ Serialization and deserialization of updates to the DDP format
-
-
-**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Prebuilt binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the prebuilt binaries are available.
-
-
-To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
-
-`$export COUCHDB_URL=https://username:password@username.cloudant.com`
-
-See [API Reference](api.html) for more information about meteor-couchdb APIs. 
-
-
 ### Python
 
 A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
 
-The library is a preview (alpha version).
-As such it does not currently have complete API coverage, nor is the documentation 100% complete.
+Download the current library release [here](https://pypi.python.org/pypi/cloudant/). Learn more information about the Python language at [python.org](https://www.python.org/about/). 
 
 ### Objective C and Swift
 
@@ -137,3 +113,12 @@ is available [here](https://github.com/cloudant/objective-cloudant).
 The library is an early release version.
 As such it does not currently have complete Cloudant API coverage.
 
+### Apache Spark
+
+[spark-cloudant](https://github.com/cloudant-labs/spark-cloudant) is the official Cloudant library for Apache Spark.
+
+The spark-cloudant library is already loaded into the [IBM Bluemix Apache Spark-as-a-Service](https://console.ng.bluemix.net/catalog/services/apache-spark/) offering.
+It can be used with any stand-alone Spark cluster.
+
+See the [project information](https://github.com/cloudant-labs/spark-cloudant)
+and [Spark Packages](https://spark-packages.org/package/cloudant-labs/spark-cloudant) for more details.

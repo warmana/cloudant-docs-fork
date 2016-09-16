@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - API Basics
+title: Cloudant Documentation - Cloudant Query
 
 language_tabs:
   - http 
@@ -15,11 +15,8 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - basics/index
-    
+  - offerings/bluemix
+
 ---
-
-
-
 
 

@@ -2,22 +2,6 @@
 
 If it's your first time here, scan this section before you scroll further. The sections on [Client Libraries](libraries.html#-client-libraries), [API Reference](api.html#-api-reference), and [Guides](guides.html#-guides) assume you know some basic things about Cloudant.
 
-## Database as a Service
-
-As a hosted and managed database-as-a-service (DBaaS),
-Cloudant provides an [HTTP API](basics.html#http-api) to your [JSON](basics.html#json) data,
-and 24-hour operational support and maintenance.
-Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
-and is delivered as a multi-tenant, dedicated, and installed service.
-
-## IBM Bluemix
-
-Cloudant is also available as an [IBM Bluemix service](https://www.ng.bluemix.net/docs/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
-Bluemix is an open-standards, cloud platform for building, running, and managing applications.
-Find out more,
-and get started with Bluemix,
-at the [home page](https://console.ng.bluemix.net/?cm_mmc=dw-_-bluemix-_-ibmsite-_-cloudantdocs).
-
 ## HTTP API
 All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
 
@@ -69,7 +53,9 @@ Cloudant stores documents using JSON (JavaScript Object Notion) encoding, so any
 
 More information about JSON can be found in the [JSON Guide](json.html).
 
-## Distributed
+<div id="distributed"></div>
+
+## Distributed Systems
 
 Cloudant's API enables you to interact with a collaboration of numerous machines, called a cluster. The machines in a cluster must be in the same datacenter, but can be within different 'pods' in that datacenter. Using different pods helps improve the High Availability characteristics of Cloudant.
 
@@ -86,18 +72,3 @@ Continuous replication can be used for backups of data, aggregation across multi
 
 <aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
 
-## Cloudant Local
-
-<a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
-
-Cloudant Local provides you with the same basic capabilities as the full Cloudant single-tenant offering,
-but hosted within your own data center installation.
-
-A more detailed overview of Cloudant Local is <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_cloudant_local_overview.html?lang=en-us" target="_blank">available</a>.
-
-The <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html?lang=en" target="_blank">IBM Knowledge Center</a> provides information on many aspects of Cloudant Local,
-including:
-
-- <a href="http://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_extract_install_cloudant_local.html?lang=en" target="_blank">Installation and Configuration</a>
-- <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_maintenance_tasks_overview.html?lang=en" target="_blank">Maintenance Tasks</a>
-- <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_tuning_parameters_replication_cases.html?lang=en" target="_blank">Tuning replication parameters</a>
