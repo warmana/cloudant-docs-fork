@@ -226,17 +226,72 @@ The total overage bill for the month would be based on a total of 88 + 168 + 518
 #### Changing plans
 
 You can change the pricing plan for your service using the dashboard within Bluemix.
+Changing the plan for an existing service normally requires you to restart or 'restage'
+applications that use the service. 
 
 To do this,
 start by selecting the service you want to change.<br/>
 ![Account Dashboard](images/BM-PricingPlanSelection004.png)
 
+On the service dashboard,
+click the `Plan` tab.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection005.png)
+
+The display shows you the current plan for the service,
+and a list of the plans available for the service.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection006.png)
+
+To change to a different pricing plan,
+click the row corresponding to the plan you want,
+then click the `Save` button.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection007.png)
+
+A window appears,
+so that you can confirm the details of the plan you want to use.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection008.png)
+
+Finally,
+the plan dashboard updates,
+showing the new plan for your service.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection009.png)
+
+#### Changing throughput capacity
+
+Within the [Standard plan](offerings.html#standard-plan),
+you can change the [provisioned throughput capacity](offerings.html#throughput).
+This affects the reserved number of database operations (lookups, writes, and queries) per second.
+
+The current provisioned capacity is visible on the `Usage` tab of the service dashboard.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection010.png)
+
+To change the provisioned throughput capacity,
+move to the `Account` tab within the service dashboard,
+and select the `Capacity` display.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection011.png)
+
+The current provisioned throughput capacity is shown as a highlight in the Standard Plan table.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection012.png)
+
 To move to a different throughput capacity,
-select the provisioning you want,
-then click the `Change Capacity` button.
+select the provisioning you want.
+The indicative monthly costs are updated.
+If you wish to proceed with the new capacity,
+click the `Change Capacity` button.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection013.png)
+
 You are asked to confirm the change,
 and reminded that the provisioning change can take up to 24 hours to complete.<br/>
-![Account Dashboard](images/cloudant_capacity_change.png)
+![Account Dashboard](images/BM-PricingPlanSelection014.png)
+
+Finally,
+the account dashboard updates,
+showing the new provisioned capacity for your service.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection015.png)
+
+If you require a different provisioned capacity,
+click the `Contact Support` button on the account dashboard
+to begin a discussion about alternative provisioned capacity options.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection016.png)
 
 #### Locations
 
