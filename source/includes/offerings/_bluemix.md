@@ -11,6 +11,43 @@ at the [home page](https://console.ng.bluemix.net/).
 Cloudant on Bluemix is available as a free [Lite plan](offerings.html#lite-plan),
 and as several configurations within the paid [Standard plan](offerings.html#standard-plan).
 
+When you first create a service instance,
+you are invited to select the Pricing Plan to use for the instance.
+By default,
+the [Lite plan](offerings.html#lite-plan) is selected.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection001.png)
+
+To select a different plan,
+simply click the corresponding row.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection002.png)
+
+<aside class="information" role="complementary" aria-label="payplanontrialaccount">If you have a trial account,
+you cannot select a paid plan until you have provided a payment method.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection003.png)</aside>
+
+#### Lite plan
+
+The Lite plan is free,
+but limits you to a maximum of 1GB of data storage.
+There are also limits on the provisioned throughput capacity for lookups, writes and queries.
+
+If you would like to store more than 1GB of data,
+or to have a greater throughput capacity,
+you should move to the [Standard plan](offerings.html#standard-plan).
+
+#### Standard plan
+
+The Standard plan includes 20GB of data storage.
+Above 20GB,
+you are charged a defined cost per GB per hour.
+See the <a href="http://cloudant.com/bluemix" target="_blank">Pricing</a> information for the current cost.
+On the Standard plan,
+you can also change the amount of provisioned throughput capacity for lookups, writes and queries.
+
+<div id="servicetier"></div>
+
+#### Throughput capacity
+
 The following table summarizes the performance measures for each of the plans.
 
 <aside class="warning" role="complementary" aria-label="indicativetierpricing">The details in the table are indicative as at September 2016.
@@ -68,38 +105,10 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 </tr>
 </table>
 
-#### Lite plan
-
-The Lite plan is free,
-but limits you to a maximum of 1GB of data storage.
-There are also limits on the provisioned throughput capacity for lookups, writes and queries.
-
-If you would like to store more than 1GB of data,
-or to have a greater throughput capacity,
-you should move to the [Standard plan](offerings.html#standard-plan).
-
-#### Standard plan
-
-The Standard plan includes 20GB of data storage.
-Above 20GB,
-you are charged a defined cost per GB per hour.
-See the <a href="http://cloudant.com/bluemix" target="_blank">Pricing</a> information for the current cost.
-On the Standard plan,
-you can also change the amount of provisioned throughput capacity for lookups, writes and queries.
-
-<div id="servicetier"></div>
-
 You can see details of the throughput capacity within the plans available for your account,
 and select the level of provisioning that you want to use,
 through the Account tab of your Cloudant account Dashboard.<br/>
 ![Account Dashboard](images/cloudant_capacity.png)
-
-To move to a different throughput capacity,
-select the provisioning you want,
-then click the `Change Capacity` button.
-You are asked to confirm the change,
-and reminded that the provisioning change can take up to 24 hours to complete.<br/>
-![Account Dashboard](images/cloudant_capacity_change.png)
 
 <div id="throughput"></div>
 
@@ -214,7 +223,22 @@ you would be billed an overage based on 8 GB x 24 hours x 27 days = 5184 GB hour
 
 The total overage bill for the month would be based on a total of 88 + 168 + 5184 = 5440 GB hours.
 
-##### Locations
+#### Changing plans
+
+You can change the pricing plan for your service using the dashboard within Bluemix.
+
+To do this,
+start by selecting the service you want to change.<br/>
+![Account Dashboard](images/BM-PricingPlanSelection004.png)
+
+To move to a different throughput capacity,
+select the provisioning you want,
+then click the `Change Capacity` button.
+You are asked to confirm the change,
+and reminded that the provisioning change can take up to 24 hours to complete.<br/>
+![Account Dashboard](images/cloudant_capacity_change.png)
+
+#### Locations
 
 By default,
 all plans are based on multi-tenant clusters.
@@ -222,10 +246,10 @@ As part of your plan selection,
 you can choose from the following Bluemix Public regions:
 
 -	US South
-- United Kingdom
-- Sydney
+-	United Kingdom
+-	Sydney
 
-##### Security, Encryption, and Compliance
+#### Security, Encryption, and Compliance
 
 All plans are provided on servers with [at-rest](https://en.wikipedia.org/wiki/Data_at_rest) disk encryption.
 Access is encrypted over a network connection by using HTTPS.
@@ -236,7 +260,7 @@ The plans also offer [Security Compliance Certification](https://cloudant.com/pr
 [HIPAA](https://en.wikipedia.org/wiki/Health_Insurance_Portability_and_Accountability_Act) compliance requires a [single-tenant environment](offerings.html#locations),
 so request this environment before provisioning.
 
-##### High Availability, Disaster Recovery, and Backup
+#### High Availability, Disaster Recovery, and Backup
 
 To provide High Availability (HA) and Disaster Recovery (DR) within a data center,
 all data is stored in triplicate across three separate physical servers in a cluster.
