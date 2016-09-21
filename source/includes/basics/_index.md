@@ -49,7 +49,7 @@ If the client (such as some web browsers) does not support using these HTTP meth
 If you use an unsupported HTTP request type with a URL that does not support the specified type, a [405](http.html#405) error is returned, listing the supported HTTP methods, as shown in the example.
 
 ## JSON
-Cloudant stores documents using JSON (JavaScript Object Notion) encoding, so anything encoded into JSON can be stored as a document. Files like images, videos, and audio are called BLObs (binary large objects) and can be stored as attachments within documents.
+Cloudant stores documents using JSON (JavaScript Object Notation) encoding, so anything encoded into JSON can be stored as a document. Files like images, videos, and audio are called BLObs (binary large objects) and can be stored as attachments within documents.
 
 More information about JSON can be found in the [JSON Guide](json.html).
 
