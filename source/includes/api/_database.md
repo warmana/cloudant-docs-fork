@@ -130,7 +130,7 @@ Field |	Description
 ------|------------
 `compact_running` |	Set to true if the database compaction routine is operating on this database.
 `db_name` |	The name of the database.
-disk_format_version |	The version of the physical format used for the data when it is stored on disk.
+`disk_format_version` |	The version of the physical format used for the data when it is stored on disk.
 `disk_size` |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
 `doc_count` |	A count of the documents in the specified database.
 `doc_del_count` |	Number of deleted documents.
