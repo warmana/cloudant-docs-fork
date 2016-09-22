@@ -128,20 +128,20 @@ The elements of the returned structure are shown in the following table:
 
 Field |	Description
 ------|------------
-compact_running |	Set to true if the database compaction routine is operating on this database.
-db_name |	The name of the database.
+`compact_running` |	Set to true if the database compaction routine is operating on this database.
+`db_name` |	The name of the database.
 disk_format_version |	The version of the physical format used for the data when it is stored on disk.
-disk_size |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
-doc_count |	A count of the documents in the specified database.
-doc_del_count |	Number of deleted documents.
-instance_start_time |	Always 0.
-file | On-disk size that must match the `disk_size` field.
-external | The billable data size that is also known as the uncompressed user data volume. It must match the `data_size` field.
-active | The actual amount of data that is close to the `file` field when the view is freshly compacted.
-purge_seq |	The number of purge operations on the database.
-update_seq |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
-other |	JSON object containing a `data_size` field.
-sizes | JSON object containing file, external, and active sizes.
+`disk_size` |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
+`doc_count` |	A count of the documents in the specified database.
+`doc_del_count` |	Number of deleted documents.
+`instance_start_time` |	Always 0.
+`file` |	On-disk size. It must match the `disk_size` field.
+`external` |	Billable data size or uncompressed user data volume. It must match the `data_size` field.
+`active` |	Amount of data. It is close to `file` when the view is freshly compacted.
+`purge_seq` |	The number of purge operations on the database.
+`update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
+`other` |	JSON object containing a `data_size` field.
+`sizes` | JSON object containing file, external, and active sizes.
 
 ### Get Databases
 
