@@ -135,8 +135,9 @@ disk_format_version |	The version of the physical format used for the data when 
 `doc_count` |	A count of the documents in the specified database.
 `doc_del_count` |	Number of deleted documents.
 `instance_start_time` |	Always 0.
-`file` |	On-disk size. It must match the `disk_size` field.
-`external` |	Billable data size or uncompressed user data volume. It must match the `data_size` field.
+`file`	|	On-disk size that must match the `disk_size` field.
+`external` |	Uncompressed user data volume or billable data size. It must match the `data_size` field.
+`active` |	Total amount of data. It is close to the `file` field when the view is freshly compacted.
 `active` |	Amount of data. It is close to `file` when the view is freshly compacted.
 `purge_seq` |	The number of purge operations on the database.
 `update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
