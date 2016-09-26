@@ -43,10 +43,54 @@ Field&nbsp;Name | Required | Description
 `doc_ids` | no | Array of document IDs; if given, only these documents are replicated.
 `filter` | no | Name of a [filter function](design_documents.html#filter-functions) that can choose which documents get replicated.
 `proxy` | no | Proxy server URL.
-`query_params` | no | Object containing properties that are passed to the [filter function](design_documents.html#filter-functions).
+`selector` | no | Provide a simple filter to select the documents that are included in the replication. More information about `selector` is available [here](replication.html#selector-field).
 `since_seq` | no | Sequence from which the replication should start. More information about `since_seq` is available [here](replication.html#since-seq-field).
 <div id="checkpoints">`use_checkpoints`</div> | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
 `user_ctx` | no | An object containing the username and optionally an array of roles, for example: `"user_ctx": {"name": "jane", "roles": ["admin"]} `. This is needed for the replication to show up in the output of `/_active_tasks`.
+
+<div id="selector-field"></div>
+
+#### The `selector` field
+
+If you do not want to replicate the entire contents of a database,
+you can specify a simple filter in the `selector` field.
+The filter takes the form of a Cloudant Query selector object.
+
+> Example `selector` filter:
+
+```
+"selector": {
+	"_id": {
+		"$gte": "d2"
+	}
+}
+```
+
+The selector object identifies a field (such as `_id` in the example),
+and an expression (such as `"$gte": "d2"`) that must be true for that field
+in order for the filter to allow the document to be replicated.
+In the example,
+only documents that have a `_id` field with a value greater than or equal to `"d2"` are replicated.
+
+> Example error response if the selector is not valid:
+
+```
+{
+	"error": "bad request",
+	"reason": "<details of the problem>"
+}
+```
+
+If there is a problem with the request,
+an HTTP [`400`](http.html#400) error is returned,
+with more details about the problem in the `"reason"` field of the response.
+The reason might be one of:
+
+-	The Cloudant Query selector object is missing.
+-	The selector object is not valid JSON.
+-	The selector object does not describe a valid Cloudant Query.
+
+More information about using the `selector` filter is available in the [Apache CouchDB documentation](http://docs.couchdb.org/en/2.0.0/api/database/changes.html#selector).
 
 <div id="since-seq-field"></div>
 
