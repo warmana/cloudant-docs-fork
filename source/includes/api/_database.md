@@ -226,6 +226,7 @@ The `_all_docs` endpoint accepts these query arguments:
 
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
+`deleted_conflicts` | Returns information about deleted conflicted revisions | yes | boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
@@ -234,6 +235,9 @@ Argument | Description | Optional | Type | Default
 `key` | Return only documents with IDs that match the specified key | yes | string |  
 `keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
 `limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
+`meta` | Short-hand combination of all three arguments: `conflicts`, `deleted_conflicts`, and `revs_info`. Using `meta=true` is the same as using `conflicts=true&deleted_conflicts=true&revs_info=true` | yes | boolean | false
+`r` | Specify the [read quorum](document.html#quorum---writing-and-reading-data) value | yes | numeric | 2
+`revs_info` | Includes detailed information for all known document revisions | yes | boolean | false
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
