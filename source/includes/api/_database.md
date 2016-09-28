@@ -69,7 +69,7 @@ Code | Description
 201 |	Database created successfully
 202 |	The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
 403 |	Invalid database name.
-412 |	Database aleady exists.
+412 |	Database already exists.
 
 ### Read
 
@@ -139,9 +139,9 @@ Field |	Description
 `update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
 `other` |	JSON object containing a `data_size` field.
 `sizes` | JSON object containing file, external, and active sizes.
-*`file`	|	On-disk size that must match the `disk_size` field.
-*`external` |	Uncompressed user data volume or billable data size. 
-*`active` |	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
+- `file`	On-disk size that must match the `disk_size` field.
+- `external` Uncompressed user data volume or billable data size. 
+- `active` Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
 
 ### Get Databases
 
