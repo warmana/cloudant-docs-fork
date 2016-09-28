@@ -135,13 +135,13 @@ Field |	Description
 `doc_count` |	A count of the documents in the specified database.
 `doc_del_count` |	Number of deleted documents.
 `instance_start_time` |	Always 0.
-`file`	|	On-disk size that must match the `disk_size` field.
-`external` |	Uncompressed user data volume or billable data size. 
-`active` |	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
 `purge_seq` |	The number of purge operations on the database.
 `update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
 `other` |	JSON object containing a `data_size` field.
-`sizes` | JSON object containing file, external, and active sizes.
+`sizes` | JSON object containing file, external, and active sizes.<br>
+<ul><li>`file`	|	On-disk size that must match the `disk_size` field.</li>
+<li>`external` |	Uncompressed user data volume or billable data size. </li>
+<li>`active` |	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.</li></ul> 
 
 ### Get Databases
 
