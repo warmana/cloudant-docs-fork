@@ -139,9 +139,9 @@ Field |	Description
 `update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
 `other` |	JSON object containing a `data_size` field.
 `sizes` | JSON object containing file, external, and active sizes.
-<ul><li>`file`	|	On-disk size that must match the `disk_size` field.</li>
-<li>`external` |	Uncompressed user data volume or billable data size. </li>
-<li>`active` |	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.</li></ul> 
+*`file`	|	On-disk size that must match the `disk_size` field.
+*`external` |	Uncompressed user data volume or billable data size. 
+*`active` |	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
 
 ### Get Databases
 
