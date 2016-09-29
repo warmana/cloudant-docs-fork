@@ -133,68 +133,56 @@ The elements of the returned structure are shown in the following table:
 <col width="26%" />
 <col width="15%" />
 </colgroup>
-
 <thead>
 <tr class="header">
 <th align="left">Field</th>
 <th align="left">Description</th>
 </tr>
 </thead>
-
 <tbody>
 <tr class="odd">
 <td align="left"><code>compact_running</code></td>
 <td align="left">Set to true if the database compaction routine is operating on this database.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>db_name</code></td>
 <td align="left">The name of the database.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>disk_format_version</code></td>
 <td align="left">The version of the physical format used for the data when it is stored on disk.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>disk_size</code></td>
 <td align="left">Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>doc_count</code></td>
 <td align="left">A count of the documents in the specified database.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>doc_del_count</code></td>
 <td align="left">Number of deleted documents.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>instance_start_time</code></td>
 <td align="left">Always 0.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>purge_seq</code></td>
 <td align="left">The number of purge operations on the database.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>update_seq</code></td>
 <td align="left">An opaque string describing the state of the database. It should not be relied on for counting the number of updates.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>other</code></td>
 <td align="left">JSON object containing a `data_size` field.</td>
 </tr>
-
 <tr class="odd">
 <td align="left"><code>sizes</code></td>
-<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> sizes. The sub-fields for the <code>sizes</code> field are described here.
+<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are described here.
 <ul>
 <li><code>file</code> On-disk size that must match the <code>disk_size</code> field.</li> 
 <li><code>external</code> Uncompressed user data volume or billable data size. </li> 
