@@ -126,22 +126,83 @@ such as how many documents it contains.
 
 The elements of the returned structure are shown in the following table:
 
-Field |	Description
-------|------------
-`compact_running` |	Set to true if the database compaction routine is operating on this database.
-|`db_name` |	The name of the database.|
-|`disk_format_version` |	The version of the physical format used for the data when it is stored on disk.|
-|`disk_size` |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.|
-|`doc_count` |	A count of the documents in the specified database.|
-|`doc_del_count` |	Number of deleted documents.|
-|`instance_start_time` |	Always 0.|
-|`purge_seq` |	The number of purge operations on the database.|
-|`update_seq` |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.|
-|`other` |	JSON object containing a `data_size` field.|
-|`sizes` | JSON object containing file, external, and active sizes.| 
-||-	`file` On-disk size that must match the `disk_size` field. 
--	`external` Uncompressed user data volume or billable data size. 
--	`active` Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
+<table>
+<colgroup>
+<col width="15%" />
+<col width="36%" />
+<col width="26%" />
+<col width="15%" />
+</colgroup>
+
+<thead>
+<tr class="header">
+<th align="left">Field</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr class="odd">
+<td align="left"><code>compact_running</code></td>
+<td align="left">Set to true if the database compaction routine is operating on this database.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>db_name</code></td>
+<td align="left">The name of the database.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>disk_format_version</code></td>
+<td align="left">The version of the physical format used for the data when it is stored on disk.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>disk_size</code></td>
+<td align="left">Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>doc_count</code></td>
+<td align="left">A count of the documents in the specified database.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>doc_del_count</code></td>
+<td align="left">Number of deleted documents.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>instance_start_time</code></td>
+<td align="left">Always 0.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>purge_seq</code></td>
+<td align="left">The number of purge operations on the database.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>update_seq</code></td>
+<td align="left">An opaque string describing the state of the database. It should not be relied on for counting the number of updates.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>other</code></td>
+<td align="left">JSON object containing a `data_size` field.</td>
+</tr>
+
+<tr class="odd">
+<td align="left"><code>sizes</code></td>
+<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> sizes. The sub-fields for the <code>sizes</code> field are described here.
+<ul>
+<li><code>file</code> On-disk size that must match the <code>disk_size</code> field.</li> 
+<li><code>external</code> Uncompressed user data volume or billable data size. </li> 
+<li><code>active</code> Total amount of data. The <code>active</code> field is similar to the <code>file</code> field when the view is freshly compacted.</li> 
+</tr>
+
+</tbody>
+</table>
 
 
 ### Get Databases
