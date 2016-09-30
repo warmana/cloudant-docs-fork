@@ -307,24 +307,30 @@ including insertions,
 updates,
 and deletions.
 
+<aside class="warning" role="complementary" aria-label="cloudantNotCouch">The distributed nature of Cloudant databases,
+and in particular the shard and fault-tolerant characterstics,
+means that the behavior of the <code>_changes</code> feed is different to the behavior you might expect
+in [Apache CouchDB](http://docs.couchdb.org/en/2.0.0/api/database/changes.html),
+especially prior to version 2.0.</aside>
+
 When a `_changes` request is received,
 one replica of each shard of the database is asked to provide a list of changes.
 These responses are combined and returned to the original requesting client.
 
-`_changes` accepts these query arguments:
+`_changes` accepts several optional query arguments:
 
-Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default 
+Argument | Description | Supported Values | Default 
 ---------|-------------|------------------|---------
-`descending` | Return the changes in sequential order | boolean | false | 
-`feed` | Type of feed | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
-`filter` | Name of filter function from a design document to get updates | string | no filter
-`heartbeat` | Time in milliseconds after which an empty line is sent during longpoll or continuous if there have been no changes | any positive number | no heartbeat | 
-`include_docs` | Include the document with the result | boolean | false |
+`descending` | Return the changes in sequential order. | boolean | false | 
+`feed` | Type of feed required. For details see the [`feed` information](database.html#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
+`filter` | Name of [filter function](design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](design_documents.html). | string | no filter
+`heartbeat` | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 
+`include_docs` | Include the document as part of the result. | boolean | false |
 `conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
-`limit` | Maximum number of rows to return | any non-negative number | none |  
-`since` | Start the results from changes _after_ the specified sequence identifier. In other words, using `since` excludes from the list all changes up to and including the specified sequence identifier. If `since` is 0 (the default), or omitted, the request returns all changes. If it is `now`, only changes made after the time of the request will be emitted. | sequence identifier or `now` | 0 | 
+`limit` | Maximum number of rows to return. | any non-negative number | none |  
+`since` | Start the results from changes _after_ the specified sequence identifier. For details see the [`since` information](database.html#the-since-argument). | sequence identifier or `now` | 0 | 
 `style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
-`timeout` | Number of milliseconds to wait for data before terminating the response. If heartbeat supersedes timeout if both are supplied. | any positive number | |
+`timeout` | Number of milliseconds to wait for data before terminating the response. If the `heartbeat` setting is also supplied, it takes precedence over the `timeout` setting. | any positive number | |
 `doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](https://docs.cloudant.com/advanced.html#get-/) for more information. | A JSON array of document IDs | |
 
 <!--
@@ -333,7 +339,7 @@ Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | S
 
 <aside class="warning" role="complementary" aria-label="includedocsperformance2">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
-All arguments are optional.
+#### The `feed` argument
 
 The `feed` argument changes how Cloudant sends the response.
 By default,
@@ -344,67 +350,7 @@ If you set `feed=longpoll`,
 requests to the server remain open until changes are reported.
 This can help monitor changes specifically instead of continuously.
 
-If you set `feed=continuous`,
-new changes are reported without closing the connection.
-In this mode,
-the format of the report entries reflects the continuous nature of the changes,
-while ensuring validity of the JSON output.
-
-The `filter` parameter designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
-Additionally, there is a built-in filter available:
-
-<!--
- * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
--->
-
- * `_design`: The `_design` filter accepts only changes to design documents.
-
-<div id="changes_responses"></div>
-
-> Example response:
-
-```
-{
-  "results": [{
-    "seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-    "id": "foo",
-    "changes": [{
-      "rev": "1-967a00dff5e02add41819138abb3284d"
-    }]
-  }],
-  "last_seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-  "pending": 0
-}
-```
-
-The response is a JSON object containing a list of the changes made to documents within the database.
-The following table describes the meaning of the individual fields:
-
-Field&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Type
-------|-------------|------
-`changes` | Array, listing the changes made to the specific document. | Array
-`deleted` | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
-`id` | Document identifier | String
-`last_seq` | Identifier of the last of the sequence identifiers. Currently this is the same as the sequence identifier of the last item in the `results`. | String
-`results` | Array of changes made to the database. | Array
-`seq` | Update sequence identifier | String
-
-When using `_changes`,
-you should be aware that:
-
--	If a `since` value is specified, only changes that have arrived in the specified replicas of the shards are returned in the response.
--	If the specified replicas of the shards in any given `since` value are unavailable, alternative replicas are selected, and the last known checkpoint between them is used. If this happens, you might see changes again that you have previously seen. Therefore, an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)', that is, able to receive the same data multiple times, safely.
--	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
--	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that seem to be 'before' the specified `since` value.
-
-`_changes` from each shard are always presented in order.
-But the ordering between all the contributing shards might appear to be different.
-For more information,
-see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
-
-<div></div>
-
-##### Continuous feed
+<div id="continuous-feed"></div>
 
 > Example response, continuous changes feed:
 
@@ -441,15 +387,112 @@ see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
 }
 ```
 
-If you request `feed=continuous`,
-the database connection stays open until explicitly closed.
-All changes are returned to the client as soon as possible after they occur.
+If you set `feed=continuous`,
+new changes are reported without closing the connection.
+This means that the database connection stays open until explicitly closed,
+and that all changes are returned to the client as soon as possible after they occur.
 
 Each line in the continuous response is either empty or a JSON object representing a single change.
+This ensures that the format of the report entries reflects the continuous nature of the changes,
+while maintaining validity of the JSON output.
 
-<div> </div>
+<div></div>
 
-#### POST
+#### The `filter` argument
+
+The `filter` argument designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
+Additionally, there is a built-in filter available:
+
+-	`_design`: The `_design` filter accepts only changes to design documents.
+
+<!--
+ * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
+-->
+
+<div></div>
+
+#### The `since` argument
+
+The `since` argument enables you to get a list of changes that occurred _after_ a specified sequence identifier.
+In other words,
+using `since` means that the change list includes all updates made after the sequence identifier.
+If the `since` identifier is 0 (the default),
+or omitted,
+the request returns all changes.
+If the `since` identifier is `now`,
+only changes made after the time of the request are returned in the response.
+
+However,
+the mechanisms used by Cloudant as a distributed database can affect the results you get in a response.
+
+For example,
+if you request a list of changes,
+using the same `since` sequence identifier,
+the order of changes in the resulting list might not be the same.
+
+You might also see some results that appear to be from _before_ the `since` parameter.
+This can occur when the shard originally asked for the list of changes is unable to respond;
+a different shard might be asked to respond.
+The other shard can only respond with changes it is currently aware of,
+and in the order that reflects when replication writes were received.
+The shard might therefore have a different chronology for changes,
+resulting in a response that differs from the original shard. 
+
+If the specified replicas of the shards for a given `since` value are unavailable,
+alternative replicas are selected,
+and the last known checkpoint between them is used.
+If this happens,
+there might be changes in the response that were returned previously.
+Therefore,
+an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)'.
+In other words,
+the application must be able safely to receive the same data multiple times.
+
+<div id="changes_responses"></div>
+
+#### Responses from the `_changes` request
+
+> Example response:
+
+```
+{
+  "results": [{
+    "seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
+    "id": "foo",
+    "changes": [{
+      "rev": "1-967a00dff5e02add41819138abb3284d"
+    }]
+  }],
+  "last_seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
+  "pending": 0
+}
+```
+
+The response from a `_changes` request is a JSON object containing a list of the changes made to documents within the database.
+The following table describes the meaning of the individual fields:
+
+Field | Description | Type
+------|-------------|------
+`changes` | An array listing the changes made to the specific document. | Array
+`deleted` | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
+`id` | Document identifier. | String
+`last_seq` | Identifier of the last of the sequence identifiers. Currently this is the same as the sequence identifier of the last item in the `results`. | String
+`results` | Array of changes made to the database. | Array
+`seq` | Update sequence identifier. | String
+
+#### Important notes about `_changes`
+
+When using `_changes`,
+you should be aware that:
+
+-	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
+-	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that are apparently prior to the specified `since` value.
+-	`_changes` reported by a given shard are always presented in order. But the ordering between all the contributing shards might appear to be different. For more information, see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
+-	Sequence values are unique within a shard, but might vary between shards. This means that if you have sequence values from different shards, you cannot assume that the same sequence value refers to the same document within the different shards.
+
+<div id="post"> </div>
+
+#### Using `POST` to get changes
 
 > Example of `POST`ing to the `_changes` endpoint
 
