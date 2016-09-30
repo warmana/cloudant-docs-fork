@@ -422,31 +422,37 @@ the request returns all changes.
 If the `since` identifier is `now`,
 only changes made after the time of the request are returned in the response.
 
-However,
-the mechanisms used by Cloudant as a distributed database can affect the results you get in a response.
-
+The distributed nature of Cloudant can affect the results you get in a response.
 For example,
-if you request a list of changes,
-using the same `since` sequence identifier,
+if you request a list of changes twice,
+using the same `since` sequence identifier both times,
 the order of changes in the resulting list might not be the same.
-
 You might also see some results that appear to be from _before_ the `since` parameter.
-This can occur when the shard originally asked for the list of changes is unable to respond;
-a different shard might be asked to respond.
-The other shard can only respond with changes it is currently aware of,
-and in the order that reflects when replication writes were received.
-The shard might therefore have a different chronology for changes,
-resulting in a response that differs from the original shard. 
 
-If the specified replicas of the shards for a given `since` value are unavailable,
+The reason is that you might be getting results from a different replica within the shard,
+or perhaps even from a different shard.
+While replicas normally have the same data (by definition),
+the order in which the replicas were updated,
+and also the order in which replicas respond to a `_changes` query,
+naturally vary because the database is distributed.
+Consequently,
+the collation of results into a `_changes` query response can vary between each invocation.
+In other words,
+while the response always lists the changes made after the `since` parameter,
+the order of the changes in the list might vary.
+
+In addition,
+if the replicas used by a shard to respond to a given `since` value are unavailable,
 alternative replicas are selected,
 and the last known checkpoint between them is used.
 If this happens,
-there might be changes in the response that were returned previously.
+there might be changes in the response that were returned previously,
+or that appear to be changes that happened 'before' the `since` parameter
+
 Therefore,
-an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)'.
-In other words,
-the application must be able safely to receive the same data multiple times.
+an application making use of the `_changes` feed should
+be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)'.
+This means that the application must be able safely to receive the same data multiple times.
 
 <div id="changes_responses"></div>
 
@@ -488,7 +494,7 @@ you should be aware that:
 -	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
 -	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that are apparently prior to the specified `since` value.
 -	`_changes` reported by a given shard are always presented in order. But the ordering between all the contributing shards might appear to be different. For more information, see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
--	Sequence values are unique within a shard, but might vary between shards. This means that if you have sequence values from different shards, you cannot assume that the same sequence value refers to the same document within the different shards.
+-	Sequence values are unique for a shard, but might vary between shards. This means that if you have sequence values from different shards, you cannot assume that the same sequence value refers to the same document within the different shards.
 
 <div id="post"> </div>
 
