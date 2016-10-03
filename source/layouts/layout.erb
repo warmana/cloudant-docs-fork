@@ -184,63 +184,67 @@ under the License.
             attr_reader :link
           end
           [
-            Page.new('Overview', 'index.html', [
-              Page.new('Contents', 'index.html#contents', []),
-              Page.new('Contribute', 'index.html#contribute', [])
-            ]),
+      Page.new('Overview', 'index.html', [
+        Page.new('Contents', 'index.html#contents', []),
+        Page.new('Contribute', 'index.html#contribute', [])
+      ]),
 			Page.new('Cloudant Offerings', 'offerings.html', [
 				Page.new('Database as a Service', 'offerings.html#database-as-a-service', []),
 				Page.new('Cloudant Local', 'offerings.html#cloudant-local', []),
 				Page.new('IBM Bluemix', 'bluemix.html', [])
-            ]),
+      ]),
 			Page.new('Cloudant Basics', 'basics.html', [
 				Page.new('HTTP API', 'basics.html#http-api', []),
 				Page.new('JSON', 'basics.html#json', []),
 				Page.new('Distributed Systems', 'basics.html#distributed', []),
 				Page.new('Replication', 'basics.html#replication', [])
-            ]),
-            Page.new('Client Libraries', 'libraries.html', [
-              Page.new('Supported', 'libraries.html#supported-client-libraries', []),
-              Page.new('Third party', 'libraries.html#third-party-client-libraries', [])
-            ]),
-            Page.new('API Reference', 'api.html', [
-              Page.new('HTTP', 'http.html', []),
-              Page.new('Account', 'account.html', []),
-              Page.new('Authentication', 'authentication.html', []),
-              Page.new('Authorization', 'authorization.html', []),
-              Page.new('CORS', 'cors.html', []),
-              Page.new('Databases', 'database.html', []),
-              Page.new('Documents', 'document.html', []),
-              Page.new('Attachments', 'attachments.html', []),
-              Page.new('Query', 'cloudant_query.html', []),
-              Page.new('Design Documents', 'design_documents.html', []),
-              Page.new('Views (MapReduce)', 'creating_views.html', []),
-              Page.new('Search', 'search.html', []),
-              Page.new('Cloudant Geospatial', 'geo.html', []),
-              Page.new('Replication', 'replication.html', []),
-              Page.new('Advanced Replication', 'advanced_replication.html', []),
-              Page.new('Active tasks', 'active_tasks.html', []),
-              Page.new('Virtual hosts', 'vhosts.html', []),
-              Page.new('Advanced', 'advanced.html', []),
-              Page.new('Monitoring', 'monitoring.html', []),
-              Page.new('Backup', 'backup.html', []),
-              Page.new('Try it', 'try.html', [])
-            ]),
-            Page.new('Guides', 'guides.html', [
-              Page.new('JSON', 'json.html', []),
-              Page.new('Replication', 'replication_guide.html', []),
-              Page.new('Managing tasks', 'managing_tasks.html', []),
-              Page.new('Document versioning and conflicts', 'mvcc.html', []),
-              Page.new('Grouping related documents together in Cloudant', 'transactions.html', []),
-              Page.new('CAP theorem', 'cap_theorem.html', []),
-              Page.new('AcID', 'acid.html', []),
-              Page.new('Backup', 'backup-guide.html', []),
-              Page.new('Backup using Replication', 'backup-guide-using-replication.html', []),
-              Page.new('CouchApps', 'couchapps.html', []),
-              Page.new('Design document management', 'design_document_management.html', []),
-              Page.new('Warehousing', 'warehousing.html', [])
-            ])
-          ].each { |page|
+      ]),
+      Page.new('Client Libraries', 'libraries.html', [
+        Page.new('Supported', 'libraries.html#supported-client-libraries', []),
+        Page.new('Third party', 'libraries.html#third-party-client-libraries', [])
+      ]),
+      Page.new('API Reference', 'api.html', [
+        Page.new('HTTP', 'http.html', []),
+        Page.new('Account', 'account.html', []),
+        Page.new('Authentication', 'authentication.html', []),
+        Page.new('Authorization', 'authorization.html', []),
+        Page.new('CORS', 'cors.html', []),
+        Page.new('Databases', 'database.html', []),
+        Page.new('Documents', 'document.html', []),
+        Page.new('Attachments', 'attachments.html', []),
+        Page.new('Query', 'cloudant_query.html', []),
+        Page.new('Design Documents', 'design_documents.html', []),
+        Page.new('Views (MapReduce)', 'creating_views.html', []),
+        Page.new('Search', 'search.html', []),
+        Page.new('Cloudant Geospatial', 'geo.html', []),
+        Page.new('Replication', 'replication.html', []),
+        Page.new('Advanced Replication', 'advanced_replication.html', []),
+        Page.new('Active tasks', 'active_tasks.html', []),
+        Page.new('Virtual hosts', 'vhosts.html', []),
+        Page.new('Advanced', 'advanced.html', []),
+        Page.new('Monitoring', 'monitoring.html', []),
+        Page.new('Backup', 'backup.html', []),
+        Page.new('Try it', 'try.html', [])
+      ]),
+      Page.new('Guides', 'guides.html', [
+        Page.new('JSON', 'json.html', []),
+        Page.new('Replication', 'replication_guide.html', []),
+        Page.new('Managing tasks', 'managing_tasks.html', []),
+        Page.new('Document versioning and conflicts', 'mvcc.html', []),
+        Page.new('Grouping related documents together in Cloudant', 'transactions.html', []),
+        Page.new('CAP theorem', 'cap_theorem.html', []),
+        Page.new('AcID', 'acid.html', []),
+        Page.new('Backup', 'backup-guide.html', []),
+        Page.new('Backup using Replication', 'backup-guide-using-replication.html', []),
+        Page.new('CouchApps', 'couchapps.html', []),
+        Page.new('Design document management', 'design_document_management.html', []),
+        Page.new('Warehousing', 'warehousing.html', [])
+      ]),
+      Page.new('Cloudant Features', 'cloudantcom.html', [
+        Page.new('DBaaS Security', 'dbaassecurity.html', []),
+        Page.new('Cloudant Security Compliance', 'cloudantcompliance.html', [])
+      ])
+    ].each { |page|
             %>
 <li class="tocify-item"><a href="<%=page.link%>"><%=page.name%></a>
 				    <%
