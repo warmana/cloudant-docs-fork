@@ -108,7 +108,7 @@ More information about SwiftCloudant, including details of installation and how 
 
 The library is an early release version. As such, it does not currently have complete Cloudant API coverage. 
 
-<aside class="warning" role="complementary" aria-label="betaonly0">SwiftCloudant is not supported on iOS, and you cannot call it from Objective-C.
+<aside class="warning" role="complementary" aria-label="betaonly0">SwiftCloudant is not supported on iOS, and you cannot call it from Objective-C.</aside>
 
 
 ### Apache Spark
