@@ -104,7 +104,7 @@ The Podfile entry is:
 
 `pod 'SwiftCloudant'`
 
-More information about SwiftCloudant, including details of installation and how to use the library to store, index, and query remote JSON data on Cloudant, is available [here](https://github.com/cloudant/objective-cloudant).
+More information about SwiftCloudant, including details of installation and how to use the library to store, index, and query remote JSON data on Cloudant, is available [here](https://github.com/cloudant/swift-cloudant).
 
 The library is an early release version. As such, it does not currently have complete Cloudant API coverage. SwiftCloudant is not supported on iOS, and you cannot call it from Objective-C.
 
