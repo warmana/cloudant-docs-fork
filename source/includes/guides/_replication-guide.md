@@ -50,7 +50,7 @@ The source and target database names do not need to match.
 
 Replication can be initiated at either the source or the destination end. This means that you can decide whether account A is pushing data to account B, or account B is pulling data from account A. In some cases, it might not be possible to run replication in either configuration, for example when one account is behind a firewall. Replication happens over HTTP (or HTTPS) and so no non-standard ports need be opened. The decision as to which device initiates replication is yours.
 
-### How to initiate replication via the Cloudant API?
+### How do I initiate replication via the Cloudant API?
 
 > Starting a replication job
 
@@ -84,6 +84,51 @@ Every Cloudant account has a special database called `_replicator`, into which r
  * `source` - The URL of the source Cloudant database, including login credentials.
  * `target` - The URL of the destination Cloudant database, including login credentials.
  * `create_target` - (Optional) Determine whether to create the destination database if it doesn't exist yet.
+ 
+### How does replication affect the list of changes?
+
+You can get a list of changes made to a document using the [`_changes`](database.html#get-changes) endpoint.
+However,
+the distributed nature of Cloudant databases
+means that the response provided by the `_changes` feed
+cannot be a simple list of changes that occurred after a particular date and time.
+
+The [CAP Theorem](cap_theorem.html) makes clear that Cloudant uses an 'eventually consistent' model.
+This means that if you were to ask two different copies of a database for a document,
+you might get different results if one of the copies has not yet received an update to the document.
+_Eventually_,
+the database copies will complete the replication,
+so that all the changes to a document are present in each copy.
+
+This 'eventual consistency' model has two characteristics that affect a list of changes:
+
+1.	A change affecting a document almost certainly takes place at different times in different copies of the database.
+2.	The order in which changes affect documents might differ between different copies of the database, depending on when the replication took place.
+
+A consequence of the first characteristic is that,
+when you ask for a list of changes,
+it is meaningless to ask for a list of changes after a given point in time.
+The reason is that the list of changes might be supplied by a different database copy,
+that updated documents at different times.
+
+A consequence of the second characteristic is that,
+in order to agree on the list of changes,
+it might be necessary to 'look back' at preceding changes.
+In other words,
+to get a list of changes _which is agreed by the database copies_,
+you start from the most recent change which the database copies agree on.
+The change is identified within Cloudant using the [checkpoint](replication-guide.html#checkpoints)
+that enables replication between database copies to be synchronized.
+
+#### What this means for the list of changes
+
+When you request a list of changes,
+the order of the changes might vary depending on which database copy supplied the list.
+
+If you ask for a list of changes _after a given update_,
+by using the `since` option,
+you always get the list of changes after that update _and_ you might also get some changes prior to that update,
+because the database copy responding to the list must ensure that it lists the cahgnes 
 
 ### Checkpoints
 
