@@ -307,35 +307,47 @@ including insertions,
 updates,
 and deletions.
 
-<aside class="warning" role="complementary" aria-label="cloudantNotCouch">The distributed nature of Cloudant databases,
-and in particular the shard and fault-tolerant characterstics,
-means that the behavior of the <code>_changes</code> feed is different to the behavior you might expect
-in [Apache CouchDB](http://docs.couchdb.org/en/2.0.0/api/database/changes.html),
-especially prior to version 2.0.</aside>
-
 When a `_changes` request is received,
-one replica of each shard of the database is asked to provide a list of changes.
+one replica for each shard of the database is asked to provide a list of changes.
 These responses are combined and returned to the original requesting client.
+
+However,
+the distributed nature of Cloudant databases,
+and in particular the shard and fault-tolerant characteristics,
+means that the response provided by the `_changes` request might be different
+to the behavior you expect.
+
+In particular,
+if you ask for a list of changes `_since` a given sequence identifier,
+you get the requested information in response,
+_but_ you might also get changes that were made before the change indicated by the sequence identifier.
+The reason for this,
+along with implications for applications,
+is explained in the
+[replication guide](replication-guide.html#how-does-replication-affect-the-list-of-changes?).
+
+<aside class="warning" role="complementary" aria-label="cloudantNotCouch">It is essential that any application using the <code>_changes</code> request should be able to process correctly a list of changes that might:
+<ul>
+<li>Have a different order for the changes listed in the response,
+when compared with an earlier request for the same information.</li>
+<li>Include changes that are considered to be prior to the change specified by the sequence identifier.</li>
+<ul></aside>
 
 `_changes` accepts several optional query arguments:
 
 Argument | Description | Supported Values | Default 
 ---------|-------------|------------------|---------
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
 `descending` | Return the changes in sequential order. | boolean | false | 
+`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](https://docs.cloudant.com/advanced.html#get-/) for more information. | A JSON array of document IDs | |
 `feed` | Type of feed required. For details see the [`feed` information](database.html#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
 `filter` | Name of [filter function](design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](design_documents.html). | string | no filter
 `heartbeat` | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 
 `include_docs` | Include the document as part of the result. | boolean | false |
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
 `limit` | Maximum number of rows to return. | any non-negative number | none |  
 `since` | Start the results from changes _after_ the specified sequence identifier. For details see the [`since` information](database.html#the-since-argument). | sequence identifier or `now` | 0 | 
 `style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
 `timeout` | Number of milliseconds to wait for data before terminating the response. If the `heartbeat` setting is also supplied, it takes precedence over the `timeout` setting. | any positive number | |
-`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](https://docs.cloudant.com/advanced.html#get-/) for more information. | A JSON array of document IDs | |
-
-<!--
-`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. | A JSON array of document IDs | |
--->
 
 <aside class="warning" role="complementary" aria-label="includedocsperformance2">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
@@ -444,15 +456,14 @@ the order of the changes in the list might vary.
 In addition,
 if the replicas used by a shard to respond to a given `since` value are unavailable,
 alternative replicas are selected,
-and the last known checkpoint between them is used.
+and the last known checkpoint between them is used to help synchronize the list of changes.
 If this happens,
-there might be changes in the response that were returned previously,
-or that appear to be changes that happened 'before' the `since` parameter
+there might be changes listed in the response that were returned previously,
+or that are changes made 'before' the `since` sequence identifier.
 
-Therefore,
-an application making use of the `_changes` feed should
-be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)'.
-This means that the application must be able safely to receive the same data multiple times.
+More information about the behavior of the `_changes` response is
+provided in the
+[replication guide](replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
 <div id="changes_responses"></div>
 
