@@ -19,52 +19,52 @@ contact [Cloudant Support](mailto:support@cloudant.com).</aside>
 
 <aside class="warning" role="complementary" aria-label="pricing2">All currency values in this document are in US dollars ($).</aside>
 
-<table border="1" summary="A table summarizing the available pricing and performance details for each of the available plans of service.">
+<table border="1" role="presentation">
 <tr valign="top">
 <td colspan="2" id="planCharacteristic"><b>Plans</b></td>
 <td id="litePlan"><b>Lite</b></td>
 <td colspan="4" id="standardPlan" align="center"><b>Standard</b></td>
 </tr>
 <tr>
-<td colspan="2" headers="planCharacteristic" id="basePrice">Base Price (per hour)</td>
-<td headers="litePlan basePrice">$0.00</td>
-<td colspan="4" headers="standardPlan basePrice">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
+<td colspan="2" id="basePrice">Base Price (per hour)</td>
+<td>$0.00</td>
+<td colspan="4">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
 </tr>
 <tr>
-<td rowspan="3" valign="center" headers="planCharacteristic" id="throughputLabel">Provisioned Throughput<br/>Capacity<br/>(per second)</td>
-<td headers="planCharacteristic throughputLabel" id="lookups">Lookups</td>
-<td headers="litePlan throughputLabel lookups">20</td>
-<td headers="standardPlan throughputLabel lookups">100</td>
-<td headers="standardPlan throughputLabel lookups">1,000</td>
-<td headers="standardPlan throughputLabel lookups">5,000</td>
-<td headers="standardPlan throughputLabel lookups">20,000</td>
+<td rowspan="3" valign="center" id="throughputLabel">Provisioned Throughput<br/>Capacity<br/>(per second)</td>
+<td id="lookups">Lookups</td>
+<td>20</td>
+<td>100</td>
+<td>1,000</td>
+<td>5,000</td>
+<td>20,000</td>
 </tr>
 <tr>
-<td headers="planCharacteristic throughputLabel" id="writes">Writes</td>
-<td headers="litePlan throughputLabel writes">10</td>
-<td headers="standardPlan throughputLabel writes">50</td>
-<td headers="standardPlan throughputLabel writes">500</td>
-<td headers="standardPlan throughputLabel writes">2,500</td>
-<td headers="standardPlan throughputLabel writes">10,000</td>
+<td id="writes">Writes</td>
+<td>10</td>
+<td>50</td>
+<td>500</td>
+<td>2,500</td>
+<td>10,000</td>
 </tr>
 <tr>
-<td headers="planCharacteristic throughputLabel" id="queries">Queries</td>
-<td headers="litePlan throughputLabel queries">5</td>
-<td headers="standardPlan throughputLabel queries">5</td>
-<td headers="standardPlan throughputLabel queries">50</td>
-<td headers="standardPlan throughputLabel queries">250</td>
-<td headers="standardPlan throughputLabel queries">1,000</td>
+<td id="queries">Queries</td>
+<td>5</td>
+<td>5</td>
+<td>50</td>
+<td>250</td>
+<td>1,000</td>
 </tr>
 <tr>
-<td rowspan="2" headers="planCharacteristic" id="diskSpace">Disk Space</td>
-<td headers="planCharacteristic" id="diskSpaceIncluded">Included</td>
-<td headers="litePlan diskSpaceIncluded">1 GB</td>
-<td colspan="4" headers="standardPlan diskSpace" align="center">20 GB</td>
+<td rowspan="2" id="diskSpace">Disk Space</td>
+<td id="diskSpaceIncluded">Included</td>
+<td>1 GB</td>
+<td colspan="4" align="center">20 GB</td>
 </tr>
 <tr>
-<td headers="planCharacteristic" id="diskOverage">Disk Overage<br/>(per GB/hour)</td>
-<td headers="litePlan diskOverage">Not available</td>
-<td colspan="4" headers="standardPlan diskOverage" align="center">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
+<td id="diskOverage">Disk Overage<br/>(per GB/hour)</td>
+<td>Not available</td>
+<td colspan="4" align="center">See <a href="http://cloudant.com/bluemix" target="_blank">Pricing details</a>.</td>
 </tr>
 </table>
 

@@ -112,7 +112,6 @@ for filename in [
 'monitoring',
 'mvcc',
 'offerings',
-'querying',
 'replication_guide',
 'replication',
 'search',
