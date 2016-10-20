@@ -426,8 +426,6 @@ Additionally, there is a built-in filter available:
 #### The `since` argument
 
 The `since` argument enables you to get a list of changes that occurred _after_ a specified sequence identifier.
-In other words,
-using `since` means that the change list includes all updates made after the sequence identifier.
 If the `since` identifier is 0 (the default),
 or omitted,
 the request returns all changes.
@@ -439,27 +437,19 @@ For example,
 if you request a list of changes twice,
 using the same `since` sequence identifier both times,
 the order of changes in the resulting list might not be the same.
+
 You might also see some results that appear to be from _before_ the `since` parameter.
+The reason is that you might be getting results from a different replica of a shard (shard replica).
 
-The reason is that you might be getting results from a different replica within the shard,
-or perhaps even from a different shard.
-While replicas normally have the same data (by definition),
-the order in which the replicas were updated,
-and also the order in which replicas respond to a `_changes` query,
-naturally vary because the database is distributed.
-Consequently,
-the collation of results into a `_changes` query response can vary between each invocation.
-In other words,
-while the response always lists the changes made after the `since` parameter,
-the order of the changes in the list might vary.
-
-In addition,
-if the replicas used by a shard to respond to a given `since` value are unavailable,
-alternative replicas are selected,
-and the last known checkpoint between them is used to help synchronize the list of changes.
-If this happens,
-there might be changes listed in the response that were returned previously,
-or that are changes made 'before' the `since` sequence identifier.
+Shard replicas automatically and continuously replicate to each other and therefore eventually have the same data.
+Therefore, at any point in time, a replica might differ from another replica.
+When you request a list of changes,
+normally the same replicas are used to respond.
+But if the node holding the shard replica is unavailable,
+the system substitutes a corresponding shard replica held on another node.
+In this event,
+the most recent checkpoint between the replicas is used,
+which might cause changes from before your `since` sequence identifier to be returned.
 
 More information about the behavior of the `_changes` response is
 provided in the
