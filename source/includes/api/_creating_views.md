@@ -1,5 +1,6 @@
 <div id="creating-views"></div>
 <div id="working-with-views"></div>
+
 ## Views (MapReduce)
 
 Views are used to obtain data stored within a database.
@@ -13,9 +14,9 @@ It can speed up searching for content.
 It can be used to 'pre-process' the results before they are returned to the client.
 
 Views are simply Javascript functions,
-defined within the view field of a design document.
+defined within the `view` field of a design document.
 When you use a view,
-or more accurately when make a query using your view,
+or more accurately when you perform a query using your view,
 the system applies the Javascript function to each and every document in the database.
 Views can be complex.
 You might choose to define a collection of Javascript functions to create the overall view required.
@@ -36,20 +37,20 @@ function(employee) {
 
 ```json
 {
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/05/21 10:00:00"
+	"_id":"23598567",
+	"number":"23598567",
+	"training":"2014/05/21 10:00:00"
 }
 
 {
-  "_id":"10278947",
-  "number":"10278947"
+	"_id":"10278947",
+	"number":"10278947"
 }
 
 {
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/07/30 12:00:00"
+	"_id":"23598567",
+	"number":"23598567",
+	"training":"2014/07/30 12:00:00"
 }
 ```
 
@@ -57,22 +58,20 @@ function(employee) {
 
 ```json
 {
-  "total_rows": 2,
-  "offset": 0,
-  "rows": [
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/05/21 10:00:00"
-    },
-
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/07/30 12:00:00"
-    }
-
-  ]
+	"total_rows": 2,
+	"offset": 0,
+	"rows": [
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/05/21 10:00:00"
+		},
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/07/30 12:00:00"
+		}
+	]
 }
 ```
 
