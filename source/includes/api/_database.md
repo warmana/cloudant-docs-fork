@@ -223,10 +223,10 @@ The `_all_docs` endpoint accepts these query arguments:
 
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
 `key` | Return only documents with IDs that match the specified key | yes | string |  
 `keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
@@ -412,15 +412,13 @@ while maintaining validity of the JSON output.
 
 #### The `filter` argument
 
-The `filter` argument designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
-Additionally, there is a built-in filter available:
+The `filter` parameter designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
+Additionally, there are several built-in filters available:
 
--	`_design`: The `_design` filter accepts only changes to design documents.
-
-<!--
- * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
--->
-
+* `_design`: The `_design` filter accepts only changes to design documents.
+* `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
+*	`_selector`: accepts only changes for documents which match a specified selector, defined using the same [selector syntax](cloudant_query.html#selector-syntax) used for [`_find`](cloudant_query.html#finding-documents-using-an-index).
+*	`_view`: allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
 <div></div>
 
 #### The `since` argument
@@ -569,4 +567,6 @@ To delete a databases and its contents, make a DELETE request to `https://$USERN
 }
 ```
 
-The response confirms successful deletion of the database or describes any errors that occurred, i.e. if you try to delete a database that does not exist.
+The response confirms successful deletion of the database
+or describes any errors that occurred,
+for example if you try to delete a database that does not exist.
