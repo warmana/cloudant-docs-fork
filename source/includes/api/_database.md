@@ -439,17 +439,25 @@ using the same `since` sequence identifier both times,
 the order of changes in the resulting list might not be the same.
 
 You might also see some results that appear to be from _before_ the `since` parameter.
-The reason is that you might be getting results from a different replica of a shard (shard replica).
+The reason is that you might be getting results from a different replica of a shard (a shard replica).
 
-Shard replicas automatically and continuously replicate to each other and therefore eventually have the same data.
-Therefore, at any point in time, a replica might differ from another replica.
+Shard replicas automatically and continuously replicate to each other
+and therefore eventually have the same data.
+However,
+at any given point in time,
+a shard replica might differ from another shard replica
+because the replication between them has not completed yet.
+
 When you request a list of changes,
 normally the same replicas are used to respond.
 But if the node holding the shard replica is unavailable,
 the system substitutes a corresponding shard replica held on another node.
-In this event,
-the most recent checkpoint between the replicas is used,
-which might cause changes from before your `since` sequence identifier to be returned.
+To guarantee that you see all the applicable changes,
+the most recent checkpoint between the replicas is used -
+effectively 'rolling back' to the most recent point in time when the shard replicas were confirmed to be in agreement with each other.
+This 'rolling back' means you might see changes listed that took place 'before' your `since` sequence identifier.
+
+It is very important that your application is able to deal with a given change being reported more than once if you issue a `_changes` request several times.
 
 More information about the behavior of the `_changes` response is
 provided in the
