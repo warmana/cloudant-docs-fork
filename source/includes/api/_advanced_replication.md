@@ -2,7 +2,9 @@
 
 This section contains details about more advanced replication concepts and tasks.
 
-You might also find it helpful to review details of the underlying [replication protocol](http://dataprotocols.org/couchdb-replication/), as well as reviewing the [Advanced Methods](advanced.html) material.
+You might also find it helpful to review details of the
+underlying [replication protocol](http://dataprotocols.org/couchdb-replication/),
+as well as reviewing the [Advanced Methods](advanced.html) material.
 
 ### Replication Status
 
@@ -31,15 +33,21 @@ You might also find it helpful to review details of the underlying [replication 
 }
 ```
 
-When replication is managed by storing a document in the `/_replicator` database, the contents of the document are updated as the replication status changes.
+When replication is managed by storing a document in the `/_replicator` database,
+the contents of the document are updated as the replication status changes.
 
-In particular, once replication starts, three new fields are added automatically to the replication document. The fields all have the prefix: `_replication_`
+In particular,
+once replication starts,
+three new fields are added automatically to the replication document.
+The fields all have the prefix: `_replication_`
 
 Field | Detail
 ------|-------
 `_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `/_active_tasks/`.
 `_replication_state` | The current state of the replication. The possible states are:<dl><dt>`triggered`</dt><dd>The replication has started and is in progress.</dd><dt>`completed`</dt><dd>The replication completed successfully.</dd><dt>`error`</dt><dd>An error occurred during replication.</dd></dl>
 `_replication_state_time` | An <a href="https://www.ietf.org/rfc/rfc3339.txt" target="_blank">RFC 3339</a> compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
+
+<div></div>
 
 > Example replication document once replication has completed:
 
@@ -55,7 +63,9 @@ Field | Detail
 }
 ```
 
-When the replication finishes, it updates the `_replication_state` field with the value `completed`, and the `_replication_state_time` field with the time that the completion status was recorded.
+When the replication finishes,
+it updates the `_replication_state` field with the value `completed`,
+and the `_replication_state_time` field with the time that the completion status was recorded.
 
 A continuous replication can never have a `completed` state.
 
@@ -70,11 +80,17 @@ A continuous replication can never have a `completed` state.
 }
 ```
 
-In any production application, security of the source and target databases is essential.
-In order for replication to proceed, authentication is necessary to access the databases.
-In addition, checkpoints for replication are [enabled by default](replication.html#checkpoints), which means that replicating the source database requires write access.
+In any production application,
+security of the source and target databases is essential.
+In order for replication to proceed,
+authentication is necessary to access the databases.
+In addition,
+checkpoints for replication are [enabled by default](replication.html#checkpoints),
+which means that replicating the source database requires write access.
 
-To enable authentication during replication, include a username and password in the database URL. The replication process uses the supplied values for HTTP Basic Authentication.
+To enable authentication during replication,
+include a username and password in the database URL.
+The replication process uses the supplied values for HTTP Basic Authentication.
 
 ### Filtered Replication
 
@@ -98,7 +114,8 @@ A filter function takes two arguments:
 - The document to be replicated.
 - The replication request.
 
-A filter function returns a true or false value. If the result is true, the document is replicated.
+A filter function returns a true or false value.
+If the result is true, the document is replicated.
 
 <div></div>
 
@@ -148,7 +165,8 @@ Filters are invoked by using a JSON statement that identifies:
 }
 ```
 
-Arguments can be supplied to the filter function by including key:value pairs in the `query_params` field of the invocation.
+Arguments can be supplied to the filter function by including 'key:value'
+pairs in the `query_params` field of the invocation.
 
 ### Named Document Replication
 
@@ -162,7 +180,11 @@ Arguments can be supplied to the filter function by including key:value pairs in
 }
 ```
 
-Sometimes you only want to replicate some documents. For this simple case, you do not need to write a filter function. To replicate specific documents, add the list of keys as an array in the `doc_ids` field.
+Sometimes you only want to replicate some documents.
+For this simple case,
+you do not need to write a filter function.
+To replicate specific documents,
+add the list of keys as an array in the `doc_ids` field.
 
 ### Replicating through a proxy
 
@@ -176,9 +198,10 @@ Sometimes you only want to replicate some documents. For this simple case, you d
 }
 ```
 
-If you want replication to pass through an HTTP proxy, provide the proxy details in the `proxy` field of the replication data.
+If you want replication to pass through an HTTP proxy,
+provide the proxy details in the `proxy` field of the replication data.
 
-### The *user\_ctx* property and delegations
+### The `user_ctx` property and delegations
 
 > Example delegated replication document:
 
@@ -201,23 +224,48 @@ For the old way of triggering replications (`POST`ing to `/_replicate/`),
 this property was not needed (it didn't exist in fact).
 This is because at the moment of triggering the replication,
 it has information about the authenticated user.
+
 With the replicator database,
 since it's a regular database,
-the information about the authenticated user is only present at the moment the replication document is written to the database - the replicator database implementation is like a `_changes` feed consumer (with `?include_docs=true`) that reacts to what was written to the replicator database - in fact this feature could be implemented with an external script/program.
+the information about the authenticated user is only present
+at the moment the replication document is written to the database.
+The replicator database implementation is like a `_changes` feed consumer with `?include_docs=true`;
+it reacts to what was written to the replicator database.
+Indeed,
+this feature could be approximated with an external script program.
+
 This implementation detail implies that for non admin users,
-a *user\_ctx* property,
-containing the user's name and a subset of his/her roles,
-must be defined in the replication document.
-This is ensured by the document update validation function present in the default design document of the replicator database.
-This validation function also ensures that a non admin user can set a user name property in the `user_ctx` property that doesn't match his/her own name (same principle applies for the roles).
+a `user_ctx` property,
+containing the user's name and a subset of their roles,
+_must_ be defined in the replication document.
+This is enforced by the document update validation function
+present in the default design document of the replicator database.
+The validation function also ensures that a non admin user
+can set a user name property in the `user_ctx` property
+that does not match their own name.
+The same principle also applies for user roles.
 
-For admins, the `user_ctx` property is optional, and if it's missing it defaults to a user context with name *null* and an empty list of roles - this means design documents will not be written to local targets. If writing design documents to local targets is desired, then a user context with the roles *\_admin* must be set explicitly.
+For admins, the `user_ctx` property is optional.
+If the property is missing,
+the value defaults to a user context with name `null`,
+and an empty list of roles.
+This means design documents will not be written to local targets.
+If writing design documents to local targets is desired,
+then a user context with the role `_admin` must be set explicitly.
 
-Also, for admins the `user_ctx` property can be used to trigger a replication on behalf of another user. This is the user context that will be passed to local target database document validation functions.
+Also,
+admins can use the `user_ctx` property to trigger a replication on behalf of another user.
+The `user_ctx` value is the user context that is passed
+to local target database document validation functions.
 
 <aside class="warning" role="complementary" aria-label="ctxonlylocal">The `user_ctx` property only has an effect for local endpoints.</aside>
 
-As stated before, for admins the `user_ctx` property is optional, while for regular (non admin) users it's mandatory. When the roles property of `user_ctx` is missing, it defaults to the empty list *[ ]*.
+For admins,
+the `user_ctx` property is optional.
+For regular non-admin users,
+the property is mandatory.
+When the roles property of `user_ctx` is missing,
+it defaults to the empty list `[ ]`.
 
 ### Performance related options
 
@@ -236,11 +284,11 @@ As stated before, for admins the `user_ctx` property is optional, while for regu
 These options can be set for a replication by including them in the replication document.
 
 -   `worker_processes` - The number of processes the replicator uses (per replication) to transfer documents from the source to the target database. Higher values can imply better throughput (due to more parallelism of network and disk IO) at the expense of more memory and eventually CPU. Default value is 4.
--   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of ''\_changes'' feed rows). Larger values for the batch size might result in better performance. Smaller values mean that checkpointing is done more frequently. Default value is 500.
--   `http_connections` - The maximum number of HTTP connections per replication. For push replications, the effective number of HTTP connections used is min(worker\_processes + 1, http\_connections). For pull replications, the effective number of connections used corresponds to this parameter's value. Default value is 20.
+-   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of `_changes` feed rows). Larger values for the batch size might result in better performance. Smaller values mean that checkpointing is done more frequently. Default value is 500.
+-   `http_connections` - The maximum number of HTTP connections per replication. For push replications, the effective number of HTTP connections used is `min(worker_processes + 1, http_connections)`. For pull replications, the effective number of connections used corresponds to this parameter's value. Default value is 20.
 -   `connection_timeout` - The maximum period of inactivity for a connection in milliseconds. If a connection is idle for this period of time, its current request will be retried. Default value is 30000 milliseconds (30 seconds).
 -   `retries_per_request` - The maximum number of retries per request. Before a retry, the replicator will wait for a short period of time before repeating the request. This period of time doubles between each consecutive retry attempt. This period of time never goes beyond 5 minutes and its minimum value (before the first retry is attempted) is 0.25 seconds. The default value of this parameter is 10 attempts.
--   `socket_options` - A list of options to pass to the connection sockets. The available options can be found in the [documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). Default value is `[{keepalive, true}, {nodelay, false}]`.
+-   `socket_options` - A list of options to pass to the connection sockets. The available options can be found in the [documentation for the Erlang function `setopts` of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). Default value is `[{keepalive, true}, {nodelay, false}]`.
 
 ### Attachments
 
@@ -248,3 +296,31 @@ Having large numbers of attachments on documents might cause an adverse effect o
 
 For more information about the effect of attachments on replication performance,
 see [here](attachments.html#performance-considerations).
+
+### The replication scheduler
+
+Replication tasks within a distributed system are clearly extremely important,
+to ensure that required information is communicated between the components
+as quickly and correctly as possible.
+Management of the replication activities requires a scheduler.
+The scheduler helps organize what replication tasks take place, and when.
+
+Some information about the replication status is available
+using the [`_active_tasks` endpoint](managing_tasks.html).
+
+More detailed information about replication tasks is available
+by issuing requests directly to one of two scheduler endpoints:
+
+-	[`_scheduler/docs`](advanced_replication.html#the-_scheduler/docs-endpoint)
+-	[`_scheduler/jobs`](advanced_replication.html#the-_scheduler/jobs-endpoint)
+
+#### The `_scheduler/docs` endpoint
+
+#### The `_scheduler/jobs` endpoint
+
+The `_scheduler/jobs` endpoint returns the current scheduling state of
+replication tasks that are in an active state,
+in other words tasks that are not in a terminal condition of `completed` or `failed`.
+More information about replication task state is available in the [replication guide](replication-guide.html#replication-status).
+
+Jobs that are techincally runnable but are erroring/crashing in some way will get an exponential backoff.  The scheduling history of any given job is recorded in a history array, which has a default length of 20 entries.  Much like the "docs" endpoint, there are the "limit" and "skip" options, with the default limit being 25, and the default skip being 0.
