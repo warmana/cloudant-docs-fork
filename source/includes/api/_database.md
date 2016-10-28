@@ -430,13 +430,18 @@ If the `since` identifier is 0 (the default),
 or omitted,
 the request returns all changes.
 If the `since` identifier is `now`,
-only changes made after the time of the request are returned in the response.
+the requests asks for changes made after the current time (the 'now' time).
 
 The distributed nature of Cloudant can affect the results you get in a response.
 For example,
 if you request a list of changes twice,
 using the same `since` sequence identifier both times,
 the order of changes in the resulting list might not be the same.
+
+<aside class="information" role="complementary" aria-label="twonowsinsuccession">If you use the
+<code>now</code> identifier several times in succession,
+it is more likely that the resulting list of changes is different in each response,
+because the 'now' time is likely to be different at the moment of each request.</aside>
 
 You might also see some results that appear to be from _before_ the `since` parameter.
 The reason is that you might be getting results from a different replica of a shard (a shard replica).
