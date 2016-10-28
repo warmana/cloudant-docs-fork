@@ -279,6 +279,14 @@ Authorization:
 To stop an ongoing replication job,
 delete the replication document from the `_replicator` database, by using either the Dashboard or the API.
 
+### Replication status
+
+Replication is performed using a number of replication tasks.
+Each of these tasks has a 'state',
+such as whether it can run,
+whether it is running,
+or whether a problem has occured.
+
 ### Other replication use-cases
 
 Replication isn’t just for Cloudant-to-Cloudant data transfer. Cloudant’s replication protocol is compatible with other databases and libraries for a variety of real-world applications.
