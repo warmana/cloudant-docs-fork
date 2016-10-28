@@ -430,7 +430,7 @@ If the `since` identifier is 0 (the default),
 or omitted,
 the request returns all changes.
 If the `since` identifier is `now`,
-the requests asks for changes made after the current time (the 'now' time).
+the request asks for changes made after the current time (the 'now' time).
 
 The distributed nature of Cloudant can affect the results you get in a response.
 For example,
