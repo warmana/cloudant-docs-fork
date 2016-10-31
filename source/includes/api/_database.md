@@ -569,4 +569,4 @@ To delete a databases and its contents, make a DELETE request to `https://$USERN
 }
 ```
 
-The response confirms successful deletion of the database or describes any errors that occured, i.e. if you try to delete a database that does not exist.
+The response confirms successful deletion of the database or describes any errors that occurred, i.e. if you try to delete a database that does not exist.
