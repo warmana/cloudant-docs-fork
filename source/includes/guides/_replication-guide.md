@@ -95,8 +95,10 @@ cannot simply be a list of changes that occurred after a particular date and tim
 
 The [CAP Theorem](cap_theorem.html) discussion makes it clear that
 Cloudant uses an 'eventually consistent' model.
-This means that if you were to ask two different copies of a database for a document,
-you might get different results if one of the copies has not yet replicated and received an update to the document.
+This means that if you were to ask two different replicas of a database for a document,
+at the same time,
+you might get different results if one of the database copies has not yet replicated
+and therefore received an update to the document.
 _Eventually_,
 the database copies complete their replication,
 so that all the changes to a document are present in each copy.
@@ -104,22 +106,22 @@ so that all the changes to a document are present in each copy.
 This 'eventual consistency' model has two characteristics that affect a list of changes:
 
 1.	A change affecting a document almost certainly takes place at different times in different copies of the database.
-2.	The order in which changes affect documents might differ between different copies of the database, depending on when the replication took place.
+2.	The order in which changes affect documents might differ between different copies of the database, depending on when and from where the replication took place.
 
 A consequence of the first characteristic is that,
 when you ask for a list of changes,
 it is meaningless to ask for a list of changes after a given point in time.
 The reason is that the list of changes might be supplied by a different database copy,
-updated documents at different times.
+which resulted in document updates at different times.
 However,
-it is meaningful to ask for a list of changes after a specific change,
+it _is_ meaningful to ask for a list of changes after a specific change,
 specified using a sequence identifier.
 
 An additional consequence of the first characteristic is that,
 in order to agree on the list of changes,
 it might be necessary to 'look back' at preceding changes.
 In other words,
-to get a list of changes _which is agreed by the database copies_,
+to get a list of changes,
 you start from the most recent change which the database copies agree on.
 The point of agreement between database copies is identified within
 Cloudant using the [checkpoint](replication-guide.html#checkpoints) mechanism
@@ -128,7 +130,7 @@ that enables replication between database copies to be synchronized.
 Finally,
 a consequence of the second characteristic is that the individual changes appearing in the
 list of changes might be presented in a different order
-in subsequent requests.
+in subsequent requests that are answered by a different database copy.
 In other words,
 an initial list of changes might report changes `A`,
 `B`,
@@ -144,15 +146,17 @@ might vary between two different copies of the database.
 #### What this means for the list of changes
 
 When you request a list of changes,
-the the response you get might vary depending on which database copy supplied the list.
+the response you get might vary depending on which database copy supplies the list.
 
-If you use the `since` option to obtain list of changes after a given sequence identifier,
+If you use the `since` option to obtain a list of changes after a given update sequence identifier,
 you always get the list of changes after that update _and_ you might also get some changes prior to that update.
-The reason is that the database copy responding to the list must ensure that it
+The reason is that the database copy responding to the list request must ensure that it
 lists the changes,
 consistent with all the replicas.
 In order to do this,
-the database copy might have to start the list of changes from the point when all the copies were in agreement.
+the database copy might have to start the list of changes from the point
+when all the copies were in agreement.
+This point is identified using checkpoints.
 
 Therefore,
 an application making use of the `_changes` feed should
