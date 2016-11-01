@@ -473,6 +473,7 @@ Only the equality operators such as `$eq`, `$gt`, `$gte`, `$lt`, and `$lte` (but
 For more information about creating complex selector expressions, see [Creating selector expressions](#creating-selector-expressions).
 
 <div></div>
+
 #### Selector with two fields
 
 This selector matches any document with a `name` field containing "Paul",
