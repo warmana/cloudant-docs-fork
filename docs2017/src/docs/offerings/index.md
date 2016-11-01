@@ -5,8 +5,8 @@
 Cloudant is a hosted and fully-managed database-as-a-service (DBaaS).
 It is built from the ground up to scale globally,
 run non-stop,
-and handle a wide variety of data types like [JSON](basics.html#json),
-[full-text](cloudant_query.html#creating-an-index),
+and handle a wide variety of data types like [JSON](../basics/index.html#json),
+[full-text](../api/cloudant_query.html#creating-an-index),
 and [geospatial](geo.html).
 Cloudant is an operational data store optimized to handle concurrent reads and writes,
 and enables high availability and data durability.
