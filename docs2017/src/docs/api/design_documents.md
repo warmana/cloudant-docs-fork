@@ -27,7 +27,7 @@ while design documents have an `_id` indicated by `$DESIGN_ID`.
 Cloudant deletes the indexes from the previous version,
 and recreates the index from scratch.
 If you need to make changes to a design document for a larger database,
-have a look at the [Design Document Management Guide](design_document_management.html#managing-changes-to-a-design-document).</aside>
+have a look at the [Design Document Management Guide](../guides/design_document_management.html#managing-changes-to-a-design-document).</aside>
 
 The structure of design document is as follows:
 

@@ -22,6 +22,8 @@ The Cloudant DBaaS offering is available through [https://cloudant.com/](https:/
 It is offered as either a [Shared Plan](index.html#shared-plan),
 or an [Enterprise (Dedicated) Plan](index.html#enterprise-plan).
 
+Cloudant is also available as an [IBM Bluemix service](bluemix.html).
+
 ### Shared Plan
 
 With the Cloudant Shared Plan,

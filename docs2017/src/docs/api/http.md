@@ -75,12 +75,10 @@ The use of the `Content-type` on a request is highly recommended.
 
 > A request with a gzipped request body
 
-```shell
-# create gzipped document
-echo '{"foo":"bar"}' | gzip >doc.gzip
-# create the document in the database
-curl https://example.cloudant.com/db/doc -X PUT -T doc.gzip -H 'Content-Encoding: gzip'
-```
+	# create gzipped document
+	echo '{"foo":"bar"}' | gzip >doc.gzip
+	# create the document in the database
+	curl https://example.cloudant.com/db/doc -X PUT -T doc.gzip -H 'Content-Encoding: gzip'
 
 ```http
 PUT /db/doc HTTP/1.1

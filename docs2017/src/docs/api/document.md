@@ -8,7 +8,7 @@ a unique `_id` field, and a `_rev` field.
 The `_id` field is either created by you,
 or generated automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier) by Cloudant.
 The `_rev` field is a revision number,
-and is [essential to Cloudant's replication protocol](mvcc.html).
+and is [essential to Cloudant's replication protocol](../guides/mvcc.html).
 In addition to these two mandatory fields,
 documents can generally contain any other content that can be described using JSON.
 
@@ -260,7 +260,7 @@ To update (or create) a document, make a PUT request with the updated JSON conte
 This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 <aside class="warning" role="complementary" aria-label="updateconflicts">
-Any document update can lead to a conflict - espescially if you replicate updated documents. To learn more about avoiding and resolving conflicts, check out our [Document Versioning and MVCC guide](mvcc.html).
+Any document update can lead to a conflict - espescially if you replicate updated documents. To learn more about avoiding and resolving conflicts, check out our [Document Versioning and MVCC guide](../guides/mvcc.html).
 </aside>
 
 <div></div>

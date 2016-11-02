@@ -133,7 +133,7 @@ including:
 ... and many others.
 For more information,
 see the <a href="http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/">Cloudant homepage</a>
-and the list of <a href="docs/libraries/index.html">Client Libraries</a>.
+and the list of <a href="http://docs.cloudant.com/libraries.html">Client Libraries</a>.
 </li>
 <li>When your application is ready,
 you can deploy it to the Bluemix environment for verification.
@@ -148,7 +148,7 @@ use the command:<br/>
 <pre><code>cf delete-service</code></pre></li>
 </ol>
 
-More information about authenticating to the database and making requests is available in the [API reference](docs/api/index.html).
+More information about authenticating to the database and making requests is available in the [API reference](https://docs.cloudant.com/api.html).
 
 # Related Links
 {: #rellinks}
@@ -159,11 +159,11 @@ More information about authenticating to the database and making requests is ava
 ## Tutorials and Samples
 {: #samples}
 
-* [Cloudant client libraries](docs/libraries/index.html)
+* [Cloudant client libraries](https://docs.cloudant.com/libraries.html)
 * [Using Cloudant with Liberty on Bluemix](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/)
-* [Cloudant Guides](docs/guides/index.html)
+* [Cloudant Guides](https://docs.cloudant.com/guides.html)
 
 ## API Reference
 {: #api}
 
-* [Cloudant API reference](docs/api/index.html)
+* [Cloudant API reference](https://docs.cloudant.com/api.html)

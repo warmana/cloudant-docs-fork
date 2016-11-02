@@ -7,6 +7,7 @@ MAINSRCDIR    = ../src
 TOOLDIR       = ../tools
 BUILDTOOLDIR  = $(TOOLDIR)/marked-it-cli
 BUILDTOOL     = $(BUILDTOOLDIR)/bin/marked-it-cli
+WEBCONTENTDIR = /var/www/html/Cloudant/
 
 .PHONY: help
 help:
@@ -18,7 +19,7 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)
-	@rm linkcheck.txt
+	@rm -f linkcheck.txt
 
 .PHONY: html
 html:
@@ -34,11 +35,11 @@ debughtml:
 
 .PHONY: publish
 publish:
-	rm -rf /var/www/html/Cloudant/*
-	cp -R $(BUILDDIR)/* /var/www/html/Cloudant
+	rm -rf $(WEBCONTENTDIR)/*
+	cp -R $(BUILDDIR)/* $(WEBCONTENTDIR)
 
 .PHONY: linkcheck
 linkcheck:
-	rm -f linkcheck.txt
-	wget --spider -r -nd -nv -H -l 4 -D localhost -o linkcheck.txt http://localhost/Cloudant/docs/ 2>/dev/null; true
+	@rm -f linkcheck.txt
+	wget --spider -r -nd -nv -H -l 10 -D localhost -o linkcheck.txt http://localhost/Cloudant/docs/ 2>/dev/null; true
 

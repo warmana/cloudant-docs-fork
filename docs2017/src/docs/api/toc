@@ -1,11 +1,17 @@
 index.md
 http.md
+authorization.md
+database.md
 document.md
+attachments.md
 cloudant_query.md
 design_documents.md
+creating_views.md
+using_views.md
 search.md
 cloudant-geo.md
 replication.md
 advanced_replication.md
 active_tasks.md
+advanced.md
 try.md
