@@ -1,2 +1,11 @@
 index.md
+http.md
+document.md
 cloudant_query.md
+design_documents.md
+search.md
+cloudant-geo.md
+replication.md
+advanced_replication.md
+active_tasks.md
+try.md

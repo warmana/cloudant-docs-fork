@@ -558,7 +558,7 @@ Any JSON object that is not the argument to a condition operator is an implicit 
 
 In this example, there must be a field `director` in a matching document, *and* the field must have a value exactly equal to "Lars von Trier".
 
-> [Example of the implicit equality operator](/try.html#requestType=cq&predefinedQuery=simple)
+> [Example of the implicit equality operator](try.html#requestType=cq&predefinedQuery=simple)
 
 ```json
 {
@@ -585,7 +585,7 @@ You can also make the equality operator explicit.
 In the example using subfields,
 the required field `imdb` in a matching document *must* also have a subfield `rating` *and* the subfield *must* have a value equal to 8.
 
-> [Example of implicit operator applied to a subfield test](/try.html#requestType=cq&predefinedQuery=imdb-rating-8)
+> [Example of implicit operator applied to a subfield test](try.html#requestType=cq&predefinedQuery=imdb-rating-8)
 
 ```json
 {
@@ -1571,7 +1571,7 @@ The `$regex` operator matches when the field is a string value _and_ matches the
 ## Creating selector expressions
 
 We have seen examples of combining selector expressions,
-such as [using explicit `$and` and `$eq` operators](cloudant-query.html#combined-expressions).
+such as [using explicit `$and` and `$eq` operators](cloudant_query.html#combined-expressions).
 In general,
 whenever you have an operator that takes an argument,
 that argument can itself be another operator with arguments of its own.

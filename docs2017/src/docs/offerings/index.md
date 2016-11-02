@@ -7,11 +7,11 @@ It is built from the ground up to scale globally,
 run non-stop,
 and handle a wide variety of data types like [JSON](../basics/index.html#json),
 [full-text](../api/cloudant_query.html#creating-an-index),
-and [geospatial](geo.html).
+and [geospatial](../api/cloudant-geo.html).
 Cloudant is an operational data store optimized to handle concurrent reads and writes,
 and enables high availability and data durability.
 
-It provides an [HTTP API](basics.html#http-api) for working with your [JSON](basics.html#json) data,
+It provides an [HTTP API](../basics/index.html#http-api) for working with your [JSON](../basics/index.html#json) data,
 and 24-hour operational support and maintenance.
 Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
 and is delivered as various multi-tenant, dedicated, and installed services.
@@ -19,8 +19,8 @@ and is delivered as various multi-tenant, dedicated, and installed services.
 <aside class="warning" role="complementary" aria-label="pricing">All currency values in this document are in US dollars ($).</aside>
 
 The Cloudant DBaaS offering is available through [https://cloudant.com/](https://cloudant.com/).
-It is offered as either a [Shared Plan](offerings.html#shared-plan),
-or an [Enterprise (Dedicated) Plan](offerings.html#enterprise-plan).
+It is offered as either a [Shared Plan](index.html#shared-plan),
+or an [Enterprise (Dedicated) Plan](index.html#enterprise-plan).
 
 ### Shared Plan
 
