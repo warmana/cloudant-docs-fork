@@ -18,6 +18,7 @@ help:
 .PHONY: clean
 clean:
 	rm -rf $(BUILDDIR)
+	@rm linkcheck.txt
 
 .PHONY: html
 html:
@@ -29,4 +30,15 @@ html:
 debughtml:
 	make clean
 	mkdir $(BUILDDIR)
-	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --header-file=$(TOOLDIR)/header --footer-file=$(TOOLDIR)/footer --conref-file=$(TOOLDIR)/conref.yml --toc-xml --verbose	
+	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --header-file=$(TOOLDIR)/header --footer-file=$(TOOLDIR)/footer --conref-file=$(TOOLDIR)/conref.yml --toc-xml --verbose
+
+.PHONY: publish
+publish:
+	rm -rf /var/www/html/Cloudant/*
+	cp -R $(BUILDDIR)/* /var/www/html/Cloudant
+
+.PHONY: linkcheck
+linkcheck:
+	rm -f linkcheck.txt
+	wget --spider -r -nd -nv -H -l 4 -D localhost -o linkcheck.txt http://localhost/Cloudant/docs/ 2>/dev/null; true
+
