@@ -710,6 +710,7 @@ Operator | Argument | Purpose
 `$elemMatch` | Selector | Matches and returns all documents that contain an array field with at least one element that matches all the specified query criteria.
 
 <div></div>
+
 #### Examples of combination operators
 
 <div></div>
