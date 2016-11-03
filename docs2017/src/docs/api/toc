@@ -1,6 +1,9 @@
 index.md
 http.md
+account.md
+authentication.md
 authorization.md
+cors.md
 database.md
 document.md
 attachments.md
@@ -13,5 +16,8 @@ cloudant-geo.md
 replication.md
 advanced_replication.md
 active_tasks.md
+vhosts.md
 advanced.md
+monitoring.md
+backup.md
 try.md

@@ -6,6 +6,12 @@ The sections on [Client Libraries](../libraries/index.html#-client-libraries),
 [API Reference](../api/index.html#-api-reference),
 and [Guides](../guides/index.html#-guides) assume you know some basic things about Cloudant.
 
+## Connecting to Cloudant
+
+To access {{site.data.keyword.cloudant}},
+you must have either a [{{site.data.keyword.cloudant}} account](../api/account.html),
+or a [Bluemix account](../offerings/bluemix.html).
+
 ## HTTP API
 All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
 

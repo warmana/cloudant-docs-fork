@@ -4,6 +4,16 @@ Cloudant databases contain JSON objects.
 These JSON objects are called [documents](document.html#documents).
 All documents must be contained in a database.
 
+A guide is [available](../guides/transactions.html),
+providing an example of how documents for an e-commerce application might be used within a Cloudant database.
+
+A more complex database application,
+involving additional storage,
+processing,
+and analytics tasks,
+is referred to as a [warehouse](../guides/warehousing.html).  
+Warehouses are also supported by Cloudant.
+
 ## Create
 
 > Create a database
@@ -570,3 +580,27 @@ To delete a databases and its contents, make a DELETE request to `https://$USERN
 ```
 
 The response confirms successful deletion of the database or describes any errors that occurred, i.e. if you try to delete a database that does not exist.
+
+## Backing up your data
+
+It is essential that you protect your data by taking good quality backups.
+An overview of backing up your data is [available](backup.html),
+with more detailed information in the [backup guide](../guides/backup-guide.html).
+
+## Using a different domain
+
+Virtual hosts (vhosts) are a way to make Cloudant serve data from a different domain than the one normally associated with your Cloudant account.
+
+More information is available [here](vhosts.html).
+
+## Creating database applications
+
+In addition to data stored in documents within the database,
+you could also have client-side application code - typically Javascript - in documents within the database.
+Two-tier combinations of data and client code,
+stored within a database,
+are called [CouchApps](../guides/couchapps.html).
+
+More information about CouchApps,
+and deciding whether they are a good match for your application,
+is [available](../guides/couchapps.html).

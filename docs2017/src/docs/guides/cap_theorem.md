@@ -5,13 +5,16 @@
 
 Cloudant uses an '[Eventually Consistent](http://en.wikipedia.org/wiki/Eventual_consistency)' model. To understand how this works, and why it is an essential part of using Cloudant, we must first consider what is meant by Consistency.
 
-Consistency is one of the three attributes in the CAP (**C**onsistency, **A**vailability, and **P**artition tolerance) theorem, which states that it is not possible for a distributed computer system - such as Cloudant - to simultaneously guarantee three attributes:
+
+Consistency is one of the four ['ACID'](acid.html) properties that are necessary for transactions within a database to be processed and reported reliably.
+
+Additionally, consistency is one of the three attributes in the CAP (**C**onsistency, **A**vailability, and **P**artition tolerance) theorem, which states that it is not possible for a distributed computer system - such as Cloudant - to guarantee three attributes _simultaneously_:
 
 - Consistency, where all nodes see the same data at the same time.
 - Availability, which guarantees that every request receives a response about whether it succeeded or failed.
 - Partition tolerance, where the system continues to operate even if any one part of the system is lost or fails.
 
-The impossibility of guaranteeing all three attributes means that Cloudant does not guarantee the Consistency attribute. In an eventually consistent model, like Cloudant, an update made to one part of the system is *eventually* seen by other parts of the system. As the update propagates, the system is said to 'converge' on complete consistency.
+The impossibility of guaranteeing all three attributes _at the same time_ means that Cloudant does not guarantee the Consistency attribute. In an eventually consistent model, like Cloudant, an update made to one part of the system is *eventually* seen by other parts of the system. As the update propagates, the system is said to 'converge' on complete consistency.
 
 Eventual consistency is good for performance. With a strong consistency model, a system would have to wait for any updates to propagate completely and successfully before a write or update request could be completed. With an eventually consistent model, the write or update request can return almost immediately, while the propagation across the system continues 'behind the scenes'.
 

@@ -1,6 +1,6 @@
 # Authorization
 
-When you have authenticated, the next test is to decide whether you
+When you have [authenticated](authentication.html), the next test is to decide whether you
 are permitted to perform certain tasks. This is called authorization.
 
 ## Roles

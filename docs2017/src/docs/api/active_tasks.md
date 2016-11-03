@@ -1,7 +1,8 @@
 # Active tasks
 
 The `/_active_tasks` endpoint provides a list of the tasks running on the server.
-For more examples on using this endpoint,
+This is often helpful when [monitoring](monitoring.html) the performance of your system.
+For more examples on using the `/_active_tasks` endpoint,
 see the [Managing tasks](../guides/managing_tasks.html) guide.
 
 ## Retrieving a list of active tasks
