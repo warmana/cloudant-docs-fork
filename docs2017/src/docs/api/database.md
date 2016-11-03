@@ -349,7 +349,7 @@ Argument | Description | Supported Values | Default
 ---------|-------------|------------------|---------
 `conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
 `descending` | Return the changes in sequential order. | boolean | false | 
-`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](https://docs.cloudant.com/advanced.html#get-/) for more information. | A JSON array of document IDs | |
+`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](advanced.html#get-/) for more information. | A JSON array of document IDs | |
 `feed` | Type of feed required. For details see the [`feed` information](database.html#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
 `filter` | Name of [filter function](design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](design_documents.html). | string | no filter
 `heartbeat` | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 

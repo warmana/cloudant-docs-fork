@@ -244,7 +244,7 @@ You can provision accounts in multiple data centers,
 then use continuous data replication to provide HA/DR across data centers.
 
 Cloudant data is not automatically backed up.
-You can request enablement of an [incremental backup feature](https://docs.cloudant.com/backup-guide.html),
+You can request enablement of an [incremental backup feature](../guides/backup-guide.html),
 or alternatively implement your own solution by using one of several possible techniques that are described [here](https://developer.ibm.com/clouddataservices/2016/03/22/simple-couchdb-and-cloudant-backup/).  
 
 ### Monitoring usage
@@ -668,7 +668,7 @@ Yes. Cloudant sends `auth` and `auditd` logs to QRadar and stores them for one y
 #### How does backup work?
 
 Cloudant offers a backup service that schedules and runs incremental backups of your data. It is strongly
-recommended that you purchase a separate cluster, specifically dedicated to storing backup data. The Cloudant backup cluster must be inside the same Bluemix Local environment. More information on backing up your data can be found [here](https://docs.cloudant.com/backup-guide.html).
+recommended that you purchase a separate cluster, specifically dedicated to storing backup data. The Cloudant backup cluster must be inside the same Bluemix Local environment. More information on backing up your data can be found [here](../guides/backup-guide.html).
 
 Both the customer and ops cluster can backup to the same location. If you do not want to use the Cloudant
 backup product, you are responsible for backing up your data.

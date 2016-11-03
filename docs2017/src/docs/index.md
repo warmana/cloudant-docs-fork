@@ -1,21 +1,3 @@
----
-title: Cloudant Documentation
-
-language_tabs:
-  - http
-  - shell: curl
-#  - javascript: node.js
-#  - python
-
-toc_footers:
-  - <a href="https://cloudant.com/">Cloudant</a>
-  - <a href="https://cloudant.com/sign-up/">Sign up</a> / <a href="https://cloudant.com/sign-in/">Sign in</a>
-  - <a href="http://stackoverflow.com/questions/tagged/cloudant">Cloudant on StackOverflow</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
-  - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
-
----
-
 # ![alt tag](images/documentation_icon.png) Overview
 
 This is the online documentation for the [IBM Cloudant Database-as-a-Service (DBaaS)](https://cloudant.com/),
@@ -31,6 +13,4 @@ all intended to help you get going quickly.
 
 ## Contribute
 
-Cloudant is built on best-of-breed open source technologies, and we're heavy committers to the technology we rely on. We're also open about our documentation. If it's not working for you, it's not working for us. Please make contributions or share suggestions through Cloudant Labs on [GitHub](https://github.com/cloudant-labs/slate). This content is built using an extended version of [Slate](https://github.com/tripit/slate).
-
-<div id="why_cloudant"></div>
+Cloudant is built on best-of-breed open source technologies, and we're heavy committers to the technology we rely on. We're also open about our documentation. If it's not working for you, it's not working for us. Please make contributions or share suggestions through Cloudant Labs on [GitHub](https://github.com/cloudant-labs/slate).
