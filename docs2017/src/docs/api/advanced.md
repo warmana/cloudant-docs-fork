@@ -1,303 +1,287 @@
 # Advanced
 
-These endpoints provide information about the state of the cluster, details about revision history, and other miscellaneous tasks.
+These endpoints provide information about the state of the cluster,
+details about revision history,
+and other miscellaneous tasks.
 
-## GET /
+## `GET /`
 
-> Example request to get server meta information:
+-	**Method**: `GET`
+-	**Path**: `/`
+-	**Response**: Welcome message and version
 
-```http
-GET / HTTP/1.1
-HOST: $ACCOUNT.cloudant.com
-```
-
-```shell
-curl https://$ACCOUNT.cloudant.com/
-```
-
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
-
-account.request({
-  path: '/'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
-
-> Example JSON response:
-
-```json
-{
-  "couchdb": "Welcome",
-  "version": "1.0.2",
-  "vendor": {
-     "cloudant_build":"1138"
-  }
-}
-```
-
--  **Method**: `GET`
--  **Path**: `/`
--  **Response**: Welcome message and version
-
-Accessing the root endpoint `/` returns meta information about the cluster. The response is a JSON object containing a welcome message and the version of the server. The `version` field contains the CouchDB version the server is compatible with.
+Accessing the root endpoint `/` returns meta information about the cluster.
+The response is a JSON object containing a welcome message and the version of the server.
+The `version` field contains the CouchDB version the server is compatible with.
 The `vendor.cloudant_build` field contains the build number of Cloudant's CouchDb implementation.
 
-## GET /_db_updates
+Example request to get server meta information, using HTTP:
 
-> Example request to get a list of changes to the database:
+	GET / HTTP/1.1
+	HOST: $ACCOUNT.cloudant.com
 
-```http
-GET /_db_updates HTTP/1.1
-```
+Example request to get server meta information from the command line:
 
-```shell
-curl https://$USERNAME.cloudant.com/_db_updates \
-     -u $USERNAME
-```
+	curl https://$ACCOUNT.cloudant.com/
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+Example request to get server meta information, using Javascript:
 
-account.request({
-  path: '_db_updates'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+	var nano = require('nano');
+	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	
+	account.request({
+		path: '/'
+	}, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
 
-> Example response:
+Example JSON response:
 
-```json
-{
-  "results": [{
-    "dbname": "$DATABASE_NAME",
-    "type": "created",
-    "account": "$USERNAME",
-    "seq": "673-g1AAAAJAeJyN0Et..."
-  }],
-  "last_seq": "673-g1AAAAJAeJyN0Et..."
-}
-```
+	{
+		"couchdb": "Welcome",
+		"version": "2.0.0",
+		"vendor": {
+			"name": "IBM Cloudant",
+			"version": "5638",
+			"variant": "paas"
+		},
+		"features": [
+			"geo"
+		]
+	}
 
-<aside class="warning" role="complementary" aria-label="dedicatedonly">This feature is only available to dedicated customers.</aside>
 
-Obtains a list of changes to databases, like a global [changes feed](database.html#get-changes). Changes can be either updates to the database, creation, or deletion of a database. Like the changes feed, the feed is not guaranteed to return changes in the correct order and might contain changes more than once. Polling modes for this method works just like polling modes for [the changes feed](database.html#get-changes).
+## `GET /_db_updates`
+
+> **Note**: This endpoint is only available to customers with dedicated system accounts.
+
+The `/_db_updates` endpoint returns a list of changes to databases,
+similar to a global [changes feed](database.html#get-changes).
+Changes can be either updates to an existing database,
+creation of a new database,
+or deletion of a database.
+Like the changes feed,
+the `/_db_updates` endpoint is not guaranteed to return changes in the correct order,
+and might contain changes more than once.
+Polling modes for this endpoint work like the polling modes for [the changes feed](database.html#get-changes).
 
 
 Argument | Description | Optional | Type | Default | Supported Values
 ---------|-------------|----------|------|---------|-----------------
+descending | Whether results should be returned in descending order, in other words the most recent event appears first. By default, the oldest event is returned first. | yes | boolean | false | 
 feed | Type of feed | yes | string | normal | `continuous`: Continuous (non-polling) mode, `longpoll`: Long polling mode, `normal`: default polling mode
 heartbeat | Time in milliseconds after which an empty line is sent during longpoll or continuous if there have been no changes | yes | numeric | 60000 | 
 limit | Maximum number of results to return | yes | numeric | none |  
-since | Start the results from changes immediately after the specified sequence number. If since is 0 (the default), the request will return all changes since the feature was activated. | yes | string | 0 | 
+since | Start the results from changes immediately after the specified sequence number. If since is 0 (the default), the request returns all changes since the feature was activated. | yes | string | 0 | 
 timeout | Number of milliseconds to wait for data in a `longpoll` or `continuous` feed before terminating the response. If both `heartbeat` and `timeout` are suppled, `heartbeat` supersedes `timeout`. | yes | numeric |  | 
-descending | Whether results should be returned in descending order, i.e. the latest event first. By default, the oldest event is returned first. | yes | boolean | false | 
 
-## GET /$DB/_shards
+Example request to get a list of changes to the database, using HTTP:
 
-> Example request
+	GET /_db_updates HTTP/1.1
 
-```http
-GET /$DATABASE/_shards HTTP/1.1
-```
+Example request to get a list of changes to the database, from the command line:
 
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_shards \
-     -u $USERNAME
-```
+	curl https://$USERNAME.cloudant.com/_db_updates \
+		-u $USERNAME
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+Example request to get a list of changes to the database, using Javascript:
 
-account.request({
-  database: $DATABASE,
-  path: '_shards'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+	var nano = require('nano');
+	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	
+	account.request({
+		path: '_db_updates'
+	}, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
 
-> Example response:
+Example response:
 
-```json
-{
-  "shards": {
-    "e0000000-ffffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "c0000000-dfffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "a0000000-bfffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "80000000-9fffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "60000000-7fffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "40000000-5fffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "20000000-3fffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ],
-    "00000000-1fffffff": [
-      "dbcore@db1.testy004.cloudant.net",
-      "dbcore@db2.testy004.cloudant.net",
-      "dbcore@db3.testy004.cloudant.net"
-    ]
-  }
-}
-```
+	{
+		"results": [{
+			"dbname": "$DATABASE_NAME",
+			"type": "created",
+			"account": "$USERNAME",
+			"seq": "673-g1AAAAJAeJyN0Et..."
+		}],
+		"last_seq": "673-g1AAAAJAeJyN0Et..."
+	}
 
-Returns informations about the shards in the cluster, specifically what nodes contain what hash ranges.
+## `GET /$DB/_shards`
 
-The response's `shards` field contains an object whose keys are the hash value range constituting each shard, while each value is the array of nodes containing that a copy of that shard.
+The `/$DATABASE/_shards` endpoint returns informations about the shards in the cluster,
+specifically what nodes contain what hash ranges.
 
-## GET /$DB/_missing_revs
+The `shards` field in the response contains an object with keys that are the hash value range constituting each shard.
+Each value is the array of nodes containing that a copy of that shard.
 
-> Example shell request
+Example request, using HTTP:
+
+	GET /$DATABASE/_shards HTTP/1.1
+
+Example request, from the command line:
+
+	curl https://$USERNAME.cloudant.com/$DATABASE/_shards \
+		-u $USERNAME
+
+Example request, using Javascript:
+
+	var nano = require('nano');
+	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	
+	account.request({
+		database: $DATABASE,
+		path: '_shards'
+	}, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
+
+Example response:
+
+	{
+		"shards": {
+			"00000000-3fffffff": [
+				"dbcore@db1.mead.cloudant.net",
+				"dbcore@db2.mead.cloudant.net",
+				"dbcore@db3.mead.cloudant.net"
+			],
+			"40000000-7fffffff": [
+				"dbcore@db1.mead.cloudant.net",
+				"dbcore@db2.mead.cloudant.net",
+				"dbcore@db3.mead.cloudant.net"
+			],
+			"80000000-bfffffff": [
+				"dbcore@db1.mead.cloudant.net",
+				"dbcore@db2.mead.cloudant.net",
+				"dbcore@db3.mead.cloudant.net"
+			],
+			"c0000000-ffffffff": [
+				"dbcore@db1.mead.cloudant.net",
+				"dbcore@db2.mead.cloudant.net",
+				"dbcore@db3.mead.cloudant.net"
+			]
+		}
+	}
+
+
+## `GET /$DB/_missing_revs`
+
+When supplied with a list of document revisions, 
+the `/$DB/_missing_revs` endpoint returns a list of the document revisions that do not exist in the database.
+
+The list of document revisions is supplied in a JSON document,
+similar to the following example:
+
+	{
+		"$DOCUMENT_ID": [
+			"$REV_1",
+			"$REV_2"
+		]
+	}
+
+Example request, from the command line:
 
 	curl https://$USERNAME.cloudant.com/$DATABASE/_missing_revs \
 	     -X POST \
 	     -u "$USERNAME:$PASSWORD" \
 	     -H "Content-Type: application/json" \
 	     -d @request-body.json
-	# where the file request-body.json contains the following:
 
-> Example request
+Example request using HTTP:
 
-```http
-GET /$DATABASE/_missing_revs
-Content-Type: application/json
-```
+	GET /$DATABASE/_missing_revs HTTP/1.1
+	Content-Type: application/json
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+Example request using Javascript:
 
-account.request({
-  database: $DATABASE,
-  path: '_missing_revs',
-  method: 'POST',
-  body: '$JSON'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+	var nano = require('nano');
+	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	
+	account.request({
+		database: $DATABASE,
+		path: '_missing_revs',
+		method: 'POST',
+		body: '$JSON'
+	},
+	function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
 
-```json
-{
-  "$DOCUMENT_ID": [
-    "$REV_1",
-    "$REV_2"
-  ]
-}
-```
 
-> Example response:
+Example response:
 
-```json
-{
-  "missed_revs":{
-    "$DOCUMENT_ID": [
-      "$REV_1"
-    ]
-  }
-}
-```
+	{
+		"missed_revs":{
+			"$DOCUMENT_ID": [
+				"$REV_1"
+			]
+		}
+	}
 
-Given a list of document revisions, returns the document revisions that do not exist in the database.
+## `POST /$DB/_revs_diff`
 
-## POST /$DB/_revs_diff
+When supplied with a set of document revision IDs, 
+the `/$DB/_revs_diff` endpoint returns the subset of those that do not correspond to revisions stored in the database.
 
-> Example request
+The list of document revision IDs is supplied in a JSON document,
+similar to the following example:
 
-```http
-POST /$DATABASE/_revs_diff HTTP/1.1
-```
+	{
+		"190f721ca3411be7aa9477db5f948bbb": [
+			"3-bb72a7682290f94a985f7afac8b27137",
+			"4-10265e5a26d807a3cfa459cf1a82ef2e",
+			"5-067a00dff5e02add41819138abb3284d"
+		]
+	}
 
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_revs_diff \
-     -X POST \
-     -u $USERNAME \
-     -d "$JSON"
-```
+Example request using HTTP:
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	POST /$DATABASE/_revs_diff HTTP/1.1
+	Content-Type: application/json
 
-account.request({
-  database: $DATABASE,
-  path: '_revs_diff',
-  method: 'POST',
-  body: '$JSON'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+Example request, from the command line:
 
-> Example request:
+	curl https://$USERNAME.cloudant.com/$DATABASE/_revs_diff \
+		-X POST \
+		-u $USERNAME \
+		-d "$JSON"
 
-```json
-{
-  "190f721ca3411be7aa9477db5f948bbb": [
-    "3-bb72a7682290f94a985f7afac8b27137",
-    "4-10265e5a26d807a3cfa459cf1a82ef2e",
-    "5-067a00dff5e02add41819138abb3284d"
-  ]
-}
-```
+Example request using Javascript:
 
-> Example response:
+	var nano = require('nano');
+	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+	account.request({
+		database: $DATABASE,
+		path: '_revs_diff',
+		method: 'POST',
+		body: '$JSON'
+	}, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
 
-```json
-{
-  "190f721ca3411be7aa9477db5f948bbb": {
-    "missing": [
-      "3-bb72a7682290f94a985f7afac8b27137",
-      "5-067a00dff5e02add41819138abb3284d"
-    ],
-    "possible_ancestors": [
-      "4-10265e5a26d807a3cfa459cf1a82ef2e"
-    ]
-  }
-}
-```
+Example response:
 
-Given a set of document/revision IDs, returns the subset of those that do not correspond to revisions stored in the database.
+	{
+		"190f721ca3411be7aa9477db5f948bbb": {
+			"missing": [
+				"3-bb72a7682290f94a985f7afac8b27137",
+				"5-067a00dff5e02add41819138abb3284d"
+			],
+			"possible_ancestors": [
+				"4-10265e5a26d807a3cfa459cf1a82ef2e"
+			]
+		}
+	}
 
 ## GET /$DB/_revs_limit
 
