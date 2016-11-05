@@ -16,27 +16,26 @@ You can obtain a list of active tasks by using the `/_active_tasks` URL.
 The result is a JSON array of the currently running tasks,
 with each task being described with a single object.
 
-Example request to retrieve list of active tasks using HTTP:
+-   Example request to retrieve list of active tasks using HTTP:
 
-	GET /_active_tasks HTTP/1.1
+    	GET /_active_tasks HTTP/1.1
 
-Example request to retrieve list of active tasks from the command line:
+-   Example request to retrieve list of active tasks, using the command line:
 
-	curl https://$USERNAME.cloudant.com/_active_tasks \
-		-u $USERNAME
+        curl https://$USERNAME.cloudant.com/_active_tasks \
+            -u $USERNAME
 
-Example request to retrieve list of active tasks using Javascript:
+-   Example request to retrieve list of active tasks using Javascript:
 
-	var nano = require('nano');
-	var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
-
-	account.request({
-		path: '_active_tasks'
-	}, function (err, body) {
-		if (!err) {
-			console.log(body);
-		}
-	});
+        var nano = require('nano');
+        var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+        account.request({
+            path: '_active_tasks'
+        }, function (err, body) {
+            if (!err) {
+                console.log(body);
+            }
+        });
 
 The returned structure includes the following fields for each task:
 
@@ -58,96 +57,92 @@ the possible values include:
 
 The meaning of other fields in the JSON response depends on the type of the task.
 
-Example JSON response array,
+-   Example JSON response array,
 containing details of currently running tasks:
 
-	[
-	  {
-	    "user": null,
-	    "updated_on": 1363274088,
-	    "type": "replication",
-	    "target": "https://repl:*****@tsm.cloudant.com/user-3dglstqg8aq0uunzimv4uiimy/",
-	    "docs_read": 0,
-	    "doc_write_failures": 0,
-	    "doc_id": "tsm-admin__to__user-3dglstqg8aq0uunzimv4uiimy",
-	    "continuous": true,
-	    "checkpointed_source_seq": "403-g1AAAADfeJzLYWBgYMlgTmGQS0lKzi9KdUhJMjTRyyrNSS3QS87JL01JzCvRy0styQGqY0pkSLL___9_VmIymg5TXDqSHIBkUj1YUxyaJkNcmvJYgCRDA5AC6tuflZhGrPsgGg9ANAJtzMkCAPFSStc",
-	    "changes_pending": 134,
-	    "pid": "<0.1781.4101>",
-	    "node": "dbcore@db11.julep.cloudant.net",
-	    "docs_written": 0,
-	    "missing_revisions_found": 0,
-	    "replication_id": "d0cdbfee50a80fd43e83a9f62ea650ad+continuous",
-	    "revisions_checked": 0,
-	    "source": "https://repl:*****@tsm.cloudant.com/tsm-admin/",
-	    "source_seq": "537-g1AAAADfeJzLYWBgYMlgTmGQS0lKzi9KdUhJMjTUyyrNSS3QS87JL01JzCvRy0styQGqY0pkSLL___9_VmI9mg4jXDqSHIBkUj1WTTityWMBkgwNQAqob39WYhextkE0HoBoBNo4MQsAFuVLVQ",
-	    "started_on": 1363274083
-	  },
-
-	  {
-	    "user": "acceptly",
-	    "updated_on": 1363273779,
-	    "type": "indexer",
-	    "node": "dbcore@db11.julep.cloudant.net",
-	    "pid": "<0.20723.4070>",
-	    "changes_done": 189,
-	    "database": "shards/00000000-3fffffff/acceptly/acceptly_my_chances_logs_live.1321035717",
-	    "design_document": "_design/MyChancesLogCohortReport",
-	    "started_on": 1363273094,
-	    "total_changes": 26389
-	  },
-
-	  {
-	    "user": "username",
-	    "updated_on": 1371118433,
-	    "type": "search_indexer",
-	    "total_changes": 5466,
-	    "node": "dbcore@db7.meritage.cloudant.net",
-	    "pid": "<0.29569.7037>",
-	    "changes_done": 4611,
-	    "database": "shards/40000000-7fffffff/username/database_name",
-	    "design_document": "_design/lucene",
-	    "index": "search1",
-	    "started_on": 1371118426
-	  },
-
-	  {
-	    "view": 1,
-	    "user": "acceptly",
-	    "updated_on": 1363273504,
-	    "type": "view_compaction",
-	    "total_changes": 26095,
-	    "node": "dbcore@db11.julep.cloudant.net",
-	    "pid": "<0.21218.4070>",
-	    "changes_done": 20000,
-	    "database": "shards/80000000-bfffffff/acceptly/acceptly_my_chances_logs_live.1321035717",
-	    "design_document": "_design/MyChancesLogCohortReport",
-	    "phase": "view",
-	    "started_on": 1363273094
-	  },
-
-	  {
-	    "updated_on": 1363274040,
-	    "node": "dbcore@db11.julep.cloudant.net",
-	    "pid": "<0.29256.4053>",
-	    "changes_done": 272195,
-	    "database": "shards/00000000-3fffffff/heroku/app3245179/id_f21a08b7005e_logs.1346083461",
-	    "started_on": 1363272496,
-	    "total_changes": 272195,
-	    "type": "database_compaction"
-	  }
-	]
+        [
+            {
+                "user": null,
+                "updated_on": 1363274088,
+                "type": "replication",
+                "target": "https://repl:*****@tsm.cloudant.com/user-3dglstqg8aq0uunzimv4uiimy/",
+                "docs_read": 0,
+                "doc_write_failures": 0,
+                "doc_id": "tsm-admin__to__user-3dglstqg8aq0uunzimv4uiimy",
+                "continuous": true,
+                "checkpointed_source_seq": "403-g1AAAADfeJzLYWBgYMlgTmGQS0lKzi9KdUhJMjTRyyrNSS3QS87JL01JzCvRy0styQGqY0pkSLL___9_VmIymg5TXDqSHIBkUj1YUxyaJkNcmvJYgCRDA5AC6tuflZhGrPsgGg9ANAJtzMkCAPFSStc",
+                "changes_pending": 134,
+                "pid": "<0.1781.4101>",
+                "node": "dbcore@db11.julep.cloudant.net",
+                "docs_written": 0,
+                "missing_revisions_found": 0,
+                "replication_id": "d0cdbfee50a80fd43e83a9f62ea650ad+continuous",
+                "revisions_checked": 0,
+                "source": "https://repl:*****@tsm.cloudant.com/tsm-admin/",
+                "source_seq": "537-g1AAAADfeJzLYWBgYMlgTmGQS0lKzi9KdUhJMjTUyyrNSS3QS87JL01JzCvRy0styQGqY0pkSLL___9_VmI9mg4jXDqSHIBkUj1WTTityWMBkgwNQAqob39WYhextkE0HoBoBNo4MQsAFuVLVQ",
+                "started_on": 1363274083
+            },
+            {
+                "user": "acceptly",
+                "updated_on": 1363273779,
+                "type": "indexer",
+                "node": "dbcore@db11.julep.cloudant.net",
+                "pid": "<0.20723.4070>",
+                "changes_done": 189,
+                "database": "shards/00000000-3fffffff/acceptly/acceptly_my_chances_logs_live.1321035717",
+                "design_document": "_design/MyChancesLogCohortReport",
+                "started_on": 1363273094,
+                "total_changes": 26389
+            },
+            {
+                "user": "username",
+                "updated_on": 1371118433,
+                "type": "search_indexer",
+                "total_changes": 5466,
+                "node": "dbcore@db7.meritage.cloudant.net",
+                "pid": "<0.29569.7037>",
+                "changes_done": 4611,
+                "database": "shards/40000000-7fffffff/username/database_name",
+                "design_document": "_design/lucene",
+                "index": "search1",
+                "started_on": 1371118426
+            },
+            {
+                "view": 1,
+                "user": "acceptly",
+                "updated_on": 1363273504,
+                "type": "view_compaction",
+                "total_changes": 26095,
+                "node": "dbcore@db11.julep.cloudant.net",
+                "pid": "<0.21218.4070>",
+                "changes_done": 20000,
+                "database": "shards/80000000-bfffffff/acceptly/acceptly_my_chances_logs_live.1321035717",
+                "design_document": "_design/MyChancesLogCohortReport",
+                "phase": "view",
+                "started_on": 1363273094
+            },
+            {
+                "updated_on": 1363274040,
+                "node": "dbcore@db11.julep.cloudant.net",
+                "pid": "<0.29256.4053>",
+                "changes_done": 272195,
+                "database": "shards/00000000-3fffffff/heroku/app3245179/id_f21a08b7005e_logs.1346083461",
+                "started_on": 1363272496,
+                "total_changes": 272195,
+                "type": "database_compaction"
+            }
+        ]
 
 ### Specific response fields for compaction tasks
 
--   **changes\_done**: Number of documents compacted.
+-   **changes_done**: Number of documents compacted.
 -   **phase**: Reports the stage of compaction.
--   **total\_changes**: Number of documents in the database.
+-   **total_changes**: Number of documents in the database.
 
 In the `phase` field, the value indicates the stage that compaction has reached:
 
--		`ids`: Document compaction is in progress.
--		`views`: View compaction is in progress.
+-   `ids`: Document compaction is in progress.
+-   `views`: View compaction is in progress.
 
 ### Specific response fields for replication tasks
 

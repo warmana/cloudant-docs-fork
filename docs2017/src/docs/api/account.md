@@ -15,34 +15,32 @@ make a `GET` against `https://$USERNAME.cloudant.com`.
 If you misspelled your account name,
 you might get a [503 'service unavailable' error](http.html#503).
 
-Example of connecting to your Cloudant account using HTTP:
+-   Example of connecting to your Cloudant account, using HTTP:
 
-	GET / HTTP/1.1
-	HOST: $USERNAME.cloudant.com
+        GET / HTTP/1.1
+        HOST: $USERNAME.cloudant.com
 
-Example of connecting to your Cloudant account from the command line:
+-   Example of connecting to your Cloudant account, using the command line:
 
-	curl -u $USERNAME https://$USERNAME.cloudant.com
+        curl -u $USERNAME https://$USERNAME.cloudant.com
 
-Example of connecting to your Cloudant account using Python:
+-   Example of connecting to your Cloudant account, using Javascript:
 
-	import cloudant
+        var nano = require('nano');
+        var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
+        account.request(function (err, body) {
+          if (!err) {
+            console.log(body);
+          }
+        });
 
-	account = cloudant.Account(USERNAME)
-	ping = account.get()
-	print ping.status_code
-	# Expected return code: 200
+-   Example of connecting to your Cloudant account, using Python:
 
-Example of connecting to your Cloudant account using Javascript:
-
-	var nano = require('nano');
-	var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
-
-	account.request(function (err, body) {
-	  if (!err) {
-	    console.log(body);
-	  }
-	});
+        import cloudant
+        account = cloudant.Account(USERNAME)
+        ping = account.get()
+        print ping.status_code
+        # Expected return code: 200
 
 ## CORS
 

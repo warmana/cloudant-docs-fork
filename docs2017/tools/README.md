@@ -29,9 +29,27 @@ You do not need to perform this task again.
 Note: If you want to get the latest versions of `marked-it*`,
 simply run the `git submodule update` command again.
 
-**Note**: The `marked-it*` modules are only available internally within IBM.
+> **Note**: The `marked-it*` modules are only available internally within IBM.
 However, they are basically markdown build scripts with some additional
 capabilities for Bluemix-specific 'extras'.
 It is not essential to have these tools; they are only used for building
 a local preview of content. It is still perfectly possible to do a 'pure'
 markdown-only build of the content for local preview purposes.
+
+Style
+-----
+
+Sample code illustrating how to invoke a capability should be provided in the following order:
+
+-   Example of &lt;activity&gt;, using HTTP:
+-   Example of &lt;activity&gt;, using the command line:
+-   Example of &lt;activity&gt;, using Javascript:
+-   Example of &lt;activity&gt;, using Python:
+-   ...
+-   Example response: 
+
+Basically,
+HTTP first,
+then the command line,
+then each language in simple alphabetic order,
+and finally a sample response from running the code.
