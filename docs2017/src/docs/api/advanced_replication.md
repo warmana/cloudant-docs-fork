@@ -8,16 +8,16 @@ as well as reviewing the [Advanced Methods](advanced.html) material.
 
 ## Replication Status
 
-When replication is managed by storing a document in the `/_replicator` database,
+When replication is managed by storing a document in the `_replicator` database,
 the contents of the document are updated as the replication status changes.
 
 In particular, once replication starts, three new fields are added automatically to the replication document. The fields all have the prefix: `_replication_`
 
 Field | Detail
 ------|-------
-`_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `/_active_tasks/`.
+`_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `_active_tasks/`.
 `_replication_state` | The current state of the replication.
-`_replication_state_time` | An <a href="https://www.ietf.org/rfc/rfc3339.txt" target="_blank">RFC 3339</a> compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
+`_replication_state_time` | An [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
 
 The possible values for the `_replication_state` are:
 
@@ -25,26 +25,26 @@ The possible values for the `_replication_state` are:
 -	`error`: An error occurred during replication.
 -	`triggered`: The replication has started and is in progress.
 
-Example replication document, prior to being `PUT` into `/_replicator`:
+-   Example replication document, prior to being `PUT` into `_replicator`:
 
-	{
-		"_id": "my_rep",
-		"source":  "https://username:password@myserver.com:5984/fromthis",
-		"target":  "https://username:password@username.cloudant.com/tothat",
-		"create_target":  true
-	}
+        {
+            "_id": "my_rep",
+            "source":  "https://username:password@myserver.com:5984/fromthis",
+            "target":  "https://username:password@username.cloudant.com/tothat",
+            "create_target":  true
+        }
 
-Example of automatic update to replication document update once replication starts:
+-   Example of automatic update to replication document, updated once replication starts:
 
-	{
-		"_id": "my_rep",
-		"source": "https://username:password@myserver.com:5984/fromthis",
-		"target": "https://username:password@username.cloudant.com/tothat",
-		"create_target": true
-		"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
-		"_replication_state": "triggered",
-		"_replication_state_time": "2011-06-07T16:54:35+01:00"
-	}
+        {
+            "_id": "my_rep",
+            "source": "https://username:password@myserver.com:5984/fromthis",
+            "target": "https://username:password@username.cloudant.com/tothat",
+            "create_target": true
+            "_replication_id": "c0ebe9256695ff083347cbf95f93e280",
+            "_replication_state": "triggered",
+            "_replication_state_time": "2011-06-07T16:54:35+01:00"
+        }
 
 When the replication finishes,
 it updates the `_replication_state` field with the value `completed`,

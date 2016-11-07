@@ -388,10 +388,10 @@ The `all_nodes` field lists all the nodes,
 
 ### Response structure
 
-Field name | Description
--|-
+Field name      | Description
+----------------|------------------------------------------------------------------
 `cluster_nodes` | Array of node names (strings) of the active nodes in the cluster.
-`all_nodes` | Array of nodes names (strings) of all nodes in the cluster.
+`all_nodes`     | Array of nodes names (strings) of all nodes in the cluster.
 
 -   Example response:
 
@@ -417,79 +417,68 @@ The response is a JSON object providing a list of UUIDs.
 -   **Path**: `/_uuids`
 -   **Response**: JSON document containing a list of UUIDs
 
-Argument | Description | Optional | Type
----------|-------------|----------|-----
-`count` | Number of UUIDs to return | yes | Positive integer, greater than 0 and less than or equal to 1,000.
+Argument | Description               | Optional | Type
+---------|---------------------------|----------|------------------------------------------------------------------
+`count`  | Number of UUIDs to return | yes      | Positive integer, greater than 0 and less than or equal to 1,000.
 
-> Example request for a single UUID:
+-   Example request for a single UUID, using HTTP:
 
-```http
-GET /_uuids HTTP/1.1
-```
+        GET /_uuids HTTP/1.1
 
-```shell
-curl https://$USERNAME.cloudant.com/_uuids \
-     -u $USERNAME
-```
+-   Example request for a single UUID, using the command line:
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+        curl https://$USERNAME.cloudant.com/_uuids \
+            -u $USERNAME
 
-account.request({
-  path: '_uuids'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+-   Example request for a single UUID, using Javascript:
 
-> Example response to a request for a single UUID:
+        var nano = require('nano');
+        var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+        account.request({
+            path: '_uuids'
+        }, function (err, body) {
+            if (!err) {
+                console.log(body);
+            }
+        });
 
-``` json
-{
-   "uuids" : [
-      "7e4b5a14b22ec1cf8e58b9cdd0000da3"
-   ]
-}
-```
+-   Example response to a request for a single UUID:
 
-> Example request for five UUIDs:
+        {
+            "uuids" : [
+                "7e4b5a14b22ec1cf8e58b9cdd0000da3"
+            ]
+        }
 
-```http
-GET /_uuids?count=5 HTTP/1.1
-```
+-   Example request for five UUIDs, using HTTP:
 
-```shell
-curl https://$USERNAME.cloudant.com/_uuids?count=5 \
-     -u $USERNAME
-```
+        GET /_uuids?count=5 HTTP/1.1
 
-```javascript
-var nano = require('nano');
-var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+-   Example request for five UUIDs, using the command line:
 
-account.request({
-  path: '_uuids?count=5'
-}, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
+        curl https://$USERNAME.cloudant.com/_uuids?count=5 \
+            -u $USERNAME
 
-> Example response to a request for five UUIDs:
+-   Example request for five UUIDs, using Javascript:
 
-``` json
-{
-   "uuids" : [
-      "c9df0cdf4442f993fc5570225b405a80",
-      "c9df0cdf4442f993fc5570225b405bd2",
-      "c9df0cdf4442f993fc5570225b405e42",
-      "c9df0cdf4442f993fc5570225b4061a0",
-      "c9df0cdf4442f993fc5570225b406a20"
-   ]
-}
-```
+        var nano = require('nano');
+        var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
+        account.request({
+            path: '_uuids?count=5'
+        }, function (err, body) {
+            if (!err) {
+                console.log(body);
+            }
+        });
 
+-   Example response to a request for five UUIDs:
+
+        {
+            "uuids" : [
+                "c9df0cdf4442f993fc5570225b405a80",
+                "c9df0cdf4442f993fc5570225b405bd2",
+                "c9df0cdf4442f993fc5570225b405e42",
+                "c9df0cdf4442f993fc5570225b4061a0",
+                "c9df0cdf4442f993fc5570225b406a20"
+            ]
+        }
