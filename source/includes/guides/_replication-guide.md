@@ -285,7 +285,9 @@ Replication is performed using a number of replication tasks.
 Each of these tasks has a 'state',
 such as whether it can run,
 whether it is running,
-or whether a problem has occured.
+or whether a problem has occurred.
+
+![Diagram showing possible replication task states](replicationState.png)
 
 ### Other replication use-cases
 

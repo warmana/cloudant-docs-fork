@@ -26,7 +26,7 @@ as well as reviewing the [Advanced Methods](advanced.html) material.
   "_id": "my_rep",
   "source":  "https://username:password@myserver.com:5984/fromthis",
   "target":  "https://username:password@username.cloudant.com/tothat",
-  "create_target":  true
+  "create_target":  true,
   "_replication_id":  "c0ebe9256695ff083347cbf95f93e280",
   "_replication_state":  "triggered",
   "_replication_state_time":  "2011-06-07T16:54:35+01:00"
@@ -301,11 +301,11 @@ see [here](attachments.html#performance-considerations).
 
 Replication tasks within a distributed system are clearly extremely important,
 to ensure that required information is communicated between the components
-as quickly and correctly as possible.
+correctly and as quickly as possible.
 Management of the replication activities requires a scheduler.
 The scheduler helps organize what replication tasks take place, and when.
 
-Some information about the replication status is available
+Information about the replication status is available
 using the [`_active_tasks` endpoint](managing_tasks.html).
 
 More detailed information about replication tasks is available
@@ -316,11 +316,295 @@ by issuing requests directly to one of two scheduler endpoints:
 
 #### The `_scheduler/docs` endpoint
 
+> Example request for a simple list of replication documents:
+
+```http
+GET /_scheduler/docs HTTP/1.1
+HOST: $ACCOUNT.cloudant.com
+```
+
+```shell
+curl https://$ACCOUNT.cloudant.com/_scheduler/docs
+```
+
+> Example response, listing replication documents:
+
+```json
+{
+    "offset": 0,
+    "docs": [
+        {
+            "doc_id": "840b6b3a464a2a1134bb18184e10331f",
+            "database": "yehudit/_replicator",
+            "id": "590e3fb6cc21b0ee2176d337a2b1296e",
+            "node": "dbcore@db1.bigblue.cloudant.net",
+            "source": "https://yehudit.cloudant.com/dw_storageref/",
+            "target": "https://aeperf:*****@aeperf.cloudant.com/perf_storageref/",
+            "state": "crashing",
+            "info": "db_not_found: could not open https://aeperf:*****@aeperf.cloudant.com/perf_storageref/",
+            "error_count": 10
+        },
+        {
+          # ... Another doc, same structure as above
+        },
+          # ... Etc... Default limit is 100
+    ],
+    "total": 1647
+}
+```
+
+The `_scheduler/docs` endpoint returns the set of replication documents that are driving the replication activity.
+
+<div></div>
+
+> Example request for the first replication document after the initial 100 replication documents:
+
+```http
+GET /_scheduler/docs?limit=1&skip=100 HTTP/1.1
+HOST: $ACCOUNT.cloudant.com
+```
+
+```shell
+curl https://$ACCOUNT.cloudant.com/_scheduler/docs?limit=1&skip=100
+```
+
+> Example response, listing replication documents:
+
+```json
+{
+    "offset": 100,
+    "docs": [
+        {
+            "doc_id": "layoutdb1003123_databackup_replicator",
+            "database": "eng-ci-qa-backup/_replicator",
+            "id": "10a57dc93948ba318b02dd09e21bc122+continuous",
+            "node": "dbcore@db1.bigblue.cloudant.net",
+            "source": "https://omentooditillesesideplar:*****@eng-ci-qa-backup.cloudant.com/layoutdb1003123/",
+            "target": "https://distichatheelledientseak:*****@eng-ci-qa.cloudant.com/layoutdb1003123/",
+            "state": "running",
+            "info": null,
+            "error_count": 0
+        }
+    ],
+    "total": 1647
+}
+```
+
+The endpoint accepts three optional parameters:
+
+Parameter | Definition
+----------|-----------
+`limit`   | The maximum number of replication documents returned in response to the request. Defaults to 100.
+`skip`    | The number of replication documents to 'skip' (or offset) before being included in the response. Used in conjunction with the `limit` option, the `skip` option enables you to 'page' through a large collection of replication documents. Defaults to 0.
+`state`   | Include the replication document in the response list if its current state matches one of those provided by the `state` parameter. Possible values include: `completed`, `crashing`, `error`, `failed`, `pending`, and `running`. Default is to include the replication document regardless of its current state.
+
+<div></div>
+
+> Example request for the first two replication documents after the initial 10 replication documents, all of which are either in an `error` or `crashing` state:
+
+```http
+GET /_scheduler/docs?limit=2&skip=10&states=error,crashing HTTP/1.1
+HOST: $ACCOUNT.cloudant.com
+```
+
+```shell
+curl https://$ACCOUNT.cloudant.com/_scheduler/docs?limit=2&skip=10&states=error,crashing
+```
+
+> Example response, listing replication documents:
+
+```json
+{
+    "offset": 10,
+    "docs": [
+        {
+            "doc_id": "b293087944134fa68b54ebac6f4a2a6d",
+            "database": "ricellis/_replicator",
+            "id": null,
+            "state": "error",
+            "info": "Could not open source database `https://ricellis:*****@ricellis.cloudant.com:443/com_cloudant_tests_replicatortest-replication_filteredwithqueryparams-4f2620fc49e34152af990aff8bb2e0f4/`: {db_not_found,<<\"https://ricellis:*****@ricellis.cloudant.com:443/com_cloudant_tests_replicatortest-replication_filteredwithqueryparams-4f2620fc49e34152af990aff8bb2e0f4/\">>}",
+            "error_count": 12,
+            "node": "dbcore@db1.bigblue.cloudant.net"
+        },
+        {
+            "doc_id": "3fdecb279195401196d79e80c7197cb2",
+            "database": "ricellis/_replicator",
+            "id": "a705679767500a66abfe8d58528af03d+create_target",
+            "node": "dbcore@db1.bigblue.cloudant.net",
+            "source": "https://ricellis:*****@ricellis.cloudant.com:443/com_cloudant_tests_replicatortest-replication-9737ea7d388144769d40a7fe05e1c8e7/",
+            "target": "https://ricellis:*****@ricellis.cloudant.com:443/com_cloudant_tests_replicatortest-replication-a64264bd649e40b8a644a43bc97e1cea/",
+            "state": "crashing",
+            "info": "db_not_found: could not open https://ricellis:*****@ricellis.cloudant.com:443/com_cloudant_tests_replicatortest-replication-9737ea7d388144769d40a7fe05e1c8e7/",
+            "error_count": 10
+        }
+    ],
+    "total": 497
+}
+```
+
+<div></div>
+
 #### The `_scheduler/jobs` endpoint
 
 The `_scheduler/jobs` endpoint returns the current scheduling state of
 replication tasks that are in an active state,
 in other words tasks that are not in a terminal condition of `completed` or `failed`.
-More information about replication task state is available in the [replication guide](replication-guide.html#replication-status).
+More information about replication task state is available in the
+[replication guide](replication_guide.html#replication-status).
 
-Jobs that are techincally runnable but are erroring/crashing in some way will get an exponential backoff.  The scheduling history of any given job is recorded in a history array, which has a default length of 20 entries.  Much like the "docs" endpoint, there are the "limit" and "skip" options, with the default limit being 25, and the default skip being 0.
+Jobs that are technically runnable but are erroring or crashing in some way get an exponential backoff.
+The scheduling history of any given job is recorded in a history array,
+which has a default length of 20 entries.
+
+The endpoint accepts two optional parameters:
+
+Parameter | Definition
+----------|-----------
+`limit`   | The maximum number of replication tasks returned in response to the request. Defaults to 25.
+`skip`    | The number of replication tasks to 'skip' (or offset) before being included in the response. Used in conjunction with the `limit` option, the `skip` option enables you to 'page' through a large collection of replication tasks. Defaults to 0.
+
+<div></div>
+
+> Example request for the second and third of the first three replication tasks:
+
+```http
+GET /_scheduler/jobs?limit=2&skip=1 HTTP/1.1
+HOST: $ACCOUNT.cloudant.com
+```
+
+```shell
+curl https://$ACCOUNT.cloudant.com/_scheduler/jobs?limit=2&skip=1
+```
+
+> Example response, listing replication tasks:
+
+```json
+{
+    "total": 760,
+    "offset": 1,
+    "jobs": [
+        {
+            "id": "00443684e65dc00168e1ec083eab4b61+continuous",
+            "pid": "<0.14686.10>",
+            "source": "https://distichatheelledientseak:*****@eng-ci-qa.cloudant.com/widget_registry_1003123/",
+            "target": "https://omentooditillesesideplar:*****@eng-ci-qa-backup.cloudant.com/widget_registry_1003123/",
+            "database": "shards/40000000-7fffffff/eng-ci-qa/_replicator.1473966838",
+            "user": null,
+            "doc_id": "widget_registry_1003123_databackup_replicator",
+            "history": [
+                {
+                    "timestamp": "2016-10-15T00-18-27.542892Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-15T00-18-27.539875Z",
+                    "type": "added"
+                }
+            ],
+            "node": "dbcore@db5.bigblue.cloudant.net"
+        },
+        {
+            "id": "0045628678071ac26a844d1b3404b23e",
+            "pid": null,
+            "source": "https://aebuild.cloudant.com/test_ci_dw_storageref/",
+            "target": "https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/",
+            "database": "shards/80000000-bfffffff/aebuild/_replicator.1462459910",
+            "user": "aebuild",
+            "doc_id": "a39378cc27574bfa7c9faf8fdf03f4d7",
+            "history": [
+                {
+                    "timestamp": "2016-10-17T07-42-33.74368Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-17T07-42-32.492205Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-17T03-26-30.873958Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-17T03-26-30.465005Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T23-10-28.809024Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T23-10-28.429145Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T18-54-26.789244Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T18-54-26.417864Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T14-38-24.734541Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T14-38-24.385768Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T10-22-22.807824Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T10-22-22.369072Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T06-06-21.702519Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T06-06-20.323982Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-16T01-50-18.707950Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-16T01-50-18.336168Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-15T21-34-16.489545Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-15T21-34-16.94108Z",
+                    "type": "started"
+                },
+                {
+                    "timestamp": "2016-10-15T17-18-14.456592Z",
+                    "type": "crashed",
+                    "reason": "unauthorized: unauthorized to access or create database https://arbuild:*****@puhirema.cloudant.com/b_dw_storageref/"
+                },
+                {
+                    "timestamp": "2016-10-15T17-18-14.52615Z",
+                    "type": "started"
+                }
+            ],
+            "node": "dbcore@db2.bigblue.cloudant.net"
+        }
+    ]
+}
+```
