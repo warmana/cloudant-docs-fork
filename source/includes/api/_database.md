@@ -412,13 +412,14 @@ while maintaining validity of the JSON output.
 
 #### The `filter` argument
 
-The `filter` parameter designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
+The `filter` argument designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
 Additionally, there are several built-in filters available:
 
-* `_design`: The `_design` filter accepts only changes to design documents.
-* `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
+*	`_design`: The `_design` filter accepts only changes to design documents.
+*	`_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
 *	`_selector`: accepts only changes for documents which match a specified selector, defined using the same [selector syntax](cloudant_query.html#selector-syntax) used for [`_find`](cloudant_query.html#finding-documents-using-an-index).
 *	`_view`: allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
+
 <div></div>
 
 #### The `since` argument

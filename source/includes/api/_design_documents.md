@@ -948,6 +948,7 @@ curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=_view&view=$DESIGN
     ]
 }
 ```
+
 The `_view` filter allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
 
 If the map function emits any output as a result of processing a given document,
