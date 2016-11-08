@@ -36,22 +36,22 @@ function(employee) {
 > Simplified example data:
 
 ```json
-{
-	"_id":"23598567",
-	"number":"23598567",
-	"training":"2014/05/21 10:00:00"
-}
-
-{
-	"_id":"10278947",
-	"number":"10278947"
-}
-
-{
-	"_id":"23598567",
-	"number":"23598567",
-	"training":"2014/07/30 12:00:00"
-}
+[
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/05/21 10:00:00"
+    },
+    {
+        "_id":"10278947",
+        "number":"10278947"
+    },
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/07/30 12:00:00"
+    }
+]
 ```
 
 > Example response from running the view query
@@ -360,7 +360,7 @@ curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_t
 }
 ```
 
-Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Optional | Type | Default | Supported values
+Argument | Description | Optional | Type | Default | Supported values
 ---------|-------------|----------|------|---------|-----------------
 `descending` | Return the documents in 'descending by key' order. | yes | Boolean | false |
 `endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | |
@@ -671,7 +671,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
      -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
 
-> Example response, returning the full document for each recipe:
+> Example response (abbreviated), returning the full document for each recipe:
 
 ```json
 {
@@ -687,8 +687,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
                   "ingredient" : "onion",
                   "ingredtext" : "onion, peeled and chopped",
                   "meastext" : "1"
-               },
-            ...
+               }
             ],
             "keywords" : [
                "cook method.hob, oven, grill@hob",
@@ -724,7 +723,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
             "_rev" : "1-bff6edf3ca2474a243023f2dad432a5a",
             "cooktime" : "92",
             "ingredients" : [
-...            ],
+            ],
             "keywords" : [
                "diet@dairy-free",
                "diet@peanut-free",
