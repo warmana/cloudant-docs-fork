@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Data Warehousing
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 A database is essential for storing data.
 But being able to apply that data for business purposes is what makes a database valuable:

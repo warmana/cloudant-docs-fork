@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Attachments
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 If you want to store data, use attachments.
 Attachments are Binary Large Object ([BLOb](http://en.wikipedia.org/wiki/Binary_large_object)) files contained within documents.

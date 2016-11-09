@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Query
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Cloudant Query is a declarative JSON querying syntax for Cloudant databases.
 Cloudant Query wraps several index types, starting with the Primary Index out-of-the-box.

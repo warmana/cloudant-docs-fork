@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # JSON
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 The majority of requests and responses to and from Cloudant use the JavaScript Object Notation (JSON) for formatting the content and structure of the data and responses.
 

@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Account
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Your account is your entry point for the {{site.data.keyword.cloudant}} API.
 You access your account using the address prefix

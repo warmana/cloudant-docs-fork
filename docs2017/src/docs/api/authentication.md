@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Authentication
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Authentication means proving who you are.
 This is typically done by providing your user credentials for verification.

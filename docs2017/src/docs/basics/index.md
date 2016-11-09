@@ -1,4 +1,15 @@
-# ![alt tag](../images/cloudantbasics_icon.png) Cloudant Basics
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
+# Cloudant Basics
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 If it's your first time here,
 scan this section before you scroll further.

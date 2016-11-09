@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Back up your data using replication
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Database backups protect your data against potential loss or corruption.
 You can use Cloudant’s replication facility to create a database backup,

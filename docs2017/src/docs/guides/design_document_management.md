@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Design Document Management
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 *Article contributed by Glynn Bird, Developer Advocate at IBM Cloudant, [glynn@cloudant.com](mailto:glynn@cloudant.com)*
 

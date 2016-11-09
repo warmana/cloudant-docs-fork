@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # AcID
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 ACID is an acronym for [atomic](acid.html#acid_atomic), [consistent](acid.html#acid_consistent), [isolated](acid.html#acid_isolated), [durable](acid.html#acid_durable), simply a set of properties which guarantee that transactions with a database are processed and reported reliably. Cloudant is AcID: the “c” is lowercase because Cloudant is [eventually consistent](cap_theorem.html) rather than strongly consistent.
 

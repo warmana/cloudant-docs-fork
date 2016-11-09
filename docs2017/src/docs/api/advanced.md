@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Advanced
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 These endpoints provide information about the state of the cluster,
 details about revision history,

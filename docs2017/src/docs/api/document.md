@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Documents
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Documents are [JSON objects](http://en.wikipedia.org/wiki/JSON#Data_types.2C_syntax_and_example).
 Documents are containers for your data, and are the basis of the Cloudant database.

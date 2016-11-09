@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # HTTP
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 This section provides details of the [HTTP Headers](#http-headers) and [HTTP Status Codes](#http-status-codes) you need to know when using Cloudant.
 

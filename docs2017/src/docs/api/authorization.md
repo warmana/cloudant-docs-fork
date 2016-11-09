@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Authorization
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 When you have [authenticated](authentication.html), the next test is to decide whether you
 are permitted to perform certain tasks. This is called authorization.

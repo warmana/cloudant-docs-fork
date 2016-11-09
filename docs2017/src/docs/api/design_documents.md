@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Design Documents
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Instead of storing data in a document,
 you might also have special documents that store other content, such as functions.

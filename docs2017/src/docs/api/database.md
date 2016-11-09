@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Databases
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Cloudant databases contain JSON objects.
 These JSON objects are called [documents](document.html#documents).

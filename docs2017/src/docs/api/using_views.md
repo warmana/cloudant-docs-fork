@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Using Views
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Views enable you to search for content within a database,
 that matches specific criteria.

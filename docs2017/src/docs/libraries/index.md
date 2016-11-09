@@ -1,4 +1,15 @@
-# ![alt tag](../images/libraries_icon.png) Client Libraries
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
+# Client Libraries
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Client libraries are the tools that let you develop your own applications to work with Cloudant databases.
 

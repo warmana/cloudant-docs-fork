@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # CouchApps
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Because Cloudant can host raw file data, like images, and serve them
 over HTTP, then theoretically it can host all the static files necessary

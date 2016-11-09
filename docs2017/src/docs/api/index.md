@@ -1,4 +1,15 @@
-# ![alt tag](../images/apireference_icon.png) API Reference
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
+# API Reference
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 The Cloudant API reference is intended to be a comprehensive and living catalog of Cloudant's capabilities.
 Contributions are welcome through [Cloudant Labs on GitHub](https://github.com/cloudant-labs/slate).

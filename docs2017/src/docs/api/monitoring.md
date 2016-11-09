@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Monitoring a Cloudant cluster
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 A key part of ensuring best performance,
 or troubleshooting any problems,

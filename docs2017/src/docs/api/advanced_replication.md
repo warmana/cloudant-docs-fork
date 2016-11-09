@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Advanced replication
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 This section contains details about more advanced replication concepts and tasks.
 

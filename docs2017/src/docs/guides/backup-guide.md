@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Back up your data
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 <aside class="warning" role="complementary" aria-label="betaonly0">This guide refers to a <b>Beta</b> daily incremental backup capability,
 available only on request to Enterprise customers.

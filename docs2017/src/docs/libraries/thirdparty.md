@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Third-party client libraries
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 <aside class="warning" role="complementary" aria-label="notmaintained2">Third-party client libraries are not maintained or supported by Cloudant.</aside>
 

@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # IBM Bluemix
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Cloudant is also available as an [IBM Bluemix service](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db/).
 Bluemix is an open-standards, cloud platform for building, running, and managing applications.

@@ -1,4 +1,15 @@
-# ![alt tag](images/documentation_icon.png) Overview
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
+# Overview
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 This is the online documentation for the [IBM Cloudant Database-as-a-Service (DBaaS)](https://cloudant.com/),
 all intended to help you get going quickly.

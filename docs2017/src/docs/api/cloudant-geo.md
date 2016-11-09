@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Cloudant Geospatial
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 Cloudant Geospatial, or 'Cloudant Geo', combines the advanced geospatial queries of a Geographic Information System (GIS) with the flexibility and scalability of Cloudant's database-as-a-service (DBaaS) capabilities.
 

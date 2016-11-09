@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Active tasks
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 The `/_active_tasks` endpoint provides a list of the tasks running on the server.
 This is often helpful when [monitoring](monitoring.html) the performance of your system.

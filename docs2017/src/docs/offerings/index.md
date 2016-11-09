@@ -1,4 +1,15 @@
-# ![alt tag](../images/cloudantbasics_icon.png) Cloudant Offerings
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
+# Cloudant Offerings
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 ## Database as a Service
 

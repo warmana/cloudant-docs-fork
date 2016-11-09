@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Back up your data
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 To protect your business from data loss and corruption,
 you should backup your data.

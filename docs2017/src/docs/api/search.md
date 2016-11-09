@@ -1,4 +1,15 @@
+---
+
+copyright:
+  years: 2015, 2016
+lastupdated: "2016-11-09"
+
+---
+
 # Search
+
+Last updated: 2016-11-09
+{: .last-updated}
 
 > Example design document:
 
@@ -637,12 +648,12 @@ function(doc) {
 > An example query that sorts cities in the northern hemisphere by their distance to New York:
 
 ```shell
-curl 'https://docs.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'
+curl 'https://$ACCOUNT.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'
 ```
 
 ```http
 GET /examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>" HTTP/1.1
-Host: docs.cloudant.com
+Host: $ACCOUNT.cloudant.com
 ```
 
 > Example response
