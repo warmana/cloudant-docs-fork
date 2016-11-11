@@ -188,7 +188,6 @@ The elements of the returned structure are shown in the following table.
 <li><code>external</code>: Size in bytes of uncompressed user data. This is the billable data size. The <code>other/data_size</code> field is an alias for the <code>external</code> field.</li> 
 <li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li></ul> 
 </tr>
-
 </tbody>
 </table>
 
