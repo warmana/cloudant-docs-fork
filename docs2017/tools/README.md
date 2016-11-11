@@ -41,12 +41,21 @@ Style
 
 Sample code illustrating how to invoke a capability should be provided in the following order:
 
--   Example of &lt;activity&gt;, using HTTP:
--   Example of &lt;activity&gt;, using the command line:
--   Example of &lt;activity&gt;, using Javascript:
--   Example of &lt;activity&gt;, using Python:
--   ...
--   Example response: 
+_Example of &lt;activity&gt;, using HTTP:_
+
+_Example of &lt;activity&gt;, using the command line:_
+
+_Example of &lt;activity&gt;, using Javascript:_
+
+_Example of &lt;activity&gt;, using Python:_
+
+	Sample code line 1
+	Sample code line 2
+
+_Example response:_
+ 
+ 	Sample response line 1
+ 	Sample response line 2
 
 Basically,
 HTTP first,

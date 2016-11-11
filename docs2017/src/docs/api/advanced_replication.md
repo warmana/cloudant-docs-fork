@@ -26,7 +26,7 @@ In particular, once replication starts, three new fields are added automatically
 
 Field | Detail
 ------|-------
-`_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `_active_tasks/`.
+`_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `_active_tasks`.
 `_replication_state` | The current state of the replication.
 `_replication_state_time` | An [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
 
@@ -36,41 +36,41 @@ The possible values for the `_replication_state` are:
 -	`error`: An error occurred during replication.
 -	`triggered`: The replication has started and is in progress.
 
--   Example replication document, prior to being `PUT` into `_replicator`:
-
-        {
-            "_id": "my_rep",
-            "source":  "https://username:password@myserver.com:5984/fromthis",
-            "target":  "https://username:password@username.cloudant.com/tothat",
-            "create_target":  true
-        }
-
--   Example of automatic update to replication document, updated once replication starts:
-
-        {
-            "_id": "my_rep",
-            "source": "https://username:password@myserver.com:5984/fromthis",
-            "target": "https://username:password@username.cloudant.com/tothat",
-            "create_target": true
-            "_replication_id": "c0ebe9256695ff083347cbf95f93e280",
-            "_replication_state": "triggered",
-            "_replication_state_time": "2011-06-07T16:54:35+01:00"
-        }
-
-When the replication finishes,
-it updates the `_replication_state` field with the value `completed`,
-and the `_replication_state_time` field with the time that the completion status was recorded.
-
-Example of replication document once replication has completed:
+_Example replication document, prior to being `PUT` into `_replicator`:_
 
 	{
 		"_id": "my_rep",
 		"source":  "https://username:password@myserver.com:5984/fromthis",
 		"target":  "https://username:password@username.cloudant.com/tothat",
-		"create_target":  true,
-		"_replication_id":  "c0ebe9256695ff083347cbf95f93e280",
-		"_replication_state":  "completed",
-		"_replication_state_time":  "2011-06-07T16:56:21+01:00"
+		"create_target":  true
+	}
+
+_Example of automatic update to replication document, updated once replication starts:_
+
+	{
+		"_id": "my_rep",
+		"source": "https://username:password@myserver.com:5984/fromthis",
+		"target": "https://username:password@username.cloudant.com/tothat",
+		"create_target": true
+		"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
+		"_replication_state": "triggered",
+		"_replication_state_time": "2011-06-07T16:54:35+01:00"
+	}
+
+When the replication finishes,
+it updates the `_replication_state` field with the value `completed`,
+and the `_replication_state_time` field with the time that the completion status was recorded.
+
+_Example of automatic update to replication document, updated once replication starts:_
+
+	{
+		"_id": "my_rep",
+		"source": "https://username:password@myserver.com:5984/fromthis",
+		"target": "https://username:password@username.cloudant.com/tothat",
+		"create_target": true
+		"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
+		"_replication_state": "completed",
+		"_replication_state_time": "2011-06-07T16:56:21+01:00"
 	}
 
 A continuous replication can never have a `completed` state.
@@ -83,7 +83,7 @@ In addition, checkpoints for replication are [enabled by default](replication.ht
 
 To enable authentication during replication, include a username and password in the database URL. The replication process uses the supplied values for HTTP Basic Authentication.
 
-Example of specifying username and password values for accessing source and target databases during replication:
+_Example of specifying username and password values for accessing source and target databases during replication:_
 
 	{
 		"source": "https://username:password@example.com/db", 
@@ -108,7 +108,7 @@ A filter function returns a `true` or `false` value.
 If the result is true,
 the document is replicated.
 
-A simple example of a filter function:
+_A simple example of a filter function:_
 
 	function(doc, req) {
 		return !!(doc.type && doc.type == "foo");
@@ -116,7 +116,7 @@ A simple example of a filter function:
 
 Filters are stored under the topmost `filters` key of the design document.
 
-A simple example of storing a filter function in a design document:
+_A simple example of storing a filter function in a design document:_
 
 	{
 		"_id": "_design/myddoc",
@@ -131,7 +131,7 @@ A filtered replication is invoked by using a JSON statement that identifies:
 -	The target database.
 -	The name of the filter stored under the `filters` key of the design document.
 
-Example JSON for invoking a filtered replication:
+_Example JSON for invoking a filtered replication:_
 
 	{
 		"source": "http://username:password@example.org/example-database",
@@ -141,7 +141,7 @@ Example JSON for invoking a filtered replication:
 
 Arguments can be supplied to the filter function by including key:value pairs in the `query_params` field of the invocation.
 
-Example JSON for invoking a filtered replication with supplied parameters:
+_Example JSON for invoking a filtered replication with supplied parameters:_
 
 	{
 		"source": "http://username:password@example.org/example-database",
@@ -161,7 +161,7 @@ Instead,
 to replicate specific documents,
 add the list of keys as an array in the `doc_ids` field.
 
-Example replication of specific documents:
+_Example replication of specific documents:_
 
 	{
 		"source": "http://username:password@example.org/example-database",
@@ -174,7 +174,7 @@ Example replication of specific documents:
 If you want replication to pass through an HTTP proxy,
 provide the proxy details in the `proxy` field of the replication data.
 
-Example showing replication through a proxy:
+_Example showing replication through a proxy:_
 
 	{
 		"source": "http://username:password@username.cloudant.com/example-database",
@@ -209,7 +209,7 @@ This validation function also ensures that a non admin user cannot set a user na
 that does not correspond to their user name.
 The same principle also applies for roles.
 
-Example delegated replication document:
+_Example delegated replication document:_
 
 	{
 		"_id": "my_rep",
@@ -256,7 +256,7 @@ by including them in the replication document.
 -   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of ''\_changes'' feed rows). Larger values for the batch size might result in better performance. Smaller values mean that checkpointing is done more frequently. Default value is 500.
 -	`worker_processes` - The number of processes the replicator uses (per replication) to transfer documents from the source to the target database. Higher values can imply better throughput (due to more parallelism of network and disk IO) at the expense of more memory and eventually CPU. Default value is 4.
 
-Example of including performance options in a replication document:
+_Example of including performance options in a replication document:_
 
 	{
 		"source": "https://username:password@example.com/example-database",

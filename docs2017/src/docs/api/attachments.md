@@ -2,13 +2,13 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-10"
 
 ---
 
 # Attachments
 
-Last updated: 2016-11-09
+Last updated: 2016-11-10
 {: .last-updated}
 
 If you want to store data, use attachments.
@@ -20,61 +20,61 @@ Examples of BLObs would be images and multimedia.
 <aside class="warning" role="complementary" aria-label="usebase64">If you include the attachment as an '[inline](#inline)' component of the overall JSON,
 the attachment content should be represented using BASE64 form.</aside>
 
-The content type corresponds to a [MIME type][mime].
+The content type corresponds to a [MIME type](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types).
 For example, if you want to attach a `.jpg` image file to a document,
 you specify the attachment MIME type as `image/jpeg`.
 
-<aside class="warning" role="complementary" aria-label="keepattachmentssmall">As a best practice, keep attachments small in size and number because attachments can impact performance.</aside>
+>	**Note**: As a best practice, keep attachments small in size and number because attachments can impact performance.
 
 ## Create / Update
 
-> Example instruction for creating or updating an attachment:
-
-```http
-PUT /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
-Content-Type: $$ATTACHMENT_MIME_TYPE
-```
-
-```shell
-curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
-     -X PUT \
-     -H "Content-Type: $ATTACHMENT_MIME_TYPE" \
-     --data-binary @$ATTACHMENT_FILEPATH
-```
-
-```javascript
-var nano = require('nano');
-var fs = require('fs');
-var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
-var db = account.use($DATABASE);
-
-fs.readFile($FILEPATH, function (err, data) {
-  if (!err) {
-    db.attachment.insert($DOCUMENT_ID, $ATTACHMENT, data, $ATTACHMENT_MIME_TYPE, {
-      rev: $REV
-    }, function (err, body) {
-      if (!err)
-        console.log(body);
-    });
-  }
-});
-```
-
 To create a new attachment at the same time as creating a new document,
-include the attachment as an '[inline](#inline)' component of the JSON content.
+include the attachment as an '[inline](attachments.html#inline)' component of the JSON content.
 
 To create a new attachment on an existing document,
 or to update an attachment on a document,
 make a PUT request with the document's latest `_rev` to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
-The attachment's [content type][mime] must be specified using the `Content-Type` header.
+The attachment's [content type](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types) must be specified using the `Content-Type` header.
 The `$ATTACHMENT` value is the name by which the attachment is associated with the document.
 
-<aside class="information" role="complementary" aria-label="attachmentsmustbeunique">You can create more than one attachment for a document;
-simply ensure that the `$ATTACHMENT` value for each attachment is unique within the document.</aside>
+>	**Note**: You can create more than one attachment for a document;
+simply ensure that the `$ATTACHMENT` value for each attachment is unique within the document.
 
-<div></div>
+_Example instruction for creating or updating an attachment, using HTTP:_
 
-> Example response:
+	PUT /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
+	Content-Type: $$ATTACHMENT_MIME_TYPE
+
+_Example instruction for creating or updating an attachment, using the command line:_
+
+	curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
+		 -X PUT \
+		 -H "Content-Type: $ATTACHMENT_MIME_TYPE" \
+		 --data-binary @$ATTACHMENT_FILEPATH
+
+_Example instruction for creating or updating an attachment, using Javascript:_
+
+	var nano = require('nano');
+	var fs = require('fs');
+	var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
+	var db = account.use($DATABASE);
+	fs.readFile($FILEPATH, function (err, data) {
+		if (!err) {
+			db.attachment.insert($DOCUMENT_ID, $ATTACHMENT, data, $ATTACHMENT_MIME_TYPE, {
+				rev: $REV
+			},
+			function (err, body) {
+				if (!err)
+					console.log(body);
+			}
+		}
+	});
+
+The response contains the document ID and the new document revision.
+
+>	**Note**: Attachments do not have their own revisions. Instead, updating or creating an attachment changes the revision of the document it is attached to.
+
+_Example response:_
 
 ```json
 {
@@ -83,8 +83,6 @@ simply ensure that the `$ATTACHMENT` value for each attachment is unique within 
   "rev" : "9-247bb19a41bfd9bfdaf5ee6e2e05be74"
 }
 ```
-
-The response contains the document ID and the new document revision. Note that attachments do not have their own revisions. Instead, updating or creating an attachment changes the revision of the document it is attached to.
 
 ## Read
 
