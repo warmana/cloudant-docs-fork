@@ -2,29 +2,37 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-10"
+lastupdated: "2016-11-11"
 
 ---
 
 # Attachments
 
-Last updated: 2016-11-10
+Last updated: 2016-11-11
 {: .last-updated}
 
-If you want to store data, use attachments.
-Attachments are Binary Large Object ([BLOb](http://en.wikipedia.org/wiki/Binary_large_object)) files contained within documents.
-The BLOb is stored in the `_attachments` component of the document.
-The BLOb includes data about the attachment name, the type of the attachment, and the actual content.
-Examples of BLObs would be images and multimedia.
+Another way to store data is to use attachments.
+Attachments are Binary Large Object ([BLOB](http://en.wikipedia.org/wiki/Binary_large_object))
+files contained within documents.
+The BLOB is stored in the `_attachments` component of the document.
+The BLOB holds data including:
 
-<aside class="warning" role="complementary" aria-label="usebase64">If you include the attachment as an '[inline](#inline)' component of the overall JSON,
-the attachment content should be represented using BASE64 form.</aside>
+-	The attachment name.
+-	The type of the attachment.
+-	The actual content.
+
+Examples of BLOBs would be images and multimedia.
+
+>	**Note**: If you include the attachment as an '[inline](#inline)' component of the overall JSON,
+the attachment content should be represented using BASE64 form.
 
 The content type corresponds to a [MIME type](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types).
-For example, if you want to attach a `.jpg` image file to a document,
+For example,
+if you want to attach a `.jpg` image file to a document,
 you specify the attachment MIME type as `image/jpeg`.
 
->	**Note**: As a best practice, keep attachments small in size and number because attachments can impact performance.
+>	**Note**: As a best practice,
+keep attachments small in size and number because attachments can impact performance.
 
 ## Create / Update
 
@@ -34,11 +42,12 @@ include the attachment as an '[inline](attachments.html#inline)' component of th
 To create a new attachment on an existing document,
 or to update an attachment on a document,
 make a PUT request with the document's latest `_rev` to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
-The attachment's [content type](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types) must be specified using the `Content-Type` header.
+The attachment's [content type](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types)
+must be specified using the `Content-Type` header.
 The `$ATTACHMENT` value is the name by which the attachment is associated with the document.
 
->	**Note**: You can create more than one attachment for a document;
-simply ensure that the `$ATTACHMENT` value for each attachment is unique within the document.
+>	**Note**: You can create more than one attachment for a document by ensuring
+that the `$ATTACHMENT` value for each attachment is unique within the document.
 
 _Example instruction for creating or updating an attachment, using HTTP:_
 
@@ -72,116 +81,107 @@ _Example instruction for creating or updating an attachment, using Javascript:_
 
 The response contains the document ID and the new document revision.
 
->	**Note**: Attachments do not have their own revisions. Instead, updating or creating an attachment changes the revision of the document it is attached to.
+>	**Note**: Attachments do not have their own revisions.
+Instead,
+updating or creating an attachment changes the revision of the document it is attached to.
 
 _Example response:_
 
-```json
-{
-  "id" : "FishStew",
-  "ok" : true,
-  "rev" : "9-247bb19a41bfd9bfdaf5ee6e2e05be74"
-}
-```
+	{
+		"id" : "FishStew",
+		"ok" : true,
+		"rev" : "9-247bb19a41bfd9bfdaf5ee6e2e05be74"
+	}
 
 ## Read
 
-> Example shell instruction for reading an attachment:
+To retrieve an attachment,
+make a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
+The body of the response is the raw content of the attachment.
+
+_Example of reading an attachment, using HTTP:_
+
+	GET /$DATABASE/$DOCUMENT_ID/$ATTACHMENT HTTP/1.1
+
+_Example of reading an attachment, using the command line:_
 
 	curl https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT \
 	     -u $USERNAME >blob_content.dat
 	# store the response content into a file for further processing.
 
-> Example instruction for reading an attachment:
+_Example of reading an attachment, using Javascript:_
 
-```http
-GET /$DATABASE/$DOCUMENT_ID/$ATTACHMENT HTTP/1.1
-```
-
-```javascript
-var nano = require('nano');
-var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
-var db = account.use($DATABASE);
-
-db.attachment.get($DOCUMENT_ID, $FILENAME, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
-
-To retrieve an attachment,
-make a GET request to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
-The body of the response is the raw content of the attachment.
+	var nano = require('nano');
+	var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
+	var db = account.use($DATABASE);
+	db.attachment.get($DOCUMENT_ID, $FILENAME, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
 
 ## Delete
 
-> Example instruction for deleting an attachment:
-
-```http
-DELETE /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
-     -u $USERNAME \
-     -X DELETE
-```
-
-```javascript
-var nano = require('nano');
-var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
-var db = account.use($DATABASE);
-
-db.attachment.destroy($DOCUMENT_ID, $FILENAME, $REV, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
-
-To delete an attachment, make a DELETE request with the document's latest `_rev` to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
+To delete an attachment,
+make a `DELETE` request with the document's latest `_rev`
+to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
 If you do not supply the latest `_rev`,
 the response is a [409 error](http.html#409).
 
-<div></div>
+_Example of deleting an attachment, using HTTP:_
 
-> Example response:
+	DELETE /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
 
-```json
-{
-  "ok": true,
-  "id": "DocID",
-  "rev": "3-aedfb06537c1d77a087eb295571f7fc9"
-}
-```
+_Example of deleting an attachment, using the command line:_
 
-If the deletion is successful, the response contains `"ok": true`, and the ID and new revision of the document.
+	curl https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
+		-u $USERNAME \
+		-X DELETE
+
+_Example of deleting an attachment, using Javascript:_
+
+	var nano = require('nano');
+	var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
+	var db = account.use($DATABASE);
+	db.attachment.destroy($DOCUMENT_ID, $FILENAME, $REV, function (err, body) {
+		if (!err) {
+			console.log(body);
+		}
+	});
+
+If the deletion is successful,
+the response contains `"ok": true`,
+and the ID and new revision of the document.
+
+_Example response after successfuly deleting an attachment:_
+
+	{
+		"ok": true,
+		"id": "DocID",
+		"rev": "3-aedfb06537c1d77a087eb295571f7fc9"
+	}
 
 ## Inline
 
-> Example JSON content that includes an inline attachment of a jpeg image:
-
-```json
-{
-  "_id":"document_with_attachment",
-  "_attachments":
-  {
-    "name_of_attachment":
-    {
-      "content_type":"image/jpeg",
-      "data": "iVBORw0KGgoAA... ...AASUVORK5CYII="
-    }
-  }
-}
-```
-
 Inline attachments are attachments included as part of the JSON content.
-The content must be provided using BASE64 representation,
+The content must be provided using [BASE64](https://en.wikipedia.org/wiki/Base64) representation,
 as shown in the example.
 
 A full list of media types is available
 [here](http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types).
+
+_Example JSON document that includes an inline attachment of a jpeg image:_
+
+	{
+		"_id":"document_with_attachment",
+		"_attachments":
+		{
+			"name_of_attachment": {
+				"content_type":"image/jpeg",
+				"data": "iVBORw0KGgoAA... ...AASUVORK5CYII="
+			}
+		}
+	}
 
 ## Performance considerations
 
@@ -193,7 +193,11 @@ having a large number of attachments can have an adverse performance impact duri
 For example,
 if your application requires lots of images to be stored as attachments,
 or has large images,
-a better approach would be to use an alternative BLOb storage mechanism for the images,
-with the image metadata (such as URLs) in Cloudant.
+a better approach would be to use an alternative [BLOB](https://en.wikipedia.org/wiki/Binary_large_object)
+storage mechanism for the images.
+You could then use Cloudant to keep
+the image metadata,
+such as URLs to the BLOB store.
 
-You might find it helpful to carry out performance testing for your specific application to determine which approach works best for your circumstances.  
+You might find it helpful to carry out performance testing for your specific application
+to determine which approach works best for your circumstances.  

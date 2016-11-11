@@ -249,12 +249,38 @@ it defaults to the empty list `[ ]`.
 Several performance-related options can be set for a replication,
 by including them in the replication document.
 
--   `connection_timeout` - The maximum period of inactivity for a connection in milliseconds. If a connection is idle for this period of time, its current request will be retried. Default value is 30000 milliseconds (30 seconds).
--   `http_connections` - The maximum number of HTTP connections per replication. For push replications, the effective number of HTTP connections used is min(worker\_processes + 1, http\_connections). For pull replications, the effective number of connections used corresponds to this parameter's value. Default value is 20.
--   `retries_per_request` - The maximum number of retries per request. Before a retry, the replicator will wait for a short period of time before repeating the request. This period of time doubles between each consecutive retry attempt. This period of time never goes beyond 5 minutes and its minimum value (before the first retry is attempted) is 0.25 seconds. The default value of this parameter is 10 attempts.
--   `socket_options` - A list of options to pass to the connection sockets. The available options can be found in the [documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). Default value is `[{keepalive, true}, {nodelay, false}]`.
--   `worker_batch_size` - Workers process batches with the size defined by this parameter (the size corresponds to number of ''\_changes'' feed rows). Larger values for the batch size might result in better performance. Smaller values mean that checkpointing is done more frequently. Default value is 500.
--	`worker_processes` - The number of processes the replicator uses (per replication) to transfer documents from the source to the target database. Higher values can imply better throughput (due to more parallelism of network and disk IO) at the expense of more memory and eventually CPU. Default value is 4.
+-   `connection_timeout` - The maximum period of inactivity for a connection in milliseconds.
+	If a connection is idle for this period of time,
+	its current request will be retried.
+	Default value is 30000 milliseconds (30 seconds).
+-   `http_connections` - The maximum number of HTTP connections per replication.
+	For push replications,
+	the effective number of HTTP connections used is `min(worker_processes + 1, http_connections)`.
+	For pull replications,
+	the effective number of connections used corresponds to this parameter's value.
+	Default value is 20.
+-   `retries_per_request` - The maximum number of retries per request.
+	Before a retry,
+	the replicator waits for a short period of time before repeating the request.
+	This period of time doubles between each consecutive retry attempt,
+	and never goes beyond 5 minutes.
+	The minimum value before the first retry is attempted is 0.25 seconds.
+	The default value is 10 attempts.
+-   `socket_options` - A list of options to pass to the connection sockets.
+	The available options can be found in the
+	[documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). 
+	Default value is `[{keepalive, true},{nodelay, false}]`.
+-   `worker_batch_size` - Worker processes perform batches of replication tasks,
+	where the batch size is defined by this parameter.
+	The size corresponds to the number of `_changes` feed rows.
+	Larger values for the batch size might result in better performance.
+	Smaller values mean that checkpointing is done more frequently.
+	Default value is 500.
+-	`worker_processes` - The number of processes the replicator uses in each replication task to transfer
+	documents from the source to the target database.
+	Higher values might produce better throughput because of greater parallelism in network and disk IO activities,
+	but this comes at the cost of requiring more memory and potentially CPU time.
+	Default value is 4.
 
 _Example of including performance options in a replication document:_
 
