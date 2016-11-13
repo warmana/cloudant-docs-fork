@@ -2,13 +2,13 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-13"
 
 ---
 
 # Cloudant Basics
 
-Last updated: 2016-11-09
+Last updated: 2016-11-13
 {: .last-updated}
 
 If it's your first time here,
@@ -21,12 +21,18 @@ and [Guides](../guides/index.html#-guides) assume you know some basic things abo
 
 To access {{site.data.keyword.cloudant}},
 you must have either a [{{site.data.keyword.cloudant}} account](../api/account.html),
-or a [Bluemix account](../offerings/bluemix.html).
+or an [{{site.data.keyword.bluemix}} account](../offerings/bluemix.html).
 
 ## HTTP API
-All requests to Cloudant go over the web, which means any system that can speak to the web, can speak to Cloudant. All language-specific libraries for Cloudant are really just wrappers that provide some convenience and linguistic niceties to help you work with a simple API. Many users even choose to use raw HTTP libraries for working with Cloudant.
 
-Specific details about how Cloudant uses HTTP is provided in the [HTTP topic of the API Reference](../api/http.html).
+All requests to Cloudant go over the web.
+This means any system that can speak to the web can speak to Cloudant.
+All language-specific libraries for Cloudant are really just wrappers that provide
+some convenience and linguistic niceties to help you work with a simple API.
+Many users choose to use raw HTTP libraries for working with Cloudant.
+
+Specific details about how Cloudant uses HTTP are
+provided in the [HTTP topic of the API Reference](../api/http.html).
 
 Cloudant supports the following HTTP request methods:
 
@@ -40,11 +46,11 @@ Cloudant supports the following HTTP request methods:
 
 -   `POST`
 
-    Upload data. Within Cloudant's API, `POST` is used to set values, including uploading documents, setting document values, and starting certain administration commands.
+    Upload data. Within Cloudant's API, the `POST` method is used to set values, upload documents, set document values, and start some administration commands.
 
 -   `PUT`
 
-    Used to put a specified resource. In Cloudant's API, `PUT` is used to create new objects, including databases, documents, views and design documents.
+    Used to 'store' a specific resource. In Cloudant's API, `PUT` is used to create new objects, including databases, documents, views, and design documents.
 
 -   `DELETE`
 
@@ -58,19 +64,27 @@ If the client (such as some web browsers) does not support using these HTTP meth
 
 ### Method not allowed error
 
-> Example error message
+If you use an unsupported HTTP request type with a URL that does not support the specified type,
+a [405](../api/http.html#405) error is returned,
+listing the supported HTTP methods, as shown in the following example.
 
-```json
-{
-    "error":"method_not_allowed",
-    "reason":"Only GET,HEAD allowed"
-}
-```
+_Example error message in response to an unsupported request:_
 
-If you use an unsupported HTTP request type with a URL that does not support the specified type, a [405](../api/http.html#405) error is returned, listing the supported HTTP methods, as shown in the example.
+	{
+		"error":"method_not_allowed",
+		"reason":"Only GET,HEAD allowed"
+	}
 
 ## JSON
-Cloudant stores documents using JSON (JavaScript Object Notation) encoding, so anything encoded into JSON can be stored as a document. Files like images, videos, and audio are called BLObs (binary large objects) and can be stored as attachments within documents.
+
+Cloudant stores documents using JSON (JavaScript Object Notation) encoding,
+so anything encoded into JSON can be stored as a document.
+Files containing media,
+such as images,
+videos,
+and audio,
+are called BLOBs (Binary Large OBjects),
+and can be stored as attachments associated with documents.
 
 More information about JSON can be found in the [JSON Guide](../guides/json.html).
 
@@ -78,18 +92,38 @@ More information about JSON can be found in the [JSON Guide](../guides/json.html
 
 ## Distributed Systems
 
-Cloudant's API enables you to interact with a collaboration of numerous machines, called a cluster. The machines in a cluster must be in the same datacenter, but can be within different 'pods' in that datacenter. Using different pods helps improve the High Availability characteristics of Cloudant.
+Cloudant's API enables you to interact with a collaboration of numerous machines,
+called a cluster.
+The machines in a cluster must be in the same datacenter,
+but can be within different 'pods' in that datacenter.
+Using different pods helps improve the High Availability characteristics of Cloudant.
 
-An advantage of clustering is that when you need more computing capacity, you just add more machines. This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.
+An advantage of clustering is that when you need more computing capacity,
+you just add more machines.
+This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.
 
-For more information about Cloudant and distributed system concepts, see the [CAP Theorem](../guides/cap_theorem.html) guide.
+For more information about Cloudant and distributed system concepts,
+see the [CAP Theorem](../guides/cap_theorem.html) guide.
 
 ## Replication
 
-[Replication](../api/replication.html) is a procedure followed by Cloudant, [CouchDB](http://couchdb.apache.org/), [PouchDB](http://pouchdb.com/), and others. It synchronizes the state of two databases so that their contents are identical.
+[Replication](../api/replication.html) is a procedure followed by Cloudant,
+[CouchDB](http://couchdb.apache.org/),
+[PouchDB](http://pouchdb.com/),
+and other distributed databases.
+Replication synchronizes the state of two databases so that their contents are identical.
 
-You can continuously replicate. This means that a target database updates every time the source database changes. Testing for source changes involves ongoing internal calls.
-Continuous replication can be used for backups of data, aggregation across multiple databases, or for sharing data.
+You can replicate continuously.
+This means that a target database updates every time the source database changes.
+Continuous replication can be used for backups of data,
+aggregating data across multiple databases,
+or for sharing data.
 
-<aside class="warning" role="complementary" aria-label="internalcalls">Continuous replication can result in a large number of internal calls. This might affect costs for multi-tenant users of Cloudant systems. Continuous replication is disabled by default.</aside>
+However,
+continuous replication means testing continuously for any source database changes.
+This testing requires continuous internal calls,
+which might impact performance or the cost of using the database.
 
+> **Note**: Continuous replication can result in a large number of internal calls.
+This might affect costs for multi-tenant users of Cloudant systems.
+Continuous replication is disabled by default.
