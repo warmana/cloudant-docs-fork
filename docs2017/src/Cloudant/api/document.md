@@ -2,24 +2,28 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Documents
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Documents
 
 Documents are [JSON objects](http://en.wikipedia.org/wiki/JSON#Data_types.2C_syntax_and_example).
 Documents are containers for your data, and are the basis of the Cloudant database.
+{:shortdesc}
 
 All documents must have two fields:
 a unique `_id` field, and a `_rev` field.
 The `_id` field is either created by you,
 or generated automatically as a [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier) by Cloudant.
 The `_rev` field is a revision number,
-and is [essential to Cloudant's replication protocol](../guides/mvcc.html).
+and is [essential to Cloudant's replication protocol](/docs/Cloudant/guides/mvcc.html).
 In addition to these two mandatory fields,
 documents can generally contain any other content that can be described using JSON.
 
@@ -77,7 +81,7 @@ it is possible to use an underscore prefix for the field name.
 
 <div></div>
 
-Cloudant uses an [eventually consistent](../guides/cap_theorem.html#consistency) model for data.
+Cloudant uses an [eventually consistent](/docs/Cloudant/guides/cap_theorem.html#consistency) model for data.
 This means that under some conditions,
 it is possible that if your application performs a document write or update,
 followed immediately by a read of the same document,
@@ -85,7 +89,7 @@ older document content is retrieved.
 In other words,
 your application would see the document content as it was *before* the write or update occurred.
 For more information about this,
-see the topic on [Consistency](../guides/cap_theorem.html#consistency).
+see the topic on [Consistency](/docs/Cloudant/guides/cap_theorem.html#consistency).
 
 <div id="documentCreate"></div>
 
@@ -271,7 +275,7 @@ To update (or create) a document, make a PUT request with the updated JSON conte
 This error prevents you overwriting data changed by other processes. If the write quorum cannot be met, a [`202` response](http.html#202) is returned.</aside>
 
 <aside class="warning" role="complementary" aria-label="updateconflicts">
-Any document update can lead to a conflict - espescially if you replicate updated documents. To learn more about avoiding and resolving conflicts, check out our [Document Versioning and MVCC guide](../guides/mvcc.html).
+Any document update can lead to a conflict - espescially if you replicate updated documents. To learn more about avoiding and resolving conflicts, check out our [Document Versioning and MVCC guide](/docs/Cloudant/guides/mvcc.html).
 </aside>
 
 <div></div>

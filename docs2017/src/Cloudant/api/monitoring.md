@@ -2,18 +2,23 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Monitoring a Cloudant cluster
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Monitoring a Cloudant cluster
 
 A key part of ensuring best performance,
 or troubleshooting any problems,
 is monitoring the affected system.
+{:shortdesc}
+
 You want to be able to answer the question:
 "In what way has the system behavior changed as a result of any configuration or application modifications?"
 To answer the question,

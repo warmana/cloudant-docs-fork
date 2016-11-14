@@ -2,18 +2,22 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Design Documents
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Design Documents
 
 Instead of storing data in a document,
 you might also have special documents that store other content, such as functions.
 The special documents are called "design documents".
+{:shortdesc}
 
 Design documents are [documents](document.html) that have an `_id` beginning with `_design/`. They can be read and updated in the same way as any other document in the database.
 Cloudant reads specific fields and values of design documents as functions.
@@ -38,7 +42,7 @@ while design documents have an `_id` indicated by `$DESIGN_ID`.
 Cloudant deletes the indexes from the previous version,
 and recreates the index from scratch.
 If you need to make changes to a design document for a larger database,
-have a look at the [Design Document Management Guide](../guides/design_document_management.html#managing-changes-to-a-design-document).</aside>
+have a look at the [Design Document Management Guide](/docs/Cloudant/guides/design_document_management.html#managing-changes-to-a-design-document).</aside>
 
 The structure of design document is as follows:
 

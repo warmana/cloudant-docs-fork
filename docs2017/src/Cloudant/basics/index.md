@@ -2,26 +2,31 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-13"
+lastupdated: "2016-11-14"
 
 ---
 
-# Cloudant Basics
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-13
-{: .last-updated}
+# Cloudant Basics
 
 If it's your first time here,
 scan this section before you scroll further.
-The sections on [Client Libraries](../libraries/index.html#-client-libraries),
-[API Reference](../api/index.html#-api-reference),
-and [Guides](../guides/index.html#-guides) assume you know some basic things about Cloudant.
+{:shortdesc}
+
+The sections on [Client Libraries](/docs/Cloudant/libraries/index.html#-client-libraries),
+[API Reference](/docs/Cloudant/api/index.html#-api-reference),
+and [Guides](/docs/Cloudant/guides/index.html#-guides) assume you know some basic things about Cloudant.
 
 ## Connecting to Cloudant
 
 To access {{site.data.keyword.cloudant}},
-you must have either a [{{site.data.keyword.cloudant}} account](../api/account.html),
-or an [{{site.data.keyword.bluemix}} account](../offerings/bluemix.html).
+you must have either a [{{site.data.keyword.cloudant}} account](/docs/Cloudant/api/account.html),
+or an [{{site.data.keyword.bluemix}} account](/docs/Cloudant/offerings/bluemix.html).
 
 ## HTTP API
 
@@ -32,7 +37,7 @@ some convenience and linguistic niceties to help you work with a simple API.
 Many users choose to use raw HTTP libraries for working with Cloudant.
 
 Specific details about how Cloudant uses HTTP are
-provided in the [HTTP topic of the API Reference](../api/http.html).
+provided in the [HTTP topic of the API Reference](/docs/Cloudant/api/http.html).
 
 Cloudant supports the following HTTP request methods:
 
@@ -65,15 +70,18 @@ If the client (such as some web browsers) does not support using these HTTP meth
 ### Method not allowed error
 
 If you use an unsupported HTTP request type with a URL that does not support the specified type,
-a [405](../api/http.html#405) error is returned,
+a [405](/docs/Cloudant/api/http.html#405) error is returned,
 listing the supported HTTP methods, as shown in the following example.
 
 _Example error message in response to an unsupported request:_
 
-	{
-		"error":"method_not_allowed",
-		"reason":"Only GET,HEAD allowed"
-	}
+```
+{
+	"error":"method_not_allowed",
+	"reason":"Only GET,HEAD allowed"
+}
+```
+{:screen}
 
 ## JSON
 
@@ -86,11 +94,10 @@ and audio,
 are called BLOBs (Binary Large OBjects),
 and can be stored as attachments associated with documents.
 
-More information about JSON can be found in the [JSON Guide](../guides/json.html).
-
-<div id="distributed"></div>
+More information about JSON can be found in the [JSON Guide](/docs/Cloudant/guides/json.html).
 
 ## Distributed Systems
+{:distributed}
 
 Cloudant's API enables you to interact with a collaboration of numerous machines,
 called a cluster.
@@ -103,13 +110,13 @@ you just add more machines.
 This is often more cost-effective and fault-tolerant than scaling up or enhancing an existing single machine.
 
 For more information about Cloudant and distributed system concepts,
-see the [CAP Theorem](../guides/cap_theorem.html) guide.
+see the [CAP Theorem](/docs/Cloudant/guides/cap_theorem.html) guide.
 
 ## Replication
 
-[Replication](../api/replication.html) is a procedure followed by Cloudant,
-[CouchDB](http://couchdb.apache.org/),
-[PouchDB](http://pouchdb.com/),
+[Replication](/docs/Cloudant/api//replication.html) is a procedure followed by Cloudant,
+[CouchDB](http://couchdb.apache.org/){:new_window},
+[PouchDB](http://pouchdb.com/){:new_window},
 and other distributed databases.
 Replication synchronizes the state of two databases so that their contents are identical.
 

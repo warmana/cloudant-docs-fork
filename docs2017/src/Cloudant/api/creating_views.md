@@ -2,20 +2,17 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
 # Views (MapReduce)
-
-<div id="creating-views"></div>
-<div id="working-with-views"></div>
-
-Last updated: 2016-11-09
-{: .last-updated}
+{:creating-views}
+{:working-with-views}
 
 Views are used to obtain data stored within a database.
 Views are written using Javascript functions.
+{:shortdesc}
 
 ## View concepts
 

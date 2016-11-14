@@ -2,18 +2,24 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # CouchApps
 
-Last updated: 2016-11-09
-{: .last-updated}
+Cloudant can host raw file data, like images, and serve them
+over HTTP, meaning it can host all the static files necessary
+to run a website, and host them just like a web server.
+{:shortdesc}
 
-Because Cloudant can host raw file data, like images, and serve them
-over HTTP, then theoretically it can host all the static files necessary
-to run a website, and host them just like a web server. Because these
+Because these
 files would be hosted on Cloudant, the client-side JavaScript could
 access Cloudant databases. An application built this way is said to have
 a two-tier architecture, consisting of the client -- typically a browser

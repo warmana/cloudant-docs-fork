@@ -2,16 +2,28 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Managing tasks
 
-Last updated: 2016-11-09
-{: .last-updated}
+Creating new indexes over lots of data or replicating a large database can take quite a while.
+{:shortdesc}
 
-Creating new indexes over lots of data or replicating a large database can take quite a while. So how can you see whether your tasks are making progress, or if they have completed? The `_active_tasks` endpoint provides information about all ongoing tasks. However, if you start a lot of tasks, some of them might be scheduled to run later and do not show up under `_active_tasks` until they have been started.
+So how can you see whether your tasks are making progress,
+or if they have completed?
+The `_active_tasks` endpoint provides information about all ongoing tasks.
+However,
+if you start a lot of tasks,
+some of them might be scheduled to run later and do not show up under `_active_tasks`
+until they have been started.
 
 This guide tells you how to use the `_active_tasks` endpoint to monitor long-running tasks.
 The `curl` command is used to access the endpoint.

@@ -2,20 +2,24 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Data Warehousing
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Data Warehousing
 
 A database is essential for storing data.
 But being able to apply that data for business purposes is what makes a database valuable:
 being able to retrieve relevant data,
 quickly and easily,
 and putting the data to work within your applications.
+{:shortdesc}
 
 But many of the storage,
 processing,

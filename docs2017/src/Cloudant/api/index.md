@@ -2,18 +2,21 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# API Reference
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# API Reference
 
 The Cloudant API reference is intended to be a comprehensive and living catalog of Cloudant's capabilities.
 Contributions are welcome through [Cloudant Labs on GitHub](https://github.com/cloudant-labs/slate).
-The API reference content is built with [Slate](https://github.com/tripit/slate).
+{:shortdesc}
 
 ## For the cURL samples
 

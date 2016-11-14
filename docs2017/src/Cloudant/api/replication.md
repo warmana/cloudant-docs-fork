@@ -3,18 +3,22 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Replication
-
-<div id="ReplicationAPI"></div>
-
-Last updated: 2016-11-09
-{: .last-updated}
+{:ReplicationAPI}
 
 Cloudant replication is the process that synchronizes ('syncs') the state of two databases.
+{:shortdesc}
+
 Any change which has occurred in the source database is reproduced in the target database.
 You can create replications between any number of databases, whether continuous or not.
 

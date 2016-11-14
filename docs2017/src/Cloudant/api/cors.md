@@ -2,16 +2,23 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # CORS
 
-Last updated: 2016-11-09
-{: .last-updated}
+[Cross-origin resource sharing (CORS)](http://www.w3.org/TR/cors/) is a mechanism that allows resources
+such as JSON documents in a Cloudant database
+to be requested from Javascript running on a website loaded from another domain.
+{:shortdesc}
 
-[Cross-origin resource sharing (CORS)](http://www.w3.org/TR/cors/) is a mechanism that allows resources such as JSON documents in a Cloudant database to be requested from Javascript running on a website loaded from another domain.
 These "cross-domain" requests would normally be forbidden by web browsers, due to the
 [same origin security policy](http://en.wikipedia.org/wiki/Same-origin_policy).
 

@@ -2,16 +2,29 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Grouping related documents together in Cloudant
 
-Last updated: 2016-11-09
-{: .last-updated}
-
-Traditionally, e-commerce systems are built with relational databases. These databases typically use a number of tables joined together to record sales, customer details, purchased products, and delivery tracking information. Relational databases offer high consistency meaning that application developers can build their applications to a database's strengths, including using joins between collections, enumerations to record the state of an object, and database transactions to guarantee atomic operations.
+Traditionally,
+e-commerce systems are built with relational databases.
+These databases typically use a number of tables joined together to record sales,
+customer details,
+purchased products,
+and delivery tracking information.
+Relational databases offer high consistency
+meaning that application developers can build their applications to a database's strengths,
+including using joins between collections,
+enumerations to record the state of an object,
+and database transactions to guarantee atomic operations.
 
 Cloudant favors availability over consistency. It is a high-availability, fault-tolerant, distributed database that is eventually consistent. This gives the advantage that the customer's shopping service is always available and scalable enough to cope with multiple users making purchases at the same time. This means that your application can utilize Cloudant's strengths and not treat it like a relational database.
 

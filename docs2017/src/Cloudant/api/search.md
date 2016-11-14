@@ -2,14 +2,25 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Search
 
-Last updated: 2016-11-09
-{: .last-updated}
+Search indexes, defined in design documents,
+allow databases to be queried using [Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview).
+{:shortdesc}
+
+Search indexes are defined by an index function,
+similar to a map function in MapReduce views.
+The index function decides what data to index and store in the index.
 
 > Example design document:
 
@@ -23,8 +34,6 @@ Last updated: 2016-11-09
   }
 }
 ```
-
-Search indexes, defined in design documents, allow databases to be queried using [Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search indexes are defined by an index function, similar to a map function in MapReduce views. The index function decides what data to index and store in the index.
 
 ## Index functions
 
@@ -275,7 +284,7 @@ Stop words are words that do not get indexed. You define them within a design do
 
 ### Testing analyzer tokenization
 
-> [Example test of the `keyword` analyzer](try.html#requestType=analyzers&predefinedQuery=keyword)
+> Example test of the `keyword` analyzer
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -299,7 +308,7 @@ Content-Type: application/json
 }
 ```
 
-> [Example test of the `standard` analyzer](try.html#requestType=analyzers&predefinedQuery=standard)
+> Example test of the `standard` analyzer
 
 ```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
@@ -324,7 +333,7 @@ Content-Type: application/json
 }
 ```
 
-You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint or using our [analyzer test form](try.html#requestType=analyzers).
+You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint.
 
 ## Queries
 

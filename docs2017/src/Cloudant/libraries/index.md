@@ -2,16 +2,21 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Client Libraries
 
-Last updated: 2016-11-09
-{: .last-updated}
-
-Client libraries are the tools that let you develop your own applications to work with Cloudant databases.
+Client libraries are the tools that let you develop your own applications
+to work with Cloudant databases.
+{:shortdesc}
 
 The following client libraries are formally [supported](supported.html#supported-client-libraries) by Cloudant.
 

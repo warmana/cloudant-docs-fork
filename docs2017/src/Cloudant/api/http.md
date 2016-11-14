@@ -2,16 +2,21 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # HTTP
 
-Last updated: 2016-11-09
-{: .last-updated}
-
-This section provides details of the [HTTP Headers](#http-headers) and [HTTP Status Codes](#http-status-codes) you need to know when using Cloudant.
+This section provides details of the [HTTP Headers](#http-headers)
+and [HTTP Status Codes](#http-status-codes) you need to know when using Cloudant.
+{:shortdesc}
 
 ## HTTP Headers
 

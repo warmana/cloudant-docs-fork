@@ -2,27 +2,31 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Databases
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Databases
 
 Cloudant databases contain JSON objects.
 These JSON objects are called [documents](document.html#documents).
 All documents must be contained in a database.
+{:shortdesc}
 
-A guide is [available](../guides/transactions.html),
+A guide is [available](/docs/Cloudant/guides/transactions.html),
 providing an example of how documents for an e-commerce application might be used within a Cloudant database.
 
 A more complex database application,
 involving additional storage,
 processing,
 and analytics tasks,
-is referred to as a [warehouse](../guides/warehousing.html).  
+is referred to as a [warehouse](/docs/Cloudant/guides/warehousing.html).  
 Warehouses are also supported by Cloudant.
 
 ## Create
@@ -345,7 +349,7 @@ _but_ you might also get changes that were made before the change indicated by t
 The reason for this,
 along with implications for applications,
 is explained in the
-[replication guide](../guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
+[replication guide](/docs/Cloudant/guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
 <aside class="warning" role="complementary" aria-label="cloudantNotCouch">It is essential that any application using the <code>_changes</code> request should be able to process correctly a list of changes that might:
 <ul>
@@ -482,7 +486,7 @@ It is very important that your application is able to deal with a given change b
 
 More information about the behavior of the `_changes` response is
 provided in the
-[replication guide](../guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
+[replication guide](/docs/Cloudant/guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
 <div id="changes_responses"></div>
 
@@ -596,7 +600,7 @@ The response confirms successful deletion of the database or describes any error
 
 It is essential that you protect your data by taking good quality backups.
 An overview of backing up your data is [available](backup.html),
-with more detailed information in the [backup guide](../guides/backup-guide.html).
+with more detailed information in the [backup guide](/docs/Cloudant/guides/backup-guide.html).
 
 ## Using a different domain
 
@@ -610,8 +614,8 @@ In addition to data stored in documents within the database,
 you could also have client-side application code - typically Javascript - in documents within the database.
 Two-tier combinations of data and client code,
 stored within a database,
-are called [CouchApps](../guides/couchapps.html).
+are called [CouchApps](/docs/Cloudant/guides/couchapps.html).
 
 More information about CouchApps,
 and deciding whether they are a good match for your application,
-is [available](../guides/couchapps.html).
+is [available](/docs/Cloudant/guides/couchapps.html).

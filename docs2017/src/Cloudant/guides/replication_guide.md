@@ -2,16 +2,28 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Replication
 
-Last updated: 2016-11-09
-{: .last-updated}
+Data can be copied from one database to another in the same Cloudant account,
+across accounts and across data centers.
+{:shortdesc}
 
-Cloudant’s replication capabilities are best-of-class. Data can be copied from one database to another in the same Cloudant account, across accounts and across data centers. Data can even be replicated to and from a Cloudant account and a mobile device using [Cloudant Sync](https://cloudant.com/product/cloudant-features/sync/) or [PouchDB](http://pouchdb.com/). Replication can run in one direction or in both directions, as a 'single shot' or continuous operation, and can be finely tuned with optional parameters.
+Data can even be replicated to and from a Cloudant account and a mobile device
+using [Cloudant Sync](https://cloudant.com/product/cloudant-features/sync/)
+or [PouchDB](http://pouchdb.com/).
+Replication can run in one direction or in both directions,
+as a 'single shot' or continuous operation,
+and can be finely tuned with optional parameters.
 
 Cloudant’s replication protocol is compatible with a range of other databases and libraries, making it a great fit for Internet of Things (IoT) and mobile applications.
 

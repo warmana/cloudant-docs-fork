@@ -2,16 +2,21 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Back up your data using replication
 
-Last updated: 2016-11-09
-{: .last-updated}
-
 Database backups protect your data against potential loss or corruption.
+{:shortdesc}
+
 You can use Cloudant’s replication facility to create a database backup,
 and store it on a Cloudant cluster.
 You can then restore data,

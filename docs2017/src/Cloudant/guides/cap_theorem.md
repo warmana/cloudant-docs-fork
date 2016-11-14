@@ -2,19 +2,24 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # CAP Theorem
+{:cap_theorem}
+{:consistency}
 
-Last updated: 2016-11-09
-{: .last-updated}
+Cloudant uses an '[Eventually Consistent](http://en.wikipedia.org/wiki/Eventual_consistency)' model.
+{:shortdesc}
 
-<div id="cap_theorem"></div>
-<div id="consistency"></div>
-
-Cloudant uses an '[Eventually Consistent](http://en.wikipedia.org/wiki/Eventual_consistency)' model. To understand how this works, and why it is an essential part of using Cloudant, we must first consider what is meant by Consistency.
+To understand how this works, and why it is an essential part of using Cloudant, we must first consider what is meant by Consistency.
 
 
 Consistency is one of the four ['ACID'](acid.html) properties that are necessary for transactions within a database to be processed and reported reliably.

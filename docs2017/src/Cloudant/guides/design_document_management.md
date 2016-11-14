@@ -2,14 +2,17 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Design Document Management
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Design Document Management
 
 *Article contributed by Glynn Bird, Developer Advocate at IBM Cloudant, [glynn@cloudant.com](mailto:glynn@cloudant.com)*
 

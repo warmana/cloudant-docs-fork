@@ -2,19 +2,23 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
-# Using Views
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-09
-{: .last-updated}
+# Using Views
 
 Views enable you to search for content within a database,
 that matches specific criteria.
 The criteria are specified within the view definition,
 or supplied as arguments when you use the view.
+{:shortdesc}
 
 ## Querying a view
 
