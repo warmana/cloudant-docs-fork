@@ -2,33 +2,39 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
 # Advanced replication
 
-Last updated: 2016-11-09
-{: .last-updated}
-
 This section contains details about more advanced replication concepts and tasks.
+{:shortdesc}
 
 You might also find it helpful to review details of the underlying
-[replication protocol](http://dataprotocols.org/couchdb-replication/),
-as well as reviewing the [Advanced Methods](advanced.html) material.
+[replication protocol](http://dataprotocols.org/couchdb-replication/){:new_window},
+as well as reviewing the [Advanced Methods](/docs/Cloudant/api/advanced.html) material.
 
 ## Replication Status
 
 When replication is managed by storing a document in the `_replicator` database,
 the contents of the document are updated as the replication status changes.
 
-In particular, once replication starts, three new fields are added automatically to the replication document. The fields all have the prefix: `_replication_`
+In particular, once replication starts,
+three new fields are added automatically to the replication document.
+The fields all have the prefix: `_replication_`
 
 Field | Detail
 ------|-------
 `_replication_id` | This is the internal ID assigned to the replication. It is the same ID that appears in the output from `_active_tasks`.
 `_replication_state` | The current state of the replication.
-`_replication_state_time` | An [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
+`_replication_state_time` | An [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt){:new_window} compliant timestamp that reports when the current replication state defined in `_replication_state` was set.
 
 The possible values for the `_replication_state` are:
 
@@ -38,24 +44,30 @@ The possible values for the `_replication_state` are:
 
 _Example replication document, prior to being `PUT` into `_replicator`:_
 
-	{
-		"_id": "my_rep",
-		"source":  "https://username:password@myserver.com:5984/fromthis",
-		"target":  "https://username:password@username.cloudant.com/tothat",
-		"create_target":  true
-	}
+```
+{
+	"_id": "my_rep",
+	"source":  "https://username:password@myserver.com:5984/fromthis",
+	"target":  "https://username:password@username.cloudant.com/tothat",
+	"create_target":  true
+}
+```
+{:screen}
 
 _Example of automatic update to replication document, updated once replication starts:_
 
-	{
-		"_id": "my_rep",
-		"source": "https://username:password@myserver.com:5984/fromthis",
-		"target": "https://username:password@username.cloudant.com/tothat",
-		"create_target": true
-		"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
-		"_replication_state": "triggered",
-		"_replication_state_time": "2011-06-07T16:54:35+01:00"
-	}
+```
+{
+	"_id": "my_rep",
+	"source": "https://username:password@myserver.com:5984/fromthis",
+	"target": "https://username:password@username.cloudant.com/tothat",
+	"create_target": true
+	"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
+	"_replication_state": "triggered",
+	"_replication_state_time": "2011-06-07T16:54:35+01:00"
+}
+```
+{:screen}
 
 When the replication finishes,
 it updates the `_replication_state` field with the value `completed`,
@@ -63,15 +75,18 @@ and the `_replication_state_time` field with the time that the completion status
 
 _Example of automatic update to replication document, updated once replication starts:_
 
-	{
-		"_id": "my_rep",
-		"source": "https://username:password@myserver.com:5984/fromthis",
-		"target": "https://username:password@username.cloudant.com/tothat",
-		"create_target": true
-		"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
-		"_replication_state": "completed",
-		"_replication_state_time": "2011-06-07T16:56:21+01:00"
-	}
+```
+{
+	"_id": "my_rep",
+	"source": "https://username:password@myserver.com:5984/fromthis",
+	"target": "https://username:password@username.cloudant.com/tothat",
+	"create_target": true
+	"_replication_id": "c0ebe9256695ff083347cbf95f93e280",
+	"_replication_state": "completed",
+	"_replication_state_time": "2011-06-07T16:56:21+01:00"
+}
+```
+{:screen}
 
 A continuous replication can never have a `completed` state.
 
@@ -79,16 +94,22 @@ A continuous replication can never have a `completed` state.
 
 In any production application, security of the source and target databases is essential.
 In order for replication to proceed, authentication is necessary to access the databases.
-In addition, checkpoints for replication are [enabled by default](replication.html#checkpoints), which means that replicating the source database requires write access.
+In addition, checkpoints for replication are [enabled by default](/docs/Cloudant/api/replication.html#checkpoints),
+which means that replicating the source database requires write access.
 
-To enable authentication during replication, include a username and password in the database URL. The replication process uses the supplied values for HTTP Basic Authentication.
+To enable authentication during replication,
+include a username and password in the database URL.
+The replication process uses the supplied values for HTTP Basic Authentication.
 
 _Example of specifying username and password values for accessing source and target databases during replication:_
 
-	{
-		"source": "https://username:password@example.com/db", 
-		"target": "https://username:password@username.cloudant.com/db"
-	}
+```
+{
+	"source": "https://username:password@example.com/db", 
+	"target": "https://username:password@username.cloudant.com/db"
+}
+```
+{:screen}
 
 ## Filtered Replication
 
@@ -97,7 +118,8 @@ To choose which documents to transfer,
 include one or more filter functions in a design document on the source.
 You can then tell the replicator to use these filter functions.
 
-> **Note**: Filtering documents during replication is similar to the process of [filtering the `_changes` feed](design_documents.html#filter-functions).
+> **Note**: Filtering documents during replication is similar to the process of
+[filtering the `_changes` feed](/docs/Cloudant/api/design_documents.html#filter-functions).
 
 A filter function takes two arguments:
 
@@ -110,20 +132,26 @@ the document is replicated.
 
 _A simple example of a filter function:_
 
-	function(doc, req) {
-		return !!(doc.type && doc.type == "foo");
-	}
+```
+function(doc, req) {
+	return !!(doc.type && doc.type == "foo");
+}
+```
+{:screen}
 
 Filters are stored under the topmost `filters` key of the design document.
 
 _A simple example of storing a filter function in a design document:_
 
-	{
-		"_id": "_design/myddoc",
-		"filters": {
-			"myfilter": "function goes here"
-		}
+```
+{
+	"_id": "_design/myddoc",
+	"filters": {
+		"myfilter": "function goes here"
 	}
+}
+```
+{:screen}
 
 A filtered replication is invoked by using a JSON statement that identifies:
 
@@ -133,24 +161,31 @@ A filtered replication is invoked by using a JSON statement that identifies:
 
 _Example JSON for invoking a filtered replication:_
 
-	{
-		"source": "http://username:password@example.org/example-database",
-		"target": "http://username:password@username.cloudant.com/example-database",
-		"filter": "myddoc/myfilter"
-	}
+```
+{
+	"source": "http://username:password@example.org/example-database",
+	"target": "http://username:password@username.cloudant.com/example-database",
+	"filter": "myddoc/myfilter"
+}
+```
+{:screen}
 
-Arguments can be supplied to the filter function by including key:value pairs in the `query_params` field of the invocation.
+Arguments can be supplied to the filter function by
+including key:value pairs in the `query_params` field of the invocation.
 
 _Example JSON for invoking a filtered replication with supplied parameters:_
 
-	{
-		"source": "http://username:password@example.org/example-database",
-		"target": "http://username:password@username.cloudant.com/example-database",
-		"filter": "myddoc/myfilter",
-		"query_params": {
-			"key": "value"
-		}
+```
+{
+	"source": "http://username:password@example.org/example-database",
+	"target": "http://username:password@username.cloudant.com/example-database",
+	"filter": "myddoc/myfilter",
+	"query_params": {
+		"key": "value"
 	}
+}
+```
+{:screen}
 
 ## Named Document Replication
 
@@ -163,11 +198,14 @@ add the list of keys as an array in the `doc_ids` field.
 
 _Example replication of specific documents:_
 
-	{
-		"source": "http://username:password@example.org/example-database",
-		"target": "http://username:password@127.0.0.1:5984/example-database",
-		"doc_ids": ["foo", "bar", "baz"]
-	}
+```
+{
+	"source": "http://username:password@example.org/example-database",
+	"target": "http://username:password@127.0.0.1:5984/example-database",
+	"doc_ids": ["foo", "bar", "baz"]
+}
+```
+{:screen}
 
 ## Replicating through a proxy
 
@@ -176,11 +214,14 @@ provide the proxy details in the `proxy` field of the replication data.
 
 _Example showing replication through a proxy:_
 
-	{
-		"source": "http://username:password@username.cloudant.com/example-database",
-		"target": "http://username:password@example.org/example-database",
-		"proxy": "http://my-proxy.com:8888"
-	}
+```
+{
+	"source": "http://username:password@username.cloudant.com/example-database",
+	"target": "http://username:password@example.org/example-database",
+	"proxy": "http://my-proxy.com:8888"
+}
+```
+{:screen}
 
 ## The `user_ctx` property and delegations
 
@@ -195,7 +236,8 @@ all the required information about the authenticated user is available.
 
 By contrast,
 the replicator database is a regular database.
-Therefore the information about the authenticated user is only present at the moment the replication document is written to the database.
+Therefore the information about the authenticated user is only present
+at the moment the replication document is written to the database.
 In other words,
 the replicator database implementation is similar to a `_changes` feed consumption application, 
 with `?include_docs=true` set.
@@ -211,16 +253,18 @@ The same principle also applies for roles.
 
 _Example delegated replication document:_
 
-	{
-		"_id": "my_rep",
-		"source":  "https://username:password@myserver.com:5984/foo",
-		"target":  "https://username:password@username.cloudant.com/bar",
-		"continuous":  true,
-		"user_ctx": {
-			"name": "joe",
-			"roles": ["erlanger", "researcher"]
-		}
+```{
+	"_id": "my_rep",
+	"source":  "https://username:password@myserver.com:5984/foo",
+	"target":  "https://username:password@username.cloudant.com/bar",
+	"continuous":  true,
+	"user_ctx": {
+		"name": "joe",
+		"roles": ["erlanger", "researcher"]
 	}
+}
+```
+{:screen}
 
 For admins,
 the `user_ctx` property is optional.
@@ -268,7 +312,7 @@ by including them in the replication document.
 	The default value is 10 attempts.
 -   `socket_options` - A list of options to pass to the connection sockets.
 	The available options can be found in the
-	[documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2). 
+	[documentation for the Erlang function setopts/2 of the inet module](http://www.erlang.org/doc/man/inet.html#setopts-2){:new_window}. 
 	Default value is `[{keepalive, true},{nodelay, false}]`.
 -   `worker_batch_size` - Worker processes perform batches of replication tasks,
 	where the batch size is defined by this parameter.
@@ -284,17 +328,20 @@ by including them in the replication document.
 
 _Example of including performance options in a replication document:_
 
-	{
-		"source": "https://username:password@example.com/example-database",
-		"target": "https://username:password@example.org/example-database",
-		"connection_timeout": 60000,
-		"retries_per_request": 20,
-		"http_connections": 30
-	}
+```
+{
+	"source": "https://username:password@example.com/example-database",
+	"target": "https://username:password@example.org/example-database",
+	"connection_timeout": 60000,
+	"retries_per_request": 20,
+	"http_connections": 30
+}
+```
+{:screen}
 
 ## Attachments
 
 Having large numbers of attachments on documents might cause an adverse effect on replication performance.
 
 For more information about the effect of attachments on replication performance,
-see [here](attachments.html#performance-considerations).
+see [here](/docs/Cloudant/api/attachments.html#performance-considerations).

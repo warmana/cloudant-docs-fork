@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-09"
+lastupdated: "2016-11-14"
 
 ---
 
@@ -14,8 +14,6 @@ lastupdated: "2016-11-09"
 
 # Getting started with Cloudant
 {: #getting-started-with-cloudant}
-Last updated: 2016-11-09
-{: .last-updated}
 
 {{site.data.keyword.cloudant}} on Bluemix is a document database as a service (DBaaS) that stores data in JSON.
 It's built with scalability,
@@ -31,10 +29,10 @@ and mobile devices.
 {:shortdesc}
 
 For more information on all the {{site.data.keyword.cloudant}} offerings,
-see the main [Cloudant](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/) site.
+see the main [Cloudant](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/){:new_window} site.
 For more details on {{site.data.keyword.cloudant}} concepts,
 tasks and techniques,
-see the [API Reference](docs/index.html).
+see the [API Reference](/docs/Cloudant/index.html){:new_window}.
 
 You can launch the {{site.data.keyword.cloudant}} on Bluemix console from the service launch page on the Bluemix dashboard.
 
@@ -133,7 +131,7 @@ including:
 ... and many others.
 For more information,
 see the <a href="http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/">Cloudant homepage</a>
-and the list of <a href="docs/libraries/index.html">Client Libraries</a>.
+and the list of <a href="/docs/Cloudant/libraries/index.html">Client Libraries</a>.
 </li>
 <li>When your application is ready,
 you can deploy it to the Bluemix environment for verification.
@@ -148,22 +146,23 @@ use the command:<br/>
 <pre><code>cf delete-service</code></pre></li>
 </ol>
 
-More information about authenticating to the database and making requests is available in the [API reference](docs/api/index.html).
+More information about authenticating to the database and making requests is available
+in the [API reference](/docs/Cloudant/api/index.html){:new_window}.
 
 # Related Links
 {: #rellinks}
 
-* [Cloudant website and dashboard](https://cloudant.com/)
-* [Cloudant Blog](https://cloudant.com/blog)
+* [Cloudant website and dashboard](https://cloudant.com/){:new_window}
+* [Cloudant Blog](https://cloudant.com/blog){:new_window}
 
 ## Tutorials and Samples
 {: #samples}
 
-* [Cloudant client libraries](docs/libraries/index.html)
-* [Using Cloudant with Liberty on Bluemix](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/)
-* [Cloudant Guides](docs/guides/index.html)
+* [Cloudant client libraries](/docs/Cloudant/libraries/index.html){:new_window}
+* [Using Cloudant with Liberty on Bluemix](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/){:new_window}
+* [Cloudant Guides](/docs/Cloudant/guides/index.html){:new_window}
 
 ## API Reference
 {: #api}
 
-* [Cloudant API reference](docs/api/index.html)
+* [Cloudant API reference](/docs/Cloudant/api/index.html){:new_window}

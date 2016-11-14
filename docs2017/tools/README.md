@@ -49,13 +49,19 @@ _Example of &lt;activity&gt;, using Javascript:_
 
 _Example of &lt;activity&gt;, using Python:_
 
-	Sample code line 1
-	Sample code line 2
+```
+Sample code line 1
+Sample code line 2
+```
+{:screen}
 
 _Example response:_
  
- 	Sample response line 1
- 	Sample response line 2
+```
+Sample response line 1
+Sample response line 2
+```
+{:screen}
 
 Basically,
 HTTP first,

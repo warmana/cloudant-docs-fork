@@ -2,22 +2,27 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-11"
+lastupdated: "2016-11-14"
 
 ---
 
-# Authentication
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
-Last updated: 2016-11-11
-{: .last-updated}
+# Authentication
 
 Authentication means proving who you are.
 This is typically done by providing your user credentials for verification.
+{:shortdesc}
+
 There are two ways that clients can provide credentials (authenticate)
 for Cloudant:
 
--	[Basic authentication](authentication.html#basic-authentication).
--	[Cookie authentication](authentication.html#cookie-authentication).
+-	[Basic authentication](#basic-authentication).
+-	[Cookie authentication](#cookie-authentication).
 
 Basic authentication is similar to showing an ID at a door, to be checked every time you want to enter.
 Cookie authentication is similar to having a key to the door so that you can let yourself in whenever you want.
@@ -36,7 +41,7 @@ pass along your credentials as part of every request.
 You do this by adding an `Authorization` header to the request.
 
 The header contains the authentication scheme (`Basic`),
-followed by the [BASE64](https://en.wikipedia.org/wiki/Base64) encoding of a string created by concatenating:
+followed by the [BASE64](https://en.wikipedia.org/wiki/Base64){:new_window} encoding of a string created by concatenating:
 
 -	Your username.
 -	The `:` character.
@@ -47,32 +52,43 @@ many application libraries that are used for creating HTTP requests can do this 
 
 _Example including basic authentication credentials in a request, using HTTP:_
 
-	GET /db/document HTTP/1.1
-	Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+```
+GET /db/document HTTP/1.1
+Authorization: Basic dXNlcm5hbWU6cGFzc3dvcmQ=
+```
+{:screen}
 
 _Example including basic authentication credentials in a request, using the command line:_
 
-	curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com
+```
+curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com
+```
+{:screen}
 
 _Example including basic authentication credentials in a request, using Javascript:_
 
-	var nano = require('nano');
-	var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
-	account.request(function (err, body) {
-		if (!err) {
-			console.log(body);
-		}
-	});
+```
+var nano = require('nano');
+var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
+account.request(function (err, body) {
+	if (!err) {
+		console.log(body);
+	}
+});
+```
+{:screen}
 
 _Example including basic authentication credentials in a request, using Python:_
 
-	import cloudant
-	
-	url = "https://{0}:{1}@{0}.cloudant.com".format(USERNAME, PASSWORD)
-	account = cloudant.Account(url)
-	ping = account.get()
-	print ping.status_code
-	# Expected result code: 200
+```
+import cloudant
+url = "https://{0}:{1}@{0}.cloudant.com".format(USERNAME, PASSWORD)
+account = cloudant.Account(url)
+ping = account.get()
+print ping.status_code
+# Expected result code: 200
+```
+{:screen}
 
 ## Cookie Authentication
 
@@ -105,97 +121,119 @@ Do this by sending a `POST` request to `/_session`.
 
 _Example of requesting a cookie, using HTTP:_
 
-	POST /_session HTTP/1.1
-	Content-Length: 32
-	Content-Type: application/x-www-form-urlencoded
-	Accept: */*
-	name=USERNAME&password=PASSWORD
+```
+POST /_session HTTP/1.1
+Content-Length: 32
+Content-Type: application/x-www-form-urlencoded
+Accept: */*
+name=USERNAME&password=PASSWORD
+```
+{:screen}
 
 _Example of requesting a cookie, using the command line:_
 
-	curl https://$USERNAME.cloudant.com/_session \
-		-X POST \
-		-c /path/to/cookiefile
-		-d "name=$USERNAME&password=$PASSWORD"
+```
+curl https://$USERNAME.cloudant.com/_session \
+	-X POST \
+	-c /path/to/cookiefile
+	-d "name=$USERNAME&password=$PASSWORD"
+```
+{:screen}
 
 _Example of requesting a cookie, using Javascript:_
 
-	var nano = require('nano');
-	var cloudant = nano("https://"+$USERNAME+".cloudant.com");
-	var cookies = {}
-	cloudant.auth($USERNAME, $PASSWORD, function (err, body, headers) {
-		if (!err) {
-			cookies[$USERNAME] = headers['set-cookie'];
-			cloudant = nano({
-				url: "https://"+$USERNAME+".cloudant.com",
-				cookie: cookies[$USERNAME] 
-			});
-			// ping to ensure we're logged in
-			cloudant.request({
-				path: 'test_porter'
-			}, function (err, body, headers) {
-				if (!err) {
-					console.log(body, headers);
-				}
-			});
-		}
-	});
+```
+var nano = require('nano');
+var cloudant = nano("https://"+$USERNAME+".cloudant.com");
+var cookies = {}
+cloudant.auth($USERNAME, $PASSWORD, function (err, body, headers) {
+	if (!err) {
+		cookies[$USERNAME] = headers['set-cookie'];
+		cloudant = nano({
+			url: "https://"+$USERNAME+".cloudant.com",
+			cookie: cookies[$USERNAME] 
+		});
+		// ping to ensure we're logged in
+		cloudant.request({
+			path: 'test_porter'
+		}, function (err, body, headers) {
+			if (!err) {
+				console.log(body, headers);
+			}
+		});
+	}
+});
+```
+{:screen}
 
 _Example of requesting a cookie, using Python:_
 
-	import cloudant
-	account = cloudant.Account(USERNAME)
-	login = account.login(USERNAME, PASSWORD)
-	print login.status_code
-	# Expected result code: 200
-	logout = account.logout()
-	print logout.status_code
-	# Expected result code: 200
-	all_dbs = account.all_dbs()
-	print all_dbs.status_code
-	# Expected result code: 401
+```
+import cloudant
+account = cloudant.Account(USERNAME)
+login = account.login(USERNAME, PASSWORD)
+print login.status_code
+# Expected result code: 200
+logout = account.logout()
+print logout.status_code
+# Expected result code: 200
+all_dbs = account.all_dbs()
+print all_dbs.status_code
+# Expected result code: 401
+```
+{:screen}
 
 If the credentials you supply in your cookie request are valid,
 the response contains a cookie which remains active for twenty-four hours.
 
 _Reply to request for a cookie:_
 
-	200 OK
-	Cache-Control: must-revalidate
-	Content-Length: 42
-	Content-Type: text/plain; charset=UTF-8
-	Date: Mon, 11 Nov 2016 12:43:15 GMT
-	server: CouchDB/1.0.2 (Erlang OTP/R14B)
-	Set-Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
-	x-couch-request-id: a638431d
+```
+200 OK
+Cache-Control: must-revalidate
+Content-Length: 42
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 11 Nov 2016 12:43:15 GMT
+server: CouchDB/1.0.2 (Erlang OTP/R14B)
+Set-Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
+x-couch-request-id: a638431d
+```
+{:screen}
 
 _JSON part of response:_
 
-	{
-		"ok": true,
-		"name": "USERNAME",
-		"roles": []
-	}
-
-
-<div id="getting-cookie-information"></div>
+```
+{
+	"ok": true,
+	"name": "USERNAME",
+	"roles": []
+}
+```
+{:screen}
 
 ### Getting cookie-authenticated information
+{: #getting-cookie-information}
 
 When a cookie has been set,
 information about the authenticated user can be retrieved with a `GET` request.
 
 _Example request for cookie information, using HTTP:_
 
-	GET /_session HTTP/1.1
-	Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
-	Accept: application/json
+```
+GET /_session HTTP/1.1
+Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
+Accept: application/json
+```
+{:screen}
 
 _Example request for cookie information, using the command line:_
 
-	curl https://$USERNAME.cloudant.com/_session \
-		-X GET \
-		-b /path/to/cookiefile
+```
+curl https://$USERNAME.cloudant.com/_session \
+	-X GET \
+	-b /path/to/cookiefile
+```
+{:screen}
 
 The response contains the username,
 the user's roles,
@@ -203,27 +241,30 @@ and which authentication mechanism was used.
 
 _Example response to request for cookie information:_
 
-	{
-		"userCtx": {
-			"roles": [
-				"_admin",
-				"_reader",
-				"_writer"
-			],
-			"name": "USERNAME"
-		},
-		"ok": true,
-		"info": {
-			"authentication_db": "_users",
-			"authentication_handlers": [
-				"delegated",
-				"cookie",
-				"default",
-				"local"
-			],
-			"authenticated": "cookie"
-		}
+```
+{
+	"userCtx": {
+		"roles": [
+			"_admin",
+			"_reader",
+			"_writer"
+		],
+		"name": "USERNAME"
+	},
+	"ok": true,
+	"info": {
+		"authentication_db": "_users",
+		"authentication_handlers": [
+			"delegated",
+			"cookie",
+			"default",
+			"local"
+		],
+		"authenticated": "cookie"
 	}
+}
+```
+{:screen}
 
 ### Deleting a cookie
 
@@ -232,33 +273,44 @@ The `DELETE` request must include the cookie you wish to delete.
 
 _Example cookie `DELETE` request, using HTTP:_
 
-	DELETE /_session HTTP/1.1
-	Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
-	Accept: application/json
+```
+DELETE /_session HTTP/1.1
+Cookie: AuthSession="d2FybWFuYTo1ODI1QkM2NzpZelovo2epvx9cfaDdxJGNLuzBzw"; Expires=Sat, 12 Nov 2016 12:43:15 GMT; Max-Age=86400; Path=/; HttpOnly; Version=1
+Accept: application/json
+```
+{:screen}
 
 _Example cookie `DELETE` request, using the command line:_
 
-	curl https://$USERNAME.cloudant.com/_session \
-		-X DELETE \
-		-b /path/to/cookiefile
+```
+curl https://$USERNAME.cloudant.com/_session \
+	-X DELETE \
+	-b /path/to/cookiefile
+```
+{:screen}
 
 The response confirms deletion of the session,
 and sets the `AuthSession` Cookie to `""`.
 
 _Example response to cookie `DELETE` request:_
 
-	200 OK
-	Cache-Control: must-revalidate
-	Content-Length: 12
-	Content-Type: application/json
-	Date: Mon, 11 Nov 2016 14:06:12 GMT
-	server: CouchDB/1.0.2 (Erlang OTP/R14B)
-	Set-Cookie: AuthSession=""; Expires=Fri, 02 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/; HttpOnly; Version=1
-	x-couch-request-id: e02e0333
+```
+200 OK
+Cache-Control: must-revalidate
+Content-Length: 12
+Content-Type: application/json
+Date: Mon, 11 Nov 2016 14:06:12 GMT
+server: CouchDB/1.0.2 (Erlang OTP/R14B)
+Set-Cookie: AuthSession=""; Expires=Fri, 02 Jan 1970 00:00:00 GMT; Max-Age=0; Path=/; HttpOnly; Version=1
+x-couch-request-id: e02e0333
+```
+{:screen}
 
 _JSON part of response:_
 
-	{
-		"ok": true
-	}
-
+```
+{
+	"ok": true
+}
+```
+{:screen}
