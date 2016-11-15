@@ -2,9 +2,15 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-15"
 
 ---
+
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
 
 # Views (MapReduce)
 {:creating-views}
@@ -31,60 +37,6 @@ You might choose to define a collection of Javascript functions to create the ov
 
 ## A simple view
 
-> Example of a simple view, using a map function:
-
-```
-function(employee) {
-  if(employee.training) {
-    emit(employee.number, employee.training);
-  }
-}
-```
-
-> Simplified example data:
-
-```json
-{
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/05/21 10:00:00"
-}
-
-{
-  "_id":"10278947",
-  "number":"10278947"
-}
-
-{
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/07/30 12:00:00"
-}
-```
-
-> Example response from running the view query
-
-```json
-{
-  "total_rows": 2,
-  "offset": 0,
-  "rows": [
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/05/21 10:00:00"
-    },
-
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/07/30 12:00:00"
-    }
-
-  ]
-}
-```
-
 The simplest form of view is a map function.
 The map function produces output data that represents an analysis (a mapping) of the documents stored within the database.
 
@@ -98,52 +50,120 @@ the employee completed the training on the date recorded as the value.
 If the field is not present,
 the employee has not completed the training.
 
-Using the `emit` function in the example view function makes it easy to produce a list in response to running a query using the view.
+Using the `emit` function in a view function makes it easy to produce a list
+in response to running a query using the view.
 The list consists of key and value pairs,
 where the key helps you identify the specific document and the value provides just the precise detail you want.
 The list also includes metadata such as the number of key:value pairs returned.
 
-<aside class="notice" role="complementary" aria-label="autoincludeid">The document `_id` is automatically included in each of the key:value pair result records.
-This is to make it easier for the client to work with the results.</aside>
+>	**Note**: The document `_id` is automatically included in each of the key:value pair result records.
+This is to make it easier for the client to work with the results.
+
+_Example of a simple view, using a map function:_
+
+```
+function(employee) {
+	if(employee.training) {
+		emit(employee.number, employee.training);
+	}
+}
+```
+{:screen}
+
+_Sample data for demonstrating the simple view example:_
+
+```json
+{
+	"_id":"23598567",
+	"number":"23598567",
+	"training":"2014/05/21 10:00:00"
+}
+
+{
+	"_id":"10278947",
+	"number":"10278947"
+}
+
+{
+	"_id":"23598567",
+	"number":"23598567",
+	"training":"2014/07/30 12:00:00"
+}
+```
+{:screen}
+
+_Example response from running the simple view query:_
+
+```json
+{
+	"total_rows": 2,
+	"offset": 0,
+	"rows": [
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/05/21 10:00:00"
+		},
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/07/30 12:00:00"
+		}
+	]
+}
+```
+{:screen}
 
 ## Map function examples
 
 ### Indexing a field
 
-> Example of indexing a field:
+The following map function checks whether the object has a `foo` field,
+and if so emits the value of this field.
+This check allows you to query against the value of the `foo` field.
+
+_Example of indexing a field:_
 
 ```
 function(doc) {
-  if (doc.foo) {
-    emit(doc._id, doc.foo);
-  }
+	if (doc.foo) {
+		emit(doc._id, doc.foo);
+	}
 }
 ```
-
-This map function checks whether the object has a `foo` field and emits the value of this field. This allows you to query against the value of the foo field.
+{:screen}
 
 ### An index for a one to many relationship
-
-> Example of indexing a one to many relationship:
-
-```
-function(doc) {
-  if (doc.friends) {
-    for (friend in friends) {
-      emit(doc._id, { "_id": friend });
-    }
-  }
-}
-```
 
 If the object passed to `emit` has an `_id` field,
 a view query with `include_docs` set to `true` contains the document with the given ID.
 
+_Example of indexing a one to many relationship:_
+
+```
+function(doc) {
+	if (doc.friends) {
+		for (friend in friends) {
+			emit(doc._id, { "_id": friend });
+		}
+	}
+}
+```
+{:screen}
+
 ### Complex Keys
 
-Keys are not limited to simple values. You can use arbitrary JSON values to influence sorting.
+Keys are not limited to simple values.
+You can use arbitrary JSON values to influence sorting.
 
-When the key is an array, view results can be grouped by a sub-section of the key. For example, if keys have the form [year, month, day] then results can be reduced to a single value or by year, month, or day. See [Using Views](creating_views.html#using-views) for more information.
+When the key is an array,
+view results can be grouped by a sub-section of the key.
+For example,
+if keys have the form `[year, month, day]`,
+then results can be reduced to a single value or by year,
+month,
+or day.
+See [Using Views](/docs/Cloudant/api/using_views.html) for more information.
 
 ## Reduce functions
 
