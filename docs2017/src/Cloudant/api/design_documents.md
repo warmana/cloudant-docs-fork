@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-16"
 
 ---
 
@@ -15,56 +15,66 @@ lastupdated: "2016-11-14"
 # Design Documents
 
 Instead of storing data in a document,
-you might also have special documents that store other content, such as functions.
+you might also have special documents that store other content,
+such as functions.
 The special documents are called "design documents".
 {:shortdesc}
 
-Design documents are [documents](document.html) that have an `_id` beginning with `_design/`. They can be read and updated in the same way as any other document in the database.
+Design documents are [documents](/docs/Cloudant/api/document.html) that have an `_id` beginning with `_design/`.
+They can be read and updated in the same way as any other document in the database.
 Cloudant reads specific fields and values of design documents as functions.
 Design documents are used to [build indexes](#indexes), [validate updates](#update-validators), and [format query results](#list-functions).
 
 ## Creating or updating a design document
 
--   **Method**: `PUT /$DATABASE/_design/design-doc`
--   **Request**: JSON of the design document information
--   **Response**: JSON status
--   **Roles permitted**: \_admin
+-	**Method**: `PUT /$DATABASE/_design/design-doc`
+-	**Request**: JSON of the design document information
+-	**Response**: JSON status
+-	**Roles permitted**: `_admin`
 
 To create a design document, upload it to the specified database.
 
 In these examples,
-`$VARIABLES` might refer to standard and design documents.
+`$VARIABLES` might refer to standard or design documents.
 To distinguish between them,
 standard documents have an `_id` indicated by `$DOCUMENT_ID`,
 while design documents have an `_id` indicated by `$DESIGN_ID`.
 
-<aside class="warning" role="complementary" aria-label="designupdateaffectsindexes">If a design document is updated,
+>	**Note**: If a design document is updated,
 Cloudant deletes the indexes from the previous version,
 and recreates the index from scratch.
 If you need to make changes to a design document for a larger database,
-have a look at the [Design Document Management Guide](/docs/Cloudant/guides/design_document_management.html#managing-changes-to-a-design-document).</aside>
+have a look at the [Design Document Management Guide](/docs/Cloudant/guides/design_document_management.html#managing-changes-to-a-design-document).
 
 The structure of design document is as follows:
 
--   **\_id**: Design Document ID
--   **\_rev**: Design Document Revision
--   **views (optional)**: an object describing MapReduce views
-    -   **viewname** (one for each view): View Definition
-        -   **map**: Map Function for the view
-        -   **reduce (optional)**: Reduce Function for the view
-        -   **dbcopy (optional)**: Database name to store view results in
--   **indexes (optional)**: an object describing search indexes
-    -   **index name** (one for each index): Index definition
-        -   **analyzer**: Object describing the analyzer to be used or an object with the following fields:
-            -   **name**: Name of the analyzer. Valid values are `standard`, `email`, `keyword`, `simple`, `whitespace`, `classic`, `perfield`.
-            -   **stopwords (optional)**: An array of stop words. Stop words are words that should not be indexed. If this array is specified, it overrides the default list of stop words. The default list of stop words depends on the analyzer. The list of stop words for the standard analyzer is: "a", "an", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with".
-            -   **default (for the per field analyzer)**: default language to use if there is no language specified for the field
-            -   **fields (for the per field analyzer)**: An object specifying which language to use to analyze each field of the index. Field names in the object correspond to field names in the index (i.e. the first parameter of the index function). The values of the fields are the languages to be used, e.g. "english".
-        -   **index**: Function that handles the indexing
--   **shows (optional)**: Show functions
-    -   **function name** (one for each function): Function definition
--   **lists (optional)**: List functions
-    -   **function name** (one for each function): Function definition
+-	**`_id`**: Design Document ID
+-	**`_rev`**: Design Document Revision
+-	**views (optional)**: An object describing MapReduce views.
+	-	**viewname** (one for each view): View Definition.
+		-	**map**: Map Function for the view.
+		-	**reduce (optional)**: Reduce Function for the view.
+		-	**dbcopy (optional)**: Database name for storing view results.
+-	**indexes (optional)**: An object describing search indexes.
+	-	**index name** (one for each index): Index definition.
+		-	**analyzer**: Object describing the analyzer to be used or an object with the following fields:
+			-	**name**: Name of the analyzer. Valid values are `standard`, `email`, `keyword`, `simple`, `whitespace`, `classic`, and `perfield`.
+			-	**stopwords (optional)**: An array of stop words.
+				Stop words are words that should not be indexed.
+				If this array is specified,
+				it overrides the default list of stop words.
+				The default list of stop words depends on the analyzer.
+				The list of stop words for the standard analyzer is:
+				`a`, `an`, `and`, `are`, `as`, `at`, `be`, `but`, `by`, `for`, `if`, `in`, `into`, `is`, `it`, `no`, `not`, `of`, `on`, `or`, `such`, `that`, `the`, `their`, `then`, `there`, `these`, `they`, `this`, `to`, `was`, `will`, and `with`.
+			-	**default (for the per field analyzer)**: default language to use if there is no language specified for the field.
+			-	**fields (for the per field analyzer)**: An object specifying which language to use to analyze each field of the index.
+				Field names in the object correspond to field names in the index, that is, the first parameter of the index function.
+				The values of the fields are the languages to be used, for example `english`.
+		-	**index**: Function that handles the indexing.
+-	**shows (optional)**: Show functions.
+	-	**function name** (one for each function): Function definition.
+-	**lists (optional)**: List functions.
+	-	**function name** (one for each function): Function definition.
 
 ## Copying a Design Document
 
@@ -72,408 +82,366 @@ You can copy the latest version of a design document to a new document
 by specifying the base document and target document.
 The copy is requested using the `COPY` HTTP request.
 
-<aside class="warning" role="complementary" aria-label="copynonstandard">`COPY` is a non-standard HTTP command.</aside>
+>	**Note**:`COPY` is a non-standard HTTP command.
+
+>	**Note**: Copying a design document does not automatically reconstruct the view indexes.
+Like other views,
+these are recreated the first time the new view is accessed.
 
 <div></div>
 
->  Example command to copy a design document:
+The following example requests Cloudant to copy the design document `recipes` to the new design document `recipelist`,
+and produces a response containing the ID and revision of the new document.
 
-```http
+_Example command to copy a design document, using HTTP:_
+
+```
 COPY /recipes/_design/recipes HTTP/1.1
 Content-Type: application/json
 Destination: /recipes/_design/recipelist
 ```
+{:screen}
 
-```shell
-curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes" \
-     -X COPY \
-     -H 'Content-Type: application/json' \
-     -H 'Destination: /recipes/_design/recipelist'
+_Example command to copy a design document, using the command line:_
+
 ```
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes" \
+	-X COPY \
+	-H 'Content-Type: application/json' \
+	-H 'Destination: /recipes/_design/recipelist'
+```
+{:screen}
 
-> Example response to copy command:
+_Example response to the copy request:_
 
 ```json
 {
-  "id": "recipes/_design/recipelist",
-  "rev": "1-9c65296036141e575d32ba9c034dd3ee"
+	"id": "recipes/_design/recipelist",
+	"rev": "1-9c65296036141e575d32ba9c034dd3ee"
 }
 ```
-
-An example request to copy the design document `recipes` to the new
-design document `recipelist` produces a response containing the ID and revision of
-the new document.
-
-<aside class="notice" role="complementary" aria-label="noautoreconstruct">Copying a design document does not automatically reconstruct the view
-indexes. Like other views, these are recreated the first
-time the new view is accessed.</aside>
-
-<div></div>
+{:screen}
 
 ### The structure of the copy command
 
--	 **Method**: `COPY /$DATABASE/_design/design-doc`
--	 **Request**: None
--	 **Response**: JSON describing the new document and revision
--	 **Roles permitted**: \_writer
--	 **Query Arguments**:
-    -	**Argument**: `rev`
-        -	**Description**:  Revision to copy from
-        -	**Optional**: yes
-        -	**Type**: string
+-	**Method**: `COPY /$DATABASE/_design/design-doc`
+-	**Request**: None
+-	**Response**: JSON describing the new document and revision.
+-	**Roles permitted**: `_writer`
+-	**Query Arguments**:
+	-	**Argument**: `rev`
+		-	**Description**:  Revision to copy from.
+		-	**Optional**: yes
+		-	**Type**: string
 -	**HTTP Headers**
-    -	**Header**: `Destination`
-        -	**Description**: Destination document (and optional revision)
-        -	**Optional**: no
+	-	**Header**: `Destination`
+		-	**Description**: Destination document (and optional revision)
+		-	**Optional**: no
 
-The source design document is specified on the request line, with the
-`Destination` HTTP Header of the request specifying the target
-document.
-
-<div></div>
+The source design document is specified on the request line,
+with the `Destination` HTTP Header of the request specifying the target document.
 
 ### Copying from a specific revision
 
->  Example command to copy a specific revision of the design document:
+To copy from a specific version,
+add the `rev` argument to the query string.
 
-```http
+The new design document is created using the specified revision of the source document.
+
+_Example command to copy a specific revision of the design document, using HTTP:_
+
+```
 COPY /recipes/_design/recipes?rev=1-e23b9e942c19e9fb10ff1fde2e50e0f5 HTTP/1.1
 Content-Type: application/json
 Destination: recipes/_design/recipelist
 ```
+{:screen}
 
-```shell
-curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes?rev=1-e23b9e942c19e9fb10ff1fde2e50e0f5" \
-     -X COPY \
-     -H 'Content-Type: application/json' \
-     -H 'Destination: /recipes/_design/recipelist'
+_Example command to copy a specific revision of the design document, using the command line:_
+
 ```
-
-To copy *from* a specific version, add the `rev` argument to the query
-string.
-
-The new design document is created using the specified revision of
-the source document.
-
-<div></div>
+curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes?rev=1-e23b9e942c19e9fb10ff1fde2e50e0f5" \
+	-X COPY \
+	-H 'Content-Type: application/json' \
+	-H 'Destination: /recipes/_design/recipelist'
+```
+{:screen}
 
 ### Copying to an existing design document
 
->  Example command to overwrite an existing copy of the design document:
+To overwrite or copy to an existing document,
+specify the current revision string for the target document,
+using the `rev` parameter to the `Destination` HTTP Header string.
 
-```http
+_Example command to overwrite an existing copy of the design document, using HTTP:_
+
+```
 COPY /recipes/_design/recipes
 Content-Type: application/json
 Destination: recipes/_design/recipelist?rev=1-9c65296036141e575d32ba9c034dd3ee
 ```
+{:screen}
 
-```shell
+_Example command to overwrite an existing copy of the design document, using the command line:_
+
+```
 curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes" \
-     -X COPY \
-     -H 'Content-Type: application/json' \
-     -H 'Destination: /recipes/_design/recipelist?rev=1-9c65296036141e575d32ba9c034dd3ee'
+	-X COPY \
+	-H 'Content-Type: application/json' \
+	-H 'Destination: /recipes/_design/recipelist?rev=1-9c65296036141e575d32ba9c034dd3ee'
 ```
 
-> Example response to overwriting successfully an existing design document:
+The return value is the ID and new revision of the copied document.
+
+_Example response:_
 
 ```json
 {
-    "id" : "recipes/_design/recipes"
-    "rev" : "2-55b6a1b251902a2c249b667dab1c6692",
+	"id" : "recipes/_design/recipes"
+	"rev" : "2-55b6a1b251902a2c249b667dab1c6692",
 }
 ```
-
-To copy to an existing document, specify the current revision
-string for the target document, using the `rev` parameter to the
-``Destination`` HTTP Header string.
-
-The return value is the new revision of the copied document.
+{:screen}
 
 ## Deleting a design document
 
-> Example command to delete a design document:
+You can delete an existing design document.
+Deleting a design document also deletes all of the associated view indexes,
+and recovers the corresponding space on disk for the indexes in question.
 
-```http
+To delete a design document successfully,
+you must specify the current revision of the design document using the `rev` query argument.
+
+_Example command to delete a design document, using HTTP:_
+
+```
 DELETE /recipes/_design/recipes?rev=2-ac58d589b37d01c00f45a4418c5a15a8 HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example command to delete a design document, using using the command line:_
+
+```
 curl "https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/recipes/_design/recipes?rev=2-ac58d589b37d01c00f45a4418c5a15a8" \
      -X DELETE
 ```
+{:screen}
 
-> Example response, containing the delete document ID and revision:
+_Example response, containing the deleted document ID and revision:_
 
 ```json
 {
-  "id": "recipe/_design/recipes",
-  "ok": true,
-  "rev": "3-7a05370bff53186cb5d403f861aca154"
+	"id": "recipe/_design/recipes",
+	"ok": true,
+	"rev": "3-7a05370bff53186cb5d403f861aca154"
 }
 ```
-
-You can delete an existing design document. Deleting a design document also
-deletes all of the associated view indexes, and recovers the
-corresponding space on disk for the indexes in question.
-
-To delete successfully, you must specify the current revision of the design document
-using the `rev` query argument.
-
-<div></div>
+{:screen}
 
 ### The structure of the delete command
 
--	 **Method**: `DELETE /db/_design/design-doc`
--	 **Request**:  None
--	 **Response**:  JSON of deleted design document
--	 **Roles permitted**: _writer
--	 **Query Arguments**:
-    -	**Argument**: `rev`
-        -	**Description**: Current revision of the document for validation
-        -	**Optional**: yes
-        -	**Type**: string
+-	**Method**: `DELETE /db/_design/design-doc`
+-	**Request**: None
+-	**Response**: JSON of deleted design document.
+-	**Roles permitted**: `_writer`
+-	**Query Arguments**:
+	-	**Argument**: `rev`
+		-	**Description**: Current revision of the document for validation.
+		-	**Optional**: yes
+		-	**Type**: string
 -	**HTTP Headers**
-    -	**Header**: `If-Match`
-        -	**Description**: Current revision of the document for validation
-        -	**Optional**: yes
+	-	**Header**: `If-Match`
+		-	**Description**: Current revision of the document for validation.
+		-	**Optional**: yes
 
 ## Views
 
-An important use of design documents is for creating views. These are discussed in more detail [here](creating_views.html).
+An important use of design documents is for creating views.
+These are discussed in more detail [here](/docs/Cloudant/api/creating_views.html).
 
 ## Rewrite rules
-
-> Example rewrite rules:
-
-```json
-"rewrites": [
-  {
-    "from": "/",
-    "to": "index.html",
-    "method": "GET",
-    "query": {}
-  },
-  {
-    "from": "/foo/:var",
-    "to": "/foo",
-    "method": "GET",
-    "query": {"v": "var"}
-  }
-]
-```
 
 A design document can contain rules for URL rewriting, by using an array in the `rewrites` field.
 Requests that match the rewrite rules must have a URL path that starts with `/$DATABASE/_design/doc/_rewrite`.
 
 Each rule is a JSON object with 4 fields:
 
-<table>
-<colgroup>
-<col width="20%" />
-<col width="80%" />
-</colgroup>
-<thead>
-<tr>
-<th>Field</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>from</code></td>
-<td>A path relative to <code>/$DATABASE/_design/doc/_rewrite</code>, used to match URLs to rewrite rules. Path elements that start with a <code>:</code> are treated as variables and match any string that does not contain a <code>/</code>. A <code>*</code> can only appear at the end of the string, and matches any string - including slashes.</td>
-</tr>
-<tr>
-<td><code>to</code></td>
-<td>The path (relative to <code>/$DATABASE/_design/doc/</code> and not including the query part of the URL) that is the result of the rewriting step. Variables captured in <code>from</code> can be used in <code>to</code>. <code>*</code> can also be used and contains everything captured by the pattern in <code>from</code>.</td>
-</tr>
-<tr>
-<td><code>method</code></td>
-<td>The HTTP method that should be matched on.</td>
-</tr>
-<tr>
-<td><code>query</code></td>
-<td>The query part of the resulting URL. This is a JSON object containing the key/value pairs of the query.</td>
-</tr>
-</tbody>
-</table>
+Field    | Description
+---------|------------
+`from`   | A path relative to `/$DATABASE/_design/doc/_rewrite`, used to match URLs to rewrite rules. Path elements that start with a `:` are treated as variables, and match any string that does not contain a `/`. A `*` can only appear at the end of the string, and matches any string - including slashes.
+`method` | The HTTP method that should be matched on.
+`query`  | The query part of the resulting URL. This is a JSON object containing the key/value pairs of the query.
+`to`     | The path (relative to `/$DATABASE/_design/doc/` and not including the query part of the URL) that is the result of the rewriting step. Variables captured in `from` can be used in `to`. `*` can also be used and contains everything captured by the pattern in `from`.
+
+_Example JSON describing some rewrite rules:_
+
+```json
+"rewrites": [
+	{
+		"from": "/",
+		"to": "index.html",
+		"method": "GET",
+		"query": {}
+	},
+	{
+		"from": "/foo/:var",
+		"to": "/foo",
+		"method": "GET",
+		"query": {"v": "var"}
+	}
+]
+```
+{:screen}
 
 ### Example rewrite rules
 
-<table>
-<colgroup>
-<col width="30%" />
-<col width="30%" />
-<col width="30%" />
-<col width="10%" />
-</colgroup>
-<thead>
-<tr>
-<th>Rule</th>
-<th>URL</th>
-<th>Rewrite to</th>
-<th>Tokens</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>{"from": "/a/b", "to": "/some/"}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a/b?k=v</code></td>
-<td><code>/$DATABASE/_design/doc/some?k=v</code></td>
-<td>k = v</td>
-</tr>
-<tr>
-<td><code>{"from": "/a/b", "to": "/some/:var"}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a/b</code></td>
-<td><code>/$DATABASE/_design/doc/some/b?var=b</code></td>
-<td>var = b</td>
-</tr>
-<tr>
-<td><code>{"from": "/a", "to": "/some/*"}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a</code></td>
-<td><code>/$DATABASE/_design/doc/some</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><code>{"from": "/a/*", "to": "/some/*}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a/b/c</code></td>
-<td><code>/$DATABASE/_design/doc/some/b/c</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><code>{"from": "/a", "to": "/some/*"}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a</code></td>
-<td><code>/$DATABASE/_design/doc/some</code></td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td><code>{"from": "/a/:foo/*","to": "/some/:foo/*"}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a/b/c</code></td>
-<td><code>/$DATABASE/_design/doc/some/b/c?foo=b</code></td>
-<td>foo = b</td>
-</tr>
-<tr>
-<td><code>{"from": "/a/:foo", "to": "/some", "query": { "k": ":foo" }}</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a/b</code></td>
-<td><code>/$DATABASE/_design/doc/some/?k=b&foo=b</code></td>
-<td>foo =:= b</td>
-</tr>
-<tr>
-<td><code>{"from": "/a", "to": "/some/:foo" }</code></td>
-<td><code>/$DATABASE/_design/doc/_rewrite/a?foo=b</code></td>
-<td><code>/$DATABASE/_design/doc/some/b&foo=b</code></td>
-<td>foo = b</td>
-</tr>
-</tbody>
-</table>
+The following table has some more examples of rewriting URL components:
+
+Rule                                                           | URL                                       | Rewrite to                               | Tokens
+---------------------------------------------------------------|-------------------------------------------|------------------------------------------|-------
+`{"from": "/a/b", "to": "/some/"}`                             | `/$DATABASE/_design/doc/_rewrite/a/b?k=v` | `/$DATABASE/_design/doc/some?k=v`        | `k = v`
+`{"from": "/a/b", "to": "/some/:var"}`                         | `/$DATABASE/_design/doc/_rewrite/a/b`     | `/$DATABASE/_design/doc/some/b?var=b`    | `var = b`
+`{"from": "/a", "to": "/some/*"}`                              | `/$DATABASE/_design/doc/_rewrite/a`       | `/$DATABASE/_design/doc/some`            |
+`{"from": "/a/*", "to": "/some/*}`                             | `/$DATABASE/_design/doc/_rewrite/a/b/c`   | `/$DATABASE/_design/doc/some/b/c`        |
+`{"from": "/a", "to": "/some/*"}`                              | `/$DATABASE/_design/doc/_rewrite/a`       | `/$DATABASE/_design/doc/some`            |
+`{"from": "/a/:foo/*","to": "/some/:foo/*"}`                   | `/$DATABASE/_design/doc/_rewrite/a/b/c`   | `/$DATABASE/_design/doc/some/b/c?foo=b`  | `foo = b`
+`{"from": "/a/:foo", "to": "/some", "query": { "k": ":foo" }}` | `/$DATABASE/_design/doc/_rewrite/a/b`     | `/$DATABASE/_design/doc/some/?k=b&foo=b` | `foo =:= b`
+`{"from": "/a", "to": "/some/:foo" }`                          | `/$DATABASE/_design/doc/_rewrite/a?foo=b` | `$DATABASE/_design/doc/some/b&foo=b`     | `foo = b`
 
 ## Indexes
 
 All queries operate on pre-defined indexes defined in design documents.
 These indexes are:
 
-* [Search](search.html)
-* [MapReduce](creating_views.html)
-
-<!-- * [Geo](#geo) -->
+*	[Search](/docs/Cloudant/api/search.html)
+*	[MapReduce](/docs/Cloudant/api/creating_views.html)
 
 For example,
 to create a design document used for searching,
 you must ensure that two conditions are true:
 
-1. You have identified the document as a design document by having an `_id` starting with `_design/`.
-2. A [search index](search.html) has been created within the document by [updating](document.html#update) the document with the appropriate field or by [creating](document.html#create) a new document containing the search index.
+1.	You have identified the document as a design document by having an `_id` starting with `_design/`.
+2.	A [search index](/docs/Cloudant/api/search.html) has been created within the document
+	by [updating](/docs/Cloudant/api/document.html#update) the document with the appropriate field
+	or by [creating](/docs/Cloudant/api/document.html#create) a new document containing the search index.
 
-As soon as the search index design document exists and the index has been built, you can make queries using it.
+As soon as the search index design document exists and the index has been built,
+you can make queries using it.
 
 For more information about search indexing,
-refer to the [search](search.html) section of this documentation.
+refer to the [search](/docs/Cloudant/api/search.html) section of this documentation.
 
 ### General notes on functions in design documents
 
-Functions in design documents are run on multiple nodes for each document and might be run several times. To avoid inconsistencies, they need to be idempotent, meaning they need to behave identically when run multiple times and/or on different nodes. In particular, you should avoid using functions that generate random numbers or return the current time.
-
+Functions in design documents are run on multiple nodes for each document,
+and might be run several times.
+To avoid inconsistencies,
+they need to be [idempotent](https://en.wikipedia.org/wiki/Idempotence#Computer_science_meaning){:new_window},
+meaning they need to behave identically when run multiple times or on different nodes.
+In particular,
+you should avoid using functions that generate random numbers or return the current time.
 
 ## List Functions
 
-> Example design document referencing a list function:
+Use list functions to customize the format of
+[MapReduce](/docs/Cloudant/api/creating_views.html#using-views) query results.
+A good example of their use is when you want to access Cloudant directly from a browser,
+and need data to be returned in a different format,
+such as HTML.
+
+You can add any query parameters to the request that would normally be used for a view request.
+
+Instead of using a MapReduce index, you can also use `_all_docs`.
+
+>	**Note**: The result of a list function is not stored.
+This means that the function is executed every time a request is made.
+As a consequence,
+using MapReduce functions might be more efficient.
+For web and mobile applications,
+consider whether any computations done in a list function would be better placed in the application tier.
+
+When you define a list function,
+you use it by sending a `GET` request to
+`https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX`.
+In this request:
+
+*	`$LIST_FUNCTION` is the name of list function you defined.
+*	`$MAPREDUCE_INDEX` is the name of the index providing the query results you want to format.
+
+List functions require two arguments:
+`head` and `req`.
+The other parameters are the same query parameters described
+[here](/docs/Cloudant/api/cloudant_query.html#query-parameters).
+
+_Example design document referencing a list function, expressed using JSON:_
 
 ```json
 {
-  "_id": "_design/list_example",
-  "lists": {
-    "FUNCTION_NAME": "function (head, req) { ... }"
-  }
+	"_id": "_design/list_example",
+	"lists": {
+		"FUNCTION_NAME": "function (head, req) { ... }"
+	}
 }
 ```
+{:screen}
 
-> Example list function:
+_Example of a list function, in pseudo-code:_
 
 ```
 function (head, req) {
-  // specify our headers
-  start({
-    headers: {
-      "Content-Type": 'text/html'
-    }
-  });
-  // send the respond, line by line
-  send('<html><body><table>');
-  send('<tr><th>ID</th><th>Key</th><th>Value</th></tr>')
-  while(row = getRow()){
-    send(''.concat(
-      '<tr>',
-      '<td>' + toJSON(row.id) + '</td>',
-      '<td>' + toJSON(row.key) + '</td>',
-      '<td>' + toJSON(row.value) + '</td>',
-      '</tr>'
-    ));
-  }
-  send('</table></body></html>');
+	// specify our headers
+	start({
+		headers: {
+			"Content-Type": 'text/html'
+		}
+	});
+
+	// send the response, line by line
+	send('<html><body><table>');
+	send('<tr><th>ID</th><th>Key</th><th>Value</th></tr>')
+	while(row = getRow()){
+		send(''.concat(
+			'<tr>',
+			'<td>' + toJSON(row.id) + '</td>',
+			'<td>' + toJSON(row.key) + '</td>',
+			'<td>' + toJSON(row.value) + '</td>',
+			'</tr>'
+		));
+	}
+	send('</table></body></html>');
 }
 ```
+{:screen}
 
-> Example query:
+_Example invocation of a list function, using HTTP:_
 
-```http
+```
 GET /$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX HTTP/1.1
 ```
+{:screen}
 
-```shell
-curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX" \
-     -u "$USERNAME:$PASSWORD"
+_Example invocation of a list function, using the command line:_
+
 ```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX" \
+	-u "$USERNAME:$PASSWORD"
+```
+{:screen}
 
-```javascript
+_Example invocation of a list function, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
 
 db.view_with_list($DESIGN_ID, $MAPREDUCE_INDEX, $LIST_FUNCTION, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
 ```
-
-Use list functions to customize the format of [MapReduce](creating_views.html#using-views) query results.
-They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
-You can add any query parameters to the request that would normally be used for a view request. Instead of using a MapReduce index, you can also use `_all_docs`.
-
-<aside class="warning" role="complementary" aria-label="listresultnotstored">The result of a list function is not stored. This means that the function is executed every time a request is made.
-As a consequence, using map-reduce functions might be more efficient.
-For web and mobile applications, consider whether any computations done in a list function would be better placed in the application tier.</aside>
-
-List functions require two arguments: `head` and `req`.
-
-When you define a list function,
-you use it by making a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_list/$LIST_FUNCTION/$MAPREDUCE_INDEX`.
-In this request:
-
-* `$LIST_FUNCTION` is the name of list function you defined.
-* `$MAPREDUCE_INDEX` is the name of the index providing the query results you want to format.
-
-The other parameters are the same query parameters described [here](cloudant_query.html#query-parameters).
+{:screen}
 
 ### head
 
