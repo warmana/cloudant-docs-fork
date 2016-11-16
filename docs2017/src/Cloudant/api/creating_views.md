@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-15"
+lastupdated: "2016-11-16"
 
 ---
 
@@ -167,145 +167,157 @@ See [Using Views](/docs/Cloudant/api/using_views.html) for more information.
 
 ## Reduce functions
 
-> Example of a reduce function:
+If a view has a reduce function,
+it is used to produce aggregate results for that view.
+A reduce function is passed a set of intermediate values and combines them to a single value.
+A reduce function must accept,
+as input,
+results emitted by its corresponding map function,
+as well as results returned by the reduce function itself.
+The latter case is referred to as a 'rereduce'.
+
+Reduce functions are passed three arguments in the following order:
+
+-	key - an array of values.
+-	values - an array of values.
+-	rereduce - a boolean flag.
+
+_Example of a reduce function:_
 
 ```
 function (key, values, rereduce) {
-  return sum(values);
+	return sum(values);
 }
 ```
-
-If a view has a reduce function, it is used to produce aggregate results for that view. A reduce function is passed a set of intermediate values and combines them to a single value. Reduce functions must accept, as input, results emitted by its corresponding map function '''as well as results returned by the reduce function itself'''. The latter case is referred to as a ''rereduce''.
-
-Reduce functions are passed three arguments in the order ''key'', ''values'', and ''rereduce''.
+{:screen}
 
 Reduce functions must handle two cases:
 
 1.	When `rereduce` is false:
-  -	`key` will be an array whose elements are arrays of the form `[key,id]`, where `key` is a key emitted by the map function and ''id'' is that of the document from which the key was generated.
-  -	`values` will be an array of the values emitted for the respective elements in `keys`, for example: `reduce([ [key1,id1], [key2,id2], [key3,id3] ], [value1,value2,value3], false)`
+	-	`key` is an array whose elements are arrays of the form `[key, id]`,
+		where `key` is a key emitted by the map function,
+		and `id` identifies the document from which the key was generated.
+	-	`values` is an array of the values emitted for the respective elements in `keys`,
+		for example:
+		`reduce([ [key1,id1], [key2,id2], [key3,id3] ], [value1,value2,value3], false)`
 
 2.	When `rereduce` is true:
-  -	`key` will be `null`.
-  -	`values` will be an array of values returned by previous calls to the reduce function, for example: `reduce(null, [intermediate1,intermediate2,intermediate3], true)`\`
+	-	`key` is `null`.
+	-	`values` is an array of values returned by previous calls to the reduce function,
+		for example: `reduce(null, [intermediate1,intermediate2,intermediate3], true)`.
 
-Reduce functions should return a single value, suitable for both the "value" field of the final view and as a member of the "values" array passed to the reduce function.
+Reduce functions should return a single value,
+suitable for both the `value` field of the final view,
+and as a member of the `values` array passed to the reduce function.
 
-Often, reduce functions can be written to handle rereduce calls without any extra code, like the summation function described previously. In that case, the `rereduce` argument can be ignored.
+Often,
+reduce functions can be written to handle rereduce calls without any extra code,
+like the summation function in the earlier example.
+In such cases,
+the `rereduce` argument can be ignored.
 
 ### Built-in reduce functions
 
-For performance reasons, a few simple reduce functions are built in. Whenever possible, you should use one of these functions instead of writing your own. To use one of the built-in functions, put its name into the `reduce` field of the view object in your design document.
+For performance reasons,
+a few simple reduce functions are built in.
+Whenever possible,
+you should use one of these functions instead of writing your own.
 
-<table>
-<colgroup>
-<col width="11%" />
-<col width="88%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Function</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>_sum</code></td>
-<td align="left">Produces the sum of all values for a key, values must be numeric</td>
-</tr>
-<tr class="even">
-<td align="left"><code>_count</code></td>
-<td align="left">Produces the row count for a given key, values can be any valid json</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>_stats</code></td>
-<td align="left">Produces a json structure containing sum, count, min, max and sum squared, values must be numeric</td>
-</tr>
-</tbody>
-</table>
+To use one of the built-in functions,
+put its name into the `reduce` field of the view object in your design document.
 
-By feeding the results of `reduce` functions back into the `reduce` function, MapReduce is able to split up the analysis of huge datasets into discrete, parallelized tasks, which can be completed much faster.
+Function | Description
+---------|------------
+`_count` | Produces the row count for a given key. The values can be any valid JSON.
+`_stats` | Produces a JSON structure containing the sum, the count, the min, the max, and the sum squared values. All values must be numeric.
+`_sum`   | Produces the sum of all values for a key. The values must be numeric.
+
+By feeding the results of `reduce` functions back into the `reduce` function,
+MapReduce is able to split up the analysis of huge data sets into discrete,
+parallel tasks,
+which can be completed much faster.
 
 ## Dbcopy
 
-If the `dbcopy` field of a view is set, the view contents will be written to a database of that name. If `dbcopy` is set, the view must also have a reduce function. For every key/value pair created by a reduce query with `group` set to `true`, a document will be created in the dbcopy database. If the database does not exist, it will be created. The documents created have the following fields:
+If the `dbcopy` field of a view is set,
+the view contents are written to a database of that name.
+If `dbcopy` is set,
+the view must also have a reduce function.
+For every key/value pair created by a reduce query with `group` set to `true`,
+a document is created in the `dbcopy` database.
+If the database does not exist,
+it is created.
 
-<table>
-<colgroup>
-<col width="18%" />
-<col width="81%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Field</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>key</code></td>
-<td align="left">The key of the view result. This can be a string or an array.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>value</code></td>
-<td align="left">The value calculated by the reduce function.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>_id</code></td>
-<td align="left">The ID is a hash of the key.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>salt</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>partials</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-</tbody>
-</table>
+The documents created have the following fields:
 
-<aside class="warning" role="complementary" aria-label="dbcopyperformance">Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
+Field      | Description
+-----------|------------
+`_id`      | The ID is a hash of the key.
+`key`      | The key of the view result. This can be a string or an array.
+`partials` | This value is an implementation detail used internally.
+`salt`     | This value is an implementation detail used internally.
+`value`    | The value calculated by the reduce function.
 
-1.	It creates a new database, so it can use a lot of disk space.
-2.	Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
-3.	It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
-
-</aside>
+>	**Note**: Dbcopy should be used carefully,
+	since it can negatively impact the performance of a database cluster:
+-	It creates a new database,
+	so it can use a lot of disk space.
+-	Dbcopy can also be IO intensive,
+	and building a dbcopy target can adversely affect the rest of the cluster.
+-	It can behave in some unexpected ways.
+	In particular,
+	if a design document with a dbcopy target is created,
+	and the target database has been built,
+	editing this design document so that some documents,
+	which were previously copied,
+	are no longer copied,
+	does not lead to those documents being deleted from the target database.
+	This behavior differs from that of normal views.
 
 ## Storing the view definition
-
-> Example using shell for `PUT`ting a view into a design document (`training`):
-
-	curl -X PUT https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_design/training --data-binary @view.def
-	# where the design document is stored in the file `view.def`
-
-> Example for `PUT`ting a view into a design document (`training`):
-
-```http
-PUT /$DATABASE/_design/training HTTP/1.1
-Content-Type: application/json
-```
-
-> Example format for the view:
-
-```json
-{
-  "views" : {
-    "hadtraining" : {
-      "map" : "function(employee) { if(employee.training) { emit(employee.number, employee.training); } }"
-    }
-  }
-}
-```
 
 Each view is a Javascript function.
 Views are stored in design documents.
 So,
 to store a view,
-we simply store the function definition within a design document. A design document can be [created or updated just like any other document](document.html#update).
+we simply store the function definition within a design document.
+A design document can be [created or updated](/docs/Cloudant/api/document.html#update)
+just like any other document.
 
-Do this by `PUT`ting the view definition content into a `_design` document.
-In this example,
+To store a view definitions,
+`PUT` the view definition content into a `_design` document.
+
+In the following example,
 the `hadtraining` view is defined as a map function,
 and is available within the `views` field of the design document.
+
+_Example of `PUT`ting a view into a design document called `training`,
+using HTTP:_
+
+```
+PUT /$DATABASE/_design/training HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
+
+_Example of `PUT`ting a view into a design document called `training`,
+using the command line:_
+
+```
+curl -X PUT https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_design/training --data-binary @view.def
+	# where the design document is stored in the file `view.def`
+```
+{:screen}
+
+_Example view definition:_
+
+```json
+{
+	"views" : {
+		"hadtraining" : {
+			"map" : "function(employee) { if(employee.training) { emit(employee.number, employee.training); } }"
+		}
+	}
+}
+```
+{:screen}

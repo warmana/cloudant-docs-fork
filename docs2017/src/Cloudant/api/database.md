@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-16"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2016-11-14"
 # Databases
 
 Cloudant databases contain JSON objects.
-These JSON objects are called [documents](document.html#documents).
+These JSON objects are called [documents](/docs/Cloudant/api/document.html#documents).
 All documents must be contained in a database.
 {:shortdesc}
 
@@ -31,154 +31,186 @@ Warehouses are also supported by Cloudant.
 
 ## Create
 
-> Create a database
+To create a database,
+send a `PUT` request to `https://$USERNAME.cloudant.com/$DATABASE`.
 
-```http
+The database name must start with a lowercase letter,
+and contain only the following characters:
+
+-	Lowercase characters (a-z)
+-	Digits (0-9)
+-	Any of the characters _, $, (, ), +, -, and /
+ 
+_Example of creating a database, using HTTP:_
+
+```
 PUT /$DATABASE HTTP/1.1
 HOST: $ACCOUNT.cloudant.com
 ```
+{:screen}
 
-```shell
+_Example of creating a database, using the command line:_
+
+```
 curl https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/$DATABASE -X PUT
 ```
+{:screen}
 
-```javascript
+_Example of creating a database, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
 account.db.create($DATABASE, function (err, body, headers) {
-  if (!err) {
-    console.log('database created!');
-  }
+	if (!err) {
+		console.log('database created!');
+	}
 });
 ```
+{:screen}
 
-To create a database, make a PUT request to `https://$USERNAME.cloudant.com/$DATABASE`.
+{:response}
 
-The database name must start with a lowercase letter and contain only the following characters:
+If creation succeeds, you get a [201 or 202 response](/docs/Cloudant/api/http.html#201).
+In case of an error,
+the HTTP status code tells you what went wrong.
 
- - Lowercase characters (a-z)
- - Digits (0-9)
- - Any of the characters _, $, (, ), +, -, and /
- 
-### Database topology
+Code | Description
+-----|------------
+201  | Database created successfully
+202  | The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
+403  | Invalid database name.
+412  | Database aleady exists.
 
-It is possible to modify the configuration of a database sharding topology of a database on dedicated database clusters.
-This can be done at the time a database is created.
-However,
-poor choice for configuration parameters can adversely affect database performance.
-
-For more information about modifying database configuration in a dedicated database environment,
-please contact Cloudant support.
-
-<aside class="warning" role="complementary" aria-label="noconfigmod">It is not possible to modify the configuration used for databases on multi-tenant clusters.</aside>
-
-### Response
-
-> Response for successful creation:
+_Example response following successful creation of a database:_
 
 ```
 HTTP/1.1 201 Created
 
 {
-  "ok": true
+	ok": true
 }
 ```
+{:screen}
 
-If creation succeeds, you get a [201 or 202 response](http.html#201).
-In case of an error,
-the HTTP status code tells you what went wrong.
+### Database topology
 
-Code | Description
------|--------------
-201 |	Database created successfully
-202 |	The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
-403 |	Invalid database name.
-412 |	Database aleady exists.
+It is possible to modify the configuration of a database sharding topology of a
+database on dedicated database clusters.
+This can be done at the time a database is created.
+However,
+poor choices for configuration parameters can adversely affect database performance.
 
-## Read
+For more information about modifying database configuration
+in a dedicated database environment,
+please contact Cloudant support.
 
-> Create a database
+> **Note**: It is not possible to modify the configuration used for databases
+on multi-tenant clusters.
 
-```http
+{:read}
+
+## Getting database details 
+
+Sending a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE`
+returns details about the database,
+such as how many documents it contains.
+
+_Example of getting database details, using HTTP:_
+
+```
 GET /$DATABASE HTTP/1.1
 ```
+{:screen}
 
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE \
-     -u $USERNAME
+_Example of getting database details, using the command line:_
+
 ```
+curl https://$USERNAME.cloudant.com/$DATABASE \
+	-u $USERNAME
+```
+{:screen}
 
-```javascript
+_Example of getting database details, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
 account.db.get($DATABASE, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
-```
-
-Making a GET request against `https://$USERNAME.cloudant.com/$DATABASE` returns details about the database,
-such as how many documents it contains.
-
-<div></div>
-
-> Example response:
-
-```json
-{
-  "update_seq": "9824119-g1AAAAIjeJzLYWBg4MhgTmHQSElKzi9KdUhJMtYrKMrMTS1KLU5NLErOMDAw1EvOyS9NScwr0ctLLckB6mBKZEiS____f1YSg9DBKajazYjQnqQAJJPsoSbsfEC6A5IcQCbEQ03YI4BqgiExJiSATKiHmrC3l3Q35LEASYYGIAU0ZD7IlF1KqKYYEW3KAogp-0Gm7HYg1y0HIKbcB5myX4T0eIGY8gBiCiRcPmQBAB4CuUQ",
-  "db_name": "db",
-  "sizes": {
-    "file": 46114703224,
-    "external": 193164408719,
-    "active": 34961621142
-  },
-  "purge_seq": 0,
-  "other": {
-    "data_size": 193164408719
-  },
-  "doc_del_count": 5564,
-  "doc_count": 9818541,
-  "disk_size": 46114703224,
-  "disk_format_version": 6,
-  "compact_running": true,
-  "instance_start_time": "0"
-}
 ```
 
 The elements of the returned structure are shown in the following table:
 
-Field |	Description
-------|------------
-compact_running |	Set to true if the database compaction routine is operating on this database.
-db_name |	The name of the database.
-disk_format_version |	The version of the physical format used for the data when it is stored on disk.
-disk_size |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
-doc_count |	A count of the documents in the specified database.
-doc_del_count |	Number of deleted documents
-instance_start_time |	Always 0.
-purge_seq |	The number of purge operations on the database.
-update_seq |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
-other |	JSON object containing a `data_size` field.
-sizes | JSON object containing file, external, and active sizes.
+Field                 | Description
+----------------------|------------
+`compact_running`     | Set to true if the database compaction routine is operating on this database.
+`db_name`             | The name of the database.
+`disk_format_version` | The version of the physical format used for the data when it is stored on disk.
+`disk_size`           | Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
+`doc_count`           | A count of the documents in the specified database.
+`doc_del_count`       | Number of deleted documents.
+`instance_start_time` | Always 0.
+`other`               | JSON object containing a `data_size` field.
+`purge_seq`           | The number of purge operations on the database.
+`sizes`               | JSON object containing file, external, and active sizes.
+`update_seq`          | An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
 
-## Get Databases
+_Example response containing (abbreviated) database details:_
 
-> Get all databases
+```json
+{
+	"update_seq": "982...uUQ",
+	"db_name": "db",
+	"sizes": {
+		"file": 46114703224,
+		"external": 193164408719,
+		"active": 34961621142
+	},
+	"purge_seq": 0,
+	"other": {
+		"data_size": 193164408719
+	},
+	"doc_del_count": 5564,
+	"doc_count": 9818541,
+	"disk_size": 46114703224,
+	"disk_format_version": 6,
+	"compact_running": true,
+	"instance_start_time": "0"
+}
+```
+{:screen}
 
-```http
+{:get-databases}
+
+## Get a list of all databases in the account
+
+To list all the databases in an account,
+send a `GET` request to `https://$USERNAME.cloudant.com/_all_dbs`.
+
+_Example request to list all databases, using HTTP:_
+
+```
 GET /_all_dbs HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example request to list all databases, using the command line:_
+
+```
 curl https://$USERNAME.cloudant.com/_all_dbs \
      -u $USERNAME
 ```
+{:screen}
 
-```javascript
+_Example request to list all databases, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -188,39 +220,65 @@ account.db.list(function (err, body, headers) {
   }
 });
 ```
+{:screen}
 
-To list all the databases in an account,
-make a GET request against `https://$USERNAME.cloudant.com/_all_dbs`.
+The response is a JSON array with all the database names.
 
-<div></div>
-
-> Example response:
+_Example response:_
 
 ```json
 [
-   "_users",
-   "contacts",
-   "docs",
-   "invoices",
-   "locations"
+	"_users",
+	"contacts",
+	"docs",
+	"invoices",
+	"locations"
 ]
 ```
-
-The response is an array with all database names.
+{:screen}
 
 ## Get Documents
 
-> Getting all documents in a database:
+To list all the documents in a database,
+send a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/_all_docs`.
 
-```http
+The `_all_docs` endpoint accepts the following query arguments:
+
+Argument        | Description                                                                                     | Optional | Type            | Default
+----------------|-------------------------------------------------------------------------------------------------|----------|-----------------|--------
+`conflicts`     | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes      | boolean         | false
+`descending`    | Return the documents in descending key order.                                                   | yes      | boolean         | false
+`endkey`        | Stop returning records when the specified key is reached.                                       | yes      | string          |
+`include_docs`  | Include the full content of the documents in the return.                                        | yes      | boolean         | false
+`inclusive_end` | Include rows whose key equals the `endkey` value.                                               | yes      | boolean         | true
+`key`           | Return only documents with IDs that match the specified key.                                    | yes      | string          |
+`keys`          | Return only documents with IDs that match one of the specified keys.                            | yes      | list of strings |
+`limit`         | Limit the number of returned documents to the specified number.                                 | yes      | numeric         |
+`skip`          | Skip this number of records before starting to return the results.                              | yes      | numeric         | 0
+`startkey`      | Return records starting with the specified key.                                                 | yes      | string          |
+
+>	**Note**: Using `include_docs=true` might have [performance implications](/docs/Cloudant/api/using_views.html#include_docs_caveat).
+
+>	**Note**: When using the `keys` argument,
+it might be easier to use `POST` rather than `GET` if you require a large number of strings to list the desired keys.
+
+_Example request to list all documents in a database, using HTTP:_
+
+```
 GET /_all_docs HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example request to list all documents in a database, using the command line:_
+
+```
 curl https://%USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_all_docs
 ```
+{:screen}
 
-```javascript
+_Example request to list all documents in a database, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -231,103 +289,70 @@ db.list(function (err, body, headers) {
   }
 });
 ```
+{:screen}
 
-> Getting all documents in a database that match at least one of the specified keys:
+_Example request to list all documents in a database that match at least one of the specified keys, using HTTP:_
 
-```http
+```
 GET /_all_docs?keys=["somekey","someotherkey"] HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example request to list all documents in a database that match at least one of the specified keys,
+using the command line:_
+
+```
 curl https://%USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_all_docs?keys=["somekey","someotherkey"]
 ```
+{:screen}
 
-To list all the documents in a database, make a GET request against `https://$USERNAME.cloudant.com/$DATABASE/_all_docs`.
+The response is a JSON object containing all documents in the database matching the parameters.
+The following table describes the meaning of the individual fields:
 
-The `_all_docs` endpoint accepts these query arguments:
+Field        | Description                                                                         | Type
+-------------|-------------------------------------------------------------------------------------|-----
+`offset`     | Offset where the document list started.                                             | numeric
+`rows`       | Array of document objects.                                                          | array
+`total_rows` | Number of documents in the database or view that match the parameters of the query. | numeric
+`update_seq` | Current update sequence for the database.                                           | string
 
-Argument | Description | Optional | Type | Default
----------|-------------|----------|------|--------
-`descending` | Return the documents in descending by key order | yes | boolean | false
-`endkey` | Stop returning records when the specified key is reached | yes | string |  
-`include_docs` | Include the full content of the documents in the return | yes | boolean | false
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
-`inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
-`key` | Return only documents with IDs that match the specified key | yes | string |  
-`keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
-`limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
-`skip` | Skip this number of records before starting to return the results | yes | numeric | 0
-`startkey` | Return records starting with the specified key | yes | string |
-
-<aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
-
-<aside class="warning" role="complementary" aria-label="usepostnotget">When using the `keys` argument,
-it might be easier to use `POST` rather than `GET` if you need a large number of strings to list the desired keys.</aside>
-
-<div></div>
-
-> Example response after requesting all documents in a database:
+_Example response after requesting all documents in a database:_
 
 ```json
 {
-  "total_rows": 3,
-  "offset": 0,
-  "rows": [{
-    "id": "5a049246-179f-42ad-87ac-8f080426c17c",
-    "key": "5a049246-179f-42ad-87ac-8f080426c17c",
-    "value": {
-      "rev": "2-9d5401898196997853b5ac4163857a29"
-    }
-  }, {
-    "id": "96f898f0-f6ff-4a9b-aac4-503992f31b01",
-    "key": "96f898f0-f6ff-4a9b-aac4-503992f31b01",
-    "value": {
-      "rev": "2-ff7b85665c4c297838963c80ecf481a3"
-    }
-  }, {
-    "id": "d1f61e66-7708-4da6-aa05-7cbc33b44b7e",
-    "key": "d1f61e66-7708-4da6-aa05-7cbc33b44b7e",
-    "value": {
-      "rev": "2-cbdef49ef3ddc127eff86350844a6108"
-    }
-  }]
+	"total_rows": 3,
+	"offset": 0,
+	"rows": [
+		{
+			"id": "5a049246-179f-42ad-87ac-8f080426c17c",
+			"key": "5a049246-179f-42ad-87ac-8f080426c17c",
+			"value": {
+				"rev": "2-9d5401898196997853b5ac4163857a29"
+			}
+		},
+		{
+			"id": "96f898f0-f6ff-4a9b-aac4-503992f31b01",
+			"key": "96f898f0-f6ff-4a9b-aac4-503992f31b01",
+			"value": {
+				"rev": "2-ff7b85665c4c297838963c80ecf481a3"
+			}
+		},
+		{
+			"id": "d1f61e66-7708-4da6-aa05-7cbc33b44b7e",
+			"key": "d1f61e66-7708-4da6-aa05-7cbc33b44b7e",
+			"value": {
+				"rev": "2-cbdef49ef3ddc127eff86350844a6108"
+			}
+		}
+	]
 }
 ```
-
-The response is a JSON object containing all documents in the database matching the parameters. The following table describes the meaning of the individual fields:
-
-Field |	Description |	Type
-------|-------------|-------
-offset |	Offset where the document list started |	numeric
-rows |	Array of document objects |	array
-total_rows |	Number of documents in the database/view matching the parameters of the query |	numeric
-update_seq |	Current update sequence for the database |	string
+{:screen}
 
 ## Get Changes
 
-> Example request to get list of changes made to documents in a database:
-
-```http
-GET /$DATABASE/_changes HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_changes \
-     -u $USERNAME
-```
-
-```javascript
-var nano = require('nano');
-var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
-
-account.db.changes($DATABASE, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
-});
-```
-
-Making a GET request against `https://$USERNAME.cloudant.com/$DATABASE/_changes` returns a list of changes made to documents in the database,
+Sending a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/_changes`
+returns a list of changes made to documents in the database,
 including insertions,
 updates,
 and deletions.
@@ -336,8 +361,57 @@ When a `_changes` request is received,
 one replica for each shard of the database is asked to provide a list of changes.
 These responses are combined and returned to the original requesting client.
 
-However,
-the distributed nature of Cloudant databases,
+`_changes` accepts several optional query arguments:
+
+Argument       | Description | Supported Values | Default 
+---------------|-------------|------------------|---------
+`conflicts`    | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
+`descending`   | Return the changes in sequential order. | boolean | false | 
+`doc_ids`      | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. **Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](/docs/Cloudant/api/advanced.html#get-/) for more information. | A JSON array of document IDs | |
+`feed`         | Type of feed required. For details see the [`feed` information](#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
+`filter`       | Name of [filter function](/docs/Cloudant/api/design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](/docs/Cloudant/api/design_documents.html). | string | no filter
+`heartbeat`    | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 
+`include_docs` | Include the document as part of the result. | boolean | false |
+`limit`        | Maximum number of rows to return. | any non-negative number | none |  
+`since`        | Start the results from changes _after_ the specified sequence identifier. For details see the [`since` information](#the-since-argument). | sequence identifier or `now` | 0 | 
+`style`        | Specifies how many revisions are returned in the changes array. The `main_only` style returns only the current "winning" revision. The `all_docs` style returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
+`timeout`      | Number of milliseconds to wait for data before terminating the response. If the `heartbeat` setting is also supplied, it takes precedence over the `timeout` setting. | any positive number | |
+
+>	**Note**: Using `include_docs=true` might have
+	[performance implications](/docs/Cloudant/api/using_views.html#include_docs_caveat).
+
+_Example request to get list of changes made to documents in a database, using HTTP:_
+
+```
+GET /$DATABASE/_changes HTTP/1.1
+```
+{:screen}
+
+_Example request to get list of changes made to documents in a database, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/$DATABASE/_changes \
+     -u $USERNAME
+```
+{:screen}
+
+_Example request to get list of changes made to documents in a database, using Javascript:_
+
+```
+var nano = require('nano');
+var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
+
+account.db.changes($DATABASE, function (err, body, headers) {
+	if (!err) {
+		console.log(body);
+	}
+});
+```
+{:screen}
+
+### Changes in a distributed database
+
+The distributed nature of Cloudant databases,
 and in particular the shard and fault-tolerant characteristics,
 means that the response provided by the `_changes` request might be different
 to the behavior you expect.
@@ -351,30 +425,10 @@ along with implications for applications,
 is explained in the
 [replication guide](/docs/Cloudant/guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
-<aside class="warning" role="complementary" aria-label="cloudantNotCouch">It is essential that any application using the <code>_changes</code> request should be able to process correctly a list of changes that might:
-<ul>
-<li>Have a different order for the changes listed in the response,
-when compared with an earlier request for the same information.</li>
-<li>Include changes that are considered to be prior to the change specified by the sequence identifier.</li>
-<ul></aside>
-
-`_changes` accepts several optional query arguments:
-
-Argument | Description | Supported Values | Default 
----------|-------------|------------------|---------
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
-`descending` | Return the changes in sequential order. | boolean | false | 
-`doc_ids` | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. <br>**Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](advanced.html#get-/) for more information. | A JSON array of document IDs | |
-`feed` | Type of feed required. For details see the [`feed` information](database.html#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
-`filter` | Name of [filter function](design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](design_documents.html). | string | no filter
-`heartbeat` | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 
-`include_docs` | Include the document as part of the result. | boolean | false |
-`limit` | Maximum number of rows to return. | any non-negative number | none |  
-`since` | Start the results from changes _after_ the specified sequence identifier. For details see the [`since` information](database.html#the-since-argument). | sequence identifier or `now` | 0 | 
-`style` | Specifies how many revisions are returned in the changes array. The default, `main_only`, only returns the current "winning" revision; `all_docs` returns all leaf revisions, including conflicts and deleted former conflicts. | `main_only`, `all_docs` | `main_only` | 
-`timeout` | Number of milliseconds to wait for data before terminating the response. If the `heartbeat` setting is also supplied, it takes precedence over the `timeout` setting. | any positive number | |
-
-<aside class="warning" role="complementary" aria-label="includedocsperformance2">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+>	**Note**: It is essential that any application using the `_changes` request should be able to process correctly a list of changes that might:
+	-	Have a different order for the changes listed in the response,
+		when compared with an earlier request for the same information.
+	-	Include changes that are considered to be prior to the change specified by the sequence identifier.
 
 ### The `feed` argument
 
@@ -382,47 +436,13 @@ The `feed` argument changes how Cloudant sends the response.
 By default,
 `_changes` reports all changes,
 then the connection closes.
+This is the same as using the `feed=normal` argument.
 
 If you set `feed=longpoll`,
 requests to the server remain open until changes are reported.
 This can help monitor changes specifically instead of continuously.
 
-<div id="continuous-feed"></div>
-
-> Example response, continuous changes feed:
-
-```
-{
-  "seq": "1-g1AAAAI7eJyN0EsOgjAQBuD6SPQWcgLSIm1xJTdRph1CCEKiuHClN9Gb6E30JlisCXaDbGYmk8mXyV8QQubZRBNPg6r2GGsI_BoP9YlS4auiOuqkrP0S68JcjhMCi6Zp8sxMO7OYISgUK3AF1iOAZyqsv8jog4Q6YIxyF4n6kLhFNs4nIQ-kUtJFwj5k2yJnB0lxSbkIhgdSTk0lF9OMc-0goCpikg7PxUI3C907KMKUM9AuJP9CDws9O0ghAtc4PB8LvSz0k5HgKTCU-RtU1qyw",
-  "id": "2documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
-  "changes": [{
-    "rev": "1-967a00dff5e02add41819138abb3284d"
-  }]
-}
-{
-  "seq": "2-g1AAAAI7eJyN0E0OgjAQBeD6k-gt5ASkRdriSm6iTDuEEIREceFKb6I30ZvoTbBYE-wG2cxMmubLyysIIfNsoomnQVV7jDUEfo2H-kSp8FVRHXVS1n6JdWF-jhMCi6Zp8sxcO_MwQ1AoVuAKrEcAz0xYf5HRBwl1wBjlLhL1IXGLbJwkIQ-kUtJFwj5k2yJnJ0mKS8pFMLyQcmomuZhlnGuXBqiKmKTDe7HQzUL3Doow5Qy0C8m_0MNCzw5SiMA1Du_HQi8L_RQteAoMZf4GVgissQ",
-  "id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
-  "changes": [{
-    "rev": "1-967a00dff5e02add41819138abb3284d"
-  }]
-}
-{
-  "seq": "3-g1AAAAI7eJyN0EsOgjAQBuD6SPQWcgLSIqW4kpso0w4hBCFRXLjSm-hN9CZ6EyyUBLtBNjOTyeTL5M8JIct0poijQJZHjBR4boWn6kJp4Mq8PKu4qNwCq1xfTmMCq7qus1RPB71YIEgMNmALbEAAR1fYdsikRXzlMUa5jYRDSNQgO-sTn3tCSmEj_hCyb5Brh0xbJME15YE3PpBiriu56aade_8NUBkyQcfnYqCHgZ49FGLCGSgbEn-hl4HePSQRgSscn4-BPgb6CTrgCTAU2RdXOqyy",
-  "id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
-  "changes": [{
-    "rev": "2-eec205a9d413992850a6e32678485900"
-  }],
-  "deleted": true
-}
-{
-  "seq": "4-g1AAAAI7eJyN0EEOgjAQBdAGTfQWcgLSIm1xJTdRph1CCEKiuHClN9Gb6E30JlisCXaDbGYmTfPy80tCyDyfaOJrUPUeEw1h0OChOVEqAlXWR51WTVBhU5qfXkpg0bZtkZtrZx5mCArFClyBDQjgmwnrL-J9kEiHjFHuIvEQknTIxkkS8VAqJV0kGkK2HXJ2kmS4pFyE4wuppmaSi1nGufZpgKqYSTq-FwvdLHTvoRgzzkC7kPwLPSz07CGFCFzj-H4s9LLQT9GCZ8BQFm9Y9qyz",
-  "id": "2documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
-  "changes": [{
-    "rev": "2-eec205a9d413992850a6e32678485900"
-  }],
-  "deleted": true
-}
-```
+{:continuous-feed}
 
 If you set `feed=continuous`,
 new changes are reported without closing the connection.
@@ -433,20 +453,57 @@ Each line in the continuous response is either empty or a JSON object representi
 This ensures that the format of the report entries reflects the continuous nature of the changes,
 while maintaining validity of the JSON output.
 
-<div></div>
+_Example (abbreviated) responses from a continuous changes feed:_
+
+```json
+{
+	"seq": "1-g1A...qyw",
+	"id": "2documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
+	"changes": [
+		{
+			"rev": "1-967a00dff5e02add41819138abb3284d"
+		}
+	]
+}
+{
+	"seq": "2-g1A...ssQ",
+	"id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
+	"changes": [
+		{
+			"rev": "1-967a00dff5e02add41819138abb3284d"
+		}
+	]
+}
+{
+	"seq": "3-g1A...qyy",
+	"id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
+	"changes": [
+		{
+			"rev": "2-eec205a9d413992850a6e32678485900"
+		}
+	],
+	"deleted": true
+}
+{
+	"seq": "4-g1A...qyz",
+	"id": "2documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
+	"changes": [
+		{
+			"rev": "2-eec205a9d413992850a6e32678485900"
+		}
+	],
+	"deleted": true
+}
+```
+{:screen}
 
 ### The `filter` argument
 
-The `filter` argument designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
+The `filter` argument designates a pre-defined
+[filter function](/docs/Cloudant/api/design_documents.html#filter-functions) to apply to the changes feed.
 Additionally, there is a built-in filter available:
 
 -	`_design`: The `_design` filter accepts only changes to design documents.
-
-<!--
- * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
--->
-
-<div></div>
 
 ### The `since` argument
 
@@ -492,121 +549,161 @@ provided in the
 
 ### Responses from the `_changes` request
 
-> Example response:
-
-```
-{
-  "results": [{
-    "seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-    "id": "foo",
-    "changes": [{
-      "rev": "1-967a00dff5e02add41819138abb3284d"
-    }]
-  }],
-  "last_seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-  "pending": 0
-}
-```
-
 The response from a `_changes` request is a JSON object containing a list of the changes made to documents within the database.
 The following table describes the meaning of the individual fields:
 
-Field | Description | Type
-------|-------------|------
-`changes` | An array listing the changes made to the specific document. | Array
-`deleted` | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
-`id` | Document identifier. | String
+Field      | Description | Type
+-----------|-------------|------
+`changes`  | An array listing the changes made to the specific document. | Array
+`deleted`  | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
+`id`       | Document identifier. | String
 `last_seq` | Identifier of the last of the sequence identifiers. Currently this is the same as the sequence identifier of the last item in the `results`. | String
-`results` | Array of changes made to the database. | Array
-`seq` | Update sequence identifier. | String
+`results`  | Array of changes made to the database. | Array
+`seq`      | Update sequence identifier. | String
+
+_Example (abbreviated) response to a `_changes` request:_
+
+```json
+{
+	"results": [
+		{
+			"seq": "1-g1A...sIg",
+			"id": "foo",
+			"changes": [
+				{
+					"rev": "1-967...84d"
+				}
+			]
+		}
+	],
+	"last_seq": "1-g1A...sIg",
+	"pending": 0
+}
+```
+{:screen}
 
 ### Important notes about `_changes`
 
 When using `_changes`,
 you should be aware that:
 
--	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
--	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that are apparently prior to the specified `since` value.
--	`_changes` reported by a given shard are always presented in order. But the ordering between all the contributing shards might appear to be different. For more information, see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
--	Sequence values are unique for a shard, but might vary between shards. This means that if you have sequence values from different shards, you cannot assume that the same sequence value refers to the same document within the different shards.
+-	The results returned by `_changes` are partially ordered.
+	In other words,
+	the order is not guaranteed to be preserved for multiple calls.
+	You might decide to get a current list using `_changes` which includes the [`last_seq` value](#changes_responses),
+	then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
+-	Although shard copies of the same range contain the same data,
+	their `_changes` history is often unique.
+	This is a result of how writes have been applied to the shard. For example,
+	they might have been applied in a different order.
+	To be sure all changes are reported for your specified sequence,
+	it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes.
+	This might give the appearance of duplicate updates,
+	or updates that are apparently prior to the specified `since` value.
+-	`_changes` reported by a given shard are always presented in order.
+	But the ordering between all the contributing shards might appear to be different.
+	For more information,
+	see [this example](https://gist.github.com/smithsz/30fb97662c549061e581){:new_window}.
+-	Sequence values are unique for a shard,
+	but might vary between shards.
+	This means that if you have sequence values from different shards,
+	you cannot assume that the same sequence value refers to the same document within the different shards.
 
-<div id="post"> </div>
+{:post}
 
 ### Using `POST` to get changes
 
-> Example of `POST`ing to the `_changes` endpoint
+Instead of `GET`,
+an alternative is to use `POST` to query the changes feed.
+The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
 
-```http
+_Example of `POST`ing to the `_changes` endpoint, using HTTP:_
+
+```
 POST /$DB/_changes HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
+{:screen}
 
-```shell
+_Example of `POST`ing to the `_changes` endpoint, using the command line:_
+
+```
 curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
 ```
+{:screen}
+
+_Example of a JSON object `POST`ed to the `_changes` endpoint:_
 
 ```json
 {
-  "limit": 10
+	"limit": 10
 }
 ```
-
-Instead of `GET`, you can also use `POST` to query the changes feed. The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
+{:screen}
 
 ## Deleting a database
 
-> Example request to delete a Cloudant database:
+To delete a databases and its contents,
+send a `DELETE` request to `https://$USERNAME.cloudant.com/$DATABASE`.
 
-```http
+>	**Note**: There is no additional check to ensure that you really intended to delete the database ("Are you sure?").
+
+_Example request to delete a Cloudant database, using HTTP:_
+
+```
 DELETE /$DATABASE HTTP/1.1
 Host: $USERNAME.cloudant.com
 ```
+{:screen}
 
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE \
-     -X DELETE \
-     -u $USERNAME
+_Example request to delete a Cloudant database, using the command line:_
+
 ```
+curl https://$USERNAME.cloudant.com/$DATABASE \
+	-X DELETE \
+	-u $USERNAME
+```
+{:screen}
 
-```javascript
+_Example request to delete a Cloudant database, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
 account.db.destroy($DATABASE, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
 ```
+{:screen}
 
-To delete a databases and its contents, make a DELETE request to `https://$USERNAME.cloudant.com/$DATABASE`.
+The response confirms successful deletion of the database or describes any errors that occurred,
+for example if you try to delete a database that does not exist.
 
-<aside class="warning" role="complementary" aria-label="deletecheck">There is no additional check to ensure that you really intended to delete the database ("Are you sure?").</aside>
+_Example response:_
 
-<div></div>
-
-> Example response:
-
-```
+```json
 {
-  "ok": true
+	"ok": true
 }
 ```
-
-The response confirms successful deletion of the database or describes any errors that occurred, i.e. if you try to delete a database that does not exist.
+{:screen}
 
 ## Backing up your data
 
 It is essential that you protect your data by taking good quality backups.
-An overview of backing up your data is [available](backup.html),
+An overview of backing up your data is [available](/docs/Cloudant/api/backup.html),
 with more detailed information in the [backup guide](/docs/Cloudant/guides/backup-guide.html).
 
 ## Using a different domain
 
-Virtual hosts (vhosts) are a way to make Cloudant serve data from a different domain than the one normally associated with your Cloudant account.
+Virtual hosts (vhosts) are a way to make Cloudant serve data from a different domain
+than the one normally associated with your Cloudant account.
 
-More information is available [here](vhosts.html).
+More information is available [here](/docs/Cloudant/api/vhosts.html).
 
 ## Creating database applications
 
@@ -617,5 +714,5 @@ stored within a database,
 are called [CouchApps](/docs/Cloudant/guides/couchapps.html).
 
 More information about CouchApps,
-and deciding whether they are a good match for your application,
+and to help you decide whether they are a good match for your application,
 is [available](/docs/Cloudant/guides/couchapps.html).
