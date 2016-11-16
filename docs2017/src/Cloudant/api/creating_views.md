@@ -178,14 +178,14 @@ The latter case is referred to as a 'rereduce'.
 
 Reduce functions are passed three arguments in the following order:
 
--	key - an array of values.
+-	keys - an array of values.
 -	values - an array of values.
 -	rereduce - a boolean flag.
 
 _Example of a reduce function:_
 
 ```
-function (key, values, rereduce) {
+function (keys, values, rereduce) {
 	return sum(values);
 }
 ```
@@ -194,7 +194,7 @@ function (key, values, rereduce) {
 Reduce functions must handle two cases:
 
 1.	When `rereduce` is false:
-	-	`key` is an array whose elements are arrays of the form `[key, id]`,
+	-	`keys` is an array whose elements are arrays of the form `[key, id]`,
 		where `key` is a key emitted by the map function,
 		and `id` identifies the document from which the key was generated.
 	-	`values` is an array of the values emitted for the respective elements in `keys`,
@@ -202,7 +202,7 @@ Reduce functions must handle two cases:
 		`reduce([ [key1,id1], [key2,id2], [key3,id3] ], [value1,value2,value3], false)`
 
 2.	When `rereduce` is true:
-	-	`key` is `null`.
+	-	`keys` is `null`.
 	-	`values` is an array of values returned by previous calls to the reduce function,
 		for example: `reduce(null, [intermediate1,intermediate2,intermediate3], true)`.
 

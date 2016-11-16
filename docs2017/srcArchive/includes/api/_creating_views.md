@@ -141,23 +141,23 @@ When the key is an array, view results can be grouped by a sub-section of the ke
 > Example of a reduce function:
 
 ```
-function (key, values, rereduce) {
+function (keys, values, rereduce) {
   return sum(values);
 }
 ```
 
 If a view has a reduce function, it is used to produce aggregate results for that view. A reduce function is passed a set of intermediate values and combines them to a single value. Reduce functions must accept, as input, results emitted by its corresponding map function '''as well as results returned by the reduce function itself'''. The latter case is referred to as a ''rereduce''.
 
-Reduce functions are passed three arguments in the order ''key'', ''values'', and ''rereduce''.
+Reduce functions are passed three arguments in the order ''keys'', ''values'', and ''rereduce''.
 
 Reduce functions must handle two cases:
 
 1.	When `rereduce` is false:
-  -	`key` will be an array whose elements are arrays of the form `[key,id]`, where `key` is a key emitted by the map function and ''id'' is that of the document from which the key was generated.
+  -	`keys` will be an array whose elements are arrays of the form `[key,id]`, where `key` is a key emitted by the map function and ''id'' is that of the document from which the key was generated.
   -	`values` will be an array of the values emitted for the respective elements in `keys`, for example: `reduce([ [key1,id1], [key2,id2], [key3,id3] ], [value1,value2,value3], false)`
 
 2.	When `rereduce` is true:
-  -	`key` will be `null`.
+  -	`keys` will be `null`.
   -	`values` will be an array of values returned by previous calls to the reduce function, for example: `reduce(null, [intermediate1,intermediate2,intermediate3], true)`\`
 
 Reduce functions should return a single value, suitable for both the "value" field of the final view and as a member of the "values" array passed to the reduce function.
