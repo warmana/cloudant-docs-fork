@@ -66,7 +66,7 @@ it is possible to use an underscore prefix for the field name.
 
 <div></div>
 
-Cloudant uses an [eventually consistent](basics.html#consistency) model for data.
+Cloudant uses an [eventually consistent](cap_theorem.html#consistency) model for data.
 This means that under some conditions,
 it is possible that if your application performs a document write or update,
 followed immediately by a read of the same document,
@@ -74,7 +74,7 @@ older document content is retrieved.
 In other words,
 your application would see the document content as it was *before* the write or update occurred.
 For more information about this,
-see the topic on [Consistency](basics.html#consistency).
+see the topic on [Consistency](cap_theorem.html#consistency).
 
 <h3 id="documentCreate">Create</h3>
 
