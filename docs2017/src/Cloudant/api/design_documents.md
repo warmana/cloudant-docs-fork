@@ -197,8 +197,8 @@ _Example response:_
 
 ```json
 {
-	"id" : "recipes/_design/recipes"
-	"rev" : "2-55b6a1b251902a2c249b667dab1c6692",
+	"id" : "recipes/_design/recipes",
+	"rev" : "2-55b6a1b251902a2c249b667dab1c6692"
 }
 ```
 {:screen}
@@ -276,20 +276,22 @@ Field    | Description
 _Example JSON describing some rewrite rules:_
 
 ```json
-"rewrites": [
-	{
-		"from": "/",
-		"to": "index.html",
-		"method": "GET",
-		"query": {}
-	},
-	{
-		"from": "/foo/:var",
-		"to": "/foo",
-		"method": "GET",
-		"query": {"v": "var"}
-	}
-]
+{
+	"rewrites": [
+		{
+			"from": "/",
+			"to": "index.html",
+			"method": "GET",
+			"query": {}
+		},
+		{
+			"from": "/foo/:var",
+			"to": "/foo",
+			"method": "GET",
+			"query": {"v": "var"}
+		}
+	]
+}
 ```
 {:screen}
 
@@ -369,8 +371,15 @@ In this request:
 *	`$MAPREDUCE_INDEX` is the name of the index providing the query results you want to format.
 
 List functions require two arguments:
-`head` and `req`.
-The other parameters are the same query parameters described
+[`head`](#head) and [`req`](#req).
+
+The `head` argument identifies the documents to be processed by the list function.
+
+The `req` argument contains additional information about the request.
+It enables you to create list functions that are more dynamic,
+because they are based on additional factors such as query parameters or the user context.
+
+The values within the `req` argument are similar to the query parameters described
 [here](/docs/Cloudant/api/cloudant_query.html#query-parameters).
 
 _Example design document referencing a list function, expressed using JSON:_
@@ -445,67 +454,102 @@ db.view_with_list($DESIGN_ID, $MAPREDUCE_INDEX, $LIST_FUNCTION, function (err, b
 
 ### head
 
-Field | Description
-------|-------------
-total_rows | Number of documents in the view
-offset | Offset where the document list started
+Field        | Description
+-------------|-------------
+`offset`     | Offset where the document list started
+`total_rows` | Number of documents in the view
 
 ### req
 
-Field | Description
-------|-------------
-body | Request body data as string. If the request method is `GET` this field contains the value "undefined". If the method is `DELETE` or `HEAD` the value is "" (empty string).
-cookie | Cookies object.
-form | Form data object. Contains the decoded body as key-value pairs if the Content-Type header was `application/x-www-form-urlencoded`.
-headers | Request headers object.
-id | Requested document id string if it was specified or null otherwise.
-info | Database information
-method | Request method as string or array. String value is a method as one of: `HEAD`, `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`, and `TRACE`. Otherwise it will be represented as an array of char codes.
-path | List of requested path sections.
-peer | Request source IP address.
-query | URL query parameters object. Note that multiple keys are not supported and the last key value suppresses others.
-requested_path | List of actual requested path section.
-raw_path | Raw requested path string.
-secObj | The database's [security object](authorization.html#viewing-permissions)
-userCtx | Context about the currently authenticated user, specifically their `name` and `roles` within the current database.
-uuid | A generated UUID
+Field            | Description
+-----------------|-------------
+`body`           | Request body data as string. If the request method is `GET`, this field contains the value `undefined`. If the method is `DELETE` or `HEAD`, the value is "" (the empty string).
+`cookie`         | Cookies object.
+`form`           | Form data object. Contains the decoded body as key-value pairs if the Content-Type header was `application/x-www-form-urlencoded`.
+`headers`        | Request headers object.
+`id`             | Requested document ID string if it was specified or null otherwise.
+`info`           | Database information
+`method`         | Request method as string or array. String value is one of the methods: `HEAD`, `GET`, `POST`, `PUT`, `DELETE`, `OPTIONS`, or `TRACE`. Alternatively, the method is represented as an array of character codes.
+`path`           | List of requested path sections.
+`peer`           | Request source IP address.
+`query`          | URL query parameters object. Multiple keys are not supported, therefore the last duplicate key overrides the others.
+`requested_path` | List of actual requested path section.
+`raw_path`       | Raw requested path string.
+`secObj`         | The database's [security object](/docs/Cloudant/api/authorization.html#viewing-permissions)
+`userCtx`        | Context about the currently authenticated user, specifically their `name` and `roles` within the current database.
+`uuid`           | A generated UUID.
 
 ## Show Functions
 
-> Design doc with a show function:
+Show functions are similar to [list functions](#list-functions),
+but are used to format individual documents.
+They are used when you want to access Cloudant directly from a browser,
+and need data to be returned in a different format,
+such as HTML.
+
+>	**Note**: The result of a show function is not stored.
+This means that the function is executed every time a request is made.
+As a consequence,
+using [map functions](/docs/Cloudant/api/creating_views#a-simple-view) might be more efficient.
+For web and mobile applications,
+consider whether any computations done in a show function would be better placed in the application tier.
+
+Show functions require two arguments: `doc`, and [req](#req).
+
+`doc` is the document requested by the show function.
+
+The [`req`](#req) argument contains additional information about the request.
+It enables you to create show functions that are more dynamic,
+because they are based on additional factors such as query parameters or the user context.
+
+The [`req`](#req) argument corresponds to that used in a [list function](#list-functions).
+
+When you have defined a show function,
+you query it by sending a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_show/$SHOW_FUNCTION/$DOCUMENT_ID`,
+where `$SHOW_FUNCTION` is the name of the function that is included in the design document `$DESIGN_ID`.
+
+_Example of a design document with a show function:_
 
 ```json
 {
-  "_id": "_design/show_example",
-  "shows": {
-    "FUNCTION_NAME": "function (doc, req) { ... }"
-  }
+	"_id": "_design/show_example",
+	"shows": {
+		"FUNCTION_NAME": "function (doc, req) { ... }"
+	}
 }
 ```
+{:screen}
 
-> Example show function:
+_Example of a show function:_
 
 ```
 function (doc, req) {
-  if (doc) {
-    return "Hello from " + doc._id + "!";
-  } else {
-    return "Hello, world!";
-  }
+	if (doc) {
+		return "Hello from " + doc._id + "!";
+	} else {
+		return "Hello, world!";
+	}
 }
 ```
+{:screen}
 
-> Example query:
+_Example of a show function query, using HTTP:_
 
-```http
+```
 GET /$DATABASE/$DESIGN_ID/_show/$SHOW_FUNCTION/$DOCUMENT_ID HTTP/1.1
 Host: $USERNAME.cloudant.com
 ```
+{:screen}
 
-```shell
+_Example of a show function query, using the command line:_
+
+```
 curl https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_show/$SHOW_FUNCTION/$DOCUMENT_ID \
      -u $USERNAME
 ```
+{:screen}
+
+_Example of a show function query, using Javascript:_
 
 ```javascript
 var nano = require('nano');
@@ -513,146 +557,137 @@ var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.c
 var db = account.use($DATABASE);
 
 db.show($DESIGN_ID, $SHOW_FUNCTION, $DOCUMENT_ID, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
 ```
-
-Show functions are similar to [list functions](#list-functions) but are used to format individual documents.
-They are used when you want to access Cloudant directly from a browser, and need data to be returned in a different format, such as HTML.
-
-<aside class="warning" role="complementary" aria-label="showresultnotstored">The result of a show function is not stored. This means that the function is executed every time a request is made.
-As a consequence, using map functions might be more efficient.
-For web and mobile applications, consider whether any computations done in a show function would be better placed in the application tier.</aside>
-
-Show functions receive two arguments: `doc`, and [req](#req). `doc` is the document requested by the show function.
-
-When you have defined a show function, you query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_show/$SHOW_FUNCTION/$DOCUMENT_ID`,
-where `$SHOW_FUNCTION` is the name of the function that is applied to the document that has `$DESIGN_ID` as its `_id`.
+{:screen}
 
 ## Update Handlers
 
-> Example design doc:
+Update handlers are custom functions that create or update a document.
+They are used for tasks such as providing server-side modification timestamps,
+and performing document updates to individual fields without the latest revision.
+
+Update handlers require two arguments: `doc` and [req](#req).
+
+If a document ID is provided in the request to the update handler,
+then `doc` is the document corresponding to that ID.
+If no ID is provided,
+`doc` is `null`.
+
+The [`req`](#req) argument contains additional information about the request.
+It enables you to create update handlers that are more dynamic,
+because they are based on additional factors such as query parameters or the user context.
+
+The [`req`](#req) argument corresponds to that used in a [list function](#list-functions).
+
+Update handler functions must return an array of two elements.
+The first element is the document to save,
+or `null` if you do not want to save the document.
+The second element is the response body.
+
+There are two methods for querying update handlers:
+
+Method | URL
+-------|------
+`POST` | `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER`
+`PUT`  | `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER/$DOCUMENT_ID`
+
+In these methods:
+
+Variable          | Purpose
+------------------|--------
+`$DESIGN_ID`      | The ID of the document defining the update handler.
+`$DOCUMENT_ID`    | The ID of the document that the handler must work with.
+`$UPDATE_HANDLER` | The name of the update handler.
+
+_Example of a design document with an update handler:_
 
 ```json
 {
-  "_id": "_design/update_example",
-  "updates": {
-    "UPDATE_HANDLER_NAME": "function (doc, req) { ... }"
-  }
+	"_id": "_design/update_example",
+	"updates": {
+		"UPDATE_HANDLER_NAME": "function (doc, req) { ... }"
+	}
 }
 ```
+{:screen}
 
-> Example update handler:
+_Example of an update handler:_
 
 ```
 function(doc, req){
-  if (!doc){
-    if ('id' in req && req.id){
-      // create new document
-      return [{_id: req.id}, 'New World']
-    }
-    // change nothing in database
-    return [null, 'Empty World']
-  }
-  doc.world = 'hello';
-  doc.edited_by = req.userCtx.name
-  return [doc, 'Edited World!']
+	if (!doc){
+		if ('id' in req && req.id){
+			// create new document
+			return [{_id: req.id}, 'New World']
+		}
+		// change nothing in database
+		return [null, 'Empty World']
+	}
+	doc.world = 'hello';
+	doc.edited_by = req.userCtx.name
+	return [doc, 'Edited World!']
 }
 ```
+{:screen}
 
-> Example query:
+_Example of an update handler query, using HTTP:_
 
-```http
+```
 POST /$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER HTTP/1.1
 Content-Type: application/json
 ```
+{:screen}
 
-```shell
-curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER" \
-     -X POST \
-     -H 'Content-Type: application/json' \
-     -u "$USERNAME:$PASSWORD"
-     -d "$JSON"
+_Example of an update handler query, using the command line:_
+
 ```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER" \
+	-X POST \
+	-H 'Content-Type: application/json' \
+	-u "$USERNAME:$PASSWORD" \
+	-d "$JSON"
+```
+{:screen}
 
-```javascript
+_Example of an update handler query, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
 
 db.atomic($DESIGN_ID, $UPDATE_HANDLER, $DOCUMENT_ID, $JSON, function (err, body) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
 ```
-
-Update handlers are custom functions that live on Cloudant's server that will create or update a document.
-This can, for example, provide server-side modification timestamps, and document updates to individual fields without the latest revision.
-
-Update handlers receive two arguments: `doc` and [req](#req).
-If a document ID is provided in the request to the update handler, then `doc` will be the document corresponding with that ID. If no ID was provided, `doc` will be `null`.
-
-Update handler functions must return an array of two elements, the first being the document to save (or null, if you don't want to save anything), and the second being the response body.
-
-Here's how to query update handlers:
-
-Method | URL
--------|------
-POST | `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER`
-PUT | `https://$USERNAME.cloudant.com/$DATABASE/$DESIGN_ID/_update/$UPDATE_HANDLER/$DOCUMENT_ID`
-
-Where `$DESIGN_ID` is the `_id` of the document defining the update handler, `$UPDATE_HANDLER` is the name of the update handler, and `$DOCUMENT_ID` is the `_id` of the document you want the handler to, well, handle.
+{:screen}
 
 ## Filter Functions
 
-> Example design document containing a filter function:
-
-```json
-{
-  "_id":"_design/FILTER_EXAMPLE",
-  "filters": {
-    "FILTER_EXAMPLE": "function (doc, req) { ... }"
-  }
-}
-```
-
-Filter functions are design documents that enable you to filter the [changes feed](database.html#get-changes).
+Filter functions are design documents that enable you to filter
+the [changes feed](/docs/Cloudant/api/database.html#get-changes).
 They work by applying tests to each of the objects included in the changes feed.
+
 If any of the function tests fail,
 the object is 'removed' or 'filtered' from the feed.
 If the function returns a `true` result when applied to a change,
 the change remains in the feed.
-Therefore,
-filter functions let you 'remove' or 'ignore' changes you don't want to monitor.
+This means that filter functions let you 'remove' or 'ignore' changes that you do not want to monitor.
 
-<aside class="information" role="complementary" aria-label="modifyreplicationtask">Filter functions can also be used to modify a [replication task](advanced_replication.html#filtered-replication).</aside>
-
-<div></div>
-
-> Example filter function:
-
-```
-function(doc, req){
-  // we need only `mail` documents
-  if (doc.type != 'mail'){
-    return false;
-  }
-  // we're interested only in `new` ones
-  if (doc.status != 'new'){
-    return false;
-  }
-  return true; // passed!
-}
-```
+>	**Note**: Filter functions can also be used to modify
+a [replication task](/docs/Cloudant/api/advanced_replication.html#filtered-replication).
 
 Filter functions require two arguments: `doc` and [`req`](#req).
 
 The `doc` argument represents the document being tested for filtering.
 
-The `req` argument contains additional information about the HTTP request.
+The `req` argument contains additional information about the request.
 It enables you to create filter functions that are more dynamic,
 because they are based on additional factors such as query parameters or the user context.
 
@@ -662,165 +697,248 @@ In many filter function use cases,
 however,
 only the `doc` parameter is used.
 
-More details about the `req` parameter are available [here](#req).
+The [`req`](#req) argument corresponds to that used in a [list function](#list-functions).
 
-<div></div>
+_Example design document containing a filter function:_
 
-> Example query:
-
-```http
-GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION HTTP/1.1
+```json
+{
+	"_id":"_design/FILTER_EXAMPLE",
+	"filters": {
+		"FILTER_EXAMPLE": "function (doc, req) { ... }"
+	}
+}
 ```
+{:screen}
 
-```shell
-curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION" \
-     -u "$USERNAME:$PASSWORD"
+_Example of a filter function:_
+
 ```
+function(doc, req){
+	// we need only `mail` documents
+	if (doc.type != 'mail'){
+		return false;
+	}
+	// we're interested only in `new` ones
+	if (doc.status != 'new'){
+		return false;
+	}
+	return true; // passed!
+}
+```
+{:screen}
 
 To apply a filter function to the changes feed,
 include the `filter` parameter in the `_changes` query,
 providing the name of the filter to use.
 
-<div></div>
+_Example of an filter function applied to a `_changes` query, using HTTP:_
 
-> Using the `req` argument:
-
-```http
-GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new HTTP/1.1
 ```
+GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION HTTP/1.1
+```
+{:screen}
 
-```shell
-curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new" \
+_Example of an filter function applied to a `_changes` query, using the command line:_
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION" \
      -u "$USERNAME:$PASSWORD"
 ```
-
-> Example filter function that uses the `req` argument:
-
-```
-function(doc, req){
-  // we need only `mail` documents
-  if (doc.type != 'mail'){
-    return false;
-  }
-  // we're interested only in `new` ones
-  if (doc.status != req.query.status){
-    return false;
-  }
-  return true; // passed!
-}
-```
+{:screen}
 
 The `req` argument gives you access to aspects of the HTTP request using the `query` property.
 
+_Example of supplying a `req` argument, using HTTP:
+
+```
+GET /$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new HTTP/1.1
+```
+{:screen}
+
+_Example of supplying a `req` argument, using the command line:
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=$DESIGN_ID/$FILTER_FUNCTION&status=new" \
+	-u "$USERNAME:$PASSWORD"
+```
+{:screen}
+
+_Example filter using a supplied `req` argument:_
+
+```
+function(doc, req){
+	// we need only `mail` documents
+	if (doc.type != 'mail'){
+		return false;
+	}
+	// we're interested only in `new` ones
+	if (doc.status != req.query.status){
+		return false;
+	}
+	return true; // passed!
+}
+```
+{:screen}
+
 ## Update Validators
 
-> Example design document:
+Update validators determine whether a document should be written to disk when insertions and updates are attempted.
+They do not require a query because they implicitly run during this process.
+If a change is rejected,
+the update validator responds with a custom error.
+
+Update validators require four arguments:
+
+Argument  | Purpose
+----------|--------
+`newDoc`  | The version of the document passed in the request.
+`oldDoc`  | The version of the document currently in the database, or `null` if there is none.
+`secObj`  | The [security object](/docs/Cloudant/api/authorization.html#viewing-permissions) for the database.
+`userCtx` | Context regardingthe currently authenticated user, such as `name` and `roles`.
+
+>	**Note**: Update validators do not apply when a design document is updated by an admin user.
+This is to ensure that admins can never accidentally lock themselves out.
+
+_Example design document with an update validator:_
 
 ```json
 {
-  "_id": "_design/validator_example",
-  "validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj) { ... }"
+	"_id": "_design/validator_example",
+	"validate_doc_update": "function(newDoc, oldDoc, userCtx, secObj) { ... }"
 }
 ```
+{:screen}
 
-> Example update validator:
+_Example of an update validator:_
 
 ```
 function(newDoc, oldDoc, userCtx, secObj) {
-  if (newDoc.address === undefined) {
-     throw({forbidden: 'Document must have an address.'});
-  }
+	if (newDoc.address === undefined) {
+		throw({forbidden: 'Document must have an address.'});
+	}
 }
 ```
+{:screen}
 
-> Example response:
+_Example response from an update validator:_
 
 ```json
 {
-  "error": "forbidden",
-  "reason": "Document must have an address."
+	"error": "forbidden",
+	"reason": "Document must have an address."
 }
 ```
-
-Update validators evaluate whether a document should be written to disk when insertions and updates are attempted.
-They do not require a query because they implicitly run during this process. If a change is rejected, the update validator responds with a custom error.
-
-Update validators get four arguments:
-
-* `newDoc`: the version of the document passed in the request.
-* `oldDoc`: the version of the document currently in the database, or `null` if there is none.
-* `userCtx`: context about the currently authenticated user, such as `name` and `roles`..
-* `secObj`: the database's [security object](authorization.html#viewing-permissions)
-
-Update validators do not apply when a design document is updated by an admin user, so that admins can never accidentally lock themselves out.
+{:screen}
 
 ## Retrieving information about a design document
 
-There are two endpoints available that provide you with more information: `_info` and `_search_info`.
+There are two endpoints available that provide you with more information about
+design documents: [`_info`](#the-_info-endpoint) and [`_search_info`](#the-_search_info-endpoint).
 
-> Example to get the information for the `recipesdd` design document in the `recipes` database:
+### The `_info` endpoint
 
-```http
+The `_info` endpoint returns information about a given design document,
+including the index,
+index size,
+and current status of the design document and associated index information.
+
+-	**Method**: `GET /db/_design/design-doc/_info`
+-	**Request**: None
+-	**Response**: JSON containing the design document information.
+-	**Roles permitted**: `_reader`
+
+_Example of retrieving information about the `recipesdd` design document from within the `recipes` database,
+using HTTP:_
+
+```
 GET /recipes/_design/recipesdd/_info HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example of retrieving information about the `recipesdd` design document from within the `recipes` database,
+using the command line:_
+
+```
 curl "https://$ACCOUNT.cloudant.com/recipes/_design/recipesdd/_info" \
      -u "$USERNAME:$PASSWORD"
 ```
+{:screen}
 
-> Example JSON structure response:
+The individual fields in the JSON response are as follows:
+
+-	**name**: Name or ID of Design Document.
+-	**view_index**: View Index
+	-	**compact_running**: Indicates whether a compaction routine is currently running on the view.
+	-	**disk_size**: Size in bytes of the view as stored on disk.
+	-	**language**: Language used for defining views.
+	-	**purge_seq**: The purge sequence that has been processed.
+	-	**signature**: MD5 signature of the views for the design document.
+	-	**update_seq**: The update sequence of the corresponding database that has been indexed.
+	-	**updater_running**: Indicates if the view is currently being updated.
+	-	**waiting_clients**: Number of clients waiting on views from this design document.
+	-	**waiting_commit**: Indicates if there are outstanding commits to the underlying database that need to processed
+
+_Example response in JSON format:_
 
 ```json
 {
-   "name" : "recipesdd",
-   "view_index": {
-      "compact_running": false,
-      "updater_running": false,
-      "language": "javascript",
-      "purge_seq": 10,
-      "waiting_commit": false,
-      "waiting_clients": 0,
-      "signature": "fc65594ee76087a3b8c726caf5b40687",
-      "update_seq": 375031,
-      "disk_size": 16491
-   },
+	"name" : "recipesdd",
+	"view_index": {
+		"compact_running": false,
+		"updater_running": false,
+		"language": "javascript",
+		"purge_seq": 10,
+		"waiting_commit": false,
+		"waiting_clients": 0,
+		"signature": "fc65594ee76087a3b8c726caf5b40687",
+		"update_seq": 375031,
+		"disk_size": 16491
+	}
 }
 ```
+{:screen}
 
--   **Method**: `GET /db/_design/design-doc/_info`
--   **Request**: None
--   **Response**: JSON of the design document information
--   **Roles permitted**: \_reader
+### The `_search_info` endpoint
 
-Obtains information about a given design document, including the index, index size and current status of the design document and associated index information.
+The `_search_info` endpoint returns information about a specified search
+that is defined within a given design document.
+
+-	**Method**: `GET /db/_design/design-doc/_search_info/yourSearch`
+-	**Request**: None
+-	**Response**: JSON containing information about the specified search.
+-	**Roles permitted**: `_reader`
+
+_Example of getting information about the `description` search,
+defined within the `app` design document stored in the `foundbite` database, using HTTP:_
+
+```
+GET /foundbite/_design/app/_search_info/description HTTP/1.1
+```
+{:screen}
+
+_Example of getting information about the `description` search,
+defined within the `app` design document stored in the `foundbite` database, using the command line:_
+
+```
+curl "https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/description" \
+	-u "$USERNAME:$PASSWORD"
+```
+{:screen}
 
 The individual fields in the returned JSON structure are as follows:
 
--   **name**: Name/ID of Design Document
--   **view\_index**: View Index
-    -   **compact\_running**: Indicates whether a compaction routine is currently running on the view
-    -   **disk\_size**: Size in bytes of the view as stored on disk
-    -   **language**: Language for the defined views
-    -   **purge\_seq**: The purge sequence that has been processed
-    -   **signature**: MD5 signature of the views for the design document
-    -   **update\_seq**: The update sequence of the corresponding database that has been indexed
-    -   **updater\_running**: Indicates if the view is currently being updated
-    -   **waiting\_clients**: Number of clients waiting on views from this design document
-    -   **waiting\_commit**: Indicates if there are outstanding commits to the underlying database that need to processed
+-	**name**: Name or ID of the Search within the Design Document.
+-	**search_index**: The Search Index
+	-	**pending_seq**: The sequence number of changes in the database that have reached the Lucene index,
+		both in memory and on disk.
+	-	**doc_del_count**: Number of deleted documents in the index.
+	-	**doc_count**: Number of documents in the index.
+	-	**disk_size**: The size of the index on disk, in bytes.
+	-	**committed_seq**: The sequence number of changes in the database that have been committed
+		to the Lucene index on disk.
 
-> Example to get information about the `description` search within the `app` design document in the `foundbite` database:
-
-```http
-GET /foundbite/_design/app/_search_info/description HTTP/1.1
-```
-
-```shell
-curl "https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/description" \
-     -u "$USERNAME:$PASSWORD"
-```
-
-> Example JSON structure response:
+_Example response in JSON format:_
 
 ```json
 {
@@ -834,20 +952,4 @@ curl "https://$USERNAME.cloudant.com/foundbite/_design/app/_search_info/descript
 	}
 }
 ```
-
--   **Method**: `GET /db/_design/design-doc/_search_info/yourSearch`
--   **Request**: None
--   **Response**: JSON information about the specified search
--   **Roles permitted**: \_reader
-
-Obtains information about a search specified within a given design document.
-
-The individual fields in the returned JSON structure are as follows:
-
--   **name**: Name/ID of the Search within the Design Document
--   **search\_index**: The Search Index
-    -   **pending\_seq**: The sequence number of changes in the database that have reached Lucene, both in memory and on disk.
-    -   **doc\_del\_count**: Number of deleted documents in the index.
-    -   **doc\_count**: Number of documents in the index.
-    -   **disk\_size**: The size of the index on disk, in bytes.
-    -   **committed\_seq**: The sequence number of changes in the database that have been committed to the Lucene index on disk.
+{:screen}
