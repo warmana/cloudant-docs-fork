@@ -149,7 +149,7 @@ The simplest method for creating a warehouse is for Cloudant to create a dashDB 
 on your behalf.
 Do this by clicking the `Create Warehouse` button on the `Warehouse` task within the `Integrations` tab of your Cloudant dashboard.
 
-![Screenshot of the "Create a dashDB warehouse" task within the Cloudant dashboard](../images/createDashDBWH.png)
+![Screenshot of the "Create a dashDB warehouse" task within the Cloudant dashboard](/docs/images/createDashDBWH.png)
 
 If you are not already logged in to Bluemix,
 you are asked to do so.
@@ -158,7 +158,7 @@ you are asked to do so.
 by default,
 Cloudant creates a dashDB instance on Bluemix for your warehouse.</aside>
 
-![Screenshot of the "Authenticate to Bluemix" task within the Cloudant dashboard](../images/authenticateToBluemix.png)
+![Screenshot of the "Authenticate to Bluemix" task within the Cloudant dashboard](/docs/images/authenticateToBluemix.png)
 
 When you have authenticated,
 you can request that a new dashDB instance is created using your Bluemix account.
@@ -169,7 +169,7 @@ To do this:
 3.  Ensure that the `Create new dashDB instance` option is selected on the form.
 4.  Click the `Create Warehouse` button.
 
-![Screenshot of the "Create Warehouse" task within the Cloudant dashboard](../images/createWarehouse.png)
+![Screenshot of the "Create Warehouse" task within the Cloudant dashboard](/docs/images/createWarehouse.png)
 
 ### Connect Cloudant to an existing warehouse
 
@@ -180,7 +180,7 @@ The process is similar to [using Cloudant to create a dashDB warehouse](warehous
 however instead of selecting the `Create new dashDB instance` option,
 select the `dashDB service instance` and choose the dashDB warehouse that already exists within Bluemix.
 
-![Screenshot of the "Connect to existing dashDB instance" task within the Cloudant dashboard](../images/existingDashDBInstance.png)
+![Screenshot of the "Connect to existing dashDB instance" task within the Cloudant dashboard](/docs/images/existingDashDBInstance.png)
 
 ### Using a DB2 warehouse instance
 
@@ -188,7 +188,7 @@ If you prefer,
 you can connect to an existing DB2 warehouse instance instead of dashDB.
 Do this by selecting the `DB2` option within your Cloudant dashboard to connect to an existing DB2 instance.
 
-![Screenshot of the Create a DB2 warehouse" task within the Cloudant dashboard](../images/createDB2WH.png)
+![Screenshot of the Create a DB2 warehouse" task within the Cloudant dashboard](/docs/images/createDB2WH.png)
 
 If you want to connect to a DB2 instance,
 you must provide the following details:
@@ -235,7 +235,7 @@ With Cloudant warehousing,
 you can run 'traditional' SQL queries,
 and view the results,
 all from within the dashDB console.<br/>
-![Screenshot of the "dashDB dashboard" within Bluemix](../images/useDashDBdashboard.png)
+![Screenshot of the "dashDB dashboard" within Bluemix](/docs/images/useDashDBdashboard.png)
 
 External applications can interact with the data in the same way as with any other relational database.
 
@@ -286,14 +286,14 @@ first ensure that your warehouse is not running.
 Do this as follows:
 
 1.	Select the `Integrations` tab within the Cloudant dashboard.
-2.	Find the name of the Warehouse you want to rescan on the `Warehouse` task:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](../images/selectWarehouse.png)
-3.	Click on the name of the Warehouse. It is a link, and when clicked it opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](../images/viewWarehouseDetail.png)
-4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](../images/stopWarehouseDatabase.png)
-5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](../images/rescanIcon.png)
+2.	Find the name of the Warehouse you want to rescan on the `Warehouse` task:<br/>![Screenshot of the "warehouse" tab within the Cloudant dashboard](/docs/images/selectWarehouse.png)
+3.	Click on the name of the Warehouse. It is a link, and when clicked it opens the warehouse detail view:<br/>![Screenshot of the detailed warehouse view within the Cloudant dashboard](/docs/images/viewWarehouseDetail.png)
+4.	Check the current status of the warehouse. A rotating green circle indicates that the warehouse is running. To stop the warehouse, click the `Stop Database` icon in the Actions column:<br/>![Screenshot of the "stop warehouse database" icon within the Cloudant dashboard](/docs/images/stopWarehouseDatabase.png)
+5.	When the warehouse database is not running, the `Rescan` icon in the Action column is enabled:<br/>![Screenshot of the rescan icon within the Cloudant dashboard](/docs/images/rescanIcon.png)
 
 ### Rescanning the source database
 
-![Screenshot of the window enabling you to rescan the warehouse source database.](../images/rescanSource.png)
+![Screenshot of the window enabling you to rescan the warehouse source database.](/docs/images/rescanSource.png)
 
 When you click the `Rescan` icon,
 you have two choices:
@@ -310,7 +310,7 @@ If you want to customize the warehouse schema,
 enable the `Customize Schema` checkbox,
 before clicking the `Rescan` button.
 
-![Screen shot of 'Rescan Source' panel, showing the 'Customize Schema' option enabled.](../images/rescanSource2.png)
+![Screen shot of 'Rescan Source' panel, showing the 'Customize Schema' option enabled.](/docs/images/rescanSource2.png)
 
 The `Customize Schema` checkbox enables two options.
 
@@ -353,7 +353,7 @@ It is possible to modify the database schema that is determined automatically du
 or after a rescan.
 To do this,
 ensure that you check the `Customize Schema` option during the creation process:<br/>
-![Screen shot of warehouse creation panel, showing the 'Customize Schema' option enabled.](../images/customizeSchema01.png)
+![Screen shot of warehouse creation panel, showing the 'Customize Schema' option enabled.](/docs/images/customizeSchema01.png)
 
 The warehouse is created in dashDB as normal,
 however it is not started immediately.
@@ -362,22 +362,22 @@ you have the opportunity to customize the schema before proceeding.
 
 To do this,
 click the link for your warehouse:<br/>
-![Screen shot of `Open in dashDB` button.](../images/openInDashDB.png)
+![Screen shot of `Open in dashDB` button.](/docs/images/openInDashDB.png)
 
 The resulting display gives you a button to customize the schema used for your source database.
 Hovering over the Status indicator confirms that the schema is ready for customization:<br/>
-![Screen shot of `Customize <source database name>` button.](../images/customizeSchema02.png)
+![Screen shot of `Customize <source database name>` button.](/docs/images/customizeSchema02.png)
 
 Clicking on the 'Customize' button results in a panel where you can modify the fields in the database schema:<br/>
-![Screen shot of Customize Schema panel.](../images/customizeSchema03.png)
+![Screen shot of Customize Schema panel.](/docs/images/customizeSchema03.png)
 
 To reset the schema to the default,
 click the `Rescan` button:<br/>
-![Screen shot of `Rescan` button.](../images/customizeSchema04.png)
+![Screen shot of `Rescan` button.](/docs/images/customizeSchema04.png)
 
 When you are happy with the database schema for the warehouse,
 simply click the `Run` button:<br/>
-![Screen shot of `Run` button.](../images/customizeSchema05.png)
+![Screen shot of `Run` button.](/docs/images/customizeSchema05.png)
 
 The schema is saved,
 and the warehouse is started.
@@ -414,17 +414,17 @@ then warehouse cannot be created successfully.
 When an error condition exists,
 the status of the warehouse is changed to a red circle,
 indicating that there is a problem requiring your attention:<br/>
-![Screen shot of error status indicator.](../images/errorIndicator1.png)
+![Screen shot of error status indicator.](/docs/images/errorIndicator1.png)
 
 If you 'hover' over the indicator,
 a little more information is supplied:<br/>
-![Screen shot showing hover summary of error status.](../images/errorIndicator2.png)
+![Screen shot showing hover summary of error status.](/docs/images/errorIndicator2.png)
 
 When you click on the indicator,
 a window appears giving you more details about exactly what the problem is.
 In this example,
 the host details entered for the DB2 connection were not valid:<br/>
-![Screen shot showing hover summary of error status.](../images/errorIndicator3.png)
+![Screen shot showing hover summary of error status.](/docs/images/errorIndicator3.png)
 
 ### Warnings and Errors
 
@@ -439,11 +439,11 @@ but a change in the Cloudant database requires storage of 40 characters,
 then the field 'overflows'.
 This would produce a 'warning' condtion,
 which is indicated in the status icon of the warehouse dashboard:<br/>
-![Screen shot showing warning message in status icon.](../images/overflowWarning.png)
+![Screen shot showing warning message in status icon.](/docs/images/overflowWarning.png)
 
 Looking in the indicated overflow table in the warehouse database,
 you see more details about the warning:<br/>
-![Screen shot showing warning message detail in the Overflow table of the warehouse database.](../images/overflowWarningDetail.png)<br/>
+![Screen shot showing warning message detail in the Overflow table of the warehouse database.](/docs/images/overflowWarningDetail.png)<br/>
 In this example,
 the warning makes it clear that a truncation has occurred,
 affecting the `Movie_earnings_rank` field of the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.
@@ -463,15 +463,15 @@ This causes an 'error' condition.
 
 For example,
 a document in the Cloudant database might 'gain' an extra field called `my key` that does not exist within the warehouse database schema:<br/>
-![Screen shot showing additional 'my key' field in a document.](../images/extraField.png)
+![Screen shot showing additional 'my key' field in a document.](/docs/images/extraField.png)
 
 The result is an error condition,
 which is indicated in the status icon of the warehouse dashboard:<br/>
-![Screen shot showing error message in status icon.](../images/overflowError.png)
+![Screen shot showing error message in status icon.](/docs/images/overflowError.png)
 
 Looking in the indicated overflow table in the warehouse database,
 you see more details about the error:<br/>
-![Screen shot showing error message detail in the Overflow table of the warehouse database.](../images/overflowErrorDetail.png)<br/>
+![Screen shot showing error message detail in the Overflow table of the warehouse database.](/docs/images/overflowErrorDetail.png)<br/>
 In this example,
 the error makes it clear that a field has been encountered that was not present when the warehouse database schema was created.
 The field itself was detected in the Cloudant document having an `_ID` of  `70f6284d2a395396dbb3a60b4cf1cac2`.

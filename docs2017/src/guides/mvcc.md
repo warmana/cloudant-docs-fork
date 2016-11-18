@@ -16,7 +16,7 @@ lastupdated: "2016-11-14"
 
 Multi-version concurrency control (MVCC) is how Cloudant databases ensure that
 all of the nodes in a database's cluster contain only
-the [newest version](/docs/Cloudant/api/document.html) of a document.
+the [newest version](/docs/api/document.html) of a document.
 {:shortdesc}
 
 Since Cloudant databases are [eventually consistent](cap_theorem.html),

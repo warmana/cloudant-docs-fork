@@ -131,7 +131,7 @@ time slice.
 Weekly databases roll up into monthly databases,
 and monthly databases roll up into yearly databases.
 
-![Illustration of roll up hierarchy](../images/rollups.png)
+![Illustration of roll up hierarchy](/docs/images/rollups.png)
 
 When requesting that backups are enabled,
 you should specify how many daily deltas to keep.
@@ -173,31 +173,31 @@ Tasks you can perform include:
 
 ### Viewing database backup status
 
-![Dashboard view of database backup status](../images/dashboarddatabasesbackup.png)
+![Dashboard view of database backup status](/docs/images/dashboarddatabasesbackup.png)
 
 When you select the Database tab within the Cloudant Dashboard,
 you can see a backup status column for each of your databases.
 
 ### Viewing document backup status
 
-![Dashboard view of backup status for all documents](../images/dashboarddatabasesbackupbutton.png)
+![Dashboard view of backup status for all documents](/docs/images/dashboarddatabasesbackupbutton.png)
 
 Within a database,
 you can view the backup status of a specific document.
 To do this,
 first check to see if there is a backup icon
-![Dashboard backup icon](../images/dashboarddatabasesbackupicon.png)
+![Dashboard backup icon](/docs/images/dashboarddatabasesbackupicon.png)
 for your document.
 This shows whether the specific document is included within the backup task.
 
 When you select the document,
 you can see a backup tab.
 
-![Dashboard view of document backup status](../images/dashboarddatabasesbackupdocument.png)
+![Dashboard view of document backup status](/docs/images/dashboarddatabasesbackupdocument.png)
 
 ### Viewing differences between document backup versions, and restoring
 
-![Dashboard view of document backup status](../images/dashboarddatabasesbackupdocumentdiff.png)
+![Dashboard view of document backup status](/docs/images/dashboarddatabasesbackupdocumentdiff.png)
 
 When you click the backup tab for a document,
 you can see the differences between the current version of the document,

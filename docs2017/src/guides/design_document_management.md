@@ -83,7 +83,7 @@ The result is that our map code has been turned into a JSON-compatible string, a
 
 Once the Design Document is saved, Cloudant triggers server-side processes to build the `fetch/by_ts` view. It does this by iterating over every document in the database, and sending each one to the Javascript map function. The function returns the emitted key/value pair. As the iteration continues, each key/value pair is stored in a B-Tree index. After the index is built for the first time, subsequent re-indexing is performed only against new and updated documents. Deleted documents are de-indexed. This time-saving process is known as *incremental MapReduce*, as shown in the following diagram:
 
-![Illustration of Incremental MapReduce](../images/DesDocMan00.png)
+![Illustration of Incremental MapReduce](/docs/images/DesDocMan00.png)
 
 It's worth remembering at this point that:
 
@@ -100,7 +100,7 @@ If MapReduce views must be altered independently of each other, place their defi
 
 <aside class="warning" role="complementary" aria-label="notlucene">This behaviour does not apply to Lucene search indexes. They can be altered within the same design document without invalidating other unchanged indexes in the same document.</aside>
 
-![Illustration of Design Document version change](../images/DesDocMan02.png)
+![Illustration of Design Document version change](/docs/images/DesDocMan02.png)
 
 ## Managing changes to a design document
 
@@ -220,7 +220,7 @@ The source code for the script is available here: [https://github.com/glynnbird/
 
 If an index is complete, but new records are added into the database, then the index is scheduled to be updated in the background. This is the state of the database shown in the following diagram:
 
-![Illustration of index scheduled for updating](../images/DesDocMan01.png)
+![Illustration of index scheduled for updating](/docs/images/DesDocMan01.png)
 
 When querying the view, we have three choices:
 

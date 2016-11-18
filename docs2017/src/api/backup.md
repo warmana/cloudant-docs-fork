@@ -23,7 +23,7 @@ Two important principles help you avoid downtime and lost revenue:
 -	Backup all your data regularly.
 -	Check the integrity of the backups.
 
-You can back up your data in Cloudant by using [replication](/docs/Cloudant/api/replication.html) to make a copy of your database.
+You can back up your data in Cloudant by using [replication](/docs/api/replication.html) to make a copy of your database.
 
 But if your database is big,
 or you need backups for multiple points in time,
@@ -35,4 +35,4 @@ Incremental backups are a good solution for storing only the documents that have
 <aside class="warning" role="complementary" aria-label="betaforenterprise">Daily incremental backup for Enterprise customers is currently a Beta capability.
 It is not enabled by default.</aside>
 
-You can see more information about Incremental Backups at [Back up your data](/docs/Cloudant/guides/backup-guide.html).
+You can see more information about Incremental Backups at [Back up your data](/docs/guides/backup-guide.html).

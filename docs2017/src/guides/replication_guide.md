@@ -33,7 +33,7 @@ This guide introduces Cloudant’s replication functionality, discuss common use
 
 Cloudant is a distributed JSON data store with an HTTP API which is run as a service on multiple clouds, or in your server rack. Documents are stored in databases and can grow to any size as Cloudant shards its data across many nodes. Replication is the copying of data from a source database to a target database. The source and target databases need not be on the same Cloudant account, or even in the same data center.
 
-![replication](../images/replication_guide_1.png)
+![replication](/docs/images/replication_guide_1.png)
 
 Replication is complete when the latest version of each document in the source has made it to the destination database; this includes new documents, updates to existing documents and deletions. Only the latest version of a document remains after replication; older versions are omitted.
 
@@ -43,15 +43,15 @@ The source database remains unaltered by replication (apart from checkpoint data
 
 The Cloudant Dashboard provides a convenient user-interface to trigger replication. Open the Replication tab of your Cloudant Dashboard and click on the New Replication button. Complete the simple form:
 
-![replication2](../images/replication_guide_2.png)
+![replication2](/docs/images/replication_guide_2.png)
 
 Using the form, define the source and target databases, then click "Replicate".
 
-![replication3](../images/replication_guide_3.png)
+![replication3](/docs/images/replication_guide_3.png)
 
 The status of each replication task can be seen in the "All Replications" section of the Dashboard, with each job changing state from "Triggered" to "Complete" as it progresses.
 
-![replication4](../images/replication_guide_4.png)
+![replication4](/docs/images/replication_guide_4.png)
 
 ## How do I run replication across different Cloudant accounts?
 
@@ -205,7 +205,7 @@ Cloudant has a special `_replicator` user permission. This allows checkpoint doc
 
 API keys are created and configured within the Cloudant Dashboard, on a per-database basis.
 
-![replication](../images/replication_guide_5.png)
+![replication](/docs/images/replication_guide_5.png)
 
 They can also be created programmatically using the Cloudant API.
 
@@ -214,7 +214,7 @@ They can also be created programmatically using the Cloudant API.
 Data can be copied in both directions in a process known as two-way replication or synchronization.
 You enable this by setting up two separate replication processes, one taking the data from A to B, the other taking data from B to A. Both replication processes work independently, with data moving seamlessly in both directions.
 
-![replication6](../images/replication_guide_6.png)
+![replication6](/docs/images/replication_guide_6.png)
 
 ## Continuous replication
 

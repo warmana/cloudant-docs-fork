@@ -151,7 +151,7 @@ To delete an attachment,
 make a `DELETE` request with the document's latest `_rev`
 to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT`.
 If you do not supply the latest `_rev`,
-the response is a [409 error](/docs/Cloudant/api/http.html#409).
+the response is a [409 error](/docs/api/http.html#409).
 
 _Example of deleting an attachment, using HTTP:_
 

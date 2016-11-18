@@ -32,7 +32,7 @@ For more information on all the {{site.data.keyword.cloudant}} offerings,
 see the main [Cloudant](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/){:new_window} site.
 For more details on {{site.data.keyword.cloudant}} concepts,
 tasks and techniques,
-see the [API Reference](/docs/Cloudant/index.html){:new_window}.
+see the [Cloudant documentation](/docs/cloudant.html){:new_window}.
 
 You can launch the {{site.data.keyword.cloudant}} on Bluemix console from the service launch page on the Bluemix dashboard.
 
@@ -131,7 +131,7 @@ including:
 ... and many others.
 For more information,
 see the <a href="http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/">Cloudant homepage</a>
-and the list of <a href="/docs/Cloudant/libraries/index.html">Client Libraries</a>.
+and the list of <a href="/docs/libraries/index.html">Client Libraries</a>.
 </li>
 <li>When your application is ready,
 you can deploy it to the Bluemix environment for verification.
@@ -147,7 +147,7 @@ use the command:<br/>
 </ol>
 
 More information about authenticating to the database and making requests is available
-in the [API reference](/docs/Cloudant/api/index.html){:new_window}.
+in the [API reference](/docs/api/index.html){:new_window}.
 
 # Related Links
 {: #rellinks}
@@ -158,11 +158,11 @@ in the [API reference](/docs/Cloudant/api/index.html){:new_window}.
 ## Tutorials and Samples
 {: #samples}
 
-* [Cloudant client libraries](/docs/Cloudant/libraries/index.html){:new_window}
+* [Cloudant client libraries](/docs/libraries/index.html){:new_window}
 * [Using Cloudant with Liberty on Bluemix](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/){:new_window}
-* [Cloudant Guides](/docs/Cloudant/guides/index.html){:new_window}
+* [Cloudant Guides](/docs/guides/index.html){:new_window}
 
 ## API Reference
 {: #api}
 
-* [Cloudant API reference](/docs/Cloudant/api/index.html){:new_window}
+* [Cloudant API reference](/docs/api/index.html){:new_window}

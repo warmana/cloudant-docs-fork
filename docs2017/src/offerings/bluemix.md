@@ -109,14 +109,14 @@ you can also change the amount of provisioned throughput capacity for lookups, w
 You can see details of the throughput capacity within the plans available for your account,
 and select the level of provisioning that you want to use,
 through the Account tab of your Cloudant account Dashboard.<br/>
-![Account Dashboard](../images/cloudant_capacity.png)
+![Account Dashboard](/docs/images/cloudant_capacity.png)
 
 To move to a different throughput capacity,
 select the provisioning you want,
 then click the `Change Capacity` button.
 You are asked to confirm the change,
 and reminded that the provisioning change can take up to 24 hours to complete.<br/>
-![Account Dashboard](../images/cloudant_capacity_change.png)
+![Account Dashboard](/docs/images/cloudant_capacity_change.png)
 
 <div id="throughput"></div>
 
@@ -267,7 +267,7 @@ or alternatively implement your own solution by using one of several possible te
 ### Monitoring usage
 
 Information about your usage is available in the Usage pane of the Activity tab within your Cloudant Dashboard.<br/>
-![Monitoring usage on the dashboard](../images/cloudant_usage.png).
+![Monitoring usage on the dashboard](/docs/images/cloudant_usage.png).
 
 Details are provided there,
 illustrating your current [throughput](bluemix.html#throughput),

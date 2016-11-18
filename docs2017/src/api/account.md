@@ -27,7 +27,7 @@ If you don't yet have an account, [sign up](https://cloudant.com/sign-up/){:new_
 To see if your Cloudant account is accessible,
 make a `GET` against `https://$USERNAME.cloudant.com`.
 If you misspelled your account name,
-you might get a [503 'service unavailable' error](/docs/Cloudant/api/http.html#503).
+you might get a [503 'service unavailable' error](/docs/api/http.html#503).
 
 _Example of connecting to your Cloudant account, using HTTP:_
 
@@ -74,4 +74,4 @@ print ping.status_code
 mechanism that allows Javascript from another domain to interact with data in
 your Cloudant account.
 
-More information about CORS and Cloudant is available [here](/docs/Cloudant/api/cors.html).
+More information about CORS and Cloudant is available [here](/docs/api/cors.html).
