@@ -12,9 +12,10 @@ lastupdated: "2016-11-16"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
+<div id="working-with-views"/>
+<div id="creating-views"/>
+
 # Views (MapReduce)
-{:creating-views}
-{:working-with-views}
 
 Views are used to obtain data stored within a database.
 Views are written using Javascript functions.

@@ -96,8 +96,9 @@ and can be stored as attachments associated with documents.
 
 More information about JSON can be found in the [JSON Guide](/docs/guides/json.html).
 
+<div id="distributed"/>
+
 ## Distributed Systems
-{:distributed}
 
 Cloudant's API enables you to interact with a collaboration of numerous machines,
 called a cluster.

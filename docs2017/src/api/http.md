@@ -198,8 +198,8 @@ This is used to ensure that the dynamic nature of the content is correctly updat
 
 The `Content-Length` header reports the length in bytes of the returned content.
 
-{:content-type-response}
-{:content-type-field}
+<div id="content-type-response"/>
+<div id="content-type-field"/>
 
 #### Content-Type
 

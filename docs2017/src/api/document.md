@@ -94,7 +94,7 @@ your application would see the document content as it was *before* the write or 
 For more information about this,
 see the topic on [Consistency](/docs/guides/cap_theorem.html#consistency).
 
-{:documentCreate}
+<div id="documentCreate"/>
 
 ## Create
 
@@ -356,7 +356,7 @@ _Example response following a successful update:_
 ```
 {:screen}
 
-{:document-delete}
+<div id="document-delete"/>
 
 ## Delete
 
@@ -617,7 +617,7 @@ you must provide the document ID,
 revision information,
 and new document values.
 
-{:request-body}
+<div id="request-body"/>
 
 ### Bulk request structure
 
@@ -627,7 +627,7 @@ Field  | Description             | Type             | Optional
 -------|-------------------------|------------------|---------
 `docs` | Bulk Documents Document | Array of objects | no
 
-{:object-in-docs-array}
+<div id="object-in-docs-array"/>
 
 Each `docs` array object has the following structure:
 
@@ -697,7 +697,7 @@ _Example JSON describing the update, creation, and deletion of three documents i
 ```
 {:screen}
 
-{:response}
+<div id="response"/>
 
 ### Bulk request responses
 
@@ -960,7 +960,7 @@ Field  | Description             | Type
 -------|-------------------------|-----
 `docs` | Bulk Documents Document | Array of objects
 
-{:fields-of-objects-in-docs-array}
+<div id="fields-of-objects-in-docs-array"/>
 
 Each `docs` array object has the following structure:
 

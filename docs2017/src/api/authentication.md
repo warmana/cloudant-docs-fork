@@ -211,8 +211,9 @@ _JSON part of response:_
 ```
 {:screen}
 
+<div id="getting-cookie-information"/>
+
 ### Getting cookie-authenticated information
-{: #getting-cookie-information}
 
 When a cookie has been set,
 information about the authenticated user can be retrieved with a `GET` request.

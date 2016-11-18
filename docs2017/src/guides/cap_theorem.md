@@ -12,9 +12,10 @@ lastupdated: "2016-11-14"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
+<div id="cap_theorem"/>
+<div id="consistency"/>
+
 # CAP Theorem
-{:cap_theorem}
-{:consistency}
 
 Cloudant uses an '[Eventually Consistent](http://en.wikipedia.org/wiki/Eventual_consistency)' model.
 {:shortdesc}
