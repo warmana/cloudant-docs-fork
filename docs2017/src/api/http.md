@@ -230,7 +230,7 @@ and corresponding data in the body of the response data.
 A list of the error codes returned by Cloudant and generic descriptions of the related errors are as follows.
 The meaning of different status codes for specific request types are provided in the corresponding API call reference.
 
-<div id="201"/><div id="202"/><div id="304"/><div id="400"/><div id="404"/><div id="405"/><div id="409"/><div id="429"/><div id="503"/>
+<div id="201"/><div id="202"/><div id="304"/><div id="400"/><div id="404"/><div id="405"/><div id="409"/><div id="429"/><div id="500"/><div id="503"/>
 
 Code                                    | Meaning
 ----------------------------------------|--------
@@ -250,5 +250,5 @@ Code                                    | Meaning
 `416 - Requested Range Not Satisfiable` | The range specified in the request header cannot be satisfied by the server.
 `417 - Expectation Failed`              | When sending documents in bulk, the bulk load operation failed.
 `429 - Too Many Requests`               | The user has sent too many requests in a given amount of time. More information is available in the corresponding [RFC 6585](https://tools.ietf.org/html/rfc6585#page-3){:new_window}.
-`500 - Internal Server Error`           | The request was invalid, either because the supplied JSON was invalid, or invalid information was supplied as part of the request.
+`500 - Internal Server Error`           | The request was invalid, either because the supplied JSON was invalid, or invalid information was supplied as part of the request. Alternatively, a replication was canceled while in progress.
 `503 - Service Unavailable`             | The request could not be processed. Seeing this response following a Cloudant request might indicate an misspelled Cloudant account name.

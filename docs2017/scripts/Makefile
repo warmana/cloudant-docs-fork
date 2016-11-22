@@ -25,13 +25,13 @@ clean:
 html:
 	make clean
 	mkdir $(BUILDDIR)
-	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --header-file=$(TOOLDIR)/header --footer-file=$(TOOLDIR)/footer --conref-file=$(TOOLDIR)/conref.yml --toc-xml
+	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --extension-file=$(TOOLDIR)/headerFooterExt.js --conref-file=$(TOOLDIR)/conref.yml --toc-xml
 
 .PHONY: debughtml
 debughtml:
 	make clean
 	mkdir $(BUILDDIR)
-	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --header-file=$(TOOLDIR)/header --footer-file=$(TOOLDIR)/footer --conref-file=$(TOOLDIR)/conref.yml --toc-xml --verbose
+	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --extension-file=$(TOOLDIR)/headerFooterExt.js --conref-file=$(TOOLDIR)/conref.yml --toc-xml --verbose
 
 .PHONY: publish
 publish:

@@ -507,3 +507,212 @@ _Example error response if one of the requested databases for a replication does
 ```
 {:screen}
 
+## Creating a target database during replication
+
+If your user credentials allow it,
+you can create the target database during replication by adding the `create_target` field to the request object.
+
+The `create_target` field is not destructive.
+If the database already exists,
+the replication proceeds as normal.
+
+_Example request to create a target database and replicate onto it:_
+
+```
+POST http://username.cloudant.com/_replicate
+Content-Type: application/json
+Accept: application/json
+
+{
+	"create_target" : true
+	"source" : "http://user:pass@example.com/db",
+	"target" : "http://user:pass@user.cloudant.com/db",
+}
+```
+{:screen}
+
+## Canceling replication
+
+A replication triggered by `POST`ing to `/_replicate` can be canceled
+by `POST`ing the exact same JSON object but with the additional `cancel` property set to `true`.
+
+>	**Note**: If a replication is canceled,
+the request which initiated the replication fails with [error 500 (shutdown)](/docs/api/http.html#500).
+
+The replication ID can be obtained from the original replication request if it is a continuous replication.
+Alternatively,
+the replication ID can be obtained from [`/_active_tasks`](/docs/api/active_tasks.html).
+
+_Example instructions for canceling a replication, using HTTP:_
+
+```
+POST /_replicate HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
+
+_Example instructions for canceling a replication, using the command line:_
+
+```
+curl -H 'Content-Type: application/json' -X POST 'https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_replicate HTTP/1.1' -d @replication-doc.json
+# the file replication-doc.json must be supplied.
+```
+{:screen}
+
+_Example JSON document describing the replication to be canceled:_
+
+```json
+{
+	"source": "https://username:password@username.cloudant.com/example-database",
+	"target": "https://username:password@example.org/example-database",
+	"cancel": true
+}
+```
+{:screen}
+
+## Single Replication
+
+Replication of a database means that the two databases,
+the 'source' and the 'target',
+are synchronized.
+By default,
+the replication process occurs one time,
+and synchronizes the two databases together.
+
+The response to a request for a single replication is a JSON structure
+containing the success or failure status of the synchronization process.
+The response also contains statistics about the process.
+
+Field             | Purpose
+------------------|--------
+`history`         | An array containing the replication history.
+`ok`              | Replication status.
+`session_id`      | Unique session ID.
+`source_last_seq` | The last sequence number read from source database.
+
+The `history` array contains the following information:
+
+Field                | Purpose
+---------------------|--------
+`doc_write_failures` | Number of document write failures.
+`docs_read`          | Number of documents read.
+`docs_written`       | Number of documents written to target.
+`end_last_seq`       | Last sequence number in changes stream.
+`end_time`           | Date/Time replication operation completed.
+`missing_checked`    | Number of missing documents checked.
+`missing_found`      | Number of missing documents found.
+`recorded_seq`       | Last recorded sequence number.
+`session_id`         | Session ID for this replication operation.
+`start_last_seq`     | First sequence number in changes stream.
+`start_time`         | Date/Time replication operation started.
+
+_Example instructions for requesting for a single replication, using HTTP:_
+
+```
+POST /_replicate HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+```
+{:screen}
+
+_Example instructions for requesting for a single replication, using the command line:_
+
+```
+curl -H 'Content-Type: application/json' -X POST 'https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_replicate HTTP/1.1' -d @replication-doc.json
+# the file replication-doc.json must be supplied.
+```
+{:screen}
+
+
+_Example JSON document describing a single replication between the source database `recipes` and the target database `recipes2`:_
+
+```json
+{
+	"source" : "http://user:pass@user.cloudant.com/recipes",
+	"target" : "http://user:pass@user.cloudant.com/recipes2",
+}
+```
+{:screen}
+
+_Example response following a request for a single replication:_
+
+```json
+{
+	"ok" : true,
+	"history" : [
+		{
+			"docs_read" : 1000,
+			"session_id" : "52c2370f5027043d286daca4de247db0",
+			"recorded_seq" : 1000,
+			"end_last_seq" : 1000,
+			"doc_write_failures" : 0,
+			"start_time" : "Thu, 28 Oct 2010 10:24:13 GMT",
+			"start_last_seq" : 0,
+			"end_time" : "Thu, 28 Oct 2010 10:24:14 GMT",
+			"missing_checked" : 0,
+			"docs_written" : 1000,
+			"missing_found" : 1000
+		}
+	],
+	"session_id" : "52c2370f5027043d286daca4de247db0",
+	"source_last_seq" : 1000
+}
+```
+{:screen}
+
+## Continuous Replication
+
+By default,
+the synchronization of a database during replication happens only once:
+at the time the replicate request is made.
+To ensure that replication from the source database to the target database takes place continually,
+set the `continuous` field of the JSON object within the request to `true`.
+
+With continuous replication,
+changes in the source database are replicated to the target database forever,
+until you specifically cancel the replication.
+
+Changes are replicated between the two databases
+as long as a network connection is available between the two instances.
+
+When in operation,
+the replication process does not stop when it has processed all current updates.
+Instead,
+the replication process continues to wait for further updates to the source database,
+and applies them to the target.
+
+>	**Note**: Continuous replication forces checks to be made continuously on the source database.
+This results in an increasing number of database accesses,
+even if the source database content has not changed.
+Database accesses are counted as part of the work performed by a multi-tenant database configuration.
+
+_Example instructions for requesting continuous replication, using HTTP:_
+
+```
+POST /_replicate HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+```
+{:screen}
+
+_Example instructions for requesting continuous replication, using the command line:_
+
+```
+curl -H 'Content-Type: application/json' -X POST 'https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_replicate HTTP/1.1' -d @replication-doc.json
+# the file replication-doc.json must be supplied.
+```
+{:screen}
+
+
+_Example JSON document describing continuous replication between the source database `recipes` and the target database `recipes2`:_
+
+```json
+{
+	"source" : "http://user:pass@user.cloudant.com/recipes",
+	"target" : "http://user:pass@user.cloudant.com/recipes2", 
+	"continuous": true
+}
+```
+{:screen}
+
+
