@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-22"
 
 ---
 
@@ -14,98 +14,108 @@ lastupdated: "2016-11-14"
 
 # Search
 
-Search indexes, defined in design documents,
-allow databases to be queried using [Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview).
+Search indexes,
+defined in design documents,
+allow databases to be queried using
+[Lucene Query Parser Syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview){:new_window}.
 {:shortdesc}
 
 Search indexes are defined by an index function,
-similar to a map function in MapReduce views.
+similar to a map function in [MapReduce views](/docs/api/creating_views.html#creating-views).
 The index function decides what data to index and store in the index.
 
-> Example design document:
+_Example design document defining a search index:_
 
 ```json
 {
-  "_id": "_design/search_example",
-  "indexes": {
-    "animals": {
-      "index": "function(doc){ ... }"
-    }
-  }
+	"_id": "_design/search_example",
+	"indexes": {
+		"animals": {
+			"index": "function(doc){ ... }"
+		}
+	}
 }
 ```
+{:screen}
 
 ## Index functions
 
-> Example search index function:
+>	**Note**: Attempting to index using a data field that does not exist will fail.
+To avoid this problem,
+use an appropriate [guard clause](#index-guard-clauses).
 
-```
-function(doc){
-  index("default", doc._id);
-  if (doc.min_length){
-    index("min_length", doc.min_length, {"store": true});
-  }
-  if (doc.diet){
-    index("diet", doc.diet, {"store": true});
-  }
-  if (doc.latin_name){
-    index("latin_name", doc.latin_name, {"store": true});
-  }
-  if (doc.class){
-    index("class", doc.class, {"store": true});
-  }
-}
-```
-
-<aside class="warning" role="complementary" aria-label="fieldmustexist">Attempting to index using a data field that does not exist will fail.
-To avoid this problem, use an appropriate [guard clause](#index-guard-clauses).</aside>
-
-The function contained in the index field is a Javascript function that is called for each document in the database. It takes the document as a parameter, extracts some data from it and then calls the `index` function to index that data.
+The function contained in the index field is a Javascript function that is called for each document in the database.
+The function takes the document as a parameter,
+extracts some data from it,
+and then calls the function defined in the `index` field to index that data.
 
 The `index` function takes three parameters, where the third parameter is optional.
 
 The first parameter is the name of the field you intend to use when querying the index,
 and which is specified in the Lucene syntax portion of subsequent queries.
 For example,
-when querying:
+when using the query:
 
-  `query=color:red`
+```
+query=color:red
+```
+{:screen}
 
 `color` is the Lucene field name specified as the first parameter of the `index` function.
 
 The `query` parameter can be abbreviated to `q`,
 so another way of writing the query is as follows:
 
-  `q=color:red`
+```
+q=color:red
+```
+{:screen}
 
 If the special value `"default"` is used when defining the name,
 you do not have to specify a field name at query time.
 The effect is that the query can be simplified:
 
-  `query=red`
+```
+query=red
+```
+{:screen}
 
 The second parameter is the data to be indexed.
 
 The third, optional parameter is a JavaScript object with the following fields:
 
-Option | Description | Values | Default
--------|-------------|--------|---------
+Option  | Description | Values | Default
+--------|-------------|--------|---------
 `index` | Whether the data is indexed, and if so, how. If set to `false` or `no`, the data cannot be used for searches, but can still be retrieved from the index if `store` is set to `true`. See [Analyzers](search.html#analyzers) for more information. | `analyzed`, `analyzed_no_norms`, `false`, `no`, `not_analyzed`, `not_analyzed_no_norms` | `analyzed`
 `facet` | Creates a faceted index. See [Faceting](search.html#faceting) for more information. | `true`, `false` | `false`
 `store` | If `true`, the value is returned in the search result; otherwise, the value is not returned. | `true`, `false` | `false`
 `boost` | A number specifying the relevance in search results. Content indexed with a boost value greater than 1 is more relevant than content indexed without a boost value. Content with a boost value less than one is not so relevant. | A positive floating point number | 1 (no boosting)
 
-<aside class="warning" role="complementary" aria-label="useStore">If you do not set the <code class="prettyprint">store</code> parameter, the index data for the document is not returned in response to a query.</aside>
+>	**Note**: If you do not set the `store` parameter,
+the index data for the document is not returned in response to a query.
 
-### Index Guard Clauses
-
-> Example of failing to check if the index data field exists:
+_Example search index function:_
 
 ```
-if (doc.min_length) {
-  index("min_length", doc.min_length, {"store": true});
+function(doc) {
+	index("default", doc._id);
+	if (doc.min_length) {
+		index("min_length", doc.min_length, {"store": true});
+	}
+	if (doc.diet) {
+		index("diet", doc.diet, {"store": true});
+	}
+	if (doc.latin_name) {
+		index("latin_name", doc.latin_name, {"store": true});
+	}
+	if (doc.class) {
+		index("class", doc.class, {"store": true});
+	}
 }
 ```
+{:screen}
+
+### Index Guard Clauses
 
 The `index` function requires the name of the data field to index as the second parameter.
 However,
@@ -115,21 +125,20 @@ The solution is to use an appropriate 'guard clause' that checks if the field ex
 and contains the expected type of data,
 _before_ attempting to create the corresponding index.
 
-<div></div>
-
-> Using a guard clause to check if the required data field exists, and holds a number, _before_ attempting to index:
+_Example of failing to check if the index data field exists:_
 
 ```
-if (typeof(doc.min_length) === 'number') {
-  index("min_length", doc.min_length, {"store": true});
+if (doc.min_length) {
+	index("min_length", doc.min_length, {"store": true});
 }
 ```
+{:screen}
 
-You might use the javascript `typeof` function to perform the guard clause test.
+You might use the Javascript `typeof` function to perform the guard clause test.
 If the field exists _and_ has the expected type,
 the correct type name is returned,
 so the guard clause test succeeds and it is safe to use the index function.
-If the field does not exist,
+If the field does _not_ exist,
 you would not get back the expected type of the field,
 therefore you would not attempt to index the field.
 
@@ -143,92 +152,105 @@ remember that Javascript considers a result to be false if one of the following 
 -	NaN (not a number)
 -	"" (the empty string)
 
-<div></div>
+_Using a guard clause to check if the required data field exists, and holds a number,
+before attempting to index:_
 
-> A 'generic' guard clause:
+```
+if (typeof(doc.min_length) === 'number') {
+	index("min_length", doc.min_length, {"store": true});
+}
+```
+{:screen}
+
+A generic guard clause simply tests to ensure that the type of the candidate data field is defined.
+
+_Example of a 'generic' guard clause:_
 
 ```
 if (typeof(doc.min_length) !== 'undefined') {
-  // The field exists, and does have a type, so we can proceed to index using it.
-  ...
+	// The field exists, and does have a type, so we can proceed to index using it.
+	...
 }
 ```
-
-Therefore,
-a possible generic guard clause simply tests to ensure that the type of the candidate data field is defined.
+{:screen}
 
 ## Analyzers
 
-> Example analyzer document:
-
-```json
-{
-  "_id": "_design/analyzer_example",
-  "indexes": {
-    "INDEX_NAME": {
-      "index": "function (doc) { ... }",
-      "analyzer": "$ANALYZER_NAME"
-    }
-  }
-}
-```
-
-Analyzers are settings which define how to recognize terms within text. This can be helpful if you need to [index multiple languages](search.html#language-specific-analyzers).
+Analyzers are settings which define how to recognize terms within text.
+This can be helpful if you need to [index multiple languages](#language-specific-analyzers).
 
 Here's the list of generic analyzers supported by Cloudant search:
 
-Analyzer | Description
----------|------------
-`classic` | The standard Lucene analyzer, circa release 3.1. You'll know if you need it.
-`email` | Like the `standard` analyzer, but tries harder to match an email address as a complete token.
-`keyword` | Input is not tokenized at all.
-`simple` | Divides text at non-letters.
-`standard` | The default analyzer. It implements the Word Break rules from the [Unicode Text Segmentation algorithm](http://www.unicode.org/reports/tr29/).
+Analyzer     | Description
+-------------|------------
+`classic`    | The standard Lucene analyzer, circa release 3.1. You'll know if you need it.
+`email`      | Like the `standard` analyzer, but tries harder to match an email address as a complete token.
+`keyword`    | Input is not tokenized at all.
+`simple`     | Divides text at non-letters.
+`standard`   | The default analyzer. It implements the Word Break rules from the [Unicode Text Segmentation algorithm](http://www.unicode.org/reports/tr29/){:new_window}.
 `whitespace` | Divides text at whitespace boundaries.
+
+_Example analyzer document:_
+
+```json
+{
+	"_id": "_design/analyzer_example",
+	"indexes": {
+		"INDEX_NAME": {
+			"index": "function (doc) { ... }",
+			"analyzer": "$ANALYZER_NAME"
+		}
+	}
+}
+```
+{:screen}
 
 ### Language-Specific Analyzers
 
-These analyzers omit very common words in the specific language, and many also [remove prefixes and suffixes](http://en.wikipedia.org/wiki/Stemming). The name of the language is also the name of the analyzer.
+These analyzers omit very common words in the specific language,
+and many also [remove prefixes and suffixes](http://en.wikipedia.org/wiki/Stemming){:new_window}.
+The name of the language is also the name of the analyzer.
 
-* arabic
-* armenian
-* basque
-* bulgarian
-* brazilian
-* catalan
-* cjk (Chinese, Japanese, Korean)
-* chinese ([smartcn](http://lucene.apache.org/core/4_2_1/analyzers-smartcn/org/apache/lucene/analysis/cn/smart/SmartChineseAnalyzer.html))
-* czech
-* danish
-* dutch
-* english
-* finnish
-* french
-* german
-* greek
-* galician
-* hindi
-* hungarian
-* indonesian
-* irish
-* italian
-* japanese ([kuromoji](http://lucene.apache.org/core/4_2_1/analyzers-kuromoji/overview-summary.html))
-* latvian
-* norwegian
-* persian
-* polish ([stempel](http://lucene.apache.org/core/4_2_1/analyzers-stempel/overview-summary.html))
-* portuguese
-* romanian
-* russian
-* spanish
-* swedish
-* thai
-* turkish
+*	arabic
+*	armenian
+*	basque
+*	bulgarian
+*	brazilian
+*	catalan
+*	cjk (Chinese, Japanese, Korean)
+*	chinese ( [smartcn](http://lucene.apache.org/core/4_2_1/analyzers-smartcn/org/apache/lucene/analysis/cn/smart/SmartChineseAnalyzer.html){:new_window} )
+*	czech
+*	danish
+*	dutch
+*	english
+*	finnish
+*	french
+*	german
+*	greek
+*	galician
+*	hindi
+*	hungarian
+*	indonesian
+*	irish
+*	italian
+*	japanese ( [kuromoji](http://lucene.apache.org/core/4_2_1/analyzers-kuromoji/overview-summary.html){:new_window} )
+*	latvian
+*	norwegian
+*	persian
+*	polish ( [stempel](http://lucene.apache.org/core/4_2_1/analyzers-stempel/overview-summary.html){:new_window} )
+*	portuguese
+*	romanian
+*	russian
+*	spanish
+*	swedish
+*	thai
+*	turkish
 
-<aside class="information" role="complementary" aria-label="optimization">Language-specific analyzers are optimized for the specified language.
+>	**Note**: Language-specific analyzers are optimized for the specified language.
 You cannot combine a generic analyzer with a language-specific analyzer.
 However,
-you could use the [`perfield` analyzer](#per-field-analyzers) to select different analyzers for different fields within the documents.</aside>
+you could use a [`perfield` analyzer](#per-field-analyzers) to select different analyzers
+for different fields within the documents.
 
 ### Per-Field Analyzers
 

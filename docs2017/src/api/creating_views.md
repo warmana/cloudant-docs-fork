@@ -12,8 +12,9 @@ lastupdated: "2016-11-16"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
-<div id="working-with-views"/>
-<div id="creating-views"/>
+<div id="working-with-views"></div>
+
+<div id="creating-views"></div>
 
 # Views (MapReduce)
 

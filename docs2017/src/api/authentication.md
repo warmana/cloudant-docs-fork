@@ -211,7 +211,7 @@ _JSON part of response:_
 ```
 {:screen}
 
-<div id="getting-cookie-information"/>
+<div id="getting-cookie-information"></div>
 
 ### Getting cookie-authenticated information
 

@@ -70,7 +70,7 @@ account.db.create($DATABASE, function (err, body, headers) {
 ```
 {:screen}
 
-<div id="response"/>
+<div id="response"></div>
 
 If creation succeeds, you get a [201 or 202 response](/docs/api/http.html#201).
 In case of an error,
@@ -109,7 +109,7 @@ please contact Cloudant support.
 > **Note**: It is not possible to modify the configuration used for databases
 on multi-tenant clusters.
 
-<div id="read"/>
+<div id="read"></div>
 
 ## Getting database details 
 
@@ -186,7 +186,7 @@ _Example response containing (abbreviated) database details:_
 ```
 {:screen}
 
-<div id="get-databases"/>
+<div id="get-databases"></div>
 
 ## Get a list of all databases in the account
 
@@ -442,7 +442,7 @@ If you set `feed=longpoll`,
 requests to the server remain open until changes are reported.
 This can help monitor changes specifically instead of continuously.
 
-<div id="continuous-feed"/>
+<div id="continuous-feed"></div>
 
 If you set `feed=continuous`,
 new changes are reported without closing the connection.
@@ -609,7 +609,7 @@ you should be aware that:
 	This means that if you have sequence values from different shards,
 	you cannot assume that the same sequence value refers to the same document within the different shards.
 
-<div id="post"/>
+<div id="post"></div>
 
 ### Using `POST` to get changes
 

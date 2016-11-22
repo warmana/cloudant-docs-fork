@@ -96,7 +96,7 @@ and can be stored as attachments associated with documents.
 
 More information about JSON can be found in the [JSON Guide](/docs/guides/json.html).
 
-<div id="distributed"/>
+<div id="distributed"></div>
 
 ## Distributed Systems
 

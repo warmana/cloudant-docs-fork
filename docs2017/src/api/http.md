@@ -198,8 +198,9 @@ This is used to ensure that the dynamic nature of the content is correctly updat
 
 The `Content-Length` header reports the length in bytes of the returned content.
 
-<div id="content-type-response"/>
-<div id="content-type-field"/>
+<div id="content-type-response"></div>
+
+<div id="content-type-field"></div>
 
 #### Content-Type
 
@@ -230,7 +231,26 @@ and corresponding data in the body of the response data.
 A list of the error codes returned by Cloudant and generic descriptions of the related errors are as follows.
 The meaning of different status codes for specific request types are provided in the corresponding API call reference.
 
-<div id="201"/><div id="202"/><div id="304"/><div id="400"/><div id="404"/><div id="405"/><div id="409"/><div id="429"/><div id="500"/><div id="503"/>
+<div id="201"></div>
+
+<div id="202"></div>
+
+<div id="304"></div>
+
+<div id="400"></div>
+
+<div id="404"></div>
+
+<div id="405"></div>
+
+<div id="409"></div>
+
+<div id="429"></div>
+
+<div id="500"></div>
+
+<div id="503"></div>
+
 
 Code                                    | Meaning
 ----------------------------------------|--------

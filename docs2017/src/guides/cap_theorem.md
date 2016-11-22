@@ -12,8 +12,9 @@ lastupdated: "2016-11-14"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
-<div id="cap_theorem"/>
-<div id="consistency"/>
+<div id="cap_theorem"></div>
+
+<div id="consistency"></div>
 
 # CAP Theorem
 
