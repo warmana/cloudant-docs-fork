@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-22"
+lastupdated: "2016-11-23"
 
 ---
 
@@ -254,150 +254,170 @@ for different fields within the documents.
 
 ### Per-Field Analyzers
 
-> Example of defining different analyzers for different fields:
+The `perfield` analyzer configures multiple analyzers for different fields.
+
+_Example of defining different analyzers for different fields:_
 
 ```json
 {
-  "_id": "_design/analyzer_example",
-  "indexes": {
-    "INDEX_NAME": {
-      "analyzer": {
-        "name": "perfield",
-        "default": "english",
-        "fields": {
-          "spanish": "spanish",
-          "german": "german"
-        }
-      },
-      "index": "function (doc) { ... }"
-    }
-  }
+	"_id": "_design/analyzer_example",
+	"indexes": {
+		"INDEX_NAME": {
+			"analyzer": {
+				"name": "perfield",
+				"default": "english",
+				"fields": {
+					"spanish": "spanish",
+					"german": "german"
+				}
+			},
+			"index": "function (doc) { ... }"
+		}
+	}
 }
 ```
-
-The `perfield` analyzer configures multiple analyzers for different fields.
+{:screen}
 
 ### Stop Words
 
-> Example of defining non-indexed ('stop') words:
+Stop words are words that do not get indexed.
+You define them within a design document by turning the analyzer string into an object.
+
+>	**Note**: The `keyword`,
+`simple`,
+ and `whitespace` analyzers do not support stop words.
+
+_Example of defining non-indexed ('stop') words:_
 
 ```json
 {
-  "_id": "_design/stop_words_example",
-  "indexes": {
-    "INDEX_NAME": {
-      "analyzer": {
-        "name": "portuguese",
-        "stopwords": [
-          "foo",
-          "bar",
-          "baz"
-        ]
-      },
-      "index": "function (doc) { ... }"
-    }
-  }
+	"_id": "_design/stop_words_example",
+	"indexes": {
+		"INDEX_NAME": {
+			"analyzer": {
+				"name": "portuguese",
+				"stopwords": [
+					"foo",
+					"bar",
+					"baz"
+				]
+			},
+			"index": "function (doc) { ... }"
+		}
+	}
 }
 ```
-
-Stop words are words that do not get indexed. You define them within a design document by turning the analyzer string into an object.
-
-<aside class="warning" role="complementary" aria-label="stopwords">The `keyword`, `simple` and `whitespace` analyzers do not support stop words.</aside>
+{:screen}
 
 ### Testing analyzer tokenization
 
-> Example test of the `keyword` analyzer
+You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint.
 
-```shell
-curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
-  -d '{"analyzer":"keyword", "text":"ablanks@renovations.com"}'
+_Example test of the `keyword` analyzer, using HTTP:_
+
 ```
-
-```http
 Host: <account>.cloudant.com
 POST /_search_analyze HTTP/1.1
 Content-Type: application/json
 {"analyzer":"keyword", "text":"ablanks@renovations.com"}
 ```
+{:screen}
 
-> Result of testing the `keyword` analyzer
+_Example test of the `keyword` analyzer, using the command line:_
+
+```
+curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
+	-d '{"analyzer":"keyword", "text":"ablanks@renovations.com"}'
+```
+{:screen}
+
+_Result of testing the `keyword` analyzer:_
 
 ```json
 {
-  "tokens": [
-    "ablanks@renovations.com"
-  ]
+	"tokens": [
+		"ablanks@renovations.com"
+	]
 }
 ```
+{:screen}
 
-> Example test of the `standard` analyzer
+_Example test of the `standard` analyzer, using HTTP:_
 
-```shell
-curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
-  -d '{"analyzer":"standard", "text":"ablanks@renovations.com"}'
 ```
-
-```http
 Host: <account>.cloudant.com
 POST /_search_analyze HTTP/1.1
 Content-Type: application/json
 {"analyzer":"standard", "text":"ablanks@renovations.com"}
 ```
+{:screen}
 
-> Result of testing the `standard` analyzer
+_Example test of the `standard` analyzer, using the command line:_
+
+```
+curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
+	-d '{"analyzer":"standard", "text":"ablanks@renovations.com"}'
+```
+{:screen}
+
+_Result of testing the `standard` analyzer:_
 
 ```json
 {
-  "tokens": [
-    "ablanks",
-    "renovations.com"
-  ]
+	"tokens": [
+		"ablanks",
+		"renovations.com"
+	]
 }
 ```
-
-You can test the results of analyzer tokenization by posting sample data to the `_search_analyze` endpoint.
+{:screen}
 
 ## Queries
 
-> Example query of an index.
+Once you've got an index written,
+you can query it with a `GET` request to
+`https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_ID/_search/$INDEX_NAME`.
+Specify your search query in the `query` query parameter.
 
-```shell
-curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_DOC/_search/$INDEX_NAME?include_docs=true\&query="*:*"\&limit=1 \
-     -u $USERNAME
+_Example query of an index, using HTTP:_
+
 ```
-
-```http
 GET /$DATABASE/_design/$DESIGN_DOC/_search/$INDEX_NAME?include_docs=true\&query="*:*"\&limit=1 HTTP/1.1
 Content-Type: application/json
 Host: account.cloudant.com
 ```
+{:screen}
 
-```javascript
+_Example query of an index, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_DOC/_search/$INDEX_NAME?include_docs=true\&query="*:*"\&limit=1 \
+	-u $USERNAME
+```
+{:screen}
+
+_Example query of an index, using Javascript:_
+
+```
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
 
 db.search($DESIGN_ID, $SEARCH_INDEX, {
-  q: $QUERY
+	q: $QUERY
 }, function (err, body, headers) {
-  if (!err) {
-    console.log(body);
-  }
+	if (!err) {
+		console.log(body);
+	}
 });
 ```
-
-Once you've got an index written, you can query it with a `GET` request to `https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_ID/_search/$INDEX_NAME`. Specify your search query in the `query` query parameter.
+{:screen}
 
 ### Query Parameters
 
-<aside class="warning" role="complementary" aria-label="enablebeforeuse">You must enable [faceting](search.html#faceting) before you can use the following parameters:
-<ul>
-<li> `counts`
-<li> `drilldown`
-</ul>
-</aside>
-
-<!-- The numeric `limit` was suggested by Glynn, in FB 40734. -->
+>	**Note**: You must enable [faceting](#faceting) before you can use the following parameters:
+	-	`counts`
+	-	`drilldown`
 
 Argument | Description | Optional | Type | Supported Values
 ---------|-------------|----------|------|------------------
@@ -421,9 +441,14 @@ Argument | Description | Optional | Type | Supported Values
 `sort` | Specifies the sort order of the results. In a grouped search (when `group_field` is used), this parameter specifies the sort order within a group. The default sort order is relevance. | yes | JSON | A JSON string of the form `"fieldname<type>"` or `-fieldname<type>` for descending order, where `fieldname` is the name of a string or number field, and `type` is either number or string or a JSON array of such strings. The type part is optional and defaults to number. Some examples are `"foo"`, `"-foo"`, `"bar<string>"`, `"-foo<number>"` and `["-foo<number>", "bar<string>"]`. String fields used for sorting must not be analyzed fields. Fields used for sorting must be indexed by the same indexer used for the search query.
 `stale` | Don't wait for the index to finish building to return results. | yes | string | ok
 
-<aside class="warning" role="complementary" aria-label="donotcombine">Do not combine the `bookmark` and `stale` options. The reason is that both these options constrain the choice of shard replicas to use for determining the response. When used together, the options can result in problems when attempting to contact slow or unavailable replicas.</aside>
+>	**Note**: Do not combine the `bookmark` and `stale` options.
+	The reason is that both these options constrain the choice of shard replicas
+	to use for determining the response.
+	When used together,
+	the options can result in problems when attempting to
+	contact slow or unavailable replicas.
 
-<aside class="warning" role="complementary" aria-label="performanceimplications">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+>	**Note**: Using `include_docs=true` might have [performance implications](/docs/api/using_views.html#include_docs_caveat).
 
 ### POSTing search queries
 

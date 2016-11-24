@@ -114,7 +114,7 @@ Argument | Description | Optional | Type | Default | Supported values
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | | 
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | | 
 
-<aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
+<aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](#include_docs_caveat).</aside>
 
 ## Indexes
 
