@@ -527,7 +527,13 @@ curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
 }
 ```
 
-Instead of `GET`, you can also use `POST` to query the changes feed. The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
+Instead of `GET`, you can also use `POST` to query the changes feed.
+The only difference to the `GET` method is that with `POST`,
+if you are using `docs_ids` or `selector` filters
+then it is possible to supply the `doc_ids : [...]` or `"selector": {...}` in a JSON document
+within the request body.
+All other parameters are expected to be in the query string,
+the same as using `GET`.
 
 ### Deleting a database
 
