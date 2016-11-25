@@ -4,3 +4,6 @@
 [submodule "docs2017/tools/marked-it"]
 	path = docs2017/tools/marked-it
 	url = git@github.ibm.com:Grant-Gayed/marked-it.git
+[submodule "docs2017/tools/couchdb-cloudant-api"]
+	path = docs2017/tools/couchdb-cloudant-api
+	url = git@githubCloudant:ibm-cds-labs/couchdb-cloudant-api.git

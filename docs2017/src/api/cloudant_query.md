@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-15"
+lastupdated: "2016-11-24"
 
 ---
 
@@ -1902,6 +1902,18 @@ for example:
 If possible,
 an attempt is made to discover the field type based on the selector.
 In ambiguous cases the field type must be provided explicitly.
+
+The following table clarifies when the field type must be specified:
+
+Index used by query                       | Field type requirement
+------------------------------------------|-----------------------
+JSON index                                | It is not necessary to specify the type of sort fields in the query.
+Text index of all fields in all documents | Specify the type of any sort field in the query if the database contains any documents in which the sort field has one type _and also_ contains some documents in which the sort field has a different type.
+Any other text index                      | Specify the type of all sort fields in the query.
+
+>	**Note**: Remember that a text index of all fields
+in all documents is created when you use the syntax:
+[`"index": {}`](#the-index-field).
 
 >	**Note**: The sorting order is undefined when fields contain different data types.
 This is an important difference between text and view indexes.
