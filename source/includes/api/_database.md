@@ -512,18 +512,18 @@ you should be aware that:
 > Example of `POST`ing to the `_changes` endpoint
 
 ```http
-POST /$DB/_changes HTTP/1.1
+POST /$DB/_changes?filter=_selector HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
 
 ```shell
-curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
+curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes?filter=_selector" -d @request.json
 ```
 
 ```json
 {
-  "limit": 10
+  "selector": {"z" : {"$gte" : 1}}
 }
 ```
 
