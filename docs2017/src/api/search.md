@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-23"
+lastupdated: "2016-11-25"
 
 ---
 
@@ -452,87 +452,150 @@ Argument | Description | Optional | Type | Supported Values
 
 ### POSTing search queries
 
-> Search request using the POST API
+Instead of using the `GET` HTTP method,
+you can also use `POST`.
+The main advantage of `POST` queries is that they can have a request body,
+so you can specify the request as a JSON object.
+Each parameter in the previous table corresponds to a field in the JSON object in the request body.
 
-```http
+_Example search request sending `POST`, using HTTP:_
+
+```
 POST /db/_design/ddoc/_search/searchname HTTP/1.1
 Content-Type: application/json
 Host: account.cloudant.com
 ```
+{:screen}
 
-```shell
+_Example search request sending `POST`, using the command line:_
+
+```
 curl 'https://account.cloudant.com/db/_design/ddoc/_search/searchname' -X POST -H 'Content-Type: application/json' -d @search.json
 ```
+{:screen}
+
+_Example search request specified in JSON document:_
 
 ```json
 {
-  "q": "index:my query",
-  "sort": "foo",
-  "limit": 3
+    "q": "index:my query",
+    "sort": "foo",
+    "limit": 3
 }
 ```
-
-Instead of using the `GET` HTTP method, you can also use `POST`. The main advantage of `POST` queries is that they can have a request body, so you can specify the request as a JSON object. Each parameter in the previous table corresponds to a field in the JSON object in the request body.
+{:screen}
 
 ## Query Syntax
 
-> Example search query:
+The Cloudant search query syntax is based on the
+[Lucene syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview){:new_window}.
+Search queries take the form of `name:value` unless the name is omitted,
+in which case they use the default field,
+as demonstrated in the following examples:
+
+> Example search query expressions:
 
 ```
 // Birds
 class:bird
+
 // Animals that begin with the letter "l"
 l*
+
 // Carnivorous birds
 class:bird AND diet:carnivore
+
 // Herbivores that start with letter "l"
 l* AND diet:herbivore
+
 // Medium-sized herbivores
 min_length:[1 TO 3] AND diet:herbivore
+
 // Herbivores that are 2m long or less
 diet:herbivore AND min_length:[-Infinity TO 2]
+
 // Mammals that are at least 1.5m long
 class:mammal AND min_length:[1.5 TO Infinity]
+
 // Find "Meles meles"
 latin_name:"Meles meles"
+
 // Mammals who are herbivore or carnivore
 diet:(herbivore OR omnivore) AND class:mammal
+
 // Return all results
 *:*
 ```
+{:screen}
 
-The Cloudant search query syntax is based on the [Lucene syntax](http://lucene.apache.org/core/4_3_0/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#Overview). Search queries take the form of `name:value` unless the name is omitted, in which case they use the default field, as demonstrated in the example provided.
+Queries over multiple fields can be logically combined,
+and groups and fields can be further grouped.
+The available logical operators are case sensitive and are `AND`,
+`+`,
+`OR`,
+`NOT` and `-`.
+Range queries can run over strings or numbers.
 
-Queries over multiple fields can be logically combined, and groups and fields can be further grouped. The available logical operators are case sensitive and are `AND`, `+`, `OR`, `NOT` and `-`. Range queries can run over strings or numbers.
+If you want a fuzzy search you can run a query with `~` to find terms like the search term.
+For instance,
+`look~` finds the terms `book` and `took`.
 
-If you want a fuzzy search you can run a query with `~` to find terms like the search term. For instance, `look~` will find terms `book` and `took`.
+You can alter the importance of a search term by adding `^` and a positive number.
+This makes matches containing the term more or less relevant,
+proportional to the power of the boost value.
+The default value is 1,
+which means no increase or decrease in the strength of the match.
+A decimal value between 0 and 1 reduces importance.
+making the match strength weaker.
+A value greater than one increases importance,
+making the match strength stronger.
 
-You can alter the importance of a search term by adding `^` and a positive number. This makes matches containing the term more or less relevant to the power of the boost value, with 1 as the default. Any decimal between 0 and 1 reduces importance.
-A value greater than one increases importance.
-
-Wild card searches are supported, for both single (`?`) and multiple (`*`) character searches. `dat?` would match `date` and `data`, `dat*` would match `date`, `data`, `database`, and `dates`.
+Wild card searches are supported,
+for both single (`?`) and multiple (`*`) character searches.
+For example,
+`dat?` would match `date` and `data`,
+whereas `dat*` would match `date`,
+`data`,
+`database`,
+and `dates`.
 Wildcards must come after the search term.
+
 Use `*:*` to return all results.
 
-Result sets from searches are limited to 200 rows, and return 25 rows by default. The number of rows returned can be changed via the limit parameter.
-If the search query does *not* specify the `"group_field"` argument,
-the response contains a bookmark. If the bookmark is passed back as a URL parameter you'll skip through the rows you've already seen and get the next set of results.
+Result sets from searches are limited to 200 rows,
+and return 25 rows by default.
+The number of rows returned can be changed via the [`limit` parameter](#query-parameters).
 
-<aside class="warning" role="complementary" aria-label="omitsbookmark">The response never includes a bookmark if the `"group_field"` argument is specified in the search query.</aside>
+If the search query does _not_ specify the `"group_field"` argument,
+the response contains a bookmark.
+If this bookmark is subsequently provided as a URL parameter,
+the response skips the rows you have already seen,
+making it quick and easy to get the next set of results.
 
-The following characters require escaping if you want to search on them: `+ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /`
+>   **Note**: The response never includes a bookmark if the [`"group_field"` parameter](#query-parameters)
+    is included in the search query.
 
-Escape these with a preceding backslash character.
+The following characters require escaping if you want to search on them:
 
-The response to a search query contains an order field for each of the results.
-The order field is an array where the first element is the field or fields specified in the sort parameter.
-If no sort parameter is included in the query, then the order field contains the lucene relevance score.
-If using the 'sort by distance' feature as described in [Geographical Searches](search.html#geographical-searches),
+```
++ - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
+```
+{:screen}
+
+To escape one of these characters,
+use a preceding backslash character (`\`).
+
+The response to a search query contains an `order` field for each of the results.
+The `order` field is an array where the first element is the field or fields specified
+in the [`sort` parameter](#query-parameters).
+If no [`sort` parameter](#query-parameters) is included in the query,
+then the `order` field contains the [Lucene relevance score](https://lucene.apache.org/core/3_6_0/scoring.html){:new_window}.
+If using the 'sort by distance' feature as described in [Geographical Searches](#geographical-searches),
 then the first element is the distance from a point,
 measured using either kilometers or miles.
 
-<aside class="warning" role="complementary" aria-label="ignoresecond">The second element in the order array can be ignored.
-It is used for troubleshooting purposes only.</aside>
+>   **Note**: The second element in the order array can be ignored.
+    It is used for troubleshooting purposes only.
 
 ## Faceting
 
