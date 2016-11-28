@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-28"
 
 ---
 
@@ -12,37 +12,53 @@ lastupdated: "2016-11-14"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
-# AcID
+# ACID
 
-ACID is an acronym for [atomic](acid.html#acid_atomic),
-[consistent](acid.html#acid_consistent),
-[isolated](acid.html#acid_isolated),
-[durable](acid.html#acid_durable).
+ACID is an acronym for [atomic](#atomic),
+[consistent](#consistent),
+[isolated](#isolated),
+[durable](#durable).
 {:shortdesc}
 
-ACID is a set of properties which guarantee that transactions with a database are processed and reported reliably. Cloudant is AcID: the “c” is lowercase because Cloudant is [eventually consistent](cap_theorem.html) rather than strongly consistent.
-
-## Atomic
+ACID is a set of properties which guarantee that transactions with a database are processed and reported reliably.
+Strictly,
+Cloudant is AcID:
+the "c" is lowercase because Cloudant is [eventually consistent](/docs/guides/cap_theorem.html)
+rather than strongly consistent.
 
 <div id="acid_atomic"></div>
 
-Atomic is just another way of saying cannot be divided. All this means is that if one part of a process fails, the whole process fails.
-The failure helps ensure that the database remains in a consistent state. For example, a request to modify a document only reports success after the change has been written to disk.
+## Atomic
 
-## Consistent
+Atomic is just another way of saying that something cannot be further divided.
+An atomic transaction means that if one part of the transaction fails,
+the whole transaction fails.
+The failure helps ensure that the database remains in a consistent state.
+
+For example,
+a request to modify a document only reports success after the change has been written to disk.
 
 <div id="acid_consistent"></div>
 
-Cloudant is eventually consistent, such that any change will propagate to the whole cluster within milliseconds, but will not wait for that propagation before reporting success. 
+## Consistent
 
-## Isolated
+Cloudant is eventually consistent,
+such that any change normally propagates to the whole cluster within milliseconds,
+but the system does not wait for that propagation be completed before reporting success. 
 
 <div id="acid_isolated"></div>
 
-Cloudant is lockless, so that even simultaneous reads and writes will not delay or impact other reads and writes. Isolation just means that concurrent processes like this result in a state that would be obtained if things happened one at a time.
+## Isolated
 
-## Durable
+Cloudant is lockless,
+so that even simultaneous reads and writes do not delay or impact other reads and writes.
+Isolation just means that concurrent processes result in the same state that would be the outcome
+if things happened one at a time.
 
 <div id="acid_durable"></div>
 
-Durability ensures that changes remain once committed, even with power failures or other errors. Document updates and insertions are written to disk before the request is considered complete.
+## Durable
+
+Durability ensures that changes remain once committed,
+even after power failures or other errors.
+Document updates and insertions are written to disk before the request is considered complete.

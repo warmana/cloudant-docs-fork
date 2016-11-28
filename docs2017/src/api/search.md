@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-25"
+lastupdated: "2016-11-28"
 
 ---
 
@@ -599,149 +599,160 @@ measured using either kilometers or miles.
 
 ## Faceting
 
-> Example search query, specifying that faceted search is enabled:
-
-```
-function(doc) {
-  index("type", doc.type, {"facet": true});
-  index("price", doc.price, {"facet": true});
-}
-```
-
-> Example of `ranges` faceted search:
-
-```
-?q=*:*&ranges={"price":{"cheap":"[0 TO 100]","expensive":"{100 TO Infinity}"}}
-```
-
-> Example results for faceted search `ranges` example:
-
-```json
-{
-  "total_rows":100000,
-  "bookmark":"g...",
-  "rows":[...],
-  "ranges": {
-    "price": {
-      "expensive": 278682,
-      "cheap": 257023
-    }
-  }
-}
-```
-
 Cloudant Search also supports faceted searching,
 which allows you to discover aggregate information about all your matches quickly and easily.
 You can match all documents using the special `?q=*:*` query syntax,
 and use the returned facets to refine your query.
-To indicate a field should be indexed for faceted queries,
+To indicate that a field should be indexed for faceted queries,
 set `{"facet": true}` in its options.
 
-<div></div>
-> Example `if` statement:
+_Example of search query, specifying that faceted search is enabled:_
+
+```
+function(doc) {
+    index("type", doc.type, {"facet": true});
+    index("price", doc.price, {"facet": true});
+}
+```
+{:screen}
+
+>   **Note**: In order to use facets,
+    all the documents in the index must include all the fields that have faceting enabled.
+    If your documents do not include all the fields,
+    you receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
+    If each document does not contain all the fields for facets,
+    it is recommended that you create separate indexes for each field.
+    If you do not create separate indexes for each field,
+    you must include only documents that contain all the fields.
+    Verify that the fields exist in each document using a single `if` statement.
+
+_Example `if` statement to verify that the required fields exist in each document:_
 
 ```
 if (typeof doc.town == "string" && typeof doc.name == "string") {
-  index("town", doc.town, {facet: true});
-  index("town", doc.town, {facet: true});
+        index("town", doc.town, {facet: true});
+        index("town", doc.town, {facet: true});
     }
 ```
-
-
-<aside class="warning" role="complementary" aria-label="enablefacets">In order to use facets, all the documents in the index must include all the fields that have faceting enabled. If your documents do not include all the fields, you will receive a `bad_request` error with the following reason, "dim `field_name` does not exist."
-
-If each document does not contain all the fields for facets, it is recommended that you create separate indexes for each field. If you do not create separate indexes for each field, you must include only documents that contain all the fields. Verify that the fields exist in each document using a single `if` statement.
-</aside>
+{:screen}
 
 ### Counts
 
-> Example query
+The `counts` facet syntax takes a list of fields,
+and returns the number of query results for each unique value of each named field.
+
+>   **Note**: The `count` operation works only if the indexed values are strings.
+    The indexed values cannot be mixed types.
+    For example,
+    if 100 strings are indexed,
+    and one number,
+    then the index cannot be used for `count` operations.
+    You can check the type using the `typeof` operator,
+    and convert using `parseInt`, `parseFloat` and `.toString()` functions.
+
+_Example query showing use of the `counts` facet syntax:_ 
 
 ```
 ?q=*:*&counts=["type"]
 ```
+{:screen}
 
-> Example response
+_Example response after requesting use of the `counts` facet syntax:_
 
 ```json
 {
-  "total_rows":100000,
-  "bookmark":"g...",
-  "rows":[...],
-  "counts":{
-    "type":{
-      "sofa": 10,
-      "chair": 100,
-      "lamp": 97
+    "total_rows":100000,
+    "bookmark":"g...",
+    "rows":[...],
+    "counts":{
+        "type":{
+            "sofa": 10,
+            "chair": 100,
+            "lamp": 97
+        }
     }
-  }
 }
 ```
-
-The count facet syntax takes a list of fields,
-and returns the number of query results for each unique value of each named field.
-
-<aside class="warning" role="complementary" aria-label="stringsonly">The count operation works only if the indexed values are strings.
-The indexed values cannot be mixed types.
-For example,
-if 100 strings are indexed,
-and one number,
-then the index cannot be used for count operations.
-You can check the type using the `typeof` operator,
-and convert using `parseInt`, `parseFloat` and `.toString()` functions.
-</aside>
-
-<div></div>
+{:screen}
 
 ### Drilldown
 
-Add `drilldown=["dimension","label"]` to a search query and restrict results to documents with dimension equal to the given label. You can include multiple drilldown parameters to restrict results along multiple dimensions.
+You can restrict results to documents with a dimension equal to the specified label.
+Do this by adding `drilldown=["dimension","label"]` to a search query.
+You can include multiple drilldown parameters to restrict results along multiple dimensions.
 
-Using a drilldown parameter is similar to using `key:value` in the `q` parameter, but the drilldown parameter returns values that the search's analyzer might skip. For example, if the analyzer did not index a stop word like "a", drilldown will return it by `drilldown=["key","a"]`.
+Using a drilldown parameter is similar to using `key:value` in the `q` parameter,
+but the drilldown parameter returns values that the analyzer used by the search might skip.
 
-<div></div>
+For example,
+if the analyzer did not index a stop word like `"a"`,
+using a drilldown returns it when you specify `drilldown=["key","a"]`.
 
 ### Ranges
 
-> Example query
+The `range` facet syntax reuses the standard Lucene syntax for ranges
+to return counts of results which fit into each specified category.
+Inclusive range queries are denoted by brackets (`[`, `]`).
+Exclusive range queries are denoted by curly brackets (`{`, `}`).
+
+>   **Note**: The `range` operation works only if the indexed values are numbers.
+    The indexed values cannot be mixed types.
+    For example,
+    if 100 strings are indexed,
+    and one number,
+    then the index cannot be used for `range` operations.
+    You can check the type using the `typeof` operator,
+    and convert using `parseInt`, `parseFloat` and `.toString()` functions.
+
+_Example of a request for matching `ranges`, using faceted search:_
 
 ```
 ?q=*:*&ranges={"price":{"cheap":"[0 TO 100]","expensive":"{100 TO Infinity}"}}
 ```
+{:screen}
 
-> Example response
+_Example results after performing a `ranges` check on a faceted search:_
 
 ```json
 {
-  "total_rows":100000,
-  "bookmark":"g...",
-  "rows":[...],
-  "ranges": {
-    "price": {
-      "expensive": 278682,
-      "cheap": 257023
+    "total_rows":100000,
+    "bookmark":"g...",
+    "rows":[...],
+    "ranges": {
+        "price": {
+            "expensive": 278682,
+            "cheap": 257023
+        }
     }
-  }
 }
 ```
-
-The range facet syntax reuses the standard Lucene syntax for ranges to return counts of results which fit into each specified category.
-Inclusive range queries are denoted by brackets (`[`, `]`).
-Exclusive range queries are denoted by curly brackets (`{`, `}`).
-
-<aside class="warning" role="complementary" aria-label="numbersonly">The range operation works only if the indexed values are numbers.
-The indexed values cannot be mixed types.
-For example,
-if 100 strings are indexed,
-and one number,
-then the index cannot be used for range operations.
-You can check the type using the `typeof` operator,
-and convert using `parseInt`, `parseFloat` and `.toString()` functions.
-</aside>
+{:screen}
 
 ## Geographical searches
 
-> Some example data...
+In addition to searching by the content of textual fields,
+you can also sort your results by their distance from a geographic coordinate.
+
+To do this,
+you must index two numeric fields,
+representing the longitude and latitude.
+
+You can then query using the special `<distance...>` sort field which takes 5 parameters:
+
+-   Longitude field name: The name of your longitude field (`mylon` in the example).
+-   Latitude field name: The name of your latitude field (`mylat` in the example).
+-   Longitude of origin: The longitude of the place you want to sort by distance from.
+-   Latitude of origin: The latitude of the place you want to sort by distance from.
+-   Units: The units to use (`km` or `mi` for kilometers and miles, respectively). The distance itself is returned in the order field.
+
+You can combine sorting by distance with any other search query,
+such as range searches on the latitude and longitude,
+or queries involving non-geographical information.
+
+That way,
+you can search in a bounding box and narrow down the search with additional criteria.
+
+_Example geographical data:_
 
 ```json
 {
@@ -751,8 +762,9 @@ and convert using `parseInt`, `parseFloat` and `.toString()` functions.
     "type":"city"
 }
 ```
+{:screen}
 
-> ... as well as a design document with a search index for them.
+_Example of a design document containing a search index for the geographic data:_
 
 ```
 function(doc) {
@@ -763,24 +775,29 @@ function(doc) {
     }
 }
 ```
+{:screen}
 
-> An example query that sorts cities in the northern hemisphere by their distance to New York:
+_An example query that sorts cities in the northern hemisphere by their distance to New York, using HTTP:_
 
-```shell
-curl 'https://$ACCOUNT.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'
 ```
-
-```http
 GET /examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>" HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 ```
+{:screen}
 
-> Example response
+_An example query that sorts cities in the northern hemisphere by their distance to New York, the command line:_
+
+```
+curl 'https://$ACCOUNT.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'
+```
+{:screen}
+
+_Example (abbreviated) response, containing a list of northern hemisphere cities sorted by distance to New York:_
 
 ```json
 {
     "total_rows": 205,
-    "bookmark": "g1AAAAEbeJzLYWBgYMlgTmGQS0lKzi9KdUhJMtfLTczJLyrRS87JL01JzCvRy0styQGqY0pkSLL___9_Fpjj5tDCOG974NGNieJZqAaY4DQgyQFIJtUjmyHXJivfY5PIgmaGKU4z8liAJEMDkAIasx9mTnPNv-PSgosTmbOI9QzEnAMQc-DuqY3U-vbZXTSRNSsLAMMnXIU",
+    "bookmark": "g1A...XIU",
     "rows": [
         {
             "id": "city180",
@@ -822,87 +839,104 @@ Host: $ACCOUNT.cloudant.com
 }
 ```
 
-In addition to searching by the content of textual fields,
-you can also sort your results by their distance from a geographic coordinate.
-
-You will need to index two numeric fields (representing the longitude and latitude).
-
-
-You can then query using the special <distance...> sort field which takes 5 parameters:
-
-- longitude field name: The name of your longitude field (“mylon” in this example)
-- latitude field name: The name of your latitude field (“mylat” in this example)
-- longitude of origin: The longitude of the place you want to sort by distance from
-- latitude of origin: The latitude of the place you want to sort by distance from units
-- The units to use (“km” or “mi” for kilometers and miles, respectively). The distance itself is returned in the order field
-
-
-You can combine sorting by distance with any other search query, such as range searches on the latitude and longitude or queries involving non-geographical information. That way, you can search in a bounding box and narrow down the search with additional criteria.
-
 ## Highlighting Search Terms
 
-> Search query with highlighting enabled
+Sometimes it is useful to get the context in which a search term was mentioned
+so that you can display more detailed results to a user.
 
-```http
+To do this,
+add the `search_highlights` parameter to the search query.
+Specify the field names for which you would like excerpts,
+with the highlighted search term returned.
+
+By default,
+the search term is placed in `<em>` tags to highlight it,
+but this can be overridden using the `highlights_pre_tag` and `highlights_post_tag` parameters.
+
+The length of the fragments is 100 characters by default.
+A different length can be requested with the `highlights_size` parameter.
+
+The `highlights_number` parameter controls the number of fragments returned,
+and defaults to 1.
+
+In the response,
+a `highlights` field is added,
+with one subfield per field name.
+
+For each field,
+you receive an array of fragments with the search term highlighted.
+
+>   **Note**: For highlighting to work,
+    you must have the field stored in the index using the `store: true` option.
+
+_Example search query with highlighting enabled, using HTTP:_
+
+```
 GET /movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=["movie_name"]&highlight_pre_tag="<b>"&highlight_post_tag="</b>"&highlights_size=30&highlights_number=2 HTTP/1.1
 HOST: <account>.cloudant.com
 Authorization: ...
 ```
+{:screen}
 
-```shell
+_Example search query with highlighting enabled, using the command line:_
+
+```
 curl "https://$user:$password@$account.cloudant.com/movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=\[\"movie_name\"\]&highlight_pre_tag=\"<b>\"&highlight_post_tag=\"</b>\"&highlights_size=30&highlights_number=2
 ```
+{:screen}
 
-> Search result with highlights
+_Example of highlighted search results:_
 
 ```json
 {
-  "highlights": {
-    "movie_name": [
-      " on the <b>Azazel</b> Orient Express",
-      " <b>Azazel</b> manuals, you"
-    ]
-  }
+    "highlights": {
+        "movie_name": [
+            " on the <b>Azazel</b> Orient Express",
+            " <b>Azazel</b> manuals, you"
+        ]
+    }
 }
 ```
-
-Sometimes it is useful to get the context in which a search term was mentioned so that you can display more detailed results to a user. To do this, you add the `search_highlights` parameter to the search query, specifying the field names for which you would like excerpts with the highlighted search term to be returned. By default, the search term is placed in `<em>` tags to highlight it, but this can be overridden using the `highlights_pre_tag` and `highlights_post_tag` parameters. The length of the fragments is 100 characters by default. A different length can be requested with the `hightlights_size` parameter. The `highlights_number` parameter controls the number of fragments returned, which defaults to 1.
-
-In the response, a `highlights` field will be added with one subfield per field name. For each field, you will receive an array of fragments with the search term highlighted.
-
-<aside class="notice" role="complementary" aria-label="storefieldinindex">For highlighting to work, you need to have the field stored in the index by using the `store: true` option.</aside>
+{:screen}
 
 ## Search index metadata
 
-> Example request
+To retrieve information about a search index,
+you send a `GET` request to the `_search_info` endpoint,
+as shown in the following example.
+`DDOC` refers to the design document that contains the index,
+and `INDEX` is the name of the index.
 
-```http
+_Example request for search index metadata, using HTTP:_
+
+```
 GET /<DATABASE>/_design/<DDOC>/_search_info/<INDEX> HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example request for search index metadata, using the command line:_
+
+```
 curl "https://$ACCOUNT.cloudant.com/$DATABASE/_design/$DDOC/_search_info/$INDEX" \
      -X GET -u "$USERNAME:$PASSWORD"
 ```
+{:screen}
 
-To retrieve information about a search index, you can send a `GET` request to the `_search_info`
-endpoint as shown in the example. `DDOC` refers to the design document that contains the index and
-`INDEX` is the name of the index.
+The response contains information about your index,
+such as the number of documents in the index and the size of the index on disk.
 
-> Example response
+_Example response following a request for search index metadata:_
 
 ```json
 {
-  "name": "_design/DDOC/INDEX",
-  "search_index": {
-    "pending_seq": 7125496,
-    "doc_del_count": 129180,
-    "doc_count": 1066173,
-    "disk_size": 728305827,
-    "committed_seq": 7125496
-  }
+    "name": "_design/DDOC/INDEX",
+    "search_index": {
+        "pending_seq": 7125496,
+        "doc_del_count": 129180,
+        "doc_count": 1066173,
+        "disk_size": 728305827,
+        "committed_seq": 7125496
+    }
 }
 ```
-
-The response contains information about your index such as the number of document in the index and
-its size on disk.
+{:screen}

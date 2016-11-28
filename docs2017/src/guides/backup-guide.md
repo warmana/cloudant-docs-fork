@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-11-28"
 
 ---
 
@@ -14,25 +14,26 @@ lastupdated: "2016-11-14"
 
 # Back up your data
 
-<aside class="warning" role="complementary" aria-label="betaonly0">This guide refers to a <b>Beta</b> daily incremental backup capability,
-available only on request to Enterprise customers.
+>   **Note**: This guide refers to a *Beta* daily incremental backup capability,
+    available only on request to Enterprise customers.
+
 This capability:
-<ul>
-<li>Is not enabled by default.</li>
-<li>Is only available to Enterprise customers, who must specifically request it.</li>
-<li>Must be explicitly configured before it is operational.</li>
-<li>Is subject to [known limitations](backup-guide.html#known-limitations).</li>
-<li>Is not applicable to [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html).</li>
-</ul>
+-   Is not enabled by default.
+-   Is only available to Enterprise customers, who must specifically request it.
+-   Must be explicitly configured before it is operational.
+-   Is subject to [known limitations](#known-limitations).
+-   Is not applicable to [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html){:new_window}.
 For more information,
-please contact the <a href="mailto:support@cloudant.com">IBM Cloudant support team</a>.</aside>
+please contact the [IBM Cloudant support team](mailto:support@cloudant.com){:new_window}.
 
-<aside class="warning" role="complementary" aria-label="notCloudantLocal">The daily incremental backup capability is not applicable for [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html).
-To back up data in Cloudant Local,
-use [replication](../api/replication.html) to make a copy of your database.</aside>
+>   **Note**: The daily incremental backup capability is not applicable for
+    [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html){:new_window}.
+    To back up data in Cloudant Local,
+    use [replication](/docs/api/replication.html) to make a copy of your database.
 
-IBM Cloudant creates three copies of each document
-and stores it on three different servers in a cluster to ensure high availability.
+To ensure high availability,
+{{site.data.keyword.cloudant}} creates three copies of each document,
+and stores it on three different servers in a cluster.
 This practice is the default for all Cloudant users.
 Even when your data is replicated in triplicate,
 it is still  important to back it up.
@@ -58,10 +59,10 @@ Enterprise customers can have daily incremental backups.
 
 If you are not an Enterprise customer,
 or you wish to create your own backup mechanism,
-consider [using Replication to perform backups](backup-guide-using-replication.html).
+consider [using Replication to perform backups](/docs/guides/backup-guide-using-replication.html).
 
-<aside class="warning" role="complementary" aria-label="betaonly">Daily incremental backup for Enterprise customers is currently a <b>Beta</b> capability.
-It is <b>not</b> enabled by default.</aside>
+>   **Note**: Daily incremental backup for Enterprise customers is currently a *Beta* capability.
+    It is not enabled by default.
 
 Daily incremental backups or 'deltas' enable document comparison,
 and easier single document restoration.
@@ -87,23 +88,32 @@ More information about how Cloudant backs up data is provided in the rest of thi
 For further assistance,
 or to request that data backup is enabled,
 contact the Cloudant support team:
-[support@cloudant.com](mailto:support@cloudant.com).
+[support@cloudant.com](mailto:support@cloudant.com){:new_window}.
 
-<aside class="warning" role="complementary" aria-label="enterpriseonly2">The Cloudant backup facility is available only to Enterprise customers.</aside>
+>   **Note**: The Cloudant backup facility is available only to Enterprise customers.
 
-<aside class="warning" role="complementary" aria-label="designdocsnotbackedup">By default,
-`_design` documents are not backed up,
-so that indexes are _not_ built on the incremental backup databases.
-If you require backups of the `_design` documents,
-you must maintain them in your preferred source control tool.</aside>
+>   **Note**: By default,
+    `_design` documents are not backed up,
+    so that indexes are _not_ built on the incremental backup databases.
+    If you require backups of the `_design` documents,
+    you must maintain them in your preferred source control tool.
 
 ## Concepts
 
-*	Backup run: For a backup period, the source database is replicated using sequence values to determine the documents that changed during the backup period. On completion, this replication is called the daily backup.
-*	Daily backup: See Backup run.
-*	Backup rollup: Daily backups are combined into weekly rolled up databases. These combine the daily deltas into a coarser (less granular) backup. Similarly, weekly databases are rolled up into monthly databases, and monthly databases into yearly databases.
-*	Backup cleanup: After a delta database has been rolled up, the delta database is removed after a configurable time period. This allows you to balance data retention at a high granularity against the cost of storage.
-*	High/low granularity: This indicates how precisely you can specify the period of change for a document. A high granularity rollup has a short timescale for the period of change, for example a day in the case of a daily backup. A low granularity rollup has a long timescale for the period of change, for example a year in the case of a yearly backup.
+It is helpful to understand the following terms when referring to backup concepts:
+
+Term                 | Meaning
+---------------------|--------
+Backup cleanup       | When a delta database has been rolled up, the delta database is removed after a configurable time period. This allows you to balance data retention at a high granularity against the cost of storage.
+Backup rollup        | Daily backups are combined into weekly rolled up databases. These combine the daily deltas into a coarser (less granular) backup. Similarly, weekly databases are rolled up into monthly databases, and monthly databases into yearly databases.
+Backup run           | For a backup period, the source database is replicated using sequence values to determine the documents that changed during the backup period. On completion, this replication is called the daily backup.
+Baseline backup      | A collection of documents, against which a delta database can be compared.
+Daily backup         | See Backup run.
+Daily delta          | Another name for a daily backup.
+Delta database       | The collection of documents that have changed over a period of time (the 'delta').
+High/low granularity | This indicates how precisely you can specify the period of change for a document. A high granularity rollup has a short timescale for the period of change, for example a day in the case of a daily backup. A low granularity rollup has a long timescale for the period of change, for example a year in the case of a yearly backup.
+Incremental backup   | The collection of documents that have changed in the database since the last backup.
+Roll up              | Aggregate a collection of incremental backups into a lower granularity backup, for example to aggregate the daily backups for a week into a single 'weekly' backup.
 
 ## Incremental backups
 
@@ -114,7 +124,8 @@ Every day,
 after the first 'baseline' backup,
 a daily,
 incremental backup is taken.
-This daily incremental backup contains only the data that has changed in the database since the last backup. The daily backup is the 'daily delta'.
+This daily incremental backup contains only the data that has changed in the database since the last backup.
+The daily backup is the 'daily delta'.
 
 As part of the request to enable data backups,
 you can specific a time of day for the backup to run.
