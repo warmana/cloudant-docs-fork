@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-11-29"
 
 ---
 
@@ -163,13 +163,13 @@ and also see changes made to that document.
 You can also restore the document to the version that was current on a particular date,
 if it is available within the granularity of the delta.
 
-<aside class="warning" role="complementary" aria-label="mustbestatic">Documents must be static before restoring from backup.
-In other words,
-the document should not be constantly receiving changes and updates.</aside>
+>   **Note**: Documents must be static before restoring from backup.
+    In other words,
+    the document should not be constantly receiving changes and updates.
 
 For more complex restores,
 such as a full database restore,
-request assistance from Cloudant support.
+request assistance from [Cloudant support](mailto:support@cloudant.com){:new_window}.
 
 ## Using the Dashboard
 
@@ -177,10 +177,11 @@ Enterprise customers can review the status and history of backups using the Clou
 
 Tasks you can perform include:
 
--	View the status of the last backup, including its date and time.
--	View a list of backup document versions by date and time.
--	View a current document and the difference between it and any backed up version.
--	Restore a document from a backed up version.
+-   View the status of the last backup,
+    including its date and time.
+-   View a list of backup document versions by date and time.
+-   View a current document and the difference between it and any backed up version.
+-   Restore a document from a backed up version.
 
 ### Viewing database backup status
 
@@ -197,7 +198,7 @@ Within a database,
 you can view the backup status of a specific document.
 To do this,
 first check to see if there is a backup icon
-![Dashboard backup icon](/docs/images/dashboarddatabasesbackupicon.png)
+(![Dashboard backup icon](/docs/images/dashboarddatabasesbackupicon.png))
 for your document.
 This shows whether the specific document is included within the backup task.
 
@@ -218,9 +219,9 @@ If you decide that you would like to restore a specific backup version of that d
 simply select the date of the backup to restore,
 then click the 'Restore' button.
 
-<aside class="warning" role="complementary" aria-label="mustbestable1">Documents must be in a stable state before restoring from backup.
-In other words,
-the document should not be constantly receiving changes and updates.</aside>
+>   **Note**: Documents must be in a stable state before restoring from backup.
+    In other words,
+    the document should not be constantly receiving changes and updates.
 
 ## Using the API
 
@@ -228,168 +229,191 @@ A number of REST API calls are available for working with the Cloudant backup fa
 
 ### Task configuration
 
-> Retrieving the backup task configuration for the user, returning results in a list format (default).
-
-```http
-GET /_api/v2/backup/task HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/_api/v2/backup/task \
-     -X GET
-```
-
-> Retrieving the backup task configuration for the user, returning results in a mapping format.
-
-```http
-GET /_api/v2/backup/task?format=mapping HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping \
-     -X GET
-```
-
 The `task` call gets the backup task configuration for the user.
 
 You can specify the format used in the response by using the `format` parameter.
 
-<div></div>
-
-> Example response following a list format request:
+_Example of requesting the backup task configuration for the user,
+returning results in a list format (default), using HTTP:_
 
 ```
-{
-  "rows": [
-    {
-      "username": "$USERNAME",
-      "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
-      "source_db": "backmeup",
-      "latest_completion": null
-    },
-    {
-      "username": "$USERNAME",
-      "task": "backup-d0ea6e8218074699a562af543db66615",
-      "source_db": "backuptest",
-      "latest_completion": "2016-01-17T05:57:44+00:00"
-    },
-    {
-      "username": "$USERNAME",
-      "task": "backup-24cd8359b94640be85b7d4071921e781",
-      "source_db": "taskdb",
-      "latest_completion": "2016-01-17T00:01:04+00:00"
-    }
-  ]
-}
+GET /_api/v2/backup/task HTTP/1.1
 ```
+{:screen}
+
+_Example of requesting the backup task configuration for the user,
+returning results in a list format (default), using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task \
+    -X GET
+```
+{:screen}
+
+_Example of requesting the backup task configuration for the user,
+returning results in a mapping format, using HTTP:_
+
+```
+GET /_api/v2/backup/task?format=mapping HTTP/1.1
+```
+{:screen}
+
+_Example of requesting the backup task configuration for the user,
+returning results in a mapping format, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping \
+     -X GET
+```
+{:screen}
 
 The default response format is a list.
 You can request this format directly by using the `...backup/task?format=list` parameter.
 The response contains a simple list of the backup tasks defined for the user.
 
-For example, you might request a list format response using either of the following commands:
-	`https://$USERNAME.cloudant.com/_api/v2/backup/task`
-	`https://$USERNAME.cloudant.com/_api/v2/backup/task?format=list`
-
-<div></div>
-
-> Example response following a mapping format request:
+For example,
+you might request a list format response using either of the following commands:
 
 ```
+https://$USERNAME.cloudant.com/_api/v2/backup/task
+
+https://$USERNAME.cloudant.com/_api/v2/backup/task?format=list
+```
+{:screen}
+
+_Example response following a list format request:_
+
+```json
 {
-  "backmeup": {
-    "username": "$USERNAME",
-    "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
-    "source_db": "backmeup",
-    "latest_completion": null
-  },
-  "backuptest": {
-    "username": "$USERNAME",
-    "task": "backup-d0ea6e8218074699a562af543db66615",
-    "source_db": "backuptest",
-    "latest_completion": "2016-01-17T05:57:44+00:00"
-  },
-  "taskdb": {
-    "username": "$USERNAME",
-    "task": "backup-24cd8359b94640be85b7d4071921e781",
-    "source_db": "taskdb",
-    "latest_completion": "2016-01-17T00:01:04+00:00"
-  }
+    "rows": [
+        {
+            "username": "$USERNAME",
+            "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
+            "source_db": "backmeup",
+            "latest_completion": null
+        },
+        {
+            "username": "$USERNAME",
+            "task": "backup-d0ea6e8218074699a562af543db66615",
+            "source_db": "backuptest",
+            "latest_completion": "2016-01-17T05:57:44+00:00"
+        },
+        {
+            "username": "$USERNAME",
+            "task": "backup-24cd8359b94640be85b7d4071921e781",
+            "source_db": "taskdb",
+            "latest_completion": "2016-01-17T00:01:04+00:00"
+        }
+    ]
 }
 ```
+{:screen}
 
 A more comprehensive response is available in the mapping format.
 You can request this format directly by using the `...backup/task?format=mapping` parameter.
 
 For example, you might request a mapping format response using the following command:
-`https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping`
 
-<div></div>
+```
+https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping
+```
+{:screen}
+
+_Example response following a mapping format request:_
+
+```json
+{
+    "backmeup": {
+        "username": "$USERNAME",
+        "task": "backup-0d0b0cf1b0ea42179f9c082ddc5e07cb",
+        "source_db": "backmeup",
+        "latest_completion": null
+    },
+    "backuptest": {
+        "username": "$USERNAME",
+        "task": "backup-d0ea6e8218074699a562af543db66615",
+        "source_db": "backuptest",
+        "latest_completion": "2016-01-17T05:57:44+00:00"
+    },
+    "taskdb": {
+        "username": "$USERNAME",
+        "task": "backup-24cd8359b94640be85b7d4071921e781",
+        "source_db": "taskdb",
+        "latest_completion": "2016-01-17T00:01:04+00:00"
+    }
+}
+```
+{:screen}
 
 ### Determining backup tasks for specific databases
 
-> Example command to find backup tasks for the `backuptest` and `taskdb` database:
-
-```http
-GET /_api/v2/backup/task?databases=backuptest,taskdb HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/_api/v2/backup/task?databases=backuptest,taskdb \
-     -X GET
-```
-
-> Example response to finding backup tasks for specific databases:
-
-```
-{
-  "rows": [
-    {
-      "username": "$USERNAME",
-      "task": "backup-d0ea6e8218074699a562af543db66615",
-      "source_db": "backuptest",
-      "latest_completion": "2016-01-17T05:57:44+00:00"
-    },
-    {
-      "username": "$USERNAME",
-      "task": "backup-24cd8359b94640be85b7d4071921e781",
-      "source_db": "taskdb",
-      "latest_completion": "2016-01-17T00:01:04+00:00"
-    }
-  ]
-}
-```
-
-The `databases` parameter for the `task` request is used to find what backup tasks are associated with a specified database.
+The `databases` parameter for the `task` request is used
+to find what backup tasks are associated with a specified database.
 
 The response lists the backup task details for the database identified in the `source_db` field.
 The `task` identified can be used in other backup API calls,
-such as [database listing](backup-guide.html#list-of-databases).
+such as the [database listing](#list-of-databases).
 
-<div></div>
+_Example command to find backup tasks for the `backuptest` and `taskdb` database, using HTTP:_
+
+```
+GET /_api/v2/backup/task?databases=backuptest,taskdb HTTP/1.1
+```
+{:screen}
+
+_Example command to find backup tasks for the `backuptest` and `taskdb` database, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/_api/v2/backup/task?databases=backuptest,taskdb \
+    -X GET
+```
+{:screen}
+
+_Example response to finding backup tasks for specific databases:_
+
+```json
+{
+    "rows": [
+        {
+            "username": "$USERNAME",
+            "task": "backup-d0ea6e8218074699a562af543db66615",
+            "source_db": "backuptest",
+            "latest_completion": "2016-01-17T05:57:44+00:00"
+        },
+        {
+            "username": "$USERNAME",
+            "task": "backup-24cd8359b94640be85b7d4071921e781",
+            "source_db": "taskdb",
+            "latest_completion": "2016-01-17T00:01:04+00:00"
+        }
+    ]
+}
+```
 
 ### List of databases
 
-> Retrieving the list of databases created by a backup task, that contain a specific document.
-
-```http
-GET /_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true HTTP/1.1
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true \
-     -X GET
-```
-
-The `monitor` call gets a list of the databases created by the backup task `$TASKNAME`,
+The `monitor` request gets a list of the databases created by the backup task `$TASKNAME`,
 that also contain the document `$DOCID`.
 
-The call supports an optional argument: `include_docs`.
+The request supports an optional argument: `include_docs`.
 The default value is `false`.
 If set to `true`,
-the `monitor` call returns the full document content for each backup database containing `$DOCID`.
+the `monitor` request returns the full document content for each backup database containing `$DOCID`.
 
-<div></div>
+_Retrieving the list of databases created by a backup task, that contain a specific document, using HTTP:_
+
+```
+GET /_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true HTTP/1.1
+```
+{:screen}
+
+_Retrieving the list of databases created by a backup task, that contain a specific document, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true \
+    -X GET
+```
+{:screen}
 
 ### Restore a document
 
