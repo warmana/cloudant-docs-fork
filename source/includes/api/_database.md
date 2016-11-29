@@ -529,7 +529,7 @@ curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes?filter=_selector" -d @
 
 Instead of `GET`, you can also use `POST` to query the changes feed.
 The only difference if you are using `POST` _and_ you are using either of the `docs_ids` or `selector` filters,
-is that it is possible to include the `doc_ids : [...]` or `"selector": {...}` parts in the request body.
+is that it is possible to include the `"doc_ids" : [...]` or `"selector": {...}` parts in the request body.
 All other parameters are expected to be in the query string,
 the same as using `GET`.
 
