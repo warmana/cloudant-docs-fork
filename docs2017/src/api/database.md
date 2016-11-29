@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-16"
+lastupdated: "2016-11-29"
 
 ---
 
@@ -464,7 +464,7 @@ _Example (abbreviated) responses from a continuous changes feed:_
 			"rev": "1-967a00dff5e02add41819138abb3284d"
 		}
 	]
-}
+},
 {
 	"seq": "2-g1A...ssQ",
 	"id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
@@ -473,7 +473,7 @@ _Example (abbreviated) responses from a continuous changes feed:_
 			"rev": "1-967a00dff5e02add41819138abb3284d"
 		}
 	]
-}
+},
 {
 	"seq": "3-g1A...qyy",
 	"id": "1documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
@@ -483,7 +483,7 @@ _Example (abbreviated) responses from a continuous changes feed:_
 		}
 	],
 	"deleted": true
-}
+},
 {
 	"seq": "4-g1A...qyz",
 	"id": "2documentation22d01513-c30f-417b-8c27-56b3c0de12ac",
@@ -614,13 +614,16 @@ you should be aware that:
 ### Using `POST` to get changes
 
 Instead of `GET`,
-an alternative is to use `POST` to query the changes feed.
-The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
+you can also use `POST` to query the changes feed.
+The only difference if you are using `POST` _and_ you are using either of the `docs_ids` or `selector` filters,
+is that it is possible to include the `"doc_ids" : [...]` or `"selector": {...}` parts in the request body.
+All other parameters are expected to be in the query string,
+the same as using `GET`.
 
 _Example of `POST`ing to the `_changes` endpoint, using HTTP:_
 
 ```
-POST /$DB/_changes HTTP/1.1
+POST /$DB/_changes?filter=_selector HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
@@ -629,7 +632,7 @@ Content-Type: application/json
 _Example of `POST`ing to the `_changes` endpoint, using the command line:_
 
 ```
-curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
+curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes?filter=_selector" -d @request.json
 ```
 {:screen}
 
@@ -637,7 +640,7 @@ _Example of a JSON object `POST`ed to the `_changes` endpoint:_
 
 ```json
 {
-	"limit": 10
+	"selector": {"z" : {"$gte" : 1}}
 }
 ```
 {:screen}
