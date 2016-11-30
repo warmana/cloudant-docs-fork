@@ -361,7 +361,7 @@ curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_t
 }
 ```
 
-Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Optional | Type | Default | Supported values
+Argument | Description | Optional | Type | Default | Supported values
 ---------|-------------|----------|------|---------|-----------------
 `descending` | Return the documents in 'descending by key' order. | yes | Boolean | false |
 `endkey` | Stop returning records when the specified key is reached. | yes | String or JSON array | |
@@ -375,9 +375,11 @@ Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 `limit` | Limit the number of returned documents to the specified count. | yes | Numeric | |
 `reduce` | Use the reduce function. | yes | Boolean | true |
 `skip` | Skip this number of rows from the start. | yes | Numeric | 0 |
+`stable` | Prefer view results from a 'stable' set of shards. This means that the results are from a view that is less likely to be updated soon. | yes | Boolean | true | 
 `stale` | Allow the results from a stale view to be used. This makes the request return immediately, even if the view has not been completely built yet. If this parameter is not given, a response is returned only after the view has been built. | yes | String | false | `ok`: Allow stale views.<br/>`update_after`: Allow stale views, but update them immediately after the request.
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | |
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | |
+`update` | Ensure that the view has been updated before results are returned. | yes | String | `true` | `false`: Return view results before updating.<br/>`true`: Return view results after updating.<br/>`lazy`: Return the view results without waiting for an update, but update them immediately after the request.
 
 <aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
@@ -411,7 +413,10 @@ all three view indexes within the design document are rebuilt.</aside>
 If the database has been updated recently, there might be a delay in returning the results when the view is accessed.
 The delay is affected by the number of changes to the database, and whether the view index is not current because the database content has been modified.
 
-It is not possible to eliminate these delays, in the case of newly created databases you might reduce them by creating the view definition in the design document in your database before inserting or updating documents. This causes incremental updates to the index when the documents or inserted.
+It is not possible to eliminate these delays,
+in the case of newly created databases you might reduce them by creating the view definition
+in the design document in your database before inserting or updating documents.
+This causes incremental updates to the index when the documents or inserted.
 
 If speed of response is more important than having completely up-to-date data,
 an alternative is to allow users to access an old version of the view index.
@@ -425,13 +430,41 @@ by using an existing version of the index.
 
 ### Accessing a stale view
 
-For example, to access the existing stale view `by_recipe` in the `recipes` design document,
-you would use a request similar to:
-<code>/recipes/_design/recipes/_view/by_recipe?stale=ok</code>
+<aside class="notice" role="complementary" aria-label="staledeprecated">The earlier method of obtaining potentially older results from a view index,
+using the <code class="prettyprint">stale=ok</code> option,
+is no longer recommended.</aside>
 
-Making use of a stale view has consequences.
+If you are prepared to accept a response that is quicker,
+but might not have the most current data,
+there are two options you can use:
+
+Option   | Purpose                                                                                                         | Default value
+---------|-----------------------------------------------------------------------------------------------------------------|--------------
+`stable` | Should the view results be obtained from a 'stable' set of shards? Possible values include `true`, and `false`. | `true`
+`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`. | `true`
+
+The `stable` option allows you to indicate whether you are prepared to accept
+view results from a set of shards that might still be in the process of updating,
+that is they are not 'stable' as far as the current view query is concerned.
+The default value is `true`,
+meaning that the results should be from a stable set of shards.
+
+The `update` option allows you to indicate whether you are prepared to accept
+view results without waiting for the view to be updated.
+The default value is `true`,
+meaning that the view should be updated before results are returned.
+The `lazy` value means that the results are returned before the view is updated,
+but that the view must then be updated anyway.
+
+The option combination `stable=true&update=false` corresponds to the older option `stale=ok`.
+The option combination `stable=true&update=lazy` corresponds to the older option `stale=update_after`.
+
+Remember that using a stale view has consequences.
 In particular,
-accessing a stale view returns the current (existing) version of the data in the view index, if it exists. The current state of the view index might be different on different nodes in the cluster.
+accessing a stale view returns the current (existing) version of the data in the view index,
+if it exists,
+without waiting for an update.
+This would mean that a stale view index result might be different on different nodes in the cluster.
 
 ### Sorting Returned Rows
 
