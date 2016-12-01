@@ -6,35 +6,41 @@ to be published on IBM Bluemix.
 
 Issues and PRs welcome.
 
-Cloning the submodules
-----------------------
+Bluemix markdown
+----------------
 
-The Bluemix markdown content is built using the `marked-it*` toolkits.
-They are included as git submodules for this repository.
-When you clone this repository,
-you'll see that the `tools/marked-it*` directories are empty.
+The Bluemix markdown content is built using the `marked-it*` toolkits for Node.js.
 
-To obtain the code,
-run these commands (a once-only task):
+Specifically,
+the repositories required are:
+-   `git@github.ibm.com:Grant-Gayed/marked-it.git`
+-   `git@github.ibm.com:Grant-Gayed/marked-it-cli.git`
 
-	git submodule init
-	git submodule update
-	cd tools/marked-it-cli
-	npm install ../marked-it
-	npm install
+>   **Note**: The `marked-it*` modules are only available internally within IBM.
+    However,
+    they are basically markdown build scripts with some additional capabilities
+    for Bluemix-specific 'extras'.
+    It is not essential to have these tools;
+    they are only used for building a local preview of content.
+    It is still perfectly possible to do a 'pure' markdown-only build of the content
+    for local preview purposes.
 
-You should now find that the `tools/marked-it*` directories are populated.
-You do not need to perform this task again.
+When you have obtained copies of these two repositories,
+you must tell Node about them.
 
-Note: If you want to get the latest versions of `marked-it*`,
-simply run the `git submodule update` command again.
+Do this by running the following two commands **from your Home folder**:
+1.  `npm install <marked-it-install-folder>/marked-it`
+2.  `npm install <marked-it-cli-install-folder>/marked-it-cli`
 
-> **Note**: The `marked-it*` modules are only available internally within IBM.
-However, they are basically markdown build scripts with some additional
-capabilities for Bluemix-specific 'extras'.
-It is not essential to have these tools; they are only used for building
-a local preview of content. It is still perfectly possible to do a 'pure'
-markdown-only build of the content for local preview purposes.
+... where `<marked-it-install-folder>` and `<marked-it-cli-install-folder>`
+correspond to the installation folders for the two repositories.
+
+Finally,
+modify the `docs2017/scripts/Makefile` variables:
+-   `TOOLDIR` (on line 8)
+-   `BUILDTOOLDIR` (on line 9)
+
+... so that the build system can locate the `marked-it-cli` component.
 
 Style
 -----

@@ -30,7 +30,7 @@ with open('APIlinks.csv', 'rb') as apiLinks:
         linkDict[row['Endpoint']+row['Method']+'Couch20']  = row['Couch20']
         linkDict[row['Endpoint']+row['Method']+'Couch16']  = row['Couch16']
 
-with open('./couchdb-cloudant-api/cloudant-couchdb-api-ref.json') as json_data_file:
+with open('cloudant-couchdb-api-ref.json') as json_data_file:
     data = load(json_data_file)
 
 print("Endpoint | Method | Cloudant | CouchDB 2.0 | CouchDB 1.6 | Summary | Notes")
