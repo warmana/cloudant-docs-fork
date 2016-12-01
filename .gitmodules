@@ -1,3 +1,0 @@
-[submodule "docs2017/tools/marked-it-cli"]
-	path = docs2017/tools/marked-it-cli
-	url = git@github.ibm.com:Grant-Gayed/marked-it-cli.git
