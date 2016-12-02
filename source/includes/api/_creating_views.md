@@ -438,16 +438,17 @@ If you are prepared to accept a response that is quicker,
 but might not have the most current data,
 there are two options you can use:
 
-Option   | Purpose                                                                                                         | Default value
----------|-----------------------------------------------------------------------------------------------------------------|--------------
-`stable` | Should the view results be obtained from a 'stable' set of shards? Possible values include `true`, and `false`. | `true`
-`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`. | `true`
+Option   | Purpose                                                                                                                       | Default value
+---------|-------------------------------------------------------------------------------------------------------------------------------|--------------
+`stable` | Should the view results be obtained from a consistent or 'stable' set of shards? Possible values include `true`, and `false`. | `true`
+`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.               | `true`
 
 The `stable` option allows you to indicate whether you are prepared to accept
-view results from a set of shards that might still be in the process of updating,
-that is they are not 'stable' as far as the current view query is concerned.
+view results from a set of shards other than the system-defined set of shards
+that normally respond to your view requests.
 The default value is `true`,
-meaning that the results should be from a stable set of shards.
+meaning that the results returned are from your normal (stable) set of shards,
+helping to reduce the likelihood of [eventual consistency](cap_theorem.html) issues.
 
 The `update` option allows you to indicate whether you are prepared to accept
 view results without waiting for the view to be updated.
@@ -456,15 +457,24 @@ meaning that the view should be updated before results are returned.
 The `lazy` value means that the results are returned before the view is updated,
 but that the view must then be updated anyway.
 
-The option combination `stable=true&update=false` corresponds to the older option `stale=ok`.
-The option combination `stable=true&update=lazy` corresponds to the older option `stale=update_after`.
+The option combination `stable=true&update=false` corresponds to the earlier option `stale=ok`.
+The option combination `stable=true&update=lazy` corresponds to the earlier option `stale=update_after`.
+If you really want the quickest possible response,
+and are prepared to accept results that might be stale,
+or are returned from any shard combination rather than your normal (consistent) set,
+then you could use the combination: `stable=false&update=false`
 
 Remember that using a stale view has consequences.
 In particular,
 accessing a stale view returns the current (existing) version of the data in the view index,
 if it exists,
 without waiting for an update.
-This would mean that a stale view index result might be different on different nodes in the cluster.
+This would mean that a stale view index result might be different from different nodes in the cluster.
+
+<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively
+works to keep views up-to-date at all times.
+This means that the only time you might notice a difference when using `stable` or `update` options is when
+there is an indexing backlog.</aside>
 
 ### Sorting Returned Rows
 
