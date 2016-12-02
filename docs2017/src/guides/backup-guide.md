@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-29"
+lastupdated: "2016-12-02"
 
 ---
 
@@ -389,6 +389,7 @@ _Example response to finding backup tasks for specific databases:_
     ]
 }
 ```
+{:screen}
 
 ### List of databases
 
@@ -417,29 +418,6 @@ curl https://$USERNAME.cloudant.com/_api/v2/backup/monitor/$TASKNAME/$DOCID?incl
 
 ### Restore a document
 
-> Restore a document from the most recent version held in a specific backup database.
-
-```http
-POST /_api/v2/backup/restore/document --data=@RESTORE.json HTTP/1.1
-Content-Type: application/json
-```
-
-```shell
-curl https://$USERNAME.cloudant.com/_api/v2/backup/restore/document --data=@RESTORE.json \
-     -X POS \
-     -H "Content-Type: application/json" \
-     -d "$JSON"
-```
-
-```json
-{
-  "doc_id": $DOCID,
-  "task_name": $TASKNAME,
-  "task_date": $TASKDATE,
-  "frequency": $FREQUENCY
-}
-```
-
 The `restore` call replaces a document,
 identified by `$DOCID`,
 from a source database.
@@ -447,20 +425,49 @@ The source database is identified by the `$TASKNAME`.
 The `$TASKDATE` is the timestamp of the specific backup,
 and specifies when the backup was performed.
 The `$FREQUENCY` is one of the following four values:
-`"daily"`,
-`"weekly"`,
-`"monthly"`,
-or `"yearly"`.
+-   `"daily"`
+-   `"weekly"`
+-    `"monthly"`
+-   `"yearly"`
 
-<aside class="warning" role="complementary" aria-label="mustbestable2">Documents must be in a stable state before restoring from backup.
-In other words,
-the document should not be constantly receiving changes and updates.</aside>
+>   **Note**: Documents must be in a stable state before restoring from backup.
+    In other words,
+    the document should not be receiving any changes and updates while the restore is in progress.
 
-<div></div>
+_Example of request to restore a document, using HTTP:_
+
+```
+POST /_api/v2/backup/restore/document --data=@RESTORE.json HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
+
+_Example of request to restore a document from the most recent version held in a specific backup database, using the command line:_
+
+```
+curl https://$USERNAME.cloudant.com/_api/v2/backup/restore/document --data=@RESTORE.json \
+    -X POS \
+    -H "Content-Type: application/json" \
+    -d "$JSON"
+```
+{:screen}
+
+_Example of a JSON document requesting that a document be restored
+from the most recent version held in a specific backup database:_
+
+```json
+{
+    "doc_id": $DOCID,
+    "task_name": $TASKNAME,
+    "task_date": $TASKDATE,
+    "frequency": $FREQUENCY
+}
+```
+{:screen}
 
 ## How backup using incremental replication works
 
-A very simple form of backup is to [replicate](../api/replication.html) the database to a dated backup database.
+A very simple form of backup is to [replicate](/docs/api/replication.html) the database to a dated backup database.
 
 This method works and is easy to do.
 But if the database is big and you need backups for multiple points in time,
@@ -492,98 +499,113 @@ The parameter indicates where the last replication finished.
 
 The following steps outline how incremental backups are created:
 
-1.	[Find the ID of the checkpoint document for the last replication.](backup-guide.html#find-the-id-of-the-checkpoint-document-for-the-last-replication)
-2.	[Get the `recorded_seq` value.](backup-guide.html#get-the-recorded_seq-value)
-3.	[Run an incremental backup.](backup-guide.html#run-an-incremental-backup)
+1.  [Find the ID of the checkpoint document for the last replication.](#find-the-id-of-the-checkpoint-document-for-the-last-replication)
+2.  [Get the `recorded_seq` value.](#get-the-recorded_seq-value)
+3.  [Run an incremental backup.](#run-an-incremental-backup)
 
 ### Find the ID of the checkpoint document for the last replication
 
-> Get checkpoint ID of the last incremental backup for a database called `original`:
+The checkpoint ID value is stored in the `_replication_id` field
+of the replication document in the `_replicator` database.
 
-```http
+_Example request to get the checkpoint ID of the last incremental backup,
+for a database called `original`, using HTTP:_
+
+```
 GET /_replicator/original HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example request to get the checkpoint ID of the last incremental backup,
+for a database called `original`, using the command line:_
+
+```
 $ replication_id=$(curl "${url}/_replicator/original" | jq -r '._replication_id')
 ```
-
-The checkpoint ID value is stored in the `_replication_id` field in the replication document in the `_replicator` database.
-
-<div></div>
+{:screen}
 
 ### Get the `recorded_seq` value
 
-> Get `recorded_seq` from database called `original`
+After you get the checkpoint ID,
+you use it to get the `recorded_seq` value from
+the first element of the history array in the `/_local/${replication_id}` document in the original database.
 
-```http
+_Example of getting the `recorded_seq` value from a database called `original`, using HTTP:_
+
+```
 GET /original/_local/${replication_id} HTTP/1.1
 ```
+{:screen}
 
-```shell
+_Example of getting the `recorded_seq` value from a database called `original`, using the command line:_
+
+```
 $ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
 ```
-
-After you get the checkpoint ID,
-you use it to get the `recorded_seq` value from the first element of the history array in the `/_local/${replication_id}` document in the original database.
-
-<div> </div>
+{:screen}
 
 ### Run an incremental backup
 
-> Start new incremental backup to an incremental database called `newbackup`:
+Now that you have the checkpoint ID and `recorded_seq`,
+you can start the new incremental backup.
 
-```http
+_Example of starting a new incremental backup, to an incremental database called `newbackup`, using HTTP:_
+
+```
 PUT /_replicator/newbackup HTTP/1.1
 Content-Type: application/json
 ```
+{:screen}
 
-	$ curl -X PUT "${url}/_replicator/newbackup" -H "${ct}" -d @newbackup.json
-	# where newbackup.json contains the following:
+_Example of starting a new incremental backup, to an incremental database called `newbackup`, using the command line:_
+
+```
+curl -X PUT "${url}/_replicator/newbackup" -H "${ct}" -d @newbackup.json
+```
+{:screen}
+
+_Example of JSON file specifyin an incremental backup:_
 
 ```json
 {
-  "_id": "newbackup",
-  "source": "${url}/original",
-  "target": "${url}/newbackup",
-  "since_seq": "${recorded_seq}"
+    "_id": "newbackup",
+    "source": "${url}/original",
+    "target": "${url}/newbackup",
+    "since_seq": "${recorded_seq}"
 }
 ```
-
-Now that you have the checkpoint ID and `recorded_seq`, you can start the new incremental backup.
+{:screen}
 
 ## Known limitations
 
-<aside class="warning" role="complementary" aria-label="betaonly2">Daily incremental backup for Enterprise customers is currently a Beta capability.
-It is not enabled by default.</aside>
+>   **Note**: Daily incremental backup for Enterprise customers is currently a Beta capability.
+    It is not enabled by default.
 
-<ul>
-<li>IBM Cloudant Backup,
-and the associated restore capabilities,
-are based on the underlying replication technology.
-Factors affecting,
-or even interrupting,
-the replication will affect or even stall backup or restore processes.</li>
-<li>Backup and restore processes could take a significant amount of time for large databases,
-for example over 100GB in size.
-This applies to the initial backup,
-which could take a few days to complete for a large database.
-<br/>Similarly,
-the restore process could take from a few hours to several days,
-again depending on the size of the database.</li>
-<li>For large daily backups,
-it is possible that the backup process cannot complete in one day (24 hours).
-The backup process normally runs to completion,
-therefore it would include incremental changes for more than a day.</li>
-<li>There is currently no support for backing up a full user account.
-Instead,
-you must specify each of the databases within a user account that you want enabled for backup or restore.
-<br/>Currently,
-there is a limit of 50 databases enabled for backup within any one user account.</li>
-<li>The IBM Cloudant Backup facility does not currently support backup or restore for
-<a href="../api/design_documents.html">"design documents"</a>.
-<br/>If you require backups of design documents,
-you must maintain them in your preferred source control tool.</li>
-<li>Currently,
-the target database for performing a database restore must be different from the original source database.</li>
-</ul>
+-   IBM Cloudant Backup,
+    and the associated restore capabilities,
+    are based on the underlying replication technology.
+    Factors affecting,
+    or even interrupting,
+    the replication will affect or even stall backup or restore processes.
+-   Backup and restore processes could take a significant amount of time for large databases,
+    for example over 100GB in size.
+    This applies to the initial backup,
+    which could take a few days to complete for a large database.
+    Similarly,
+    the restore process could take from a few hours to several days,
+    again depending on the size of the database.
+-   For large daily backups,
+    it is possible that the backup process cannot complete in one day (24 hours).
+    The backup process normally runs to completion,
+    therefore it would include incremental changes for more than a day.
+-   There is currently no support for backing up a full user account.
+    Instead,
+    you must specify each of the databases within a user account that you want enabled for backup or restore.
+    Currently,
+    there is a limit of 50 databases enabled for backup within any one user account.
+-   The IBM Cloudant Backup facility does not currently support
+    backup or restore for [design documents](/docs/api/design_documents.html).
+    If you require backups of design documents,
+    you must maintain them in your preferred source control tool.
+-   Currently,
+    the target database for performing a database restore must be different from the original source database.

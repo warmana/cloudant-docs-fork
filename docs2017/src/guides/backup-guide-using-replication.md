@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-02"
 
 ---
 
@@ -36,7 +36,7 @@ a backup can preserve the state of your database at a selected time.
 ## Incremental backups
 
 If you are an Enterprise customer,
-a daily incremental backup capability is [available](backup-guide.html).
+a daily incremental backup capability is [available](/docs/guides/backup-guide.html).
 
 If you are not an Enterprise customer,
 or you prefer to create your own backups,
@@ -51,7 +51,8 @@ This quickly requires significant disk usage,
 especially if your database is large.
 
 As an alternative,
-incremental backups are a good solution for storing only the documents that have changed since the last backup.
+incremental backups are a good solution for storing
+only the documents that have changed since the last backup.
 
 The process is simple.
 Initially,
@@ -61,11 +62,11 @@ you run daily 'incremental' backups,
 backing up _only_ what has changed in the database since the last backup.
 This replication becomes a daily backup.
 
-<aside class="warning" role="complementary" aria-label="triggerintervals">You can configure a backup to trigger at regular intervals.
-However,
-each interval must be 24 hours or more.
-In other words,
-you can run daily backups but not hourly backups.</aside>
+>   **Note**: You can configure a backup to trigger at regular intervals.
+    However,
+    each interval must be 24 hours or more.
+    In other words,
+    you can run daily backups but not hourly backups.
 
 ## Creating an incremental backup
 
@@ -82,10 +83,21 @@ This name makes it easier to identify checkpoints during the recovery or roll up
 To create an incremental backup,
 you must perform the following steps:
 
-1.	Find the ID of the checkpoint document for the last replication. It is stored in the  `_replication_id` field of the replication document, found in the `_replicator` database.
-2.	Open the checkpoint document at `/<database>/_local/<_replication_id>`, where `<_replication_id>` is the ID you found in the previous step, and `<database>` is the name of the source or the target database. The document usually exists on both databases but might only exist on one.
-3.	Search for the `recorded_seq` field of the first element in the history array found in the checkpoint document.
-4.	Start replicating to the new incremental backup database, setting the `since_seq` field in the replication document to the value of the `recorded_seq` field found in the previous step.
+1.  Find the ID of the checkpoint document for the last replication.
+    It is stored in the `_replication_id` field of the replication document,
+    found in the `_replicator` database.
+2.  Open the checkpoint document at `/<database>/_local/<_replication_id>`,
+    where `<_replication_id>` is the ID you found in the previous step,
+    and `<database>` is the name of the source or the target database.
+    The document usually exists on both databases,
+    but might only exist on one.
+3.  Search for the `recorded_seq` field of the first element
+    in the history array found in the checkpoint document.
+4.  Start replicating to the new incremental backup database,
+    setting the [`since_seq` field](/docs/api/replication.html#the-since_seq-field)
+    in the replication document to the value of
+    the [`recorded_seq` field](/docs/guides/backup-guide.html#get-the-recorded_seq-value)
+    found in the previous step.
 
 ## Restoring a database
 
@@ -96,7 +108,8 @@ starting with the most recent increment.
 You could start with the oldest backup,
 then apply the subsequent  backups in order.
 However,
-replicating from the latest incremental backup first is faster because updated documents are only written to the target database once.
+replicating from the latest incremental backup first is faster
+because updated documents are only written to the target database once.
 Any documents older than a copy already present in the new database are skipped.
 
 
@@ -104,56 +117,57 @@ Any documents older than a copy already present in the new database are skipped.
 
 This example shows how to:
 
--	Setup databases to use incremental backup.
--	Run a full backup.
--	Set up and run an incremental backup.
--	Restore a backup.
+1.  Setup databases to use incremental backup.
+2.  Run a full backup.
+3.  Set up and run an incremental backup.
+4.  Restore a backup.
 
-> Constants used in this guide
+### Constants used in this guide
 
-	# save base URL and the content type in shell variables
-	$ url='https://<username>:<password>@<username>.cloudant.com'
-	$ ct='Content-Type: application-json'
+```
+# save base URL and the content type in shell variables
+$ url='https://<username>:<password>@<username>.cloudant.com'
+$ ct='Content-Type: application-json'
+```
+{:screen}
 
 Assume you need to back up one database.
 You want to create a full backup on Monday,
 and an incremental backup on Tuesday.
 
-You can use the `curl` and [`jq`](http://stedolan.github.io/jq/) commands to run these operations.
+You can use the `curl` and [`jq`](http://stedolan.github.io/jq/){:new_window}
+commands to run these operations.
 In practice,
 you could use any http client.
 
-<div></div>
-
 ### Step 1: Check you have three databases
-
-> Check you have three databases to use with this example
-
-```shell
-$ curl -X PUT "${url}/original"
-$ curl -X PUT "${url}/backup-monday"
-$ curl -X PUT "${url}/backup-tuesday"
-```
-
-```http
-PUT /original HTTP/1.1
-```
-
-```http
-PUT /backup-monday HTTP/1.1
-```
-
-```http
-PUT /backup-tuesday HTTP/1.1
-```
 
 For this example,
 you require three databases:
 
--	The original database, holding the data you want to backup.
--	Two incremental databases, for Monday (`backup-monday`) and Tuesday (`backup-tuesday`).
+-   The original database,
+    holding the data you want to backup.
+-   Two incremental databases,
+    for Monday (`backup-monday`) and Tuesday (`backup-tuesday`).
 
-<div></div>
+_Example showing how to check you have three databases to use with this example, using HTTP:_
+
+```
+PUT /original HTTP/1.1
+PUT /backup-monday HTTP/1.1
+PUT /backup-tuesday HTTP/1.1
+```
+{:screen}
+
+_Example showing how to check you have three databases to use with this example,
+using the command line:_
+
+```
+$ curl -X PUT "${url}/original"
+$ curl -X PUT "${url}/backup-monday"
+$ curl -X PUT "${url}/backup-tuesday"
+```
+{:screen}
 
 ### Step 2: Create the `_replicator` database
 
