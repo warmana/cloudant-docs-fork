@@ -462,7 +462,7 @@ The option combination `stable=true&update=lazy` corresponds to the earlier opti
 If you really want the quickest possible response,
 and are prepared to accept results that might be stale,
 or are returned from any shard combination rather than your normal (consistent) set,
-then you could use the combination: `stable=false&update=false`
+then you could use the combination: `stable=false&update=false`.
 
 Remember that using a stale view has consequences.
 In particular,

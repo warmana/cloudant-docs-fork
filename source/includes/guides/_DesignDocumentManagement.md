@@ -221,6 +221,6 @@ Adding "`stale=ok`" or "`stale=update_after`" can be a good way getting answers 
 Avoid using `stale=ok` or `stale=update_after` whenever possible. The reason is that the default behavior provides the freshest data, and distributes data within the cluster. If it is possible to make a client app aware that there is a large data processing task is in progress (during a regular bulk data update, for example), then the app could switch to `stale=ok` temporarily during these times, then revert to the default behaviour afterwards.
 
 **Note** The `stale` option is still available,
-but more the useful options `stable` and `update` are available and should be used instead.
+but the more useful options `stable` and `update` are available and should be used instead.
 For more details,
 see [Accessing a stale view](creating_views.html#accessing-a-stale-view)
