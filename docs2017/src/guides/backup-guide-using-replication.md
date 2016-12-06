@@ -171,58 +171,58 @@ $ curl -X PUT "${url}/backup-tuesday"
 
 ### Step 2: Create the `_replicator` database
 
-> Create the `_replicator` database
-
-```shell
-$ curl -X PUT "${url}/_replicator"
-```
-
-```http
-PUT /_replicator HTTP/1.1
-```
-
 If it does not exist, create the `_replicator` database.
 
-<div> </div>
+_Creating the `_replicator` database, using HTTP:_
+
+```
+PUT /_replicator HTTP/1.1
+```
+{:screen}
+
+_Creating the `_replicator` database, using the command line:_
+
+```
+$ curl -X PUT "${url}/_replicator"
+```
+{:screen}
 
 ### Step 3: Back up the entire (original) database
-
-> Run a full backup on Monday (HTTP)
-
-	PUT /_replicator/full-backup-monday HTTP/1.1
-	Content-Type: application/json
-
-> Run a full backup on Monday (shell)
-
-	$ curl -X PUT "${url}/_replicator/full-backup-monday" -H "$ct" -d @backup-monday.json
-	# where backup-monday.json has the following contents:
-
-> ... using this JSON document:
- 
-```json
-{
-  "_id": "full-backup-monday",
-  "source": "${url}/original",
-  "target": "${url}/backup-monday"
-}
-```
 
 On Monday,
 you want to back up all your data for the first time.
 Do this by replicating everything from `original` to `backup-monday`.
 
-<div> </div>
+_Running a full backup on Monday, using HTTP:_
 
-### Step 4: Get checkpoint ID
-
-> Get checkpoint ID to help find the `recorded_seq` value:
-
-	GET /_replicator/backup-monday HTTP/1.1
-	# Search for the value of _replication_id
-
-```shell
-$ replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
 ```
+PUT /_replicator/full-backup-monday HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
+
+_Running a full backup on Monday, using the command line:_
+
+```
+$ curl -X PUT "${url}/_replicator/full-backup-monday" -H "$ct" -d @backup-monday.json
+# where backup-monday.json describes the required backup.
+```
+{:screen}
+
+_JSON document describing the required full backup:_
+ 
+```json
+{
+    "_id": "full-backup-monday",
+    "source": "${url}/original",
+    "target": "${url}/backup-monday"
+}
+```
+{:screen}
+
+<div id="step-4-get-checkpoint-id"></div>
+
+### Step 4: Prepare incremental backup part 1 - Get checkpoint ID
 
 On Tuesday,
 you want to do an incremental backup,
@@ -231,8 +231,8 @@ rather than another full backup.
 To start the incremental backup,
 you need two values:
 
--	The checkpoint ID.
--	The `recorded_seq` value.
+-   The checkpoint ID.
+-   [The `recorded_seq` value](#step-5-prepare-incremental-backup-part-2-get-recorded_seq-value).
 
 These values identify where the last backup ended,
 and determine where to start the next incremental backup.
@@ -242,18 +242,24 @@ You start by finding the checkpoint ID value.
 This is stored in the `_replication_id` field of the replication document,
 within the `_replicator` database.
 
-<div> </div>
+_Getting the checkpoint ID to help find the `recorded_seq` value, using HTTP:_
 
-### Step 5: Get `recorded_seq` value
-
-> Get `recorded_seq` from original database
-
-	GET /original/_local/${replication_id} HTTP/1.1
-	# Search for the first value of recorded_seq in the history array
-
-```shell
-$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
 ```
+GET /_replicator/backup-monday HTTP/1.1
+# Search for the value of _replication_id
+```
+{:screen}
+
+_Getting the checkpoint ID to help find the `recorded_seq` value, using the command line:_
+
+```
+$ replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
+```
+{:screen}
+
+<div id="step-5-get-recorded_seq-value"></div>
+
+### Step 5: Prepare incremental backup part 2 - Get `recorded_seq` value
 
 After you get the checkpoint ID,
 use it to get the `recorded_seq` value.
@@ -263,27 +269,22 @@ within the original database.
 You now have the `recorded_seq` value.
 This tells you the last document replicated from the original database.
 
-<div> </div>
+_Getting the `recorded_seq` from original database, using HTTP:_
+
+```
+GET /original/_local/${replication_id} HTTP/1.1
+# Search for the first value of recorded_seq in the history array
+```
+{:screen}
+
+_Getting the `recorded_seq` from original database, using the command line:_
+
+```
+$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
+```
+{:screen}
 
 ### Step 6: Run an incremental backup
-
-> Start Tuesday's incremental backup
-
-	PUT /_replicator/incr-backup-tuesday HTTP/1.1
-	Content-Type: application/json
-
-	$ curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
-
-> ... using this JSON document:
- 
-```json
-{
-  "_id": "incr-backup-tuesday",
-  "source": "${url}/original",
-  "target": "${url}/backup-tuesday",
-  "since_seq": "${recorded_seq}"
-}
-```
 
 Now that you have the checkpoint ID and `recorded_seq`,
 you can start Tuesday's incremental backup.
@@ -294,27 +295,34 @@ you have a completed incremental backup.
 The backup consists of all the documents in the original database,
 and may be restored by retrieving the content of both the `backup-monday` _and_ `backup-tuesday` databases.
 
-<div> </div>
+_Running Tuesday's incremental backup, using HTTP:_
 
-### Step 7: Restore the Monday backup
+```
+PUT /_replicator/incr-backup-tuesday HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
 
-> Restore from the `backup-monday` database
+_Running Tuesday's incremental backup, using the command line:_
 
-	PUT /_replicator/restore-monday HTTP/1.1
-	Content-Type: application/json
+```
+$ curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
+```
+{:screen}
 
-	$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
-
-> ... using this JSON document:
+_JSON document describing Tuesday's incremental backup:_
  
 ```json
 {
-  "_id": "restore-monday",
-  "source": "${url}/backup-monday",
-  "target": "${url}/restore",
-  "create-target": true  
+    "_id": "incr-backup-tuesday",
+    "source": "${url}/original",
+    "target": "${url}/backup-tuesday",
+    "since_seq": "${recorded_seq}"
 }
 ```
+{:screen}
+
+### Step 7: Restore the Monday backup
 
 To restore from a backup,
 you replicate the initial full backup,
@@ -325,9 +333,45 @@ For example,
 to restore Monday's state,
 you would replicate from the `backup-monday` database.
 
-<div> </div>
+_Restoring from the `backup-monday` database, using HTTP:_
+
+```
+PUT /_replicator/restore-monday HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
+
+_Restoring from the `backup-monday` database, using the command line:_
+
+```
+$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
+```
+{:screen}
+
+_JSON document describing the required restore:_
+ 
+```json
+{
+    "_id": "restore-monday",
+    "source": "${url}/backup-monday",
+    "target": "${url}/restore",
+    "create-target": true  
+}
+```
+{:screen}
 
 ### Step 8: Restore the Tuesday backup
+
+To restore Tuesday's database,
+you first replicate from `backup-tuesday` and then from `backup-monday`.
+
+>   **Note**: The order is not a typo;
+    we really _do_ mean restore from Tuesday then Monday.
+
+You could restore in chronological sequence,
+but by using the reverse order,
+documents updated on Tuesday only need to be written to the target database once;
+older versions of the document stored in the Monday database are ignored.
 
 > Restore Tuesday's backup to get the latest changes first
 
@@ -363,14 +407,6 @@ you would replicate from the `backup-monday` database.
   "target": "${url}/restore"
 }
 ```
-
-To restore Tuesday's database,
-you first replicate from `backup-tuesday` and then from `backup-monday`.
-
-You could restore in chronological sequence,
-but by using the reverse order,
-documents updated on Tuesday only need to be written to the target database once;
-older versions of the document stored in the Monday database are ignored.
 
 <div> </div>
 
