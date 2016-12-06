@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-02"
+lastupdated: "2016-12-06"
 
 ---
 
@@ -373,42 +373,58 @@ but by using the reverse order,
 documents updated on Tuesday only need to be written to the target database once;
 older versions of the document stored in the Monday database are ignored.
 
-> Restore Tuesday's backup to get the latest changes first
+_Restoring Tuesday's backup, getting the latest changes first, using HTTP:_
 
-	PUT /_replicator/restore-tuesday HTTP/1.1
-	Content-Type: application/json
+```
+PUT /_replicator/restore-tuesday HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
 
-	$ curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.json
+_Restoring Tuesday's backup, getting the latest changes first, using the command line:_
 
-> ... using this JSON document:
+```
+$ curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.json
+```
+{:screen}
+
+_JSON document requesting restoration of the Tuesday backup:_
  
 ```json
 {
-  "_id": "restore-tuesday",
-  "source": "${url}/backup-tuesday",
-  "target": "${url}/restore",
-  "create-target": true  
+    "_id": "restore-tuesday",
+    "source": "${url}/backup-tuesday",
+    "target": "${url}/restore",
+    "create-target": true  
 }
 ```
+{:screen}
 
-> Finish by restoring Monday's backup last
+_Complete the recovery by restoring Monday's backup last, using HTTP:_
 
-	PUT /_replicator/restore-monday HTTP/1.1
-	Content-Type: application/json
+```
+PUT /_replicator/restore-monday HTTP/1.1
+Content-Type: application/json
+```
+{:screen}
 
-	$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
+_Complete the recovery by restoring Monday's backup last, using the command line:_
 
-> ... using this JSON document:
+```
+$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
+```
+{:screen}
+
+_JSON document requesting restoration of the Monday backup:_
  
 ```json
 {
-  "_id": "restore-monday",
-  "source": "${url}/backup-monday",
-  "target": "${url}/restore"
+    "_id": "restore-monday",
+    "source": "${url}/backup-monday",
+    "target": "${url}/restore"
 }
 ```
-
-<div> </div>
+{:screen}
 
 ## Best practices
 
@@ -425,42 +441,56 @@ or to a time when the cluster is less busy.
 
 #### Changing the IO priority of a backup
 
-> Setting the IO priority
+You can change the priority of backup jobs
+by adjusting the value of the `x-cloudant-io-priority` field within the replication document.
+
+1.  In the source and target fields, change the `headers` object.
+2.  In the headers object,
+    change the `x-cloudant-io-priority` field value to `"low"`.
+
+_Example of JSON document setting the IO priority:_
 
 ```json
 {
-  "source": {
-    "url": "https://user:pass@example.com/db",
-    "headers": {
-      "x-cloudant-io-priority": "low"
+    "source": {
+        "url": "https://user:pass@example.com/db",
+        "headers": {
+            "x-cloudant-io-priority": "low"
+        }
+    },
+    "target": {
+        "url": "https://user:pass@example.net/db",
+        "headers": {
+            "x-cloudant-io-priority": "low"
+        }
     }
-  },
-  "target": {
-    "url": "https://user:pass@example.net/db",
-    "headers": {
-      "x-cloudant-io-priority": "low"
-    }
-  }
 }
 ```
+{:screen}
 
-You can change the priority of backup jobs by adjusting the value of the `x-cloudant-io-priority` field within the replication document.
-
-1.	In the source and target fields, change the `headers` object.
-2.	In the headers object, change the `x-cloudant-io-priority` field value to `"low"`.
-
-<div id="design-documents"> </div>
+<div id="design-documents"></div>
 
 ### Backing up design documents
 
-If you backup design documents, the backup operation creates indexes on the backup destination. This practice slows down the backup process and uses unnecessary amounts of disk space. If you don't require indexes on your backup system, use a filter function with your replications to filter out design documents. You can also use this filter function to filter out other documents that are not required.
+If you backup design documents,
+the backup operation creates indexes on the backup destination.
+This practice slows down the backup process and uses unnecessary amounts of disk space.
+If you don't require indexes on your backup system,
+use a filter function with your replications to filter out design documents.
+You can also use this filter function to filter out other documents that are not required.
 
 ### Backing up multiple databases
 
-If your application uses one database per user, or allows each user to create several databases, you need to create a backup job for each new database. Make sure that your replication jobs do not begin at the same time.
+If your application uses one database per user,
+or allows each user to create several databases,
+you need to create a backup job for each new database.
+Make sure that your replication jobs do not begin at the same time.
 
 ## Need help?
 
-Replication and backups can be tricky. If you get stuck,
-check out the [replication guide](replication_guide.html),
-talk to us on IRC (#cloudant on freenode), or email <a href="mailto:support@cloudant.com">support</a>.
+Replication and backups can be tricky.
+If you get stuck,
+check out the [replication guide](/docs/guides/replication_guide.html),
+talk to us on IRC (#cloudant on freenode),
+or contact the
+[IBM Cloudant support team](mailto:support@cloudant.com){:new_window}.

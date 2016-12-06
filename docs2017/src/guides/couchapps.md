@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-06"
 
 ---
 
@@ -14,41 +14,49 @@ lastupdated: "2016-11-14"
 
 # CouchApps
 
-Cloudant can host raw file data, like images, and serve them
-over HTTP, meaning it can host all the static files necessary
-to run a website, and host them just like a web server.
+Cloudant can host raw file data,
+like images,
+and serve them over HTTP,
+meaning it can host all the static files necessary to run a website,
+and host them just like a web server.
 {:shortdesc}
 
-Because these
-files would be hosted on Cloudant, the client-side JavaScript could
-access Cloudant databases. An application built this way is said to have
-a two-tier architecture, consisting of the client -- typically a browser
--- and the database. In the CouchDB community, this is called a
-CouchApp.
+Because these files would be hosted on Cloudant,
+the client-side JavaScript could access Cloudant databases.
+An application built this way is said to have a two-tier architecture,
+consisting of the client - typically a browser - and the database.
+In the CouchDB community,
+this is called a CouchApp.
 
-Most web apps have three tiers: the client, the server, and the
-database. Placing the server inbetween the client and the database can
-help with authentication, authorization, asset management, leveraging
-third-party web APIs, providing particularly sophisticated endpoints,
-etc. This separation allows for added complexity without conflating
-concerns, so your client can worry first and last about data
-presentation, while your database can focus on storing and serving data.
+Most web apps have three tiers:
+the client,
+the server,
+and the database.
+Placing the server inbetween the client and the database can help with authentication,
+authorization,
+asset management,
+leveraging third-party web APIs,
+providing particularly sophisticated endpoints,
+etc.
+This separation allows for added complexity without conflating concerns,
+so your client can worry first and last about data presentation,
+while your database can focus on storing and serving data.
 
-CouchApps shine in their simplicity, but frequently a web app will need
-the power of a 3-tier architecture. When is each appropriate?
+CouchApps shine in their simplicity,
+but frequently a web app will need the power of a 3-tier architecture.
+When is each appropriate?
 
 ## A CouchApp is appropriate if...
 
 -   Your server would have only provided an API to Cloudant anyway.
--   You're OK using Cloudant's [cookie-based
-    authentication](../api/authentication.html).
--   You're OK using Cloudant's [\_users and
-    \_security](../api/authorization.html) databases
-    to manage users and permissions.
+-   You're OK using Cloudant's
+    [cookie-based authentication](/docs/api/authentication.html).
+-   You're OK using Cloudant's [`_users` and `_security`](/docs/api/authorization.html)
+    databases to manage users and permissions.
 -   You don't need to schedule cronjobs or other regular tasks.
 
-To get started with CouchApps, read [Managing applications on
-Cloudant](https://cloudant.com/blog/app-management/).
+To get started with CouchApps,
+read [Managing applications on Cloudant](https://cloudant.com/blog/app-management/){:new_window}.
 
 ## A 3-tier application is appropriate if...
 

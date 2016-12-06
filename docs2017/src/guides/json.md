@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-06"
 
 ---
 
@@ -15,27 +15,31 @@ lastupdated: "2016-11-14"
 # JSON
 
 The majority of requests and responses to and from Cloudant
-use the JavaScript Object Notation (JSON)
+use the [JavaScript Object Notation (JSON)](https://en.wikipedia.org/wiki/JSON){:new_window}
 for formatting the content and structure of the data and responses.
 {:shortdesc}
 
 JSON is used because it is the simplest and easiest solution for working with data using a web browser.
-This is because JSON structures can be evaluated and used as JavaScript objects within the web browser environment. JSON also integrates with the server-side JavaScript used within Cloudant. JSON documents are always UTF-8 encoded.
+This is because JSON structures can be evaluated and used as JavaScript objects within the web browser environment.
+JSON also integrates with the server-side JavaScript used within Cloudant.
+JSON documents are always UTF-8 encoded.
 
-<aside class="warning" role="complementary" aria-label="takecare">Care should be taken to ensure that:
+>   **Note**: Care should be taken to ensure that:
 
--  Your JSON structures are valid. Invalid structures cause Cloudant to return an HTTP status code of [400 (bad request)](../api/http.html#400).
--  You normalize strings in JSON documents retrieved from Cloudant, before you compare them. This is because Unicode normalization might have been applied, so that a string stored and then retrieved is not identical on a binary level.
-
-</aside>
+-   Your JSON structures are valid.
+    Invalid structures cause Cloudant to return an HTTP status code of [400 (bad request)](/docs/api/http.html#400).
+-   You normalize strings in JSON documents retrieved from Cloudant,
+    before you compare them.
+    This is because Unicode normalization might have been applied,
+    so that a string stored and then retrieved is not identical on a binary level.
 
 JSON supports the same basic types as supported by JavaScript:
 
-- [Numbers](#numbers)
-- [Strings](#strings)
-- [Booleans](#booleans)
-- [Arrays](#arrays)
-- [Objects](#objects)
+-   [Numbers](#numbers)
+-   [Strings](#strings)
+-   [Booleans](#booleans)
+-   [Arrays](#arrays)
+-   [Objects](#objects)
 
 ## Numbers
 
