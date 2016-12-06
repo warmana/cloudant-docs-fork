@@ -212,7 +212,7 @@ Assuming we have a design document in JSON format, stored in a file, we can then
 
 The script coordinates the 'move and switch' procedure, waiting until the view is built before returning. If the incoming design document is the same as the incumbent one, then the script returns almost immediately.
 
-The source code for the script is available here: [https://github.com/glynnbird/couchmigrate](https://github.com/glynnbird/couchmigrate) .
+The source code for the script is available here: [https://github.com/glynnbird/couchmigrate](https://github.com/glynnbird/couchmigrate){:new_window}.
 
 <div id="stale"></div>
 
@@ -233,3 +233,8 @@ Adding "`stale=ok`" or "`stale=update_after`" can be a good way getting answers 
 **A word of caution:** The default behaviour distributes load evenly across nodes in the Cloudant cluster. If you use the alternative `stale=ok` or `stale=update_after` options, this might favour a subset of cluster nodes, in order to return consistent results from across the eventually consistent set. This means that the '`stale`' parameter isn't a perfect solution for all use-cases. However, it can be useful for providing timely responses on fast-changing data sets if your application is happy to accept stale results. If the rate of change of your data is small, adding "`stale=ok`" or "`stale=update_after`" will not bring a performance benefit, and might unevenly distribute the load on larger clusters.
 
 Avoid using `stale=ok` or `stale=update_after` whenever possible. The reason is that the default behavior provides the freshest data, and distributes data within the cluster. If it is possible to make a client app aware that there is a large data processing task is in progress (during a regular bulk data update, for example), then the app could switch to `stale=ok` temporarily during these times, then revert to the default behaviour afterwards.
+
+**Note** The `stale` option is still available,
+but the more useful options `stable` and `update` are available and should be used instead.
+For more details,
+see [Accessing a stale view](/docs/api/using_views.html#accessing-a-stale-view).
