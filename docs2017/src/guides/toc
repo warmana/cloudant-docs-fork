@@ -1,6 +1,7 @@
 index.md
 json.md
 acurl.md
+model_data.md
 replication_guide.md
 managing_tasks.md
 mvcc.md

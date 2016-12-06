@@ -1,34 +1,21 @@
 from json import load
 import csv
 
-linkDict = {}
+linkArray = []
 outputLine = ""
-used = False
 wherePresent = ""
 
-def testDatabase(dbname, key, apiname):
+def outputDatabase(dbName, docLink, default):
     global outputLine
-    global used
     global wherePresent
-    shortName = dbname.replace(' ', '')
-    if (linkDict.has_key(key + apiname)):
-        if (dbname in wherePresent):
-            used = True
-            docLink = linkDict[key + apiname]
-            if (docLink != ""):
-                outputLine += "[![small" + shortName + "](images/small" + shortName + ".png)](" + docLink + "){:new_window} | "
-            else:
-                outputLine += "![small" + shortName + "](images/small" + shortName + ".png) | "
+    if (dbName in wherePresent):
+        shortName = dbName.replace(' ', '')
+        if (docLink != ""):
+            outputLine += "[![small" + shortName + "](images/small" + shortName + ".png)](" + docLink + "){:new_window} | "
+        else:
+            outputLine += "[![small" + shortName + "](images/small" + shortName + ".png)](" + default + "){:new_window} | "
     else:
-        outputLine += "![small" + shortName + "](images/small" + shortName + ".png) | "
-
-with open('APIlinks.csv', 'rb') as apiLinks:
-    thedata = csv.DictReader(apiLinks, delimiter=',')
-    for row in thedata:
-        # print(row['Endpoint']+"\t"+row['Method']+"\t"+row['Cloudant']+"\t"+row['Couch20']+"\t"+row['Couch16'])
-        linkDict[row['Endpoint']+row['Method']+'Cloudant'] = row['Cloudant']
-        linkDict[row['Endpoint']+row['Method']+'Couch20']  = row['Couch20']
-        linkDict[row['Endpoint']+row['Method']+'Couch16']  = row['Couch16']
+        outputLine += " | "
 
 with open('cloudant-couchdb-api-ref.json') as json_data_file:
     data = load(json_data_file)
@@ -37,14 +24,20 @@ print("Endpoint | Method | Cloudant | CouchDB 2.0 | CouchDB 1.6 | Summary | Note
 print("---------|--------|----------|-------------|-------------|---------|------")
 
 for row in data:
-    linkDictKey = row["endpoint"] + row["method"]
+    # linkDictKey = row["endpoint"] + row["method"]
+    linkArray = row["links"]
+    linkArray.append("")
+    linkArray.append("")
+    linkArray.append("")
     outputLine = row["endpoint"] + " | "
     outputLine += row["method"] + " | "
     wherePresent = row['database']
-    used = False
-    testDatabase("Cloudant", linkDictKey, "Cloudant")
-    testDatabase("CouchDB 2.0", linkDictKey, "Couch20")
-    testDatabase("CouchDB 1.6", linkDictKey, "Couch16")
+    outputDatabase("Cloudant", linkArray[0], "http://docs.cloudant.com/")
+    outputDatabase("CouchDB 2.0", linkArray[2], "http://docs.couchdb.org/en/2.0.0/")
+    outputDatabase("CouchDB 1.6", linkArray[1], "http://docs.couchdb.org/en/1.6.1/")
+    # testDatabase("Cloudant", linkDictKey, "Cloudant")
+    # testDatabase("CouchDB 2.0", linkDictKey, "Couch20")
+    # testDatabase("CouchDB 1.6", linkDictKey, "Couch16")
     outputLine += row['summary'] + " | "
     if (row['comment'] != ""):
         outputLine += row['comment']
