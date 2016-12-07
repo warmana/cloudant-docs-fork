@@ -83,6 +83,7 @@ Field Name | Required | Description
 `doc_ids` | no | Array of document IDs; if given, only these documents are replicated.
 `filter` | no | Name of a [filter function](/docs/api/design_documents.html#filter-functions), defined in a design document. The filter function determines which documents get replicated. Note that using the `selector` option provides performance benefits compared with using the `filter` option. You should use the `selector` option where possible.
 `proxy` | no | Proxy server URL.
+`query_params` | no | A field containing key:value pairs, for use in [filter function](/docs/api/design_documents.html#filter-functions).
 `selector` | no | Provide a simple filter to select the documents that are included in the replication. Using the `selector` option provides performance benefits compared with using the `filter` option. More information about `selector` is available [here](#selector-field).
 `since_seq` | no | Sequence from which the replication should start. More information about `since_seq` is available [here](#since-seq-field).
 `use_checkpoints` | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.

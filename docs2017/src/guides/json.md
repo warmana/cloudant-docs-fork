@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-06"
+lastupdated: "2016-12-07"
 
 ---
 
@@ -18,6 +18,16 @@ The majority of requests and responses to and from Cloudant
 use the [JavaScript Object Notation (JSON)](https://en.wikipedia.org/wiki/JSON){:new_window}
 for formatting the content and structure of the data and responses.
 {:shortdesc}
+
+In Cloudant databases,
+the JSON object is used to represent a variety of structures,
+including all documents in a database.
+
+Parsing JSON into a JavaScript object is supported through the `JSON.parse()` function in JavaScript,
+or through various [libraries](/docs/libraries/index.html)
+that perform the parsing of the content into a JavaScript object for you.
+[Libraries](/docs/libraries/index.html) for parsing and generating JSON
+are available for many major programming languages.
 
 JSON is used because it is the simplest and easiest solution for working with data using a web browser.
 This is because JSON structures can be evaluated and used as JavaScript objects within the web browser environment.
@@ -43,61 +53,83 @@ JSON supports the same basic types as supported by JavaScript:
 
 ## Numbers
 
-> numbers
+Numbers can be integer or floating point values.
 
-```json
+_Example of a number in JSON format:_
+
+```
 123
 ```
-
-Numbers can be integer or floating point values.
+{:screen}
 
 ## Strings
 
-> strings
+String should be enclosed by double-quotes. Strings support Unicode characters and backslash escaping.
 
-```json
+_Example of a string in JSON format:_
+
+```
 "A String"
 ```
-
-String should be enclosed by double-quotes. Strings support Unicode characters and backslash escaping.
+{:screen}
 
 ## Booleans
 
-> booleans
-
-```json
-{ "value": true}
-```
-
 A `true` or `false` value.
 
-## Arrays
-
-> arrays
-
-```json
-["one", 2, "three", [], true, {"foo": "bar"}]
-```
-
-A list of values enclosed in brackets. The values enclosed can be any valid JSON.
-
-
-## Objects
-
-> objects
+_Example of a boolean in JSON format:_
 
 ```json
 {
-   "servings" : 4,
-   "subtitle" : "Easy to make in advance, and then cook when ready",
-   "cooktime" : 60,
-   "title" : "Chicken Coriander"
+  "value": true
 }
 ```
+{:screen}
 
-A set of key/value pairs, such as an associative array, or hash. The key must be a string, but the value can be any of the supported JSON values.
+## Arrays
 
-In Cloudant databases, the JSON object is used to represent a variety of structures, including all documents in a database.
+A list of values enclosed in brackets. The values enclosed can be any valid JSON.
 
-Parsing JSON into a JavaScript object is supported through the `JSON.parse()` function in JavaScript, or through various [libraries](../libraries/index.html#-client-libraries) that perform the parsing of the content into a JavaScript object for you. [Libraries](../libraries/index.html#-client-libraries) for parsing and generating JSON are available for many major programming languages.
+_Example of an array in JSON format:_
 
+```json
+[
+    "one",
+    2,
+    "three",
+    [],
+    true,
+    {
+        "foo":
+        "bar"
+    }
+]
+```
+{:screen}
+
+_Example of an array in JSON format (linear):_
+
+```json
+[ "one", 2, "three", [], true, { "foo": "bar" } ]
+```
+{:screen}
+
+## Objects
+
+A set of key/value pairs,
+such as an associative array,
+or a hash.
+The key must be a string,
+but the value can be any of the supported JSON values.
+
+_Example of a JSON object:_
+
+```json
+{
+    "servings" : 4,
+    "subtitle" : "Easy to make in advance, and then cook when ready",
+    "cooktime" : 60,
+    "title" : "Chicken Coriander"
+}
+```
+{:screen}

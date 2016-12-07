@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-07"
 
 ---
 
@@ -26,13 +26,21 @@ including using joins between collections,
 enumerations to record the state of an object,
 and database transactions to guarantee atomic operations.
 
-Cloudant favors availability over consistency. It is a high-availability, fault-tolerant, distributed database that is eventually consistent. This gives the advantage that the customer's shopping service is always available and scalable enough to cope with multiple users making purchases at the same time. This means that your application can utilize Cloudant's strengths and not treat it like a relational database.
+Cloudant favors availability over consistency.
+It is a high-availability,
+fault-tolerant,
+distributed database that is eventually consistent.
+This gives the advantage that the customer's shopping service is always available and scalable enough
+to cope with multiple users making purchases at the same time.
+This means that your application can utilize Cloudant's strengths and not treat it like a relational database.
 
-This example will demonstrate how to build an e-commerce system and take advantage of Cloudant's strengths by using concepts that are applicable to many other domains.
+This example demonstrates how to build an e-commerce system and take advantage of Cloudant's strengths
+by using concepts that are applicable to many other domains.
 
--	Using multiple documents to represent the state of a purchase, rather than frequently updating a single document.
--	Storing copies of related objects in order instead of joining to another collection.
--	Creating views to collate documents by `order_id` to reflect the current state of a purchase.
+-   Using multiple documents to represent the state of a purchase,
+    rather than frequently updating a single document.
+-   Storing copies of related objects in order instead of joining to another collection.
+-   Creating views to collate documents by `order_id` to reflect the current state of a purchase.
  
  
 > Example shopping app's documents
