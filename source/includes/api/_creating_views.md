@@ -197,53 +197,6 @@ For performance reasons, a few simple reduce functions are built in. Whenever po
 
 By feeding the results of `reduce` functions back into the `reduce` function, MapReduce is able to split up the analysis of huge datasets into discrete, parallelized tasks, which can be completed much faster.
 
-### Dbcopy
-
-If the `dbcopy` field of a view is set, the view contents will be written to a database of that name. If `dbcopy` is set, the view must also have a reduce function. For every key/value pair created by a reduce query with `group` set to `true`, a document will be created in the dbcopy database. If the database does not exist, it will be created. The documents created have the following fields:
-
-<table>
-<colgroup>
-<col width="18%" />
-<col width="81%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Field</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>key</code></td>
-<td align="left">The key of the view result. This can be a string or an array.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>value</code></td>
-<td align="left">The value calculated by the reduce function.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>_id</code></td>
-<td align="left">The ID is a hash of the key.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>salt</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>partials</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-</tbody>
-</table>
-
-<aside class="warning" role="complementary" aria-label="dbcopyperformance">Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
-
-1.	It creates a new database, so it can use a lot of disk space.
-2.	Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
-3.	It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
-
-</aside>
-
 ### Storing the view definition
 
 > Example for `PUT`ting a view into a design document (`training`):
