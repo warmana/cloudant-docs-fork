@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -19,24 +19,26 @@ lastupdated: "2016-11-14"
 Cloudant is a hosted and fully-managed database-as-a-service (DBaaS).
 It is built from the ground up to scale globally,
 run non-stop,
-and handle a wide variety of data types like [JSON](../basics/index.html#json),
-[full-text](../api/cloudant_query.html#creating-an-index),
-and [geospatial](../api/cloudant-geo.html).
+and handle a wide variety of data types like [JSON](/docs/basics/index.html#json),
+[full-text](/docs/api/cloudant_query.html#creating-an-index),
+and [geospatial](/docs/api/cloudant-geo.html).
 Cloudant is an operational data store optimized to handle concurrent reads and writes,
 and enables high availability and data durability.
 
-It provides an [HTTP API](../basics/index.html#http-api) for working with your [JSON](../basics/index.html#json) data,
+It provides an [HTTP API](/docs/basics/index.html#http-api) for working with your [JSON](/docs/basics/index.html#json) data,
 and 24-hour operational support and maintenance.
-Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/),
-and is delivered as various multi-tenant, dedicated, and installed services.
+Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/){:new_window},
+and is delivered as various multi-tenant,
+dedicated,
+and installed services.
 
-<aside class="warning" role="complementary" aria-label="pricing">All currency values in this document are in US dollars ($).</aside>
+>   **Note**: All currency values in this document are in US dollars ($).
 
-The Cloudant DBaaS offering is available through [https://cloudant.com/](https://cloudant.com/).
-It is offered as either a [Shared Plan](index.html#shared-plan),
-or an [Enterprise (Dedicated) Plan](index.html#enterprise-plan).
+The Cloudant DBaaS offering is available through [https://cloudant.com/](https://cloudant.com/){:new_window}.
+It is offered as either a [Shared Plan](#shared-plan),
+or an [Enterprise (Dedicated) Plan](#enterprise-plan).
 
-Cloudant is also available as an [IBM Bluemix service](bluemix.html).
+Cloudant is also available as an [IBM Bluemix service](/docs/offerings/bluemix.html).
 
 ### Shared Plan
 
@@ -49,7 +51,7 @@ based on your monthly usage.
 There is no charge if your monthly usage is under $50.00 (as at August 2016).
 
 For more information,
-see the [pricing details](https://cloudant.com/product/pricing/).
+see the [pricing details](https://cloudant.com/product/pricing/){:new_window}.
 
 ### Enterprise Plan
 
@@ -61,19 +63,23 @@ This gives you assured database performance and up-time,
 using dedicated DBaaS clusters or hardware available at various hosting locations.
 
 For more information,
-see the [pricing details](https://cloudant.com/product/pricing/).
+see the [pricing details](https://cloudant.com/product/pricing/){:new_window}.
 
 ## Cloudant Local
 
-<a href="https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html" target="_blank">IBM Cloudant Data Layer Local Edition (Cloudant Local)</a> is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
+[IBM Cloudant Data Layer Local Edition (Cloudant Local)](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html){:new_window}
+is a locally installed version of the Cloudant Database-as-a-Service (DBaaS) offering.
 
 Cloudant Local provides you with the same basic capabilities as the full Cloudant single-tenant offering,
 but hosted within your own data center.
 
-A more detailed overview of Cloudant Local is <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_cloudant_local_overview.html?lang=en-us" target="_blank">available</a>.
-The <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html?lang=en" target="_blank">IBM Knowledge Center</a> provides information on many aspects of Cloudant Local,
+A more detailed overview of Cloudant Local is
+[available](http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_cloudant_local_overview.html?lang=en-us){:new_window}.
+The
+[IBM Knowledge Center](http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html?lang=en){:new_window}
+provides information on many aspects of Cloudant Local,
 including:
 
-- <a href="http://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_extract_install_cloudant_local.html?lang=en" target="_blank">Installation and Configuration</a>
-- <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_maintenance_tasks_overview.html?lang=en" target="_blank">Maintenance Tasks</a>
-- <a href="http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_tuning_parameters_replication_cases.html?lang=en" target="_blank">Tuning replication parameters</a>
+-   [Installation and Configuration](http://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_extract_install_cloudant_local.html?lang=en){:new_window}.
+-   [Maintenance Tasks](http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_maintenance_tasks_overview.html?lang=en){:new_window}.
+-   [Tuning replication parameters](http://www-01.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.install.doc/topics/clinstall_tuning_parameters_replication_cases.html?lang=en){:new_window}.

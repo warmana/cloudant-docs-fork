@@ -239,43 +239,6 @@ MapReduce is able to split up the analysis of huge data sets into discrete,
 parallel tasks,
 which can be completed much faster.
 
-## Dbcopy
-
-If the `dbcopy` field of a view is set,
-the view contents are written to a database of that name.
-If `dbcopy` is set,
-the view must also have a reduce function.
-For every key/value pair created by a reduce query with `group` set to `true`,
-a document is created in the `dbcopy` database.
-If the database does not exist,
-it is created.
-
-The documents created have the following fields:
-
-Field      | Description
------------|------------
-`_id`      | The ID is a hash of the key.
-`key`      | The key of the view result. This can be a string or an array.
-`partials` | This value is an implementation detail used internally.
-`salt`     | This value is an implementation detail used internally.
-`value`    | The value calculated by the reduce function.
-
->	**Note**: Dbcopy should be used carefully,
-	since it can negatively impact the performance of a database cluster:
--	It creates a new database,
-	so it can use a lot of disk space.
--	Dbcopy can also be IO intensive,
-	and building a dbcopy target can adversely affect the rest of the cluster.
--	It can behave in some unexpected ways.
-	In particular,
-	if a design document with a dbcopy target is created,
-	and the target database has been built,
-	editing this design document so that some documents,
-	which were previously copied,
-	are no longer copied,
-	does not lead to those documents being deleted from the target database.
-	This behavior differs from that of normal views.
-
 ## Storing the view definition
 
 Each view is a Javascript function.

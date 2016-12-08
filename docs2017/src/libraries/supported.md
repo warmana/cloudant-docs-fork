@@ -77,10 +77,10 @@ npm install cloudant
 
 -   [nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant){:new_window} ([npm](https://www.npmjs.org/package/cloudant){:new_window}).
 -   [sag-js](https://github.com/sbisbee/sag-js){:new_window} which also works in the browser.
-    See [saggingcouch](http://www.saggingcouch.com/){:new_window} for more detail.
+    See [saggingcouch](https://github.com/sbisbee/saggingcouch.com){:new_window} for more detail.
 -   [nano](https://github.com/dscape/nano){:new_window} is a minimalist implementation.
 -   [restler](https://github.com/danwrong/restler){:new_window} delivers the best performance but is really barebones.
--   [cradle](http://cloudhead.io/cradle){:new_window} is a high-level client that is also available
+-   [cradle](https://github.com/flatiron/cradle){:new_window} is a high-level client that is also available
     if you absolutely need ease of use at the cost of reduced performance.
 -   [cane_passport](https://github.com/ddemichele/cane_passport){:new_window} - Cloudant Angular Node Express with Bootstrap.
 -   [express-cloudant](https://github.com/cloudant-labs/express-cloudant){:new_window} - a template for Node.js Express framework also using PouchDB and Grunt.

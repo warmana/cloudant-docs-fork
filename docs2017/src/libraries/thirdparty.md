@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -14,153 +14,163 @@ lastupdated: "2016-11-14"
 
 # Third-party client libraries
 
-<aside class="warning" role="complementary" aria-label="notmaintained2">Third-party client libraries are not maintained or supported by Cloudant.</aside>
+>   **Note**: Third-party client libraries are not maintained or supported by Cloudant.
 
 ## Third-party Mobile libraries
 
-Working with a Cloudant database: <a href="http://www.tricedesigns.com/2014/11/17/ibm-worklight-powered-native-objective-c-ios-apps/">IBM Worklight Powered Native Objective-C iOS Apps</a> with a Cloudant Adapter.
+Working with a Cloudant database:
+
+-   [IBM Worklight Powered Native Objective-C iOS Apps](http://www.tricedesigns.com/2014/11/17/ibm-worklight-powered-native-objective-c-ios-apps/){:new_window} with a Cloudant Adapter.
 
 ## C# / .NET
 
-<a href="https://github.com/danielwertheim/mycouch">MyCouch</a> is an asynchronous CouchDB and Cloudant client for .Net.
+[MyCouch](https://github.com/danielwertheim/mycouch){:new_window}
+is an asynchronous CouchDB and Cloudant client for .Net.
 
-To install the library, open up the Package manager console, and invoke:
+To install the library,
+open up the Package manager console,
+and invoke:
 
-`install-package mycouch.cloudant`
+```
+install-package mycouch.cloudant
+```
+{:screen}
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td><ul>
-<li><a href="https://github.com/danielwertheim/mycouch">MyCouch</a></li>
-<li><a href="https://github.com/soitgoes/LoveSeat">LoveSeat</a></li>
-<li><a href="https://github.com/foretagsplatsen/Divan">Divan</a></li>
-<li><a href="https://github.com/arobson/Relax">Relax</a></li>
-<li><a href="http://code.google.com/p/relax-net/">Hammock</a></li>
-<li><a href="https://github.com/hhariri/EasyCouchDB">EasyCouchDB</a></li>
-<li><a href="http://code.google.com/p/skitsanoswdk/source/browse/#svn%2Ftrunk%2FWDK10%2FWDK.API.CouchDb">WDK.API.CouchDB</a> from <a href="http://kanapeside.com/">Kanapes IDE</a>.</li>
-</td>
-<td>
-<ul><li><a href="https://github.com/cloudant/haengematte/tree/master/c%23">CRUD</a></li></ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
+
+-   [MyCouch](https://github.com/danielwertheim/mycouch){:new_window}.
+-   [LoveSeat](https://github.com/soitgoes/LoveSeat){:new_window}.
+-   [Divan](https://github.com/foretagsplatsen/Divan){:new_window}.
+-   [Relax](https://github.com/arobson/Relax){:new_window}.
+-   [Hammock](http://code.google.com/p/relax-net/){:new_window}.
+-   [EasyCouchDB](https://github.com/hhariri/EasyCouchDB){:new_window}.
+-   `WDK.API.CouchDB` from [Kanapes IDE](http://kanapeside.com/){:new_window}.
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/c%23){:new_window}.
 
 ## PHP
 
-[Sag](http://www.saggingcouch.com/) is PHP's CouchDB and Cloudant client. [Sag.js](https://github.com/sbisbee/sag-js) is Sag's JavaScript counterpart.
+[Sag](https://github.com/sbisbee/sag){:new_window} is PHP's CouchDB and Cloudant client.
+[Sag.js](https://github.com/sbisbee/sag-js){:new_window} is Sag's JavaScript counterpart.
 
-To install, download sag from [http://www.saggingcouch.com/download.php](http://www.saggingcouch.com/download.php) then include the library in your application:
+To install,
+download `sag` from [https://github.com/sbisbee/sag](https://github.com/sbisbee/sag){:new_window},
+then include the library in your application:
 
-`require_once('./src/Sag.php');`
+```
+require_once('./src/Sag.php');
+```
+{:screen}
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td>
-<ul>
-<li><a href="http://www.saggingcouch.com/">sag</a></li>
-<li><a href="https://github.com/doctrine/couchdb-client">Doctrine CouchDB Client</a></li>
-<li><a href="https://github.com/dready92/PHP-on-Couch">PHP-on-Couch</a></li>
-</ul>
-</td>
-<td>
-<ul>
-<li><a href="https://github.com/cloudant/haengematte/tree/master/php">CRUD</a></li>
-</ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
+
+-   [sag](https://github.com/sbisbee/sag){:new_window}.
+-   [Doctrine CouchDB Client](https://github.com/doctrine/couchdb-client){:new_window}.
+-   [PHP-on-Couch](https://github.com/dready92/PHP-on-Couch){:new_window}.
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/php){:new_window}.
 
 ## JavaScript
 
-<a href="http://pouchdb.com/">PouchDB</a> is a JavaScript database that can sync with Cloudant, meaning you can make your apps offline-ready just by using PouchDB. For more info, see [our blog post](https://cloudant.com/blog/pouchdb) on PouchDB.
+[PouchDB](http://pouchdb.com/){:new_window} is a JavaScript database that can sync with Cloudant,
+meaning you can make your apps offline-ready just by using PouchDB.
+For more info,
+see [our blog post](https://cloudant.com/blog/pouchdb){:new_window} on PouchDB.
 
-To obtain PouchDB, and for setup details, refer to <a href="http://pouchdb.com/">PouchDB</a>.
+To obtain PouchDB,
+and for setup details,
+refer to [PouchDB](http://pouchdb.com/){:new_window}.
 
-<aside class="notice" role="complementary" aria-label="nodejs">PouchDB is also available for Node.js: `npm install pouchdb`</aside>
+>   **Note**: PouchDB is also available for Node.js: `npm install pouchdb`.
 
-<aside class="notice" role="complementary" aria-label="bower">PouchDB can also be installed with Bower: `bower install pouchdb`</aside>
+>   **Note**: PouchDB can also be installed with Bower: `bower install pouchdb`.
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td><ul>
-<li><a href="https://github.com/cloudant-labs/backbone.cloudant">Backbone.cloudant</a> See the <a href="https://cloudant.com/blog/backbone-and-cloudant/">blog post</a> for more information.</li>
-<li><a href="http://www.saggingcouch.com/jsdocs.php">sag.js</a></li>
-<li><a href="http://pouchdb.com/">PouchDB</a> - JavaScript database for browser, with offline synchronization.</li>
-</ul>
-</td>
-<td>
-<ul>
-<li><a href="https://github.com/cloudant/haengematte/tree/master/javascript-jquery">CRUD</a> using jQuery.</li>
-<li><a href="https://github.com/michellephung/CSVtoCloudant">CSVtoCloudant</a> - UI for importing .csv files into Cloudant. The app can also be accessed <a href="https://michellephung.github.io/CSVtoCloudant/">here</a>.</li>
-<li><a href="https://github.com/Mango-information-systems/csv2couchdb">csv2couchdb</a> - UI from Mango Systems to import .csv files to CouchDB/Cloudant.</li>
-<li><a href="https://github.com/millayr/songblog">songblog</a> - example app using JQuery.</li>
-<li><a href="http://pouchdb.com/getting-started.html">PouchDB Getting Started Guide</a> - example Todo application that syncs from browser to Cloudant or CouchDB.</li>
-<li><a href="https://github.com/rajrsingh/locationtracker">locationtracker</a> - example app to record and map location using PouchDB, CouchApp, and Cloudant.</li>
-</ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
+
+-   [Backbone.cloudant](https://github.com/cloudant-labs/backbone.cloudant){:new_window}.
+    See the [blog post](https://cloudant.com/blog/backbone-and-cloudant/){:new_window} for more information.
+-   [sag.js](https://github.com/sbisbee/sag-js){:new_window}.
+-   [PouchDB](http://pouchdb.com/){:new_window} - JavaScript database for browser,
+    with offline synchronization.
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/javascript-jquery){:new_window} using jQuery.
+-   [CSVtoCloudant](https://github.com/michellephung/CSVtoCloudant){:new_window} -
+    UI for importing `.csv` files into Cloudant.
+    The app can also be accessed [here](https://michellephung.github.io/CSVtoCloudant/){:new_window}.
+-   [csv2couchdb](https://github.com/Mango-information-systems/csv2couchdb){:new_window} -
+    UI from Mango Systems to import `.csv` files to CouchDB/Cloudant.
+-   [songblog](https://github.com/millayr/songblog){:new_window} - example app using JQuery.
+-   [PouchDB Getting Started Guide](http://pouchdb.com/getting-started.html){:new_window} -
+    example Todo application that syncs from browser to Cloudant or CouchDB.
+-   [locationtracker](https://github.com/rajrsingh/locationtracker){:new_window} -
+    example app to record and map location using PouchDB,
+    CouchApp,
+    and Cloudant.
 
 ## Ruby
 
-[CouchRest](https://github.com/couchrest/couchrest) is a CouchDB and Cloudant client with extensions for working with Rails using [CouchRest Model](https://github.com/couchrest/couchrest_model).
+[CouchRest](https://github.com/couchrest/couchrest){:new_window} is a CouchDB and Cloudant client
+with extensions for working with Rails using [CouchRest Model](https://github.com/couchrest/couchrest_model){:new_window}.
 
-To install CouchRest, run the command:
+To install CouchRest,
+run the command:
 
-`gem install couchrest`
+```
+gem install couchrest
+```
+{:screen}
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td>
-<ul>
-<li>There are many CouchDB clients listed on <a href="https://www.ruby-toolbox.com/categories/couchdb_clients">Ruby Toolbox</a>.</li>
-</ul>
-</td>
-<td>
-<ul>
-<li><a href="https://github.com/cloudant/haengematte/tree/master/ruby">CRUD</a></li>
-</ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
 
+There are many CouchDB clients listed on
+[Ruby Toolbox](https://www.ruby-toolbox.com/categories/couchdb_clients){:new_window}.
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/ruby){:new_window}.
 
 <div id="couchdb"></div>
 
 ## Meteor
 
-<a href="https://atmospherejs.com/cloudant/couchdb">cloudant:couchdb</a> is the Cloudant library for the couchdb-meteor package. Since Apache CouchDB does not ship with Meteor or the couchdb package, you must provide a URL for Meteor to connect to and a running CouchDB or Cloudant server instance before you install Meteor. Add this package to your Meteor application:
+[cloudant:couchdb](https://atmospherejs.com/cloudant/couchdb){:new_window} is the
+Cloudant library for the `couchdb-meteor` package.
+Since Apache CouchDB does not ship with Meteor or the couchdb package,
+you must provide a URL for Meteor to connect
+to a running CouchDB or Cloudant server instance before you install Meteor.
+Add this package to your Meteor application:
 
-`meteor add cloudant:couchdb`
+```
+meteor add cloudant:couchdb
+```
+{:screen}
 
 The couchdb-meteor package provides:
 
-+ Livequery implementation and real-time updates from the database by consuming the CouchDB `_changes` feed
-+ Distributed Data Protocol (DDP) RPC endpoints that update data from clients connected locally
-+ Serialization and deserialization of updates to the DDP format
+-   Livequery implementation and real-time updates from the database by consuming the CouchDB `_changes` feed.
+-   Distributed Data Protocol (DDP) RPC endpoints that update data from clients connected locally.
+-   Serialization and deserialization of updates to the DDP format.
 
-**Note**: The JSON query syntax used by Cloudant Query, and initially developed by Cloudant, was contributed back to Apache CouchDB for version 2.0. Pre-built binaries for Apache CouchDB version 2.0 are not yet available. You can use this module with Cloudant DBaaS or Cloudant Local until the pre-built binaries are available.
+>   **Note**: The JSON query syntax used by Cloudant Query,
+    and initially developed by Cloudant,
+    was contributed back to Apache CouchDB for version 2.0.
+    Pre-built binaries for Apache CouchDB version 2.0 are not yet available.
+    You can use this module with Cloudant DBaaS or Cloudant Local until the pre-built binaries are available.
 
-To configure the Apache CouchDB or Cloudant server connection information, pass its URL as the COUCHDB_URL environment variable to the Meteor server process.
+To configure the Apache CouchDB or Cloudant server connection information,
+pass its URL as the `COUCHDB_URL` environment variable to the Meteor server process:
 
-`$export COUCHDB_URL=https://username:password@username.cloudant.com`
+```
+$ export COUCHDB_URL=https://username:password@username.cloudant.com
+```
+{:screen}
 
-See [API Reference](../api/index.html) for more information about meteor-couchdb APIs. 
+See the [API Reference](/docs/api/index.html) for more information about meteor-couchdb APIs. 
 
 
