@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12_07"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -41,7 +41,7 @@ Replication is the copying of data from a source database to a target database.
 The source and target databases need not be on the same Cloudant account,
 or even in the same data center.
 
-![replication](/docs/images/replication_guide_1.png)
+![replication](../images/replication_guide_1.png)
 
 Replication is complete when the latest version of each document in the source has made it to the destination database;
 this includes new documents,
@@ -59,18 +59,18 @@ The Cloudant Dashboard provides a convenient user-interface to trigger replicati
 Open the Replication tab of your Cloudant Dashboard and click on the New Replication button.
 Complete the simple form:
 
-![replication2](/docs/images/replication_guide_2.png)
+![replication2](../images/replication_guide_2.png)
 
 Using the form,
 define the source and target databases,
 then click "Replicate".
 
-![replication3](/docs/images/replication_guide_3.png)
+![replication3](../images/replication_guide_3.png)
 
 The status of each replication task can be seen in the "All Replications" section of the Dashboard,
 with each job changing state from "Triggered" to "Complete" as it progresses.
 
-![replication4](/docs/images/replication_guide_4.png)
+![replication4](../images/replication_guide_4.png)
 
 ## How do I run replication across different Cloudant accounts?
 
@@ -261,7 +261,7 @@ It is recommended that you [create API keys](/docs/api/authorization.html#creati
 API keys can be created and configured within the Cloudant Dashboard,
 on a per-database basis.
 
-![replication](/docs/images/replication_guide_5.png)
+![replication](../images/replication_guide_5.png)
 
 They can also be created [programmatically](/docs/api/authorization.html#creating-api-keys) using the Cloudant API.
 
@@ -274,7 +274,7 @@ the other taking data from B to A.
 Both replication processes work independently,
 with data moving seamlessly in both directions.
 
-![replication6](/docs/images/replication_guide_6.png)
+![replication6](../images/replication_guide_6.png)
 
 ## Continuous replication
 

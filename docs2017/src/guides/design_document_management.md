@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-06"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -112,7 +112,7 @@ Deleted documents are de-indexed.
 This time-saving process is known as *incremental MapReduce*,
 as shown in the following diagram:
 
-![Illustration of Incremental MapReduce](/docs/images/DesDocMan00.png)
+![Illustration of Incremental MapReduce](../images/DesDocMan00.png)
 
 It's worth remembering at this point that:
 
@@ -146,7 +146,7 @@ place their definitions in separate design documents.
     They can be altered within the same design document
     without invalidating other unchanged indexes in the same document.
 
-![Illustration of Design Document version change](/docs/images/DesDocMan02.png)
+![Illustration of Design Document version change](../images/DesDocMan02.png)
 
 ## Managing changes to a design document
 
@@ -312,7 +312,7 @@ but new records are added into the database,
 then the index is scheduled to be updated in the background.
 This is the state of the database shown in the following diagram:
 
-![Illustration of index scheduled for updating](/docs/images/DesDocMan01.png)
+![Illustration of index scheduled for updating](../images/DesDocMan01.png)
 
 When querying the view, we have three choices:
 

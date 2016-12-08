@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-15"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -181,7 +181,7 @@ CORS support is available in the Cloudant dashboard.
 
 You can update your CORS settings using the CORS tab within the dashboard:
 
-![CORS dashboard illustration](/docs/images/corsdashboard.png)
+![CORS dashboard illustration](../images/corsdashboard.png)
 
 To see the current CORS configuration,
 simply open the CORS tab in the dashboard.
