@@ -45,7 +45,7 @@ It can be used for performing analysis and creating reports for knowledge worker
 The technologies that enable data storage,
 reporting,
 and analytics have emerged in recent years as a response to the need
-to process '[Big Data](https://en.wikipedia.org/wiki/Big_data)'{:new_window}:
+to process '[Big Data](https://en.wikipedia.org/wiki/Big_data){:new_window}':
 "Big data is a term for data sets that are so large or complex
 that traditional data processing applications are inadequate."
 
@@ -217,7 +217,7 @@ you must provide the following details:
     However,
     the topic applies equally if you are using an instance of DB2.
     A tutorial is also available describing how to
-    "[Load JSON Data from Cloudant into dashDB](https://developer.ibm.com/clouddataservices/docs/dashdb/get/load-json-from-cloudant-database-in-to-dashdb/)"{:new_window},
+    [load JSON data from Cloudant into dashDB](https://developer.ibm.com/clouddataservices/docs/dashdb/get/load-json-from-cloudant-database-in-to-dashdb/){:new_window},
     and includes examples of using DB2 as the warehouse database.
 
 ## Warehouse schema

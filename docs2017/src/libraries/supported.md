@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -16,7 +16,8 @@ lastupdated: "2016-11-14"
 
 ## Mobile
 
-The Cloudant Sync library is used to store, index and query local JSON data on a mobile device.
+The Cloudant Sync library is used to store,
+index and query local JSON data on a mobile device.
 It is also used to synchronise data between many devices.
 Synchronisation is controlled by your application.
 The library also provides helper methods for finding and resolving conflicts,
@@ -24,112 +25,122 @@ both in the local device and the remote database.
 
 Two versions are available:
 
-- <a href="https://github.com/cloudant/sync-android">Cloudant Sync - Android / JavaSE</a>
-- <a href="https://github.com/cloudant/CDTDatastore">Cloudant Sync - iOS (CDTDatastore)</a>
+-   [Cloudant Sync - Android / JavaSE](https://github.com/cloudant/sync-android){:new_window}.
+-   [Cloudant Sync - iOS (CDTDatastore)](https://github.com/cloudant/CDTDatastore){:new_window}.
 
-An <a href="https://cloudant.com/product/cloudant-features/sync/">overview</a> of Cloudant Sync is available, as are details of <a href="https://cloudant.com/cloudant-sync-resources/">resources</a>.
+An [overview](https://cloudant.com/product/cloudant-features/sync/){:new_window} of Cloudant Sync is available,
+as are details of [resources](https://cloudant.com/cloudant-sync-resources/){:new_window}.
 
 ## Java
 
-[java-cloudant](https://github.com/cloudant/java-cloudant) is the official Cloudant library for Java.
+[java-cloudant](https://github.com/cloudant/java-cloudant){:new_window} is the official Cloudant library for Java.
 
 Information about installing the library by adding it as a dependency to your maven or gradle builds is available
-[here](https://github.com/cloudant/java-cloudant#installation-and-usage),
+[here](https://github.com/cloudant/java-cloudant#installation-and-usage){:new_window},
 along with details and examples of how to use the library.
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td>Supported:<ul><li><a href="https://github.com/cloudant/java-cloudant">java-cloudant</a></li></ul>
-Unsupported:<ul><li><a href="http://ektorp.org/">ektorp</a></li>
-<li><a href="http://code.google.com/p/jcouchdb/">jcouchdb</a></li>
-<li><a href="https://github.com/isterin/jrelax">jrelax</a></li>
-<li><a href="http://www.lightcouch.org/">LightCouch</a></li>
-<li><a href="https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=CloudantJavaBPTemplate&fromCatalog=true">Java Cloudant Web Starter</a> boilerplate for Bluemix.</li></ul>
-</td>
-<td><ul><li><a href="https://github.com/cloudant/haengematte/tree/master/java">CRUD</a> with HTTP and JSON libraries.</li>
-<li><a href="https://github.com/cloudant/haengematte/tree/master/java/CrudWithEktorp">CRUD</a> with ektorp library.</li>
-<li><a href="https://cloudant.com/blog/building-apps-using-java-with-cloudant-on-ibm-bluemix/">Building apps using Java with Cloudant on IBM Bluemix</a></li>
-<li><a href="http://www.ibm.com/developerworks/cloud/library/cl-multiservicegame-app/index.html?ca=drs-">Build a game app with Liberty, Cloudant, and Single Sign On</a> Bluemix example.</li>
-<li><a href="https://developer.ibm.com/bluemix/2014/10/17/building-java-ee-app-ibm-bluemix-using-watson-cloudant/">Building a Java EE app on IBM Bluemix Using Watson and Cloudant</a> Bluemix example along with <a href="https://www.youtube.com/watch?feature=youtu.be&v=9AFMY6m0LIU&app=desktop">YouTube video</a>.</li></ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
+
+#### Supported
+
+-   [java-cloudant](https://github.com/cloudant/java-cloudant){:new_window}.
+
+#### Unsupported
+
+-   [ektorp](http://ektorp.org/){:new_window}.
+-   [jcouchdb](http://code.google.com/p/jcouchdb/){:new_window}.
+-   [jrelax](https://github.com/isterin/jrelax){:new_window}.
+-   [LightCouch](http://www.lightcouch.org/){:new_window}.
+-   [Java Cloudant Web Starter](https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=CloudantJavaBPTemplate&fromCatalog=true){:new_window} boilerplate for Bluemix.
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/java){:new_window} with HTTP and JSON libraries.
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/java/CrudWithEktorp){:new_window} with ektorp library.
+-   [Building apps using Java with Cloudant on IBM Bluemix](https://cloudant.com/blog/building-apps-using-java-with-cloudant-on-ibm-bluemix/){:new_window}.
+-   [Build a game app with Liberty, Cloudant, and Single Sign On](http://www.ibm.com/developerworks/cloud/library/cl-multiservicegame-app/index.html?ca=drs-){:new_window} Bluemix example.
+-   [Building a Java EE app on IBM Bluemix Using Watson and Cloudant](https://developer.ibm.com/bluemix/2014/10/17/building-java-ee-app-ibm-bluemix-using-watson-cloudant/){:new_window} Bluemix example along with [YouTube video](https://www.youtube.com/watch?feature=youtu.be&v=9AFMY6m0LIU&app=desktop){:new_window}.
+
 
 ## Node.js
 
-<a href="https://github.com/cloudant/nodejs-cloudant">nodejs-cloudant</a> is the official Cloudant library for Node.js. You can install it with npm:
+[nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant){:new_window}
+is the official Cloudant library for Node.js.
+You can install it with npm:
 
-`npm install cloudant`
+```
+npm install cloudant
+```
+{:screen}
 
-<table>
-<tr>
-<th>Libraries and Frameworks</th>
-<th>Examples and Tutorials</th>
-</tr>
-<tr>
-<td>
-<ul>
-<li>
-<a href="https://github.com/cloudant/nodejs-cloudant">nodejs-cloudant</a> (<a href="https://www.npmjs.org/package/cloudant">npm</a>)</li>
-<a href="https://github.com/sbisbee/sag-js">sag-js</a> which also works in the browser. See <a href="http://www.saggingcouch.com/">saggingcouch</a> for more detail.</li>
-<li>
-<a href="https://github.com/dscape/nano">nano</a> is a minimalist implementation.</li>
-<li>
-<a href="https://github.com/danwrong/restler">restler</a> delivers the best performance but is really barebones.</li>
-<li>
-<a href="http://cloudhead.io/cradle">cradle</a> is a high-level client is also available if you absolutely need ease of use at the cost of reduced performance.</li>
-<li><a href="https://github.com/ddemichele/cane_passport">cane_passport</a> - Cloudant Angular Node Express with Bootstrap.</li>
-<li><a href="https://github.com/cloudant-labs/express-cloudant">express-cloudant</a> - a template for Node.js Express framework also using PouchDB and Grunt.</li>
-<li><a href="https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=nodejscloudantbp&fromCatalog=true">Node.js Cloudant DB Web Starter</a> - boilerplate for Bluemix.</li>
-<li><a href="https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=mobileBackendStarter&fromCatalog=true">Mobile Cloud</a> - boiler plate for Bluemix (Node.js, Security, Push, and Mobile Data/Cloudant)</li>
-</ul>
-</td>
-<td>
-<ul>
-<li><a href="https://github.com/cloudant/haengematte/tree/master/nodejs">CRUD</a></li>
-<li><a href="https://github.com/garbados/Cloudant-Uploader">Cloudant-Uploader</a> - utility to upload .csv files to Cloudant.</li>
-<li><a href="https://github.com/glynnbird/couchimport">couchimport</a> - utility to import csv or tsv files into CouchDB or Cloudant</li>
-<li><a href="http://thoughtsoncloud.com/2014/07/getting-started-ibm-bluemix-node-js/">Getting started with IBM Bluemix and Node.js</a></li>
-<li><a href="https://gigadom.wordpress.com/2014/08/15/a-cloud-medley-with-ibm-bluemix-cloudant-db-and-node-js/">A Cloud medley with IBM Bluemix, Cloudant DB and Node.js</a></li>
-<li><a href="http://www.ibm.com/developerworks/cloud/library/cl-guesstheword-app/index.html?ca=drs-">Build a simple word game app using Cloudant on Bluemix</a> - uses Node.js</li>
-<li><a href="https://www.twilio.com/blog/2012/09/building-a-real-time-sms-voting-app-part-1-node-js-couchdb.html">Building a Real-time SMS Voting App</a> - six-part series using Node.js, Twilio, and Cloudant.</li>
-<li><a href="http://msopentech.com/blog/2013/12/19/tutorial-building-multi-tier-windows-azure-web-application-use-cloudants-couchdb-service-node-js-cors-grunt-2/">Building a Multi-Tier Windows Azure Web application</a> - uses Cloudant, Node.js, CORS, and Grunt.</li>
-<li><a href="http://www.ibm.com/developerworks/library/ba-remoteservpi-app/index.html">Do it yourself: Build a remote surveillance application using Bluemix, Cloudant, and Raspberry Pi.</a></li>
-</ul>
-</td>
-</tr>
-</table>
+### Libraries and Frameworks
+
+-   [nodejs-cloudant](https://github.com/cloudant/nodejs-cloudant){:new_window} ([npm](https://www.npmjs.org/package/cloudant){:new_window}).
+-   [sag-js](https://github.com/sbisbee/sag-js){:new_window} which also works in the browser.
+    See [saggingcouch](http://www.saggingcouch.com/){:new_window} for more detail.
+-   [nano](https://github.com/dscape/nano){:new_window} is a minimalist implementation.
+-   [restler](https://github.com/danwrong/restler){:new_window} delivers the best performance but is really barebones.
+-   [cradle](http://cloudhead.io/cradle){:new_window} is a high-level client that is also available
+    if you absolutely need ease of use at the cost of reduced performance.
+-   [cane_passport](https://github.com/ddemichele/cane_passport){:new_window} - Cloudant Angular Node Express with Bootstrap.
+-   [express-cloudant](https://github.com/cloudant-labs/express-cloudant){:new_window} - a template for Node.js Express framework also using PouchDB and Grunt.
+-   [Node.js Cloudant DB Web Starter](https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=nodejscloudantbp&fromCatalog=true){:new_window} - boilerplate for Bluemix.
+-   [Mobile Cloud](https://ace.ng.bluemix.net/#/store/cloudOEPaneId=store&appTemplateGuid=mobileBackendStarter&fromCatalog=true){:new_window} - boiler plate for Bluemix (Node.js, Security, Push, and Mobile Data/Cloudant).
+
+### Examples and Tutorials
+
+-   [CRUD](https://github.com/cloudant/haengematte/tree/master/nodejs){:new_window}.
+-   [Cloudant-Uploader](https://github.com/garbados/Cloudant-Uploader){:new_window} - utility to upload `.csv` files to Cloudant.
+-   [couchimport](https://github.com/glynnbird/couchimport){:new_window} - utility to import `.csv` or `.tsv` files into CouchDB or Cloudant.
+-   [Getting started with IBM Bluemix and Node.js](http://thoughtsoncloud.com/2014/07/getting-started-ibm-bluemix-node-js/){:new_window}.
+-   [A Cloud medley with IBM Bluemix, Cloudant DB and Node.js](https://gigadom.wordpress.com/2014/08/15/a-cloud-medley-with-ibm-bluemix-cloudant-db-and-node-js/){:new_window}.
+-   [Build a simple word game app using Cloudant on Bluemix](http://www.ibm.com/developerworks/cloud/library/cl-guesstheword-app/index.html?ca=drs-){:new_window} - uses Node.js.
+-   [Building a Real-time SMS Voting App](https://www.twilio.com/blog/2012/09/building-a-real-time-sms-voting-app-part-1-node-js-couchdb.html){:new_window} - six-part series using Node.js, Twilio, and Cloudant.
+-   [Building a Multi-Tier Windows Azure Web application](http://msopentech.com/blog/2013/12/19/tutorial-building-multi-tier-windows-azure-web-application-use-cloudants-couchdb-service-node-js-cors-grunt-2/){:new_window} - uses Cloudant, Node.js, CORS, and Grunt.
+-   [Do it yourself: Build a remote surveillance application using Bluemix, Cloudant, and Raspberry Pi.](http://www.ibm.com/developerworks/library/ba-remoteservpi-app/index.html){:new_window}.
 
 ## Python
 
-A supported library for working with Cloudant using Python is available [here](https://github.com/cloudant/python-cloudant).
+A supported library for working with Cloudant using Python is
+available [here](https://github.com/cloudant/python-cloudant){:new_window}.
 
-Download the current library release [here](https://pypi.python.org/pypi/cloudant/). Learn more information about the Python language at [python.org](https://www.python.org/about/). 
+Download the current library release [here](https://pypi.python.org/pypi/cloudant/){:new_window}.
+Learn more information about the Python language at [python.org](https://www.python.org/about/){:new_window}. 
 
 ## Swift
 
-A supported library is available for working with Cloudant. The library is called SwiftCloudant, and is installed using `cocoapods`.
+A supported library is available for working with Cloudant.
+The library is called SwiftCloudant,
+and is installed using `cocoapods`.
 
 The Podfile entry is:
 
-`pod 'SwiftCloudant'`
+```
+pod 'SwiftCloudant'
+```
+{:screen}
 
-More information about SwiftCloudant, including details of installation and how to use the library to store, index, and query remote JSON data on Cloudant, is available [here](https://github.com/cloudant/swift-cloudant).
+More information about SwiftCloudant,
+including details of installation and how to use the library to store,
+index,
+and query remote JSON data on Cloudant,
+is available [here](https://github.com/cloudant/swift-cloudant){:new_window}.
 
-The library is an early release version. As such, it does not currently have complete Cloudant API coverage. 
+The library is an early release version.
+As such,
+it does not currently have complete Cloudant API coverage. 
 
-<aside class="warning" role="complementary" aria-label="betaonly0">SwiftCloudant is not supported on iOS, and you cannot call it from Objective-C.</aside>
+>   **Note**: SwiftCloudant is not supported on iOS,
+    and you cannot call it from Objective-C.
 
 ## Apache Spark
 
-[spark-cloudant](https://github.com/cloudant-labs/spark-cloudant) is the official Cloudant library for Apache Spark.
+[spark-cloudant](https://github.com/cloudant-labs/spark-cloudant){:new_window}
+is the official Cloudant library for Apache Spark.
 
-The spark-cloudant library is already loaded into the [IBM Bluemix Apache Spark-as-a-Service](https://console.ng.bluemix.net/catalog/services/apache-spark/) offering.
+The spark-cloudant library is already loaded into the
+[IBM Bluemix Apache Spark-as-a-Service](https://console.ng.bluemix.net/catalog/services/apache-spark/){:new_window} offering.
 It can be used with any stand-alone Spark cluster.
 
-See the [project information](https://github.com/cloudant-labs/spark-cloudant)
-and [Spark Packages](https://spark-packages.org/package/cloudant-labs/spark-cloudant) for more details.
+See the [project information](https://github.com/cloudant-labs/spark-cloudant){:new_window}
+and [Spark Packages](https://spark-packages.org/package/cloudant-labs/spark-cloudant){:new_window} for more details.

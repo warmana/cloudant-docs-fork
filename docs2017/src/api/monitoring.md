@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-21"
+lastupdated: "2016-12-08"
 
 ---
 
@@ -68,7 +68,18 @@ Field        | Meaning
 -------------|--------
 `ADMIN_USER` | The account name. The account must have administrative privileges.
 `CLUSTER`    | The cluster you are interested in.
+`DURATION`   | Specifies the duration of the desired time series query. Select from one of the following time intervals: `["5min", "30min", "1h", "12h", "24h", "1d", "3d", "7d", "1w", "1m", "3m", "6m", "12m", "1y"]`. `DURATION` must be paired with either the `START` or `END` request.
+`END`        | UTC timestamp in ISO-8601 or integer seconds where epoch format specifies the end point of a time series query that is mutually exclusive with `START`.
 `END_POINT`  | The [aspect](#monitoring-endpoints) of the cluster you want to monitor.
+`START`      | UTC timestamp in ISO-8601 or integer seconds where epoch format specifies the starting point of a time series query that is mutually exclusive with `END`.
+
+Several of the fields have default values:
+
+Field      | Default value
+-----------|--------------
+`DURATION` | 5 minutes.
+`END`      | No default value.
+`START`    | The current time.
 
 ### Results format
 
@@ -85,8 +96,17 @@ sumSeries(net.cloudant.mycustomer001.db*.df.srv.used)
 ```
 {:screen}
 
-The information in the results consists of cluster-level data from the last five minutes,
-recorded at 15 second intervals. 
+The results include cluster-level data.
+
+>   **Note**: Cloudant stores the queried data at the following resolutions:
+
+-   10 seconds for the past 24 hours.
+-   1 minute for the past 7 days.
+-   1 hour for the past 2 years.
+
+>   As a result,
+    and to ensure that Cloudant always stores the higher resolution interval length,
+    deltas on the boundary of these resolutions are trimmed by one interval's length.
 
 ### With `format=json` (default)
 
@@ -188,38 +208,31 @@ _Example response, listing the available monitoring end points:_
 
 ```json
 {
-	"targets": [
-		"rps",
-		"kv_emits",
-		"rate/status_code",
-		"rate/verb",
-		"disk_use",
-		"node_peak_cpu",
-		"run_queue",
-		"uptime",
-		"map_doc_v2",
-		"memory",
-		"node_disk_free_srv",
-		"map_doc",
-		"smoosh_channels/slack_dbs",
-		"smoosh_channels/upgrade_dbs",
-		"smoosh_channels/ratio_dbs",
-		"smoosh_channels/ratio_views",
-		"smoosh_channels/slack_views",
-		"smoosh_channels/upgrade_views",
-		"wps",
-		"rps_v2",
-		"rate_v2/status_code",
-		"rate_v2/verb",
-		"os_proc_count",
-		"response_time",
-		"wps_v2",
-		"kv_emits_v2",
-		"disk_use_v2",
-		"response_time_v2",
-		"node_disk_use_srv",
-		"process_count"
-	]
+    "targets": [
+        "node_disk_free_srv",
+        "rps",
+        "kv_emits",
+        "smoosh_channels/slack_dbs",
+        "smoosh_channels/upgrade_dbs",
+        "smoosh_channels/ratio_dbs",
+        "smoosh_channels/ratio_views",
+        "smoosh_channels/slack_views",
+        "smoosh_channels/upgrade_views",
+        "uptime",
+        "map_doc",
+        "wps",
+        "node_peak_cpu",
+        "rate/status_code",
+        "rate/verb",
+        "disk_use",
+        "node_mean_cpu",
+        "memory",
+        "os_proc_count",
+        "run_queue",
+        "node_disk_use_srv",
+        "process_count",
+        "response_time"
+    ]
 }
 ```
 {:screen}
@@ -286,8 +299,7 @@ _Example results (abbreviated) from a `disk_use` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
@@ -330,8 +342,7 @@ _Example results (abbreviated) from a `kv_emits` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 
@@ -373,8 +384,7 @@ _Example results (abbreviated) from a `map_doc` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
@@ -467,8 +477,7 @@ _Example results (abbreviated) from a `rate/status_code` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
@@ -486,8 +495,8 @@ _Example results (abbreviated) from a `rate/verb` monitoring request:_
 
 ```json
 {
-	"start": 1436195497, 
-	"end": 1436195797, 
+	"start": 1436195497,
+    "end": 1436195797, 
 	"target_responses": [
 		{
 			"target": "myclustername GET", 
@@ -597,8 +606,7 @@ _Example results (abbreviated) from a `rate/verb` monitoring request:_
 				]
 			]
 		}
-	], 
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
@@ -616,10 +624,9 @@ _Example results (abbreviated) from a `response_time` monitoring request:_
 
 ```json
 {
-	"start": 1436195645,
-	"end": 1436195945,
-	"target_responses": [],
-	"granularity": "15sec"
+    "start": 1436195645,
+    "end": 1436195945,
+    "target_responses": []
 }
 ```
 {:screen}
@@ -658,8 +665,7 @@ _Example results (abbreviated) from an `rps` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
@@ -698,8 +704,7 @@ _Example results (abbreviated) from a `wps` monitoring request:_
 				]
 			]
 		}
-	],
-	"granularity": "15sec"
+	]
 }
 ```
 {:screen}
