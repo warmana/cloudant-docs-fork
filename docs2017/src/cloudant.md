@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -20,20 +20,20 @@ all intended to help you get going quickly.
 
 ## Contents
 
-*	[Cloudant Offerings](/docs/offerings/index.html): The IBM Cloudant DBaaS is available
+*	[Cloudant Offerings](offerings/index.html): The IBM Cloudant DBaaS is available
 	in a variety of offerings,
 	all described in this section.
-*	[Cloudant Basics](/docs/basics/index.html): If it’s your first time using Cloudant or NoSQL databases,
+*	[Cloudant Basics](basics/index.html): If it’s your first time using Cloudant or NoSQL databases,
 	scan this quick overview section before you read further.
 	It tells you the basic things you need to know about IBM Cloudant.
 	The rest of the documentation assumes you know these basics.
-*	[Client Libraries](/docs/libraries/index.html): Client libraries are toolkits that
+*	[Client Libraries](libraries/index.html): Client libraries are toolkits that
 	let you develop your own applications,
 	ready to work with Cloudant databases.
-*	[Cloudant API reference](/docs/api/index.html): The API reference is a
+*	[Cloudant API reference](api/index.html): The API reference is a
 	comprehensive and living catalog of Cloudant’s capabilities.
 	You can find detailed information about the things you can do with Cloudant.
-*	[Guides](/docs/guides/index.html): These guides go into detail about
+*	[Guides](guides/index.html): These guides go into detail about
 	use cases and more complex activities and problems.
 	The guides also explore some of the important concepts behind the mechanics of a Cloudant database.
 

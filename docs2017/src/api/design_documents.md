@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-16"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -20,7 +20,7 @@ such as functions.
 The special documents are called "design documents".
 {:shortdesc}
 
-Design documents are [documents](/docs/api/document.html) that have an `_id` beginning with `_design/`.
+Design documents are [documents](document.html) that have an `_id` beginning with `_design/`.
 They can be read and updated in the same way as any other document in the database.
 Cloudant reads specific fields and values of design documents as functions.
 Design documents are used to [build indexes](#indexes), [validate updates](#update-validators), and [format query results](#list-functions).
@@ -44,7 +44,7 @@ while design documents have an `_id` indicated by `$DESIGN_ID`.
 Cloudant deletes the indexes from the previous version,
 and recreates the index from scratch.
 If you need to make changes to a design document for a larger database,
-have a look at the [Design Document Management Guide](/docs/guides/design_document_management.html#managing-changes-to-a-design-document).
+have a look at the [Design Document Management Guide](../guides/design_document_management.html#managing-changes-to-a-design-document).
 
 The structure of design document is as follows:
 
@@ -257,7 +257,7 @@ _Example response, containing the deleted document ID and revision:_
 ## Views
 
 An important use of design documents is for creating views.
-These are discussed in more detail [here](/docs/api/creating_views.html).
+These are discussed in more detail [here](creating_views.html).
 
 ## Rewrite rules
 
@@ -315,23 +315,23 @@ Rule                                                           | URL            
 All queries operate on pre-defined indexes defined in design documents.
 These indexes are:
 
-*	[Search](/docs/api/search.html)
-*	[MapReduce](/docs/api/creating_views.html)
+*	[Search](search.html)
+*	[MapReduce](creating_views.html)
 
 For example,
 to create a design document used for searching,
 you must ensure that two conditions are true:
 
 1.	You have identified the document as a design document by having an `_id` starting with `_design/`.
-2.	A [search index](/docs/api/search.html) has been created within the document
-	by [updating](/docs/api/document.html#update) the document with the appropriate field
-	or by [creating](/docs/api/document.html#create) a new document containing the search index.
+2.	A [search index](search.html) has been created within the document
+	by [updating](document.html#update) the document with the appropriate field
+	or by [creating](document.html#create) a new document containing the search index.
 
 As soon as the search index design document exists and the index has been built,
 you can make queries using it.
 
 For more information about search indexing,
-refer to the [search](/docs/api/search.html) section of this documentation.
+refer to the [search](search.html) section of this documentation.
 
 ### General notes on functions in design documents
 
@@ -346,7 +346,7 @@ you should avoid using functions that generate random numbers or return the curr
 ## List Functions
 
 Use list functions to customize the format of
-[MapReduce](/docs/api/creating_views.html#using-views) query results.
+[MapReduce](creating_views.html#using-views) query results.
 A good example of their use is when you want to access Cloudant directly from a browser,
 and need data to be returned in a different format,
 such as HTML.
@@ -380,7 +380,7 @@ It enables you to create list functions that are more dynamic,
 because they are based on additional factors such as query parameters or the user context.
 
 The values within the `req` argument are similar to the query parameters described
-[here](/docs/api/cloudant_query.html#query-parameters).
+[here](cloudant_query.html#query-parameters).
 
 _Example design document referencing a list function, expressed using JSON:_
 
@@ -475,7 +475,7 @@ Field            | Description
 `query`          | URL query parameters object. Multiple keys are not supported, therefore the last duplicate key overrides the others.
 `requested_path` | List of actual requested path section.
 `raw_path`       | Raw requested path string.
-`secObj`         | The database's [security object](/docs/api/authorization.html#viewing-permissions)
+`secObj`         | The database's [security object](authorization.html#viewing-permissions)
 `userCtx`        | Context about the currently authenticated user, specifically their `name` and `roles` within the current database.
 `uuid`           | A generated UUID.
 
@@ -490,7 +490,7 @@ such as HTML.
 >	**Note**: The result of a show function is not stored.
 This means that the function is executed every time a request is made.
 As a consequence,
-using [map functions](/docs/api/creating_views.html#a-simple-view) might be more efficient.
+using [map functions](creating_views.html#a-simple-view) might be more efficient.
 For web and mobile applications,
 consider whether any computations done in a show function would be better placed in the application tier.
 
@@ -671,7 +671,7 @@ db.atomic($DESIGN_ID, $UPDATE_HANDLER, $DOCUMENT_ID, $JSON, function (err, body)
 ## Filter Functions
 
 Filter functions are design documents that enable you to filter
-the [changes feed](/docs/api/database.html#get-changes).
+the [changes feed](database.html#get-changes).
 They work by applying tests to each of the objects included in the changes feed.
 
 If any of the function tests fail,
@@ -681,7 +681,7 @@ the change remains in the feed.
 This means that filter functions let you 'remove' or 'ignore' changes that you do not want to monitor.
 
 >	**Note**: Filter functions can also be used to modify
-a [replication task](/docs/api/advanced_replication.html#filtered-replication).
+a [replication task](advanced_replication.html#filtered-replication).
 
 Filter functions require two arguments: `doc` and [`req`](#req).
 
@@ -794,7 +794,7 @@ Argument  | Purpose
 ----------|--------
 `newDoc`  | The version of the document passed in the request.
 `oldDoc`  | The version of the document currently in the database, or `null` if there is none.
-`secObj`  | The [security object](/docs/api/authorization.html#viewing-permissions) for the database.
+`secObj`  | The [security object](authorization.html#viewing-permissions) for the database.
 `userCtx` | Context regardingthe currently authenticated user, such as `name` and `roles`.
 
 >	**Note**: Update validators do not apply when a design document is updated by an admin user.

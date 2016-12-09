@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -14,7 +14,7 @@ lastupdated: "2016-11-14"
 
 # Authorization
 
-When you have [authenticated](/docs/api/authentication.html),
+When you have [authenticated](authentication.html),
 the next test is to decide whether you are permitted to perform certain tasks.
 This is called authorization.
 {:shortdesc}

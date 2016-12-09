@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -117,7 +117,7 @@ documents with a given tag.
 
 In Cloudant, you'd store tags in a list in each document. You would then use a view to get the 
 documents with a given tag by 
-[emitting each tag as a key in your view's map function](/docs/api/creating_views.html). 
+[emitting each tag as a key in your view's map function](../api/creating_views.html). 
 Querying the view for a given key will then provide all the documents with that tag.
 
 ## Why this helps

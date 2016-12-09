@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -200,7 +200,7 @@ view results from a set of shards other than the system-defined set of shards
 that normally respond to your view requests.
 The default value is `true`,
 meaning that the results returned are from your normal (stable) set of shards,
-helping to reduce the likelihood of [eventual consistency](/docs/guides/cap_theorem.html) issues.
+helping to reduce the likelihood of [eventual consistency](../guides/cap_theorem.html) issues.
 
 The `update` option allows you to indicate whether you are prepared to accept
 view results without waiting for the view to be updated.

@@ -3,7 +3,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-22"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -81,9 +81,9 @@ Field Name | Required | Description
 `continuous` | no | Continuously syncs state from the `source` to the `target`, only stopping when deleted.
 `create_target` | no | A value of `true` tells the replicator to create the `target` database if it does not exist.
 `doc_ids` | no | Array of document IDs; if given, only these documents are replicated.
-`filter` | no | Name of a [filter function](/docs/api/design_documents.html#filter-functions), defined in a design document. The filter function determines which documents get replicated. Note that using the `selector` option provides performance benefits compared with using the `filter` option. You should use the `selector` option where possible.
+`filter` | no | Name of a [filter function](design_documents.html#filter-functions), defined in a design document. The filter function determines which documents get replicated. Note that using the `selector` option provides performance benefits compared with using the `filter` option. You should use the `selector` option where possible.
 `proxy` | no | Proxy server URL.
-`query_params` | no | A field containing key:value pairs, for use in [filter function](/docs/api/design_documents.html#filter-functions).
+`query_params` | no | A field containing key:value pairs, for use in [filter function](design_documents.html#filter-functions).
 `selector` | no | Provide a simple filter to select the documents that are included in the replication. Using the `selector` option provides performance benefits compared with using the `filter` option. More information about `selector` is available [here](#selector-field).
 `since_seq` | no | Sequence from which the replication should start. More information about `since_seq` is available [here](#since-seq-field).
 `use_checkpoints` | no | Indicate whether to create checkpoints. Checkpoints greatly reduce the time and resources needed for repeated replications. Setting this to `false` removes the requirement for write access to the `source` database. Defaults to `true`.
@@ -95,10 +95,10 @@ Field Name | Required | Description
 
 If you do not want to replicate the entire contents of a database,
 you can specify a simple filter in the `selector` field.
-The filter takes the form of a [Cloudant Query](/docs/api/cloudant_query.html) selector object.
+The filter takes the form of a [Cloudant Query](cloudant_query.html) selector object.
 
 Using a selector object provides performance benefits when compared with using a
-[filter function](/docs/api/design_documents.html#filter-functions).
+[filter function](design_documents.html#filter-functions).
 You should use the `selector` option where possible.
 
 
@@ -126,7 +126,7 @@ _Example `selector` object in a replication document:_
 
 
 If there is a problem with the replication request,
-an HTTP [`400`](/docs/api/http.html#400) error is returned,
+an HTTP [`400`](http.html#400) error is returned,
 including more details about the problem in the `"reason"` field of the response.
 The reason might be one of:
 
@@ -254,7 +254,7 @@ If you are sure that the replication has stalled,
 contact Cloudant support for assistance.
 
 For more details about the information provided by `_active_tasks`,
-see [Active tasks](/docs/api/active_tasks.html).
+see [Active tasks](active_tasks.html).
 
 _Example instructions for monitoring a replication, using HTTP:_
 
@@ -349,15 +349,15 @@ _Example response following active task, including single replication:_
 ### Cancelling a replication
 
 To cancel a replication,
-simply [delete its replication document](/docs/api/document.html#delete) from the `_replicator` database.
+simply [delete its replication document](document.html#delete) from the `_replicator` database.
 
-If the replication is in an [`error` state](/docs/api/advanced_replication.html#replication-status),
+If the replication is in an [`error` state](advanced_replication.html#replication-status),
 the replicator makes repeated attempts to achieve a successful replication.
 A consequence is that the replication document is updated with each attempt.
 This also changes the document revision value.
 Therefore,
 you should get the revision value immediately before deleting the document,
-otherwise you might get an [HTTP 409 "document update conflict"](/docs/api/http.html#409) response.
+otherwise you might get an [HTTP 409 "document update conflict"](http.html#409) response.
 
 _Example instructions for deleting a replication document, using HTTP:_
 
@@ -457,7 +457,7 @@ If you defined a replication by sending a request to the `/_replicate` endpoint,
 it cannot be restarted by the system if a problem occurs because the replication request does not persist.
 
 In addition,
-replications defined in the `_replicator` database are easier to [monitor](/docs/api/advanced_replication.html#replication-status).
+replications defined in the `_replicator` database are easier to [monitor](advanced_replication.html#replication-status).
 
 ## Replication Operation
 
@@ -538,11 +538,11 @@ A replication triggered by `POST`ing to `/_replicate` can be canceled
 by `POST`ing the exact same JSON object but with the additional `cancel` property set to `true`.
 
 >	**Note**: If a replication is canceled,
-the request which initiated the replication fails with [error 500 (shutdown)](/docs/api/http.html#500).
+the request which initiated the replication fails with [error 500 (shutdown)](http.html#500).
 
 The replication ID can be obtained from the original replication request if it is a continuous replication.
 Alternatively,
-the replication ID can be obtained from [`/_active_tasks`](/docs/api/active_tasks.html).
+the replication ID can be obtained from [`/_active_tasks`](active_tasks.html).
 
 _Example instructions for canceling a replication, using HTTP:_
 
@@ -727,7 +727,7 @@ In particular,
 if you requested continuous replication,
 the cancellation request must also contain the `continuous` field.
 
-Requesting cancellation of a replication that does not exist results in a [404 error](/docs/api/http.html#404).
+Requesting cancellation of a replication that does not exist results in a [404 error](http.html#404).
 
 _Example replication request to create the target database if it does not exist, and to replicate continuously:_
 
@@ -843,4 +843,4 @@ when the replicator process is restarted by Cloudant operations.
 
 The main action you can perform to maintain a replication database is to remove old documents.
 This can be done simply by determining the age of documents,
-and [deleting them](/docs/api/document.html#delete) if they are no longer required.
+and [deleting them](document.html#delete) if they are no longer required.

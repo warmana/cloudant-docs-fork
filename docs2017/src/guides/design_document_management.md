@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -29,7 +29,7 @@ non-blocking write throughput.
 -   Search Indexes are constructed using Apache Lucene to allow free-text search,
     faceting and complex ad-hoc queries
 
-Cloudant's [search indexes](/docs/api/search.html) and [MapReduce views](/docs/api/creating_views.html)
+Cloudant's [search indexes](../api/search.html) and [MapReduce views](../api/creating_views.html)
 are configured by adding Design Documents to a database.
 Design Documents are JSON documents which contain the instructions on how the view or index is to be built.
 Let's take a simple example.
@@ -52,7 +52,7 @@ _Example of a simple data document:_
 Each data document includes a name,
 a body,
 and a timestamp.
-We want to create a [MapReduce view](/docs/api/creating_views.html) to sort our documents by timestamp.
+We want to create a [MapReduce view](../api/creating_views.html) to sort our documents by timestamp.
 
 We can do this by creating a Map function,
 similar to the following example.
@@ -119,7 +119,7 @@ It's worth remembering at this point that:
 -   The construction of an index happens asynchronously.
     Cloudant confirms that our Design Document has been saved,
     but to check on the progress on the construction of our index,
-    we have to poll Cloudant's [`_active_tasks`](/docs/api/active_tasks.html) endpoint.
+    we have to poll Cloudant's [`_active_tasks`](../api/active_tasks.html) endpoint.
 -   The more data we have,
     the longer it takes before the index is ready.
 -   While the initial index build is in progress,
@@ -363,4 +363,4 @@ then revert to the default behaviour afterwards.
 >   **Note**: The `stale` option is still available,
     but the more useful options `stable` and `update` are available and should be used instead.
     For more details,
-    see [Accessing a stale view](/docs/api/using_views.html#accessing-a-stale-view).
+    see [Accessing a stale view](../api/using_views.html#accessing-a-stale-view).

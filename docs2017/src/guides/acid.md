@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -23,7 +23,7 @@ ACID is an acronym for [atomic](#atomic),
 ACID is a set of properties which guarantee that transactions with a database are processed and reported reliably.
 Strictly,
 Cloudant is AcID:
-the "c" is lowercase because Cloudant is [eventually consistent](/docs/guides/cap_theorem.html)
+the "c" is lowercase because Cloudant is [eventually consistent](cap_theorem.html)
 rather than strongly consistent.
 
 <div id="acid_atomic"></div>

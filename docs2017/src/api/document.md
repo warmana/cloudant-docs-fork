@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-18"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -28,7 +28,7 @@ or generated automatically as a
 [UUID](http://en.wikipedia.org/wiki/Universally_unique_identifier){:new_window} by Cloudant.
 
 The `_rev` field is a revision number,
-and is [essential to Cloudant's replication protocol](/docs/guides/mvcc.html).
+and is [essential to Cloudant's replication protocol](../guides/mvcc.html).
 In addition to these two mandatory fields,
 documents can generally contain any other content that can be described using JSON.
 
@@ -84,7 +84,7 @@ _Example success message (abbreviated) returned when creating a nested field wit
 ```
 {:screen}
 
-Cloudant uses an [eventually consistent](/docs/guides/cap_theorem.html#consistency) model for data.
+Cloudant uses an [eventually consistent](../guides/cap_theorem.html#consistency) model for data.
 This means that under some conditions,
 it is possible that if your application performs a document write or update,
 followed immediately by a read of the same document,
@@ -92,7 +92,7 @@ older document content is retrieved.
 In other words,
 your application would see the document content as it was *before* the write or update occurred.
 For more information about this,
-see the topic on [Consistency](/docs/guides/cap_theorem.html#consistency).
+see the topic on [Consistency](../guides/cap_theorem.html#consistency).
 
 <div id="documentCreate"></div>
 
@@ -172,7 +172,7 @@ _Example response after successfully creating a document:_
 {:screen}
 
 >	**Note**: If the write [quorum](#quorum) cannot be met when creating a document,
-a [`202` response](/docs/api/http.html#202) is returned.
+a [`202` response](http.html#202) is returned.
 
 ## Read
 
@@ -180,7 +180,7 @@ To retrieve a document,
 send a GET request to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 
 If you do not know the `_id` for a particular document,
-you can [query the database](/docs/api/database.html#get-documents) for all documents.
+you can [query the database](database.html#get-documents) for all documents.
 
 >	**Note**: Due to the distributed,
 eventually consistent nature of Cloudant,
@@ -268,7 +268,7 @@ Name                | Type | Description | Default
 ## Read Many
 
 To fetch more than one document at a time,
-[query the database](/docs/api/database.html#get-documents),
+[query the database](database.html#get-documents),
 using the `include_docs` option.
 
 ## Update
@@ -280,14 +280,14 @@ You can also use this `PUT` method to create a document,
 in which case you do not need to supply the latest `_rev` value.
 
 >	**Note**: If you fail to provide the latest `_rev` when updating an existing document,
-Cloudant responds with a [409 error](/docs/api/http.html#409).
+Cloudant responds with a [409 error](http.html#409).
 This error prevents you overwriting data changed by other processes.
-If the write [quorum](#quorum) cannot be met, a [`202` response](/docs/api/http.html#202) is returned.
+If the write [quorum](#quorum) cannot be met, a [`202` response](http.html#202) is returned.
 
 >	**Note**: Any document update can lead to a conflict,
 espescially when replicating updated documents.
 More information about avoiding and resolving conflicts is in
-the [Document Versioning and MVCC guide](/docs/guides/mvcc.html).
+the [Document Versioning and MVCC guide](../guides/mvcc.html).
 
 _Example of updating a document, using HTTP:_
 
@@ -368,10 +368,10 @@ The response contains the ID and the new revision of the document,
 or an error message if the delete failed.
 
 >	**Note**: If you fail to provide the latest `_rev`,
-Cloudant responds with a [409 error](/docs/api/http.html#409).
+Cloudant responds with a [409 error](http.html#409).
 This error prevents you overwriting data changed by other clients.
 If the write [quorum](#quorum) cannot be met,
-a [`202` response](/docs/api/http.html#202) is returned.
+a [`202` response](http.html#202) is returned.
 
 >	**Note**: Cloudant does not completely delete the specified document.
 Instead,
@@ -454,7 +454,7 @@ perform the following steps:
 
 1.	Create a new database to hold the required documents.
 	The new database is intended to hold all documents _except_ the tombstone documents.
-2.	Set up a [filtered replication](/docs/api/advanced_replication.html#filtered-replication) to
+2.	Set up a [filtered replication](advanced_replication.html#filtered-replication) to
 	replicate documents from the original database to the new database.
 	Configure the filter so that documents with the '`_deleted`' attribute are not replicated.
 3.	When replication is complete,
@@ -599,7 +599,7 @@ because the database sequence numbers are likely to have changed.
 you should avoid replicating that function to clients.
 This is to prevent the possibility of unwanted side effects as a result of having the function present on the client.
 
->	**Note**: [Cloudant Sync](/docs/libraries/supported.html#mobile) libraries do not replicate design documents,
+>	**Note**: [Cloudant Sync](../libraries/supported.html#mobile) libraries do not replicate design documents,
 so replication of `validate_doc_update` functions should not normally be a problem for Cloudant.
 However,
 other clients might replicate design documents or `validate_doc_update` functions,
@@ -774,7 +774,7 @@ _Example JSON for a bulk insert of three documents:_
 ```
 {:screen}
 
-The return code from a successful bulk insertion is [`201`](/docs/api/http.html#201),
+The return code from a successful bulk insertion is [`201`](http.html#201),
 with the content of the returned structure indicating specific success
 or other information messages on a per-document basis.
 
@@ -909,7 +909,7 @@ _Example JSON structure returned after bulk update:_
 
 ### Bulk Documents Transaction Semantics
 
-If your request receives a [`202` response](/docs/api/http.html#202),
+If your request receives a [`202` response](http.html#202),
 the only guarantee is that some of the document tasks were processed completely.
 The response body contains the list of documents successfully inserted or updated during the process.
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -100,12 +100,12 @@ Throughput provision is identified and measured as one of three kinds of events:
 3.	A query,
     which is a request made to one of the Cloudant query endpoints,
     including the following types:
-	-	Primary Index ([`_all_docs`](/docs/api/database.html#get-documents))
-	-	MapReduce View ([`_view`](/docs/api/creating_views.html#using-views))
-	-	Search Index ([`_search`](/docs/api/search.html#queries))
-	-	Geospatial Index ([`_geo`](/docs/api/cloudant-geo.html#querying-a-cloudant-geo-index))
-	-	Cloudant Query ([`_find`](/docs/api/cloudant_query.html#finding-documents-using-an-index))
-	-	Changes ([`_changes`](/docs/api/database.html#get-changes))
+	-	Primary Index ([`_all_docs`](../api/database.html#get-documents))
+	-	MapReduce View ([`_view`](../api/creating_views.html#using-views))
+	-	Search Index ([`_search`](../api/search.html#queries))
+	-	Geospatial Index ([`_geo`](../api/cloudant-geo.html#querying-a-cloudant-geo-index))
+	-	Cloudant Query ([`_find`](../api/cloudant_query.html#finding-documents-using-an-index))
+	-	Changes ([`_changes`](../api/database.html#get-changes))
 
 The measurement of throughput is a simple count of the number of events of each type,
 per second,
@@ -122,12 +122,12 @@ Subsequent lookup requests made during the sliding 1,000 millisecond period
 are rejected until the number of lookup requests in that period drops below 200 again.
 
 When a request is rejected because the number of events is exceeded,
-applications receive a [`429` Too Many Requests](/docs/api/http.html#429).
+applications receive a [`429` Too Many Requests](../api/http.html#429).
 response.
 
-Recent versions of the supported client libraries (for [Java](/docs/libraries/supported.html#java),
-[Node.js](/docs/libraries/supported.html#node-js),
-and [Python](/docs/libraries/supported.html#python) languages) have an ability to handle a `429` response.
+Recent versions of the supported client libraries (for [Java](../libraries/supported.html#java),
+[Node.js](../libraries/supported.html#node-js),
+and [Python](../libraries/supported.html#python) languages) have an ability to handle a `429` response.
 For example,
 the Java library throws a
 [`TooManyRequestsException`](http://static.javadoc.io/com.cloudant/cloudant-client/2.5.1/com/cloudant/client/org/lightcouch/TooManyRequestsException.html){:new_window}.
@@ -146,7 +146,7 @@ that you should move to a different plan configuration.
     You should check this as part of your migration verification.
 
 In summary,
-you must ensure that your application is able to handle a [`429`](/docs/api/http.html#429) response correctly.
+you must ensure that your application is able to handle a [`429`](../api/http.html#429) response correctly.
 
 #### Disk Space Included
 
@@ -233,7 +233,7 @@ You can provision accounts in multiple data centers,
 then use continuous data replication to provide HA/DR across data centers.
 
 Cloudant data is not automatically backed up.
-You can request enablement of an [incremental backup feature](/docs/guides/backup-guide.html),
+You can request enablement of an [incremental backup feature](../guides/backup-guide.html),
 or alternatively implement your own solution by using one of several possible techniques that are described
 [here](https://developer.ibm.com/clouddataservices/2016/03/22/simple-couchdb-and-cloudant-backup/){:new_window}.  
 

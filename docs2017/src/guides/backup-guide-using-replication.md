@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-06"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -36,7 +36,7 @@ a backup can preserve the state of your database at a selected time.
 ## Incremental backups
 
 If you are an Enterprise customer,
-a daily incremental backup capability is [available](/docs/guides/backup-guide.html).
+a daily incremental backup capability is [available](backup-guide.html).
 
 If you are not an Enterprise customer,
 or you prefer to create your own backups,
@@ -94,9 +94,9 @@ you must perform the following steps:
 3.  Search for the `recorded_seq` field of the first element
     in the history array found in the checkpoint document.
 4.  Start replicating to the new incremental backup database,
-    setting the [`since_seq` field](/docs/api/replication.html#the-since_seq-field)
+    setting the [`since_seq` field](../api/replication.html#the-since_seq-field)
     in the replication document to the value of
-    the [`recorded_seq` field](/docs/guides/backup-guide.html#get-the-recorded_seq-value)
+    the [`recorded_seq` field](backup-guide.html#get-the-recorded_seq-value)
     found in the previous step.
 
 ## Restoring a database
@@ -490,7 +490,7 @@ Make sure that your replication jobs do not begin at the same time.
 
 Replication and backups can be tricky.
 If you get stuck,
-check out the [replication guide](/docs/guides/replication_guide.html),
+check out the [replication guide](replication_guide.html),
 talk to us on IRC (#cloudant on freenode),
 or contact the
 [IBM Cloudant support team](mailto:support@cloudant.com){:new_window}.

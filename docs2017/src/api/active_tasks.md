@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -15,9 +15,9 @@ lastupdated: "2016-11-14"
 # Active tasks
 
 The `/_active_tasks` endpoint provides a list of the tasks running on the server.
-This is often helpful when [monitoring](/docs/api/monitoring.html) the performance of your system.
+This is often helpful when [monitoring](monitoring.html) the performance of your system.
 For more examples on using the `/_active_tasks` endpoint,
-see the [Managing tasks](/docs/guides/managing_tasks.html) guide.
+see the [Managing tasks](../guides/managing_tasks.html) guide.
 {:shortdesc}
 
 ## Retrieving a list of active tasks

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-06"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -26,7 +26,7 @@ and why it is an essential part of using Cloudant,
 we must first consider what is meant by Consistency.
 
 
-Consistency is one of the four ['ACID'](/docs/guides/acid.html) properties
+Consistency is one of the four ['ACID'](acid.html) properties
 that are necessary for transactions within a database to be processed and reported reliably.
 
 Additionally,

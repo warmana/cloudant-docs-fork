@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-07"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -120,7 +120,7 @@ longer UUIDs are used to ensure that documents are stored with their own unique 
 
 To create a unique identifier for use in your application,
 such as an `order_id`,
-call the [`GET _uuids` endpoint](/docs/api/advanced.html#-get-_uuids-) on the Cloudant API.
+call the [`GET _uuids` endpoint](../api/advanced.html#-get-_uuids-) on the Cloudant API.
 The database generates an identifier for you.
 The same endpoint can be used to generate multiple ids by adding a `count` parameter,
 for example, `/_uuids?count=10`.
@@ -183,7 +183,7 @@ function (doc) {
 ```
 {:screen}
 
-Using the built-in [`_sum` reducer](/docs/api/creating_views.html#built-in-reduce-functions)
+Using the built-in [`_sum` reducer](../api/creating_views.html#built-in-reduce-functions)
 enables you to produce output as a ledger of payment events.
 
 _Example of using the built-in `_sum` reducer, queried with `?reduce=false`:_

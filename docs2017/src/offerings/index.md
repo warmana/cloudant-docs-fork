@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -19,13 +19,13 @@ lastupdated: "2016-12-08"
 Cloudant is a hosted and fully-managed database-as-a-service (DBaaS).
 It is built from the ground up to scale globally,
 run non-stop,
-and handle a wide variety of data types like [JSON](/docs/basics/index.html#json),
-[full-text](/docs/api/cloudant_query.html#creating-an-index),
-and [geospatial](/docs/api/cloudant-geo.html).
+and handle a wide variety of data types like [JSON](../basics/index.html#json),
+[full-text](../api/cloudant_query.html#creating-an-index),
+and [geospatial](../api/cloudant-geo.html).
 Cloudant is an operational data store optimized to handle concurrent reads and writes,
 and enables high availability and data durability.
 
-It provides an [HTTP API](/docs/basics/index.html#http-api) for working with your [JSON](/docs/basics/index.html#json) data,
+It provides an [HTTP API](../basics/index.html#http-api) for working with your [JSON](../basics/index.html#json) data,
 and 24-hour operational support and maintenance.
 Cloudant is based on [Apache CouchDB](http://couchdb.apache.org/){:new_window},
 and is delivered as various multi-tenant,
@@ -38,7 +38,7 @@ The Cloudant DBaaS offering is available through [https://cloudant.com/](https:/
 It is offered as either a [Shared Plan](#shared-plan),
 or an [Enterprise (Dedicated) Plan](#enterprise-plan).
 
-Cloudant is also available as an [IBM Bluemix service](/docs/offerings/bluemix.html).
+Cloudant is also available as an [IBM Bluemix service](bluemix.html).
 
 ### Shared Plan
 

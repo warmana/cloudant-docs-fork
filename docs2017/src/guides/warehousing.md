@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -105,7 +105,7 @@ Cloudant provides a tight integration with relational data warehouses,
 giving you the benefit of this technology.
 
 IBM Cloudant has a basic warehousing capability built in,
-in the form of [MapReduce views](/docs/api/using_views.html)
+in the form of [MapReduce views](../api/using_views.html)
 that enable you to perform a range of basic analytical tasks.
 
 For more advanced warehousing tasks,
@@ -148,7 +148,7 @@ but without the cost,
 complexity,
 and risk of managing your own infrastructure.
 
-For more information, see the [IBM DB2 on Cloud documentation](https://console.ng.bluemix.net/docs/services/DB2OnCloud/index.html#DB2OnCloud){:new_window}.
+For more information, see the [IBM DB2 on Cloud documentation](https://console.ng.bluemix.net../services/DB2OnCloud/index.html#DB2OnCloud){:new_window}.
 
 ## Creating a warehouse
 
@@ -217,7 +217,7 @@ you must provide the following details:
     However,
     the topic applies equally if you are using an instance of DB2.
     A tutorial is also available describing how to
-    [load JSON data from Cloudant into dashDB](https://developer.ibm.com/clouddataservices/docs/dashdb/get/load-json-from-cloudant-database-in-to-dashdb/){:new_window},
+    [load JSON data from Cloudant into dashDB](https://developer.ibm.com/clouddataservices../dashdb/get/load-json-from-cloudant-database-in-to-dashdb/){:new_window},
     and includes examples of using DB2 as the warehouse database.
 
 ## Warehouse schema
@@ -231,7 +231,7 @@ you can choose to [customize the schema](#customizing-the-warehouse-schema) manu
 
 Once the schema is created,
 the warehouse is able to hold your data in a relational format.
-Cloudant then [replicates](/docs/api/replication.html) to perform
+Cloudant then [replicates](../api/replication.html) to perform
 an 'initial load' of the database documents into the warehouse,
 giving you a working collection of your data in the dashDB relational database.
 
@@ -273,7 +273,7 @@ see the [IBM dashDB Cloud Data Warehouse documentation](https://www.ibm.com/supp
 
 ## Keeping the data and structure fresh
 
-Data is loaded from Cloudant into dashDB using a [replication](/docs/api/replication.html) process.
+Data is loaded from Cloudant into dashDB using a [replication](../api/replication.html) process.
 This means that if your Cloudant data is updated or modified in some way,
 replication of the documents into dashDB must take place again
 to ensure your analytic tasks continue to work using the most up-to-date information.

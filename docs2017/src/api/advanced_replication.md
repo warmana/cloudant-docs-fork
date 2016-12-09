@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -19,7 +19,7 @@ This section contains details about more advanced replication concepts and tasks
 
 You might also find it helpful to review details of the underlying
 [replication protocol](http://dataprotocols.org/couchdb-replication/){:new_window},
-as well as reviewing the [Advanced Methods](/docs/api/advanced.html) material.
+as well as reviewing the [Advanced Methods](advanced.html) material.
 
 ## Replication Status
 
@@ -94,7 +94,7 @@ A continuous replication can never have a `completed` state.
 
 In any production application, security of the source and target databases is essential.
 In order for replication to proceed, authentication is necessary to access the databases.
-In addition, checkpoints for replication are [enabled by default](/docs/api/replication.html#checkpoints),
+In addition, checkpoints for replication are [enabled by default](replication.html#checkpoints),
 which means that replicating the source database requires write access.
 
 To enable authentication during replication,
@@ -119,7 +119,7 @@ include one or more filter functions in a design document on the source.
 You can then tell the replicator to use these filter functions.
 
 > **Note**: Filtering documents during replication is similar to the process of
-[filtering the `_changes` feed](/docs/api/design_documents.html#filter-functions).
+[filtering the `_changes` feed](design_documents.html#filter-functions).
 
 A filter function takes two arguments:
 
@@ -344,4 +344,4 @@ _Example of including performance options in a replication document:_
 Having large numbers of attachments on documents might cause an adverse effect on replication performance.
 
 For more information about the effect of attachments on replication performance,
-see [here](/docs/api/attachments.html#performance-considerations).
+see [here](attachments.html#performance-considerations).

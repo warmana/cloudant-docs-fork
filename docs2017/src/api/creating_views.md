@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-16"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -165,7 +165,7 @@ if keys have the form `[year, month, day]`,
 then results can be reduced to a single value or by year,
 month,
 or day.
-See [Using Views](/docs/api/using_views.html) for more information.
+See [Using Views](using_views.html) for more information.
 
 ## Reduce functions
 
@@ -246,7 +246,7 @@ Views are stored in design documents.
 So,
 to store a view,
 we simply store the function definition within a design document.
-A design document can be [created or updated](/docs/api/document.html#update)
+A design document can be [created or updated](document.html#update)
 just like any other document.
 
 To store a view definitions,

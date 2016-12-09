@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -26,13 +26,13 @@ you need data.
 The data comes from monitoring the system.
 
 Monitoring the system while it replicates can be performed using the `_active_tasks` endpoint,
-which is described in more detail [here](/docs/api/active_tasks.html).
+which is described in more detail [here](active_tasks.html).
 
 For more detailed system information,
 you make use of the cluster monitoring API.
 
 >	**Note**: The cluster monitoring API is not available for
-[IBM Cloudant Data Layer Local Edition (Cloudant Local)](/docs/offerings/index.html#cloudant-local).
+[IBM Cloudant Data Layer Local Edition (Cloudant Local)](../offerings/index.html#cloudant-local).
 
 ## Monitoring metrics overview
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-06"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -50,8 +50,8 @@ When is each appropriate?
 
 -   Your server would have only provided an API to Cloudant anyway.
 -   You're OK using Cloudant's
-    [cookie-based authentication](/docs/api/authentication.html).
--   You're OK using Cloudant's [`_users` and `_security`](/docs/api/authorization.html)
+    [cookie-based authentication](../api/authentication.html).
+-   You're OK using Cloudant's [`_users` and `_security`](../api/authorization.html)
     databases to manage users and permissions.
 -   You don't need to schedule cronjobs or other regular tasks.
 

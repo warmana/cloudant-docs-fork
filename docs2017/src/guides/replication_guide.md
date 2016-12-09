@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -153,13 +153,13 @@ _Example JSON document describing the required replication:_
 ## How does replication affect the list of changes?
 
 You can get a list of changes made to a document using
-the [`_changes` endpoint](/docs/api/database.html#get-changes).
+the [`_changes` endpoint](../api/database.html#get-changes).
 However,
 the distributed nature of Cloudant databases
 means that the response provided by the `_changes` feed
 cannot simply be a list of changes that occurred after a particular date and time.
 
-The [CAP Theorem](/docs/guides/cap_theorem.html) discussion makes it clear that
+The [CAP Theorem](cap_theorem.html) discussion makes it clear that
 Cloudant uses an 'eventually consistent' model.
 This means that if you were to ask two different replicas of a database for a document,
 at the same time,
@@ -238,7 +238,7 @@ in both the source and destination databases.
 This allows a replication task to be resumed from where it stopped,
 without having to start from the beginning.
 This feature can be switched off by supplying
-[`"use_checkpoints": false`](/docs/api/replication.html#checkpoints) when starting replication,
+[`"use_checkpoints": false`](../api/replication.html#checkpoints) when starting replication,
 but it is helpful to leave the feature on if your replication is to resume efficiently from its last known position.
 
 ## Permissions
@@ -253,7 +253,7 @@ It is sufficient if the credentials are able to:
 Cloudant has a special `_replicator` user permission.
 This allows checkpoint documents to be created,
 but does not allow the creation of ordinary documents in a database.
-It is recommended that you [create API keys](/docs/api/authorization.html#creating-api-keys) that have:
+It is recommended that you [create API keys](../api/authorization.html#creating-api-keys) that have:
 
 -   `_reader` and `_replicator` access at the source side.
 -   `_writer` access at the destination side.
@@ -263,7 +263,7 @@ on a per-database basis.
 
 ![replication](../images/replication_guide_5.png)
 
-They can also be created [programmatically](/docs/api/authorization.html#creating-api-keys) using the Cloudant API.
+They can also be created [programmatically](../api/authorization.html#creating-api-keys) using the Cloudant API.
 
 ## Two-way replication
 
@@ -286,7 +286,7 @@ All subsequent changes to the source database are transmitted to the target data
 
 Continuous replication is triggered by clicking the
 "Make this replication continuous" tick box when defining a replication task in the Cloudant Dashboard,
-or by setting the [`"continuous"`](/docs/api/replication.html#checkpoints) flag in the Cloudant API.
+or by setting the [`"continuous"`](../api/replication.html#checkpoints) flag in the Cloudant API.
 
 Two-way replication can be continuous in one or both of the directions,
 by setting the continuous flag accordingly.
@@ -333,7 +333,7 @@ for example if the authentication credentials were invalid,
 then the error state is recorded in the `_replicator` document.
 In addition,
 the Cloudant account's `/_active_tasks` endpoint can be used to see replication work as it progresses.
-More details are available [here](/docs/api/active_tasks.html).
+More details are available [here](../api/active_tasks.html).
 
 _Example of monitoring a replication process, using HTTP:_
 
@@ -470,8 +470,8 @@ Examples include:
 
 Cloudant’s filtered replication allows you to define a Javascript function which uses the return value
 to determine whether each document in a database is to be filtered or not.
-[Filter functions](/docs/api/design_documents.html#filter-functions) are stored
-in [design documents](/docs/api/design_documents.html).
+[Filter functions](../api/design_documents.html#filter-functions) are stored
+in [design documents](../api/design_documents.html).
 
 The following example is a filter function that only allows non-deleted documents to be replicated.
 
@@ -535,7 +535,7 @@ _Example of a JSON document defining a filtered replication:_
 Cloudant publishes the adds,
 edits,
 and deletes affecting a database through a single HTTP feed from
-the [`_changes` endpoint](/docs/api/database.html#get-changes).
+the [`_changes` endpoint](../api/database.html#get-changes).
 This feed can be consumed by your application to trigger events.
 You can access the feed using HTTP or `curl`,
 as shown in the examples.
@@ -587,7 +587,7 @@ _Example `_changes` feed:_
 <div id="changes-feed-since"></div>
 
 To join the changes feed from a known position,
-simply pass a [`since` argument](/docs/api/database.html#the-since-argument) with the sequence number you want to start from.
+simply pass a [`since` argument](../api/database.html#the-since-argument) with the sequence number you want to start from.
 
 _Example (abbreviated) of supplying the `since` to join a `_changes` feed at a known position, using HTTP:_
 
@@ -639,7 +639,7 @@ feed.follow();
 
 Accessing the `_changes` data programmatically is straightforward.
 For example,
-the [Cloudant Node.js library](/docs/libraries/supported.html#node-js)
+the [Cloudant Node.js library](../libraries/supported.html#node-js)
 enables you to follow changes with a few lines of code.
 
 Example use cases might be:
@@ -687,7 +687,7 @@ the credentials supplied must have:
 *   `_reader` and `_replicator` rights on database "a".
 *   `_writer` rights on database "b".
 
-API keys are generated in the Cloudant Dashboard or [through the API](/docs/api/authorization.html#creating-api-keys).
+API keys are generated in the Cloudant Dashboard or [through the API](../api/authorization.html#creating-api-keys).
 Each key can be given individual rights relating to a specific Cloudant database.
 Cloudant must be able to write its checkpoint documents at the "read" end of replication,
 otherwise no state is saved and replication cannot resume from where it stopped.
@@ -774,7 +774,7 @@ Alternatively,
 you might require cluster performance to take priority,
 with replication being treated as a background process.
 
-There are advanced replication API options [available](/docs/api/advanced_replication.html)
+There are advanced replication API options [available](../api/advanced_replication.html)
 which enable you to increase or decrease the amount of computing power used during replication.
 For example:
 
@@ -783,8 +783,8 @@ For example:
     to accommodate larger documents in smaller batches.
 *   If you have many tiny documents,
     then you might consider increasing the
-    [`worker_process`](/docs/api/advanced_replication.html#performance-related-options) and
-    [`http_connections`](/docs/api/advanced_replication.html#performance-related-options) values.
+    [`worker_process`](../api/advanced_replication.html#performance-related-options) and
+    [`http_connections`](../api/advanced_replication.html#performance-related-options) values.
 *   If you want to run replication with minimal impact,
     setting `worker_processes` and `http_connections` to 1 might be appropriate.
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-29"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -15,18 +15,18 @@ lastupdated: "2016-11-29"
 # Databases
 
 Cloudant databases contain JSON objects.
-These JSON objects are called [documents](/docs/api/document.html#documents).
+These JSON objects are called [documents](document.html#documents).
 All documents must be contained in a database.
 {:shortdesc}
 
-A guide is [available](/docs/guides/transactions.html),
+A guide is [available](../guides/transactions.html),
 providing an example of how documents for an e-commerce application might be used within a Cloudant database.
 
 A more complex database application,
 involving additional storage,
 processing,
 and analytics tasks,
-is referred to as a [warehouse](/docs/guides/warehousing.html).  
+is referred to as a [warehouse](../guides/warehousing.html).  
 Warehouses are also supported by Cloudant.
 
 ## Create
@@ -72,7 +72,7 @@ account.db.create($DATABASE, function (err, body, headers) {
 
 <div id="response"></div>
 
-If creation succeeds, you get a [201 or 202 response](/docs/api/http.html#201).
+If creation succeeds, you get a [201 or 202 response](http.html#201).
 In case of an error,
 the HTTP status code tells you what went wrong.
 
@@ -257,7 +257,7 @@ Argument        | Description                                                   
 `skip`          | Skip this number of records before starting to return the results.                              | yes      | numeric         | 0
 `startkey`      | Return records starting with the specified key.                                                 | yes      | string          |
 
->	**Note**: Using `include_docs=true` might have [performance implications](/docs/api/using_views.html#include_docs_caveat).
+>	**Note**: Using `include_docs=true` might have [performance implications](using_views.html#include_docs_caveat).
 
 >	**Note**: When using the `keys` argument,
 it might be easier to use `POST` rather than `GET` if you require a large number of strings to list the desired keys.
@@ -367,9 +367,9 @@ Argument       | Description | Supported Values | Default
 ---------------|-------------|------------------|---------
 `conflicts`    | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | boolean | false 
 `descending`   | Return the changes in sequential order. | boolean | false | 
-`doc_ids`      | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. **Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](/docs/api/advanced.html#get-/) for more information. | A JSON array of document IDs | |
+`doc_ids`      | To be used only when `filter` is set to `_doc_ids`. Filters the feed so that only changes to the specified documents are sent. **Note**: The `doc_ids` parameter only works with versions of Cloudant that are compatible with CouchDB 2.0. See [API: GET / documentation](advanced.html#get-/) for more information. | A JSON array of document IDs | |
 `feed`         | Type of feed required. For details see the [`feed` information](#the-feed-argument). | `"continuous"`, `"longpoll"`, `"normal"` | `"normal"`
-`filter`       | Name of [filter function](/docs/api/design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](/docs/api/design_documents.html). | string | no filter
+`filter`       | Name of [filter function](design_documents.html#filter-functions) to use to get updates. The filter is defined in a [design document](design_documents.html). | string | no filter
 `heartbeat`    | Time in milliseconds after which an empty line is sent during `feed=longpoll` or `feed=continuous` if there have been no changes. | any positive number | no heartbeat | 
 `include_docs` | Include the document as part of the result. | boolean | false |
 `limit`        | Maximum number of rows to return. | any non-negative number | none |  
@@ -378,7 +378,7 @@ Argument       | Description | Supported Values | Default
 `timeout`      | Number of milliseconds to wait for data before terminating the response. If the `heartbeat` setting is also supplied, it takes precedence over the `timeout` setting. | any positive number | |
 
 >	**Note**: Using `include_docs=true` might have
-	[performance implications](/docs/api/using_views.html#include_docs_caveat).
+	[performance implications](using_views.html#include_docs_caveat).
 
 _Example request to get list of changes made to documents in a database, using HTTP:_
 
@@ -423,7 +423,7 @@ _but_ you might also get changes that were made before the change indicated by t
 The reason for this,
 along with implications for applications,
 is explained in the
-[replication guide](/docs/guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
+[replication guide](../guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
 >	**Note**: It is essential that any application using the `_changes` request should be able to process correctly a list of changes that might:
 	-	Have a different order for the changes listed in the response,
@@ -500,7 +500,7 @@ _Example (abbreviated) responses from a continuous changes feed:_
 ### The `filter` argument
 
 The `filter` argument designates a pre-defined
-[filter function](/docs/api/design_documents.html#filter-functions) to apply to the changes feed.
+[filter function](design_documents.html#filter-functions) to apply to the changes feed.
 Additionally, there is a built-in filter available:
 
 -	`_design`: The `_design` filter accepts only changes to design documents.
@@ -543,7 +543,7 @@ It is very important that your application is able to deal with a given change b
 
 More information about the behavior of the `_changes` response is
 provided in the
-[replication guide](/docs/guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
+[replication guide](../guides/replication_guide.html#how-does-replication-affect-the-list-of-changes?).
 
 <div id="changes_responses"></div>
 
@@ -698,15 +698,15 @@ _Example response:_
 ## Backing up your data
 
 It is essential that you protect your data by taking good quality backups.
-An overview of backing up your data is [available](/docs/api/backup.html),
-with more detailed information in the [backup guide](/docs/guides/backup-guide.html).
+An overview of backing up your data is [available](backup.html),
+with more detailed information in the [backup guide](../guides/backup-guide.html).
 
 ## Using a different domain
 
 Virtual hosts (vhosts) are a way to make Cloudant serve data from a different domain
 than the one normally associated with your Cloudant account.
 
-More information is available [here](/docs/api/vhosts.html).
+More information is available [here](vhosts.html).
 
 ## Creating database applications
 
@@ -714,8 +714,8 @@ In addition to data stored in documents within the database,
 you could also have client-side application code - typically Javascript - in documents within the database.
 Two-tier combinations of data and client code,
 stored within a database,
-are called [CouchApps](/docs/guides/couchapps.html).
+are called [CouchApps](../guides/couchapps.html).
 
 More information about CouchApps,
 and to help you decide whether they are a good match for your application,
-is [available](/docs/guides/couchapps.html).
+is [available](../guides/couchapps.html).

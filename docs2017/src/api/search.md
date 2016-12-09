@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -21,7 +21,7 @@ allow databases to be queried using
 {:shortdesc}
 
 Search indexes are defined by an index function,
-similar to a map function in [MapReduce views](/docs/api/creating_views.html#creating-views).
+similar to a map function in [MapReduce views](creating_views.html#creating-views).
 The index function decides what data to index and store in the index.
 
 _Example design document defining a search index:_
@@ -448,7 +448,7 @@ Argument | Description | Optional | Type | Supported Values
 	the options can result in problems when attempting to
 	contact slow or unavailable replicas.
 
->	**Note**: Using `include_docs=true` might have [performance implications](/docs/api/using_views.html#include_docs_caveat).
+>	**Note**: Using `include_docs=true` might have [performance implications](using_views.html#include_docs_caveat).
 
 ### POSTing search queries
 

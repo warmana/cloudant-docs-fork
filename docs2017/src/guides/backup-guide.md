@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -29,7 +29,7 @@ please contact the [IBM Cloudant support team](mailto:support@cloudant.com){:new
 >   **Note**: The daily incremental backup capability is not applicable for
     [Cloudant Local](https://www.ibm.com/support/knowledgecenter/SSTPQH_1.0.0/com.ibm.cloudant.local.doc/SSTPQH_1.0.0_welcome.html){:new_window}.
     To back up data in Cloudant Local,
-    use [replication](/docs/api/replication.html) to make a copy of your database.
+    use [replication](../api/replication.html) to make a copy of your database.
 
 To ensure high availability,
 {{site.data.keyword.cloudant}} creates three copies of each document,
@@ -59,7 +59,7 @@ Enterprise customers can have daily incremental backups.
 
 If you are not an Enterprise customer,
 or you wish to create your own backup mechanism,
-consider [using Replication to perform backups](/docs/guides/backup-guide-using-replication.html).
+consider [using Replication to perform backups](backup-guide-using-replication.html).
 
 >   **Note**: Daily incremental backup for Enterprise customers is currently a *Beta* capability.
     It is not enabled by default.
@@ -467,7 +467,7 @@ from the most recent version held in a specific backup database:_
 
 ## How backup using incremental replication works
 
-A very simple form of backup is to [replicate](/docs/api/replication.html) the database to a dated backup database.
+A very simple form of backup is to [replicate](../api/replication.html) the database to a dated backup database.
 
 This method works and is easy to do.
 But if the database is big and you need backups for multiple points in time,
@@ -604,7 +604,7 @@ _Example of JSON file specifyin an incremental backup:_
     Currently,
     there is a limit of 50 databases enabled for backup within any one user account.
 -   The IBM Cloudant Backup facility does not currently support
-    backup or restore for [design documents](/docs/api/design_documents.html).
+    backup or restore for [design documents](../api/design_documents.html).
     If you require backups of design documents,
     you must maintain them in your preferred source control tool.
 -   Currently,

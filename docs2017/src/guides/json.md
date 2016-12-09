@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-07"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -24,9 +24,9 @@ the JSON object is used to represent a variety of structures,
 including all documents in a database.
 
 Parsing JSON into a JavaScript object is supported through the `JSON.parse()` function in JavaScript,
-or through various [libraries](/docs/libraries/index.html)
+or through various [libraries](../libraries/index.html)
 that perform the parsing of the content into a JavaScript object for you.
-[Libraries](/docs/libraries/index.html) for parsing and generating JSON
+[Libraries](../libraries/index.html) for parsing and generating JSON
 are available for many major programming languages.
 
 JSON is used because it is the simplest and easiest solution for working with data using a web browser.
@@ -37,7 +37,7 @@ JSON documents are always UTF-8 encoded.
 >   **Note**: Care should be taken to ensure that:
 
 -   Your JSON structures are valid.
-    Invalid structures cause Cloudant to return an HTTP status code of [400 (bad request)](/docs/api/http.html#400).
+    Invalid structures cause Cloudant to return an HTTP status code of [400 (bad request)](../api/http.html#400).
 -   You normalize strings in JSON documents retrieved from Cloudant,
     before you compare them.
     This is because Unicode normalization might have been applied,

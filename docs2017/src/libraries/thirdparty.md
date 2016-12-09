@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-09"
 
 ---
 
@@ -171,6 +171,6 @@ $ export COUCHDB_URL=https://username:password@username.cloudant.com
 ```
 {:screen}
 
-See the [API Reference](/docs/api/index.html) for more information about meteor-couchdb APIs. 
+See the [API Reference](../api/index.html) for more information about meteor-couchdb APIs. 
 
 
