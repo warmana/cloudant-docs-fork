@@ -148,7 +148,7 @@ but without the cost,
 complexity,
 and risk of managing your own infrastructure.
 
-For more information, see the [IBM DB2 on Cloud documentation](https://console.ng.bluemix.net../services/DB2OnCloud/index.html#DB2OnCloud){:new_window}.
+For more information, see the [IBM DB2 on Cloud documentation](https://console.ng.bluemix.net/docs/services/DB2OnCloud/index.html#DB2OnCloud){:new_window}.
 
 ## Creating a warehouse
 

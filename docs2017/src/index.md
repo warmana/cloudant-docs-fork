@@ -63,7 +63,7 @@ Click the '<code>Service Credentials</code>' link to see all the details you req
 follow these steps:
 <ol>
 <li>Install the CloudFoundry <code>cf</code> tool on your system.
-Instructions on how to do that can be found in the <a href="https://console.ng.bluemix.netcli/index.html">Bluemix CLI and dev tools guide</a>.</li>
+Instructions on how to do that can be found in the <a href="https://console.ng.bluemix.net/docs/cli/index.html">Bluemix CLI and dev tools guide</a>.</li>
 <li>Create a new service instance using the command:<br/>
 <pre><code>cf create-service</code></pre></li>
 <li>You are presented with a list of available services.
