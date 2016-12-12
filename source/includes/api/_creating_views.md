@@ -196,53 +196,6 @@ For performance reasons, a few simple reduce functions are built in. Whenever po
 
 By feeding the results of `reduce` functions back into the `reduce` function, MapReduce is able to split up the analysis of huge datasets into discrete, parallelized tasks, which can be completed much faster.
 
-### Dbcopy
-
-If the `dbcopy` field of a view is set, the view contents will be written to a database of that name. If `dbcopy` is set, the view must also have a reduce function. For every key/value pair created by a reduce query with `group` set to `true`, a document will be created in the dbcopy database. If the database does not exist, it will be created. The documents created have the following fields:
-
-<table>
-<colgroup>
-<col width="18%" />
-<col width="81%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Field</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><code>key</code></td>
-<td align="left">The key of the view result. This can be a string or an array.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>value</code></td>
-<td align="left">The value calculated by the reduce function.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>_id</code></td>
-<td align="left">The ID is a hash of the key.</td>
-</tr>
-<tr class="even">
-<td align="left"><code>salt</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>partials</code></td>
-<td align="left">This value is an implementation detail used internally.</td>
-</tr>
-</tbody>
-</table>
-
-<aside class="warning" role="complementary" aria-label="dbcopyperformance">Dbcopy should be used carefully, since it can negatively impact the performance of a database cluster.
-
-1.	It creates a new database, so it can use a lot of disk space.
-2.	Dbcopy can also be IO intensive, and building a dbcopy target can adversely affect the rest of the cluster.
-3.	It can behave in some unexpected ways. Notably, if a design document with a dbcopy target is created, and the target database has been built, editing this design document so that some documents, which were previously copied, are no longer copied, does not lead to those documents being deleted from the target database. This behavior differs from that of normal views.
-
-</aside>
-
 ### Storing the view definition
 
 > Example for `PUT`ting a view into a design document (`training`):
@@ -374,9 +327,11 @@ Argument | Description | Optional | Type | Default | Supported values
 `limit` | Limit the number of returned documents to the specified count. | yes | Numeric | |
 `reduce` | Use the reduce function. | yes | Boolean | true |
 `skip` | Skip this number of rows from the start. | yes | Numeric | 0 |
+`stable` | Prefer view results from a 'stable' set of shards. This means that the results are from a view that is less likely to be updated soon. | yes | Boolean | true | 
 `stale` | Allow the results from a stale view to be used. This makes the request return immediately, even if the view has not been completely built yet. If this parameter is not given, a response is returned only after the view has been built. | yes | String | false | `ok`: Allow stale views.<br/>`update_after`: Allow stale views, but update them immediately after the request.
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | |
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | |
+`update` | Ensure that the view has been updated before results are returned. | yes | String | `true` | `false`: Return view results before updating.<br/>`true`: Return view results after updating.<br/>`lazy`: Return the view results without waiting for an update, but update them immediately after the request.
 
 <aside class="warning" role="complementary" aria-label="includedocsperformance">Note that using `include_docs=true` might have [performance implications](creating_views.html#include_docs_caveat).</aside>
 
@@ -410,7 +365,10 @@ all three view indexes within the design document are rebuilt.</aside>
 If the database has been updated recently, there might be a delay in returning the results when the view is accessed.
 The delay is affected by the number of changes to the database, and whether the view index is not current because the database content has been modified.
 
-It is not possible to eliminate these delays, in the case of newly created databases you might reduce them by creating the view definition in the design document in your database before inserting or updating documents. This causes incremental updates to the index when the documents or inserted.
+It is not possible to eliminate these delays,
+in the case of newly created databases you might reduce them by creating the view definition
+in the design document in your database before inserting or updating documents.
+This causes incremental updates to the index when the documents or inserted.
 
 If speed of response is more important than having completely up-to-date data,
 an alternative is to allow users to access an old version of the view index.
@@ -424,13 +382,51 @@ by using an existing version of the index.
 
 ### Accessing a stale view
 
-For example, to access the existing stale view `by_recipe` in the `recipes` design document,
-you would use a request similar to:
-<code>/recipes/_design/recipes/_view/by_recipe?stale=ok</code>
+<aside class="notice" role="complementary" aria-label="staledeprecated">The earlier method of obtaining potentially older results from a view index,
+using the <code class="prettyprint">stale=ok</code> option,
+is no longer recommended.</aside>
 
-Making use of a stale view has consequences.
+If you are prepared to accept a response that is quicker,
+but might not have the most current data,
+there are two options you can use:
+
+Option   | Purpose                                                                                                                       | Default value
+---------|-------------------------------------------------------------------------------------------------------------------------------|--------------
+`stable` | Should the view results be obtained from a consistent or 'stable' set of shards? Possible values include `true`, and `false`. | `true`
+`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.               | `true`
+
+The `stable` option allows you to indicate whether you are prepared to accept
+view results from a set of shards other than the system-defined set of shards
+that normally respond to your view requests.
+The default value is `true`,
+meaning that the results returned are from your normal (stable) set of shards,
+helping to reduce the likelihood of [eventual consistency](cap_theorem.html) issues.
+
+The `update` option allows you to indicate whether you are prepared to accept
+view results without waiting for the view to be updated.
+The default value is `true`,
+meaning that the view should be updated before results are returned.
+The `lazy` value means that the results are returned before the view is updated,
+but that the view must then be updated anyway.
+
+The option combination `stable=true&update=false` corresponds to the earlier option `stale=ok`.
+The option combination `stable=true&update=lazy` corresponds to the earlier option `stale=update_after`.
+If you really want the quickest possible response,
+and are prepared to accept results that might be stale,
+or are returned from any shard combination rather than your normal (consistent) set,
+then you could use the combination: `stable=false&update=false`.
+
+Remember that using a stale view has consequences.
 In particular,
-accessing a stale view returns the current (existing) version of the data in the view index, if it exists. The current state of the view index might be different on different nodes in the cluster.
+accessing a stale view returns the current (existing) version of the data in the view index,
+if it exists,
+without waiting for an update.
+This would mean that a stale view index result might be different from different nodes in the cluster.
+
+<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively
+works to keep views up-to-date at all times.
+This means that the only time you might notice a difference when using `stable` or `update` options is when
+there is an indexing backlog.</aside>
 
 ### Sorting Returned Rows
 

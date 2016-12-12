@@ -511,22 +511,26 @@ you should be aware that:
 > Example of `POST`ing to the `_changes` endpoint
 
 ```http
-POST /$DB/_changes HTTP/1.1
+POST /$DB/_changes?filter=_selector HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
 
 ```shell
-curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes" -d @request.json
+curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes?filter=_selector" -d @request.json
 ```
 
 ```json
 {
-  "limit": 10
+  "selector": {"z" : {"$gte" : 1}}
 }
 ```
 
-Instead of `GET`, you can also use `POST` to query the changes feed. The only difference to the `GET` method is that parameters are specified in a JSON object in the request body.
+Instead of `GET`, you can also use `POST` to query the changes feed.
+The only difference if you are using `POST` _and_ you are using either of the `docs_ids` or `selector` filters,
+is that it is possible to include the `"doc_ids" : [...]` or `"selector": {...}` parts in the request body.
+All other parameters are expected to be in the query string,
+the same as using `GET`.
 
 ### Deleting a database
 
