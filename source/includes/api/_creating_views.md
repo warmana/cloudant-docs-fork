@@ -423,8 +423,7 @@ if it exists,
 without waiting for an update.
 This would mean that a stale view index result might be different from different nodes in the cluster.
 
-<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively
-works to keep views up-to-date at all times.
+<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively works to keep views up-to-date at all times.
 This means that the only time you might notice a difference when using `stable` or `update` options is when
 there is an indexing backlog.</aside>
 
