@@ -328,7 +328,7 @@ Argument | Description | Optional | Type | Default | Supported values
 `limit` | Limit the number of returned documents to the specified count. | yes | Numeric | |
 `reduce` | Use the reduce function. | yes | Boolean | true |
 `skip` | Skip this number of rows from the start. | yes | Numeric | 0 |
-`stable` | Prefer view results from a 'stable' set of shards. This means that the results are from a view that is less likely to be updated soon. | yes | Boolean | true | 
+`stable` | Prefer view results from a 'stable' set of shards. This means that the results are from a view that is less likely to be updated soon. | yes | Boolean | false | 
 `stale` | Allow the results from a stale view to be used. This makes the request return immediately, even if the view has not been completely built yet. If this parameter is not given, a response is returned only after the view has been built. | yes | String | false | `ok`: Allow stale views.<br/>`update_after`: Allow stale views, but update them immediately after the request.
 `startkey` | Return records starting with the specified key. | yes | String or JSON array | |
 `startkey_docid` | Return records starting with the specified document ID. | yes | String | |
@@ -383,25 +383,25 @@ by using an existing version of the index.
 
 ### Accessing a stale view
 
-<aside class="notice" role="complementary" aria-label="staledeprecated">The earlier method of obtaining potentially older results from a view index,
-using the <code class="prettyprint">stale=ok</code> option,
-is no longer recommended.</aside>
-
 If you are prepared to accept a response that is quicker,
 but might not have the most current data,
 there are two options you can use:
 
-Option   | Purpose                                                                                                                       | Default value
----------|-------------------------------------------------------------------------------------------------------------------------------|--------------
-`stable` | Should the view results be obtained from a consistent or 'stable' set of shards? Possible values include `true`, and `false`. | `true`
-`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.               | `true`
+Option   | Purpose                                                                                                                      | Default value
+---------|------------------------------------------------------------------------------------------------------------------------------|--------------
+`stable` | Should the view results be obtained from a consistent ('stable') set of shards? Possible values include `true`, and `false`. | `false`
+`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.              | `true`
 
-The `stable` option allows you to indicate whether you are prepared to accept
-view results from a set of shards other than the system-defined set of shards
-that normally respond to your view requests.
-The default value is `true`,
-meaning that the results returned are from your normal (stable) set of shards,
-helping to reduce the likelihood of [eventual consistency](cap_theorem.html) issues.
+The `stable` option allows you to indicate whether you would prefer to get results from a single,
+consistent set of shards.
+
+The default value is `false`,
+meaning all available shard replicas are queried.
+The first response received is the one that is used.
+The benefit is that the response is not delayed in the event that any individual shard replica is slow to respond.
+By contrast,
+setting `stable` to `true` forces the database to use a single,
+consistent set of shards to respond to the query.
 
 The `update` option allows you to indicate whether you are prepared to accept
 view results without waiting for the view to be updated.
@@ -410,11 +410,23 @@ meaning that the view should be updated before results are returned.
 The `lazy` value means that the results are returned before the view is updated,
 but that the view must then be updated anyway.
 
-The option combination `stable=true&update=false` corresponds to the earlier option `stale=ok`.
-The option combination `stable=true&update=lazy` corresponds to the earlier option `stale=update_after`.
-If you really want the quickest possible response,
-and are prepared to accept results that might be stale,
-or are returned from any shard combination rather than your normal (consistent) set,
+When you specify `stable=true` in conjunction with `update=false` or `update=lazy`,
+responses are consistent from request to request because a single,
+consistent set of shards is used to respond to the query.
+However,
+if one of those shards is heavily loaded or slow to respond,
+the response time might be adversely affected.
+
+When the default `stable=false` value applies,
+and you use either of `update=false` or `update=lazy`,
+indexes between shard replicas might not be synchronized.
+The effect would be that you might get different results,
+depending on which replicas respond first.
+
+In summary,
+if you want the quickest possible response,
+and are prepared to accept results that might not yet be synchronized,
+or are returned from the first shard replica to respond rather than your normal set of shards,
 then you could use the combination: `stable=false&update=false`.
 
 Remember that using a stale view has consequences.
