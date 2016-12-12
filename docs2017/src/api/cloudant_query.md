@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-12"
 
 ---
 
@@ -491,8 +491,8 @@ The Cloudant Query language is expressed as a JSON object describing documents o
 Within this structure,
 you can apply conditional logic using specially named fields.
 
-> **Note**: While the Cloudant Query language has some similarities with MongoDB query documents,
-these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.
+>   **Note**: While the Cloudant Query language has some similarities with MongoDB query documents,
+    these arise from a similarity of purpose and do not necessarily extend to commonality of function or result.
 
 ### Selector basics
 

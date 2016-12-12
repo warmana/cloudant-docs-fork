@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-12"
 
 ---
 
@@ -781,6 +781,239 @@ function(doc, req){
 ```
 {:screen}
 
+### Predefined filter functions
+
+A number of predefined filter functions are available:
+
+*	[`_design`](#the-_design-filter): accepts only changes to design documents.
+*	[`_doc_ids`](#the-_doc_ids-filter): accepts only changes for documents whose ID is specified in the `doc_ids` parameter or supplied JSON document.
+*	[`_selector`](#the-_selector-filter): accepts only changes for documents which match a specified selector, defined using the same [selector syntax](cloudant_query.html#selector-syntax) used for [`_find`](cloudant_query.html#finding-documents-using-an-index).
+*	[`_view`](#the-_view-filter): allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
+
+#### The `_design` filter
+
+The `_design` filter accepts changes only for design documents within the requested database.
+
+The filter does not require any arguments.
+
+Changes are listed for _all_ the design documents within the database.
+
+_Example application of the `_design` filter, using HTTP:_
+
+```
+GET /$DATABASE/_changes?filter=_design HTTP/1.1
+```
+{:screen}
+
+_Example application of the `_design` filter, using the command line:_
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=_design" \
+     -u "$USERNAME:$PASSWORD"
+```
+{:screen}
+
+_Example response (abbreviated) after applying the `_design` filter:_
+
+```json
+{
+    ...
+    "results": [
+        {
+            "changes": [
+                {
+                    "rev": "10-304...4b2"
+                }
+            ],
+            "id": "_design/ingredients",
+            "seq": "8-g1A...gEo"
+        },
+        {
+            "changes": [
+                {
+                  "rev": "123-6f7...817"
+                }
+            ],
+            "deleted": true,
+            "id": "_design/cookbook",
+            "seq": "9-g1A...4BL"
+        },
+        ...
+    ]
+}
+```
+{:screen}
+
+#### The `_doc_ids` filter
+
+The `_doc-ids` filter accepts only changes for documents with specified IDs.
+The IDs are specified in a `doc_ids` parameter,
+or within a JSON document supplied as part of the original request.
+
+_Example application of the `_doc_ids` filter, using HTTP:_
+
+```
+POST /$DATABASE/_changes?filter=_doc_ids HTTP/1.1
+```
+{:screen}
+
+_Example application of the `_doc_ids` filter, using the command line:_
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=_doc_ids" \
+     -u "$USERNAME:$PASSWORD"
+```
+{:screen}
+
+_Example JSON document listing document IDs to match during filtering:_
+
+```json
+{
+    "doc_ids": [
+      "ExampleID"
+    ]
+}
+```
+
+_Example response (abbreviated) after filtering by `_docs_ids`:_
+
+```json
+{
+    "last_seq": "5-g1A...o5i",
+    "pending": 0,
+    "results": [
+        {
+            "changes": [
+                {
+                  "rev": "13-bcb...29e"
+                }
+            ],
+            "id": "ExampleID",
+            "seq":  "5-g1A...HaA"
+        }
+    ]
+}
+```
+{:screen}
+
+#### The `_selector` filter
+
+The `_selector` filter accepts only changes for documents which match a specified selector,
+defined using the same [selector syntax](cloudant_query.html#selector-syntax) used
+for [`_find`](cloudant_query.html#finding-documents-using-an-index).
+
+For more examples showing use of this filter,
+see the information on [selector syntax](cloudant_query.html#selector-syntax).
+
+_Example application of the `_selector` filter, using HTTP:_
+
+```
+POST /$DATABASE/_changes?filter=_selector HTTP/1.1
+```
+{:screen}
+
+_Example application of the `_selector` filter, using the command line:_
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=_selector" \
+     -u "$USERNAME:$PASSWORD"
+```
+{:screen}
+
+_Example JSON document containing the selector expression to use during filtering:_
+
+```json
+{
+    "selector": {
+        "_id": {
+          "$regex": "^_design/"
+        }
+    }
+}
+```
+
+_Example response (abbreviated) after filtering using a selector:_
+
+```json
+{
+    "last_seq": "11-g1A...OaA",
+    "pending": 0,
+    "results": [
+        {
+            "changes": [
+                {
+                  "rev": "10-304...4b2"
+                }
+            ],
+            "id": "_design/ingredients",
+            "seq": "8-g1A...gEo"
+        },
+        {
+            "changes": [
+                {
+                  "rev": "123-6f7...817"
+                }
+            ],
+            "deleted": true,
+            "id": "_design/cookbook",
+            "seq": "9-g1A...4BL"
+        },
+        {
+            "changes": [
+                {
+                  "rev": "6-5b8...8f3"
+                }
+            ],
+            "deleted": true,
+            "id": "_design/meta",
+            "seq": "11-g1A...Hbg"
+        }
+    ]
+}
+```
+{:screen}
+
+#### The `_view` filter
+
+The `_view` filter allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
+
+If the map function emits any output as a result of processing a given document,
+then the filter considers the document to be allowed and so includes it in the list of documents that have changed.
+
+_Example application of the `_view` filter, using HTTP:_
+
+```
+GET /$DATABASE/_changes?filter=_view&view=$DESIGNDOC/$VIEWNAME HTTP/1.1
+```
+{:screen}
+
+_Example application of the `_view` filter, using the command line:_
+
+```
+curl "https://$ACCOUNT.cloudant.com/$DATABASE/_changes?filter=_view&view=$DESIGNDOC/$VIEWNAME" \
+     -u "$USERNAME:$PASSWORD"
+```
+{:screen}
+
+_Example response (abbreviated) after filtering using a map function:_
+
+```json
+{
+    "last_seq": "5-g1A...o5i",
+    "results": [
+        {
+            "changes": [
+                {
+                  "rev": "13-bcb...29e"
+                }
+            ],
+            "id": "ExampleID",
+            "seq":  "5-g1A...HaA"
+        }
+    ]
+}
+```
+
 ## Update Validators
 
 Update validators determine whether a document should be written to disk when insertions and updates are attempted.
@@ -797,8 +1030,8 @@ Argument  | Purpose
 `secObj`  | The [security object](authorization.html#viewing-permissions) for the database.
 `userCtx` | Context regardingthe currently authenticated user, such as `name` and `roles`.
 
->	**Note**: Update validators do not apply when a design document is updated by an admin user.
-This is to ensure that admins can never accidentally lock themselves out.
+>   **Note**: Update validators do not apply when a design document is updated by an admin user.
+    This is to ensure that admins can never accidentally lock themselves out.
 
 _Example design document with an update validator:_
 

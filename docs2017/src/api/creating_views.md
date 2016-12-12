@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-12"
 
 ---
 
@@ -30,9 +30,9 @@ It can speed up searching for content.
 It can be used to 'pre-process' the results before they are returned to the client.
 
 Views are simply Javascript functions,
-defined within the view field of a design document.
+defined within the `view` field of a design document.
 When you use a view,
-or more accurately when make a query using your view,
+or more accurately when you perform a query using your view,
 the system applies the Javascript function to each and every document in the database.
 Views can be complex.
 You might choose to define a collection of Javascript functions to create the overall view required.
@@ -58,8 +58,8 @@ The list consists of key and value pairs,
 where the key helps you identify the specific document and the value provides just the precise detail you want.
 The list also includes metadata such as the number of key:value pairs returned.
 
->	**Note**: The document `_id` is automatically included in each of the key:value pair result records.
-This is to make it easier for the client to work with the results.
+>   **Note**: The document `_id` is automatically included in each of the key:value pair result records.
+    This is to make it easier for the client to work with the results.
 
 _Example of a simple view, using a map function:_
 
@@ -75,22 +75,22 @@ function(employee) {
 _Sample data for demonstrating the simple view example:_
 
 ```json
-{
-	"_id":"23598567",
-	"number":"23598567",
-	"training":"2014/05/21 10:00:00"
-}
-
-{
-	"_id":"10278947",
-	"number":"10278947"
-}
-
-{
-	"_id":"23598567",
-	"number":"23598567",
-	"training":"2014/07/30 12:00:00"
-}
+[
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/05/21 10:00:00"
+    },
+    {
+        "_id":"10278947",
+        "number":"10278947"
+    },
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/07/30 12:00:00"
+    }
+]
 ```
 {:screen}
 

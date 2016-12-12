@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-12"
 
 ---
 
@@ -504,6 +504,18 @@ The `filter` argument designates a pre-defined
 Additionally, there is a built-in filter available:
 
 -	`_design`: The `_design` filter accepts only changes to design documents.
+
+The `filter` argument designates a pre-defined
+[filter function](design_documents.html#filter-functions) to apply to the changes feed.
+Additionally,
+there are several built-in filters available:
+
+*   `_design`: The `_design` filter accepts only changes to design documents.
+*   `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
+*   `_selector`: accepts only changes for documents which match a specified selector,
+    defined using the same [selector syntax](cloudant_query.html#selector-syntax) used
+    for [`_find`](cloudant_query.html#finding-documents-using-an-index).
+*   `_view`: allows you to use an existing [map function](creating_views.html#a-simple-view) as the filter.
 
 ### The `since` argument
 
