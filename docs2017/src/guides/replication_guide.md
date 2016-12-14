@@ -256,7 +256,7 @@ but does not allow the creation of ordinary documents in a database.
 It is recommended that you [create API keys](../api/authorization.html#creating-api-keys) that have:
 
 -   `_reader` and `_replicator` access at the source side.
--   `_writer` access at the destination side.
+-   `_reader` and `_writer` access at the destination side.
 
 API keys can be created and configured within the Cloudant Dashboard,
 on a per-database basis.
