@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-13"
+lastupdated: "2016-12-14"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2016-12-13"
 # Creating and populating a simple Cloudant database on Bluemix
 
 This tutorial shows you how to use the [Python programming language](https://www.python.org/){:new_window} to
-create a {{site.data.keyword.cloudantfull}} database in your {{site.data.keyword.Bluemix_notm}} service instance,
+create an {{site.data.keyword.cloudantfull}} database in your {{site.data.keyword.Bluemix_notm}} service instance,
 and populate the database with a simple collection of data.
 {:shortdesc}
 
@@ -33,7 +33,7 @@ To check this,
 run the following command at a prompt:
 
 ```
-$ python --version
+python --version
 ```
 {:pre}
 
@@ -55,7 +55,7 @@ To check that you have the client library installed successfully,
 run the following command at a prompt:
 
 ```
-$ pip freeze
+pip freeze
 ```
 {:pre}
 
@@ -76,11 +76,11 @@ Ensure that you have the following Service Credentials available for your servic
 
 Field      | Purpose
 -----------|--------
-`host`     | The hostname used by applications to access the service instance.
+`host`     | The hostname used by applications to locate the service instance.
 `username` | The username required for applications to access the service instance.
 `password` | The password required for applications to access the service instance.
 `port`     | The HTTP port number for accessing the service instance on the host. Normally 443 to force HTTPS access.
-`url`      | A string aggregating all the other credential information into a single URL suitable for use by applications.
+`url`      | A string aggregating the other credential information into a single URL, suitable for use by applications.
 
 Information on finding the service credentials for your service instance is
 available [here](create_service.html#locating-your-service-credentials).
@@ -134,13 +134,13 @@ serviceURL = "https://353466e8-47eb-45ce-b125-4a4e1b5a4f7e-bluemix.cloudant.com"
 ```
 {:codeblock}
 
->   **Note**: The service credentials supplied were real and valid,
-    and were provided when a sample Cloudant service was created on Bluemix.
-    The credentials are incldued here to show how they would be applied in a Python application.
+>   **Note**: The service credentials illustrated here
+    were defined when a demonstration Cloudant service was created on Bluemix.
+    The credentials are reproduced here to show how they would be used in a Python application.
     However,
-    this particular sample Cloudant service has been removed now,
-    so these exact credentials will not work;
-    you _must_ supply your own service credentials.
+    the demonstration Cloudant service has been removed now,
+    so these credentials will not work;
+    you _must_ supply and use your own service credentials.
 
 Once you have enabled the Python client library within your application,
 and identified the service credentials,
@@ -235,19 +235,18 @@ for document in sampleData:
 
 Notice that we check that each document was successfully created.
 
-## Retrieving a complete list of the documents
+## Retrieving data
 
 At this point,
 a small collection of data
 has been stored as documents within the database.
-
 We can now perform a series of queries,
-illustrating how to retrieve data from the database.
+illustrating different ways of retrieving data from the database.
 
 ### A minimal retrieval of a document
 
 To perform a minimal retrieval,
-we request a list of all documents within the database.
+we first request a list of all documents within the database.
 This list is returned as an array.
 We can then show the content of an element in the array.
 
@@ -275,11 +274,18 @@ The result is similar to the following example:
 ```
 {:screen}
 
+>   **Note**: The nature of NoSQL databases,
+    such as Cloudant,
+    means that simple notions of the first document stored in a database
+    always being the first one returned in a list of results,
+    do not necessarily apply.
+
 ### Full retrieval of a document
 
 To perform a full retrieval,
 we request a list of all documents within the database,
-and additionally specify that the document content must also be returned by using the `include_docs` option.
+and additionally specify that the document content must also be returned.
+We do this by using the `include_docs` option.
 As before,
 the results are returned as an array.
 We can then show the details of an element in the array,
@@ -317,13 +323,7 @@ The result is similar to the following example:
 ```
 {:screen}
 
->   **Note**: The nature of NoSQL databases,
-    such as Cloudant,
-    means that simple notions of the first document stored in a database
-    being the first one returned in a list of results,
-    do not apply.
-
-### Calling a Cloudant API endpoint directly
+## Calling a Cloudant API endpoint directly
 
 We can also work with the Cloudant API endpoints directly,
 from within a Python application.
@@ -443,6 +443,8 @@ and perform a typical series of tasks:
 6.  Closing the connection to the service instance.
 
 ```python
+# 1.  Connecting to the service instance.
+
 # Enable the required Python libraries.
 
 from cloudant.client import Cloudant
@@ -476,7 +478,9 @@ client = Cloudant(serviceUsername, servicePassword, url=serviceURL)
 # Connect to the server
 client.connect()
 
-# Create a fresh instance of the database.
+# 2.  Creating a database within the service instance.
+
+# Create an instance of the database.
 myDatabaseDemo = client.create_database(databaseName)
 
 # Check that the database now exists.
@@ -485,6 +489,8 @@ if myDatabaseDemo.exists():
 
 # Space out the results.
 print "----\n"
+
+# 3.  Storing a small collection of data as documents within the database.
 
 # Create documents using the sample data.
 # Go through each row in the array
@@ -513,6 +519,8 @@ for document in sampleData:
 
 # Space out the results.
 print "----\n"
+
+# 4.  Retrieving a complete list of the documents.
 
 # Simple and minimal retrieval of the first
 # document in the database.
@@ -547,6 +555,8 @@ print "----\n"
 # All done.
 # Time to tidy up.
 
+# 5.  Deleting the database.
+
 # Delete the test database.
 try :
     client.delete_database(databaseName)
@@ -554,6 +564,8 @@ except CloudantException:
     print "There was a problem deleting '{0}'.\n".format(databaseName)
 else:
     print "'{0}' successfully deleted.\n".format(databaseName)
+
+# 6.  Closing the connection to the service instance.
 
 # Disconnect from the server
 client.disconnect()

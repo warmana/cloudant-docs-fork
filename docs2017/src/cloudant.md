@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-14"
 
 ---
 
@@ -30,7 +30,9 @@ all intended to help you get going quickly.
 *	[Client Libraries](libraries/index.html): Client libraries are toolkits that
 	let you develop your own applications,
 	ready to work with Cloudant databases.
-*	[Cloudant API reference](api/index.html): The API reference is a
+*   [Tutorials](tutorials/index.html): A detailed collection of articles,
+    showing you how to perform key tasks using Cloudant on Bluemix.
+*	[Cloudant API Reference](api/index.html): The API reference is a
 	comprehensive and living catalog of Cloudant’s capabilities.
 	You can find detailed information about the things you can do with Cloudant.
 *	[Guides](guides/index.html): These guides go into detail about

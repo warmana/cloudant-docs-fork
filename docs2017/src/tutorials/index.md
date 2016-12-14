@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-13"
+lastupdated: "2016-12-14"
 
 ---
 
@@ -15,7 +15,7 @@ lastupdated: "2016-12-13"
 # Tutorials
 
 These tutorial topics walk you through some common tasks,
-and provide you with sample code to perform those tasks.
+and where appropriate provide you with sample code to perform those tasks.
 {:shortdesc}
 
 ## Creating a Cloudant instance on Bluemix
@@ -23,7 +23,7 @@ and provide you with sample code to perform those tasks.
 [This tutorial](create_service.html) shows you how to create a {{site.data.keyword.cloudantfull}}
 service instance on {{site.data.keyword.Bluemix_notm}},
 and shows you where to find the essential information to enable your applications
-to work with the database.
+to work with the instance.
 
 ## Creating and populating a simple Cloudant database on Bluemix
 
