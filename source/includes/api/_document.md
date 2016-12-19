@@ -534,15 +534,6 @@ db.bulk($JSON, function (err, body) {
 }
 ```
 
-|`sizes` | JSON object containing file, external, and active sizes. The sub-fields for the `sizes` field include, `file`, `external`, and `active`, which are described here. 
-
-`file`	On-disk size that must match the `disk_size` field. 
-
-`external`	Uncompressed user data volume or billable data size. 
-
-`active`	Total amount of data. The `active` field is similar to the `file` field when the view is freshly compacted.
-
-
 For both inserts and updates the basic structure of the JSON document in the request is the same:
 
 <table>
@@ -556,12 +547,16 @@ For both inserts and updates the basic structure of the JSON document in the req
 <tr class="header">
 <th align="left">Field</th>
 <th align="left">Description</th>
+<th align="left">Type</th>
+<th align="left">Optional</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code></code></td>
-<td align="left"></td>
+<td align="left"><code>docs</code></td>
+<td align="left">Bulk Documents Document</td>
+<td align="left">array of objects</td>
+<td align="left">no</td>
 </tr>
 </tbody>
 </table>
