@@ -377,8 +377,6 @@ when compared with an earlier request for the same information.</li>
 <li>Include changes that are considered to be prior to the change specified by the sequence identifier.</li>
 <ul></aside>
 
-`_changes` accepts several optional query arguments:
-
 `_changes` accepts these query arguments:
 
 Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default 
