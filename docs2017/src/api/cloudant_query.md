@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-12"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -48,11 +48,11 @@ The `type` field of the JSON object has to be set to `"json"`.
 
 _Example of requesting a new index of type `JSON`, using HTTP:_
 
-```
+```http
 POST /db/_index HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of JSON object requesting a new index called `foo-index`, for the field called `foo`:_
 
@@ -65,7 +65,7 @@ _Example of JSON object requesting a new index called `foo-index`, for the field
 	"type" : "json"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of returned JSON, confirming that the index has been created:_
 
@@ -74,7 +74,7 @@ _Example of returned JSON, confirming that the index has been created:_
 	"result": "created"
 }
 ```
-{:screen}
+{:codeblock}
 
 #### Request Body format
 
@@ -140,7 +140,7 @@ _Example of JSON document requesting index creation:_
 	"type": "text"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of JSON document requesting creation of a more complex index:_
 
@@ -163,7 +163,7 @@ _Example of JSON document requesting creation of a more complex index:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `index` field
 
@@ -172,10 +172,10 @@ The `index` field contains settings specific to text indexes.
 To index all fields in all documents automatically,
 use the simple syntax:
 
-```
+```json
 "index": {}
 ```
-{:screen}
+{:codeblock}
 
 The indexing process traverses all of the fields in all the documents in the database.
 
@@ -192,7 +192,7 @@ _Example of JSON document requesting creation of an index of all fields in all d
 	"index": {}
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `default_field` field
 
@@ -267,7 +267,7 @@ _Example JSON document with suggested settings to optimize performance on produc
 	"index_array_lengths": false
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Query Parameters
 
@@ -304,7 +304,7 @@ _Example JSON document using all available query parameters:_
 	"skip": 0
 	}
 ```
-{:screen}
+{:codeblock}
 
 ## Working with indexes
 
@@ -383,7 +383,7 @@ _Example of a response body with two indexes:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Deleting an index
 
@@ -454,7 +454,7 @@ _Example request in JSON format, for finding documents using an index:_
 	"skip": 0
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Response body
 
@@ -483,7 +483,7 @@ _Example response when finding documents using an index:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Selector Syntax
 
@@ -510,7 +510,7 @@ _Example of a simple selector:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 
 If you created a full text index by specifying `"type":"text"` when the index was created,
@@ -527,7 +527,7 @@ _An example of a simple selector for a full text index:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 In the following example,
 the full text index is inspected to find any document that includes the word "Bond".
@@ -546,7 +546,7 @@ _Example of a simple selector, inspecting specific fields:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 You can create more complex selector expressions by combining operators.
 However,
@@ -576,7 +576,7 @@ _Example of a more complex selector:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Subfields
 
@@ -596,7 +596,7 @@ _Example of a field and subfield selector, within a JSON object:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 An abbreviated equivalent uses a dot notation to combine the field and subfield names into a single name.
 
@@ -609,7 +609,7 @@ _Example of an equivalent field and subfield selector using dot notation:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Operators
 
@@ -633,7 +633,7 @@ Every explicit operator has the form:
 	"$operator": "argument"
 }
 ```
-{:screen}
+{:codeblock}
 
 A selector without an explicit operator is considered to have an implicit operator.
 The exact implicit operator is determined by the structure of the selector expression.
@@ -663,7 +663,7 @@ _Example selector using an operator to match any document, where the `age` field
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 In the following example,
 there must be a field `director` in a matching document,
@@ -676,7 +676,7 @@ _Example of the implicit equality operator:_
 	"director": "Lars von Trier"
 }
 ```
-{:screen}
+{:codeblock}
 
 You can also make the equality operator explicit,
 as shown in the following example.
@@ -690,7 +690,7 @@ _Example of an explicit equality operator:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 In the following example using subfields,
 the required field `imdb` in a matching document *must* also have
@@ -705,7 +705,7 @@ _Example of implicit operator applied to a subfield test:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 You can make the equality operator explicit.
 
@@ -720,7 +720,7 @@ _Example of an explicit equality operator:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$eq` operator used with full text indexing:_
 
@@ -739,7 +739,7 @@ _Example of the `$eq` operator used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$eq` operator used with a database indexed on the field `year`:_
 
@@ -758,7 +758,7 @@ _Example of the `$eq` operator used with a database indexed on the field `year`:
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 
 In the following example,
@@ -773,9 +773,9 @@ _Example of an implicit `$and` operator:_
 	"year": 2003
 }
 ```
-{:screen}
+{:codeblock}
 
-{:combined-expressions}
+<div id="combined-expressions"></div>
 
 You can make both the `$and` operator and the equality operator explicit.
 
@@ -797,7 +797,7 @@ _Example of using explicit `$and` and `$eq` operators:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Explicit operators
 
@@ -854,7 +854,7 @@ _Example of the `$and` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$and` operator, used with a primary index:_
 
@@ -880,7 +880,7 @@ _Example of the `$and` operator, used with a primary index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$or` operator
 
@@ -903,7 +903,7 @@ _Example of the `$or` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$or` operator, used with a database indexed on the field `year`:_
 
@@ -923,7 +923,7 @@ _Example of the `$or` operator, used with a database indexed on the field `year`
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$not` operator
 
@@ -950,7 +950,7 @@ _Example of the `$not` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$not` operator, used with a database indexed on the field `year`:_
 
@@ -973,7 +973,7 @@ _Example of the `$not` operator, used with a database indexed on the field `year
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$nor` operator
 
@@ -1002,7 +1002,7 @@ _Example of the `$nor` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$nor` operator, used with a database indexed on the field `year`:_
 
@@ -1027,7 +1027,7 @@ _Example of the `$nor` operator, used with a database indexed on the field `year
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$all` operator
 
@@ -1051,7 +1051,7 @@ _Example of the `$all` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$all` operator, used with a primary database index:_
 
@@ -1072,7 +1072,7 @@ _Example of the `$all` operator, used with a primary database index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$elemMatch` operator
 
@@ -1096,7 +1096,7 @@ _Example of the `$elemMatch` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$elemMatch` operator, used with a primary database index:_
 
@@ -1117,7 +1117,7 @@ _Example of the `$elemMatch` operator, used with a primary database index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Condition Operators
 
@@ -1177,7 +1177,7 @@ _Example of the `$lt` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$lt` operator, used with a database indexed on the field `year`:_
 
@@ -1196,7 +1196,7 @@ _Example of the `$lt` operator, used with a database indexed on the field `year`
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$lte` operator
 
@@ -1221,7 +1221,7 @@ _Example of the `$lte` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$lte` operator, used with a database indexed on the field `year`:_
 
@@ -1240,7 +1240,7 @@ _Example of the `$lte` operator, used with a database indexed on the field `year
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$eq` operator
 
@@ -1263,7 +1263,7 @@ _Example of the `$eq` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$eq` operator, used with a database indexed on the field `year`:_
 
@@ -1282,7 +1282,7 @@ _Example of the `$eq` operator, used with a database indexed on the field `year`
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$ne` operator
 
@@ -1308,7 +1308,7 @@ _Example of the `$ne` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$ne` operator, used with a primary index:_
 
@@ -1328,7 +1328,7 @@ _Example of the `$ne` operator, used with a primary index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$gte` operator
 
@@ -1353,7 +1353,7 @@ _Example of the `$gte` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$gte` operator, used with a database indexed on the field `year`:_
 
@@ -1372,7 +1372,7 @@ _Example of the `$gte` operator, used with a database indexed on the field `year
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$gt` operator
 
@@ -1397,7 +1397,7 @@ _Example of the `$gte` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$gt` operator, used with a database indexed on the field `year`:_
 
@@ -1416,7 +1416,7 @@ _Example of the `$gt` operator, used with a database indexed on the field `year`
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$exists` operator
 
@@ -1440,7 +1440,7 @@ _Example of the `$exists` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$exists` operator, used with a database indexed on the field `year`:_
 
@@ -1459,7 +1459,7 @@ _Example of the `$exists` operator, used with a database indexed on the field `y
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$type` operator
 
@@ -1481,7 +1481,7 @@ _Example of the `$type` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$type`, operator used with a primary index:_
 
@@ -1500,7 +1500,7 @@ _Example of the `$type`, operator used with a primary index:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$in` operator
 
@@ -1525,7 +1525,7 @@ _Example of the `$in` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$in` operator, used with a primary index:_
 
@@ -1545,7 +1545,7 @@ _Example of the `$in` operator, used with a primary index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$nin` operator
 
@@ -1571,7 +1571,7 @@ _Example of the `$nin` operator, used with full text indexing:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$nin` operator, used with a primary index:_
 
@@ -1591,7 +1591,7 @@ _Example of the `$nin` operator, used with a primary index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$size` operator
 
@@ -1613,7 +1613,7 @@ _Example of the `$size` operator, used with full text indexing:_
 	"limit": 1000
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$size` operator, used with a primary index:_
 
@@ -1634,7 +1634,7 @@ _Example of the `$size` operator, used with a primary index:_
 	"limit": 25
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$mod` operator
 
@@ -1666,7 +1666,7 @@ _Example of the `$mod` operator, used with full text indexing:_
 	"limit": 50
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$mod` operator, used with a primary index:_
 
@@ -1687,7 +1687,7 @@ _Example of the `$mod` operator, used with a primary index:_
 	"limit": 50
 }
 ```
-{:screen}
+{:codeblock}
 
 #### The `$regex` operator
 
@@ -1711,7 +1711,7 @@ _Example of the `$regex` operator, used with full text indexing:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of the `$regex` operator, used with a primary index:_
 
@@ -1734,7 +1734,7 @@ _Example of the `$regex` operator, used with a primary index:_
 	"limit": 10
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Creating selector expressions
 
@@ -1770,7 +1770,7 @@ _Example of an unsupported selector expression:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example response to an unsupported selector expression:_
 
@@ -1780,7 +1780,7 @@ _Example response to an unsupported selector expression:_
 	"reason": "There is no operator in this selector can used with an index."
 }
 ```
-{:screen}
+{:codeblock}
 
 A solution is to use an equality operator as the basis of the query.
 You can add a 'null' or 'always true' expression as the basis of the query.
@@ -1794,7 +1794,7 @@ you could first test that the document has an `_id` value:
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 This expression is always true,
 enabling the remainder of the selector expression to be applied.
@@ -1826,6 +1826,7 @@ _Example use of an equality operator to enable a selector expression:_
 	}
 }
 ```
+{:codeblock}
 
 ## Sort Syntax
 
@@ -1856,7 +1857,7 @@ _Example of simple sort syntax:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 _Example of simple sort, assuming default ascending direction for both fields:_
 
@@ -1865,7 +1866,7 @@ _Example of simple sort, assuming default ascending direction for both fields:_
 	"fieldNameA", "fieldNameB"
 ]
 ```
-{:screen}
+{:codeblock}
 
 A typical requirement is to search for some content using a selector,
 then to sort the results according to the specified field,
@@ -1897,7 +1898,7 @@ for example:
 	"<fieldname>:string": "asc"
 }
 ```
-{:screen}
+{:codeblock}
 
 If possible,
 an attempt is made to discover the field type based on the selector.
@@ -1936,7 +1937,7 @@ _Example of a simple query, using sorting:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Filtering fields
 
@@ -1966,7 +1967,7 @@ _Example of selective retrieval of fields from matching documents:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Explain Plans
 
@@ -1997,7 +1998,7 @@ and you want to use a selector similar to the following:
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 Cloudant Query uses the `text` type index,
 because a `json` type index cannot satisfy the selector.
@@ -2012,7 +2013,7 @@ you might use a different selector with the same indexes:
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 In this example,
 Cloudant Query uses the `json` type index because both types of indexes could satisfy the selector.
@@ -2035,7 +2036,7 @@ Content-Type: application/json
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example showing how to identify the index used to answer a query, using the command line:_
 
@@ -2050,7 +2051,7 @@ curl 'https://examples.cloudant.com/movies/_explain' \
 		}
 	}'
 ```
-{:screen}
+{:codeblock}
 
 _Example response showing which index was used to answer a query:_
 
@@ -2101,7 +2102,7 @@ _Example response showing which index was used to answer a query:_
 	"sort": "relevance"
 }
 ```
-{:screen}
+{:codeblock}
 
 To instruct a query to use a specific index,
 add the `use_index` parameter to the query.
@@ -2122,7 +2123,7 @@ _Example query with instructions to use a specific index:_
 	"use_index": "_design/32372935e14bed00cc6db4fc9efca0f1537d34a8"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Note about `text` indexes
 
@@ -2164,14 +2165,14 @@ _Example query to be translated:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _The corresponding Lucene query:_
 
-```
+```javascript
 (age_3anumber:{5 TO Infinity])
 ```
-{:screen}
+{:codeblock}
 
 ### A more complex example
 
@@ -2203,7 +2204,7 @@ _JSON query to be converted to Lucene:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 The first part of the JSON query is straightforward to convert to Lucene;
 we are simply testing that the `age` field has a numeric value greater than 5.
@@ -2238,7 +2239,7 @@ which is an example of the expanded array indexing.
 
 _Corresponding Lucene query. The '#' comments are not valid Lucene syntax, but help explain the query construction:_
 
-```
+```javascript
 (
 	# Search for age > 5
 	(age_3anumber:{5 TO Infinity])
@@ -2255,7 +2256,7 @@ _Corresponding Lucene query. The '#' comments are not valid Lucene syntax, but h
 	)
 )
 ```
-{:screen}
+{:codeblock}
 
 ## Example: Movies Demo Database
 
@@ -2270,7 +2271,7 @@ by running one of the following commands:
 
 _Obtaining a copy of the Cloudant Query movie database, using HTTP:_
 
-```
+```http
 POST /_replicator HTTP/1.1
 Host: user.cloudant.com
 Content-Type: application/json
@@ -2281,11 +2282,11 @@ Content-Type: application/json
 	"use_checkpoints": false
 }
 ```
-{:screen}
+{:codeblock}
 
 _Obtaining a copy of the Cloudant Query movie database, using the command line:_
 
-```
+```shell
 curl 'https://<user:password>@<user>.cloudant.com/_replicator' \
 	-X POST \
 	-H 'Content-Type: application/json' \
@@ -2296,7 +2297,7 @@ curl 'https://<user:password>@<user>.cloudant.com/_replicator' \
 		"use_checkpoints": false
 	}'
 ```
-{:screen}
+{:codeblock}
 
 _Results after successful replication of the Cloudant Query movie database:_
 
@@ -2306,7 +2307,7 @@ _Results after successful replication of the Cloudant Query movie database:_
 	"use_checkpoints": false
 }
 ```
-{:screen}
+{:codeblock}
 
 Before we can search the content,
 we must index it.
@@ -2314,7 +2315,7 @@ We do this by creating a text index for the documents.
 
 _Creating a _text_ index for your sample database, using HTTP:_
 
-```
+```http
 POST /my-movies/_index HTTP/1.1
 Host: user.cloudant.com
 Content-Type: application/json
@@ -2323,17 +2324,17 @@ Content-Type: application/json
 	"type": "text"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Creating a _text_ index for your sample database, using the command line:_
 
-```
+```shell
 curl 'https://<user:password>@<user>.cloudant.com/my-movies/_index' \
 	-X POST \
 	-H 'Content-Type: application/json' \
 	-d '{"index": {}, "type": "text"}'
 ```
-{:screen}
+{:codeblock}
 
 _Example response after creating a text index:_
 
@@ -2342,7 +2343,7 @@ _Example response after creating a text index:_
 	"result": "created"
 }
 ```
-{:screen}
+{:codeblock}
 
 The most obvious difference in the results you get when using full text indexes is
 the inclusion of a large `bookmark` field.
@@ -2356,7 +2357,7 @@ so the examples here have truncated `bookmark` values for reasons of clarity.
 
 _Example of searching for a specific document within the database, using HTTP:_
 
-```
+```http
 POST /my-movies/_find HTTP/1.1
 Host: user.cloudant.com
 Content-Type: application/json
@@ -2366,16 +2367,16 @@ Content-Type: application/json
   }
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of searching for a specific document within the database, using the command line:_
 
-```
+```shell
 curl -X POST -H "Content-Type: application/json" \
 	https://<user:password>@<user>.cloudant.com/my-movies/_find \
 	-d '{"selector": {"Person_name":"Zoe Saldana"}}'
 ```
-{:screen}
+{:codeblock}
 
 _Example result from the search:_
 
@@ -2399,11 +2400,11 @@ _Example result from the search:_
 	"bookmark": "g2wA ... Omo"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of a slightly more complex search, using HTTP:_
 
-```
+```http
 POST /my-movies/_find HTTP/1.1
 Host: user.cloudant.com
 Content-Type: application/json
@@ -2414,16 +2415,16 @@ Content-Type: application/json
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of a slightly more complex search, using the command line:_
 
-```
+```shell
 curl -X POST -H "Content-Type: application/json" \
 	https://<user:password>@<user>.cloudant.com/my-movies/_find \
 	-d '{"selector": {"Person_name":"Robert De Niro", "Movie_year": 1978}}'
 ```
-{:screen}
+{:codeblock}
 
 _Example result from the search:_
 
@@ -2446,11 +2447,11 @@ _Example result from the search:_
 	"bookmark": "g2w ... c2o"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of searching within a range, using HTTP:_
 
-```
+```http
 POST /my-movies/_find HTTP/1.1
 Host: user.cloudant.com
 Content-Type: application/json
@@ -2463,16 +2464,16 @@ Content-Type: application/json
   }
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of searching within a range, using the command line:_
 
-```
+```shell
 curl -X POST -H "Content-Type: application/json" \
 	https://<user:password>@<user>.cloudant.com/my-movies/_find \
 	-d '{"selector": {"Person_name":"Robert De Niro", "Movie_year": { "$in": [1974, 2009]}}}'
 ```
-{:screen}
+{:codeblock}
 
 _Example result from the search:_
 
@@ -2495,4 +2496,4 @@ _Example result from the search:_
 	"bookmark": "g2w ... c2o"
 }
 ```
-{:screen}
+{:codeblock}

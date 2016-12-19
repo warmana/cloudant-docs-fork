@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -57,10 +57,10 @@ You can specify a `raw` format if you prefer.
 
 All requests to the monitoring API have the following form:
 
-```
+```shell
 curl -u [ADMIN_USER] https://[ADMIN_USER].cloudant.com/_api/v2/monitoring/[END_POINT]?cluster=[CLUSTER][&format=(json|raw)]
 ```
-{:screen}
+{:codeblock}
 
 The fields are described in the following table:
 
@@ -91,10 +91,10 @@ you can choose to receive the results in [`raw` format](#with-format-raw-).
 The results include a text string that identifies the metric stored on the server providing the API capability,
 for example:
 
-```
+```text
 sumSeries(net.cloudant.mycustomer001.db*.df.srv.used)
 ```
-{:screen}
+{:codeblock}
 
 The results include cluster-level data.
 
@@ -116,10 +116,10 @@ Each value returned consists of `[datapoint, timestamp]` values.
 
 _Example monitoring request for disk use data returned in `JSON` format:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/disk_use?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example result after requesting disk use data in `JSON` format:_
 
@@ -147,7 +147,7 @@ _Example result after requesting disk use data in `JSON` format:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### With `format=raw`
 
@@ -166,18 +166,18 @@ with the disk use expressed as bytes stored.
 
 _Example monitoring request for disk use data returned in `raw` format:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/disk_use?cluster=myclustername&format=raw
 ```
-{:screen}
+{:codeblock}
 
 _Example result after requesting disk use data in `raw` format:_
 
-```
+```text
 sumSeries(net.cloudant.mycustomer001.db*.df.srv.used),1391019780,1391020080,60|344708448256.0,345318227968.0,346120126464.0,346716471296.0,175483256832.0
 sumSeries(net.cloudant.mycustomer001.db*.df.srv.free),1391019780,1391020080,60|6.49070326579e+12,6.4896982057e+12,6.48884414054e+12,6.48801589658e+12,4.32277107507e+12
 ```
-{:screen}
+{:codeblock}
 
 ## Monitoring endpoints
 
@@ -199,10 +199,10 @@ Endpoint                                | Description
 
 _Example showing how to obtain a list of the currently supported monitoring end points:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring
 ```
-{:screen}
+{:codeblock}
 
 _Example response, listing the available monitoring end points:_
 
@@ -235,7 +235,7 @@ _Example response, listing the available monitoring end points:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Examples of monitoring requests
 
@@ -243,10 +243,10 @@ _Example response, listing the available monitoring end points:_
 
 _Example of a `disk_use` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/disk_use?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `disk_use` monitoring request:_
 
@@ -302,16 +302,16 @@ _Example results (abbreviated) from a `disk_use` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### kv_emits
 
 _Example of a `kv_emits` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/kv_emits?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `kv_emits` monitoring request:_
 
@@ -345,15 +345,16 @@ _Example results (abbreviated) from a `kv_emits` monitoring request:_
 	]
 }
 ```
+{:codeblock}
 
 ### map_doc
 
 _Example of a `map_doc` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/map_doc?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `map_doc` monitoring request:_
 
@@ -387,16 +388,16 @@ _Example results (abbreviated) from a `map_doc` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### rate/status_code
 
 _Example of a `rate/status_code` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/rate/status_code?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `rate/status_code` monitoring request:_
 
@@ -480,16 +481,16 @@ _Example results (abbreviated) from a `rate/status_code` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### rate/verb
 
 _Example of a `rate/verb` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/rate/verb?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `rate/verb` monitoring request:_
 
@@ -609,16 +610,16 @@ _Example results (abbreviated) from a `rate/verb` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### response_time
 
 _Example of a `response_time` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/response_time?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `response_time` monitoring request:_
 
@@ -629,16 +630,16 @@ _Example results (abbreviated) from a `response_time` monitoring request:_
     "target_responses": []
 }
 ```
-{:screen}
+{:codeblock}
 
 ### rps
 
 _Example of an `rps` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/rps?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from an `rps` monitoring request:_
 
@@ -668,16 +669,16 @@ _Example results (abbreviated) from an `rps` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### wps
 
 _Example of a `wps` monitoring request:_
 
-```
+```shell
 curl -u myusername https://myusername.cloudant.com/_api/v2/monitoring/wps?cluster=myclustername&format=json
 ```
-{:screen}
+{:codeblock}
 
 _Example results (abbreviated) from a `wps` monitoring request:_
 
@@ -707,4 +708,4 @@ _Example results (abbreviated) from a `wps` monitoring request:_
 	]
 }
 ```
-{:screen}
+{:codeblock}

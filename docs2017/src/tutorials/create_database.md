@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-14"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -32,17 +32,17 @@ installed on your system.
 To check this,
 run the following command at a prompt:
 
-```
+```shell
 python --version
 ```
 {:pre}
 
 You should get a result similar to:
 
-```
+```text
 Python 2.7.12
 ```
-{:screen}
+{:codeblock}
 
 ### Python Client Library for Cloudant
 
@@ -54,7 +54,7 @@ You should install this using the instructions provided [here](../libraries/supp
 To check that you have the client library installed successfully,
 run the following command at a prompt:
 
-```
+```shell
 pip freeze
 ```
 {:pre}
@@ -63,10 +63,10 @@ You should get a list of all the Python modules installed on your system.
 Inspect the list,
 looking for a {{site.data.keyword.cloudant_short_notm}} entry similar to the following:
 
-```
+```text
 cloudant==2.3.1
 ```
-{:screen}
+{:codeblock}
 
 ### A Cloudant service instance on Bluemix
 
@@ -272,7 +272,7 @@ The result is similar to the following example:
     }
 ]
 ```
-{:screen}
+{:codeblock}
 
 >   **Note**: The nature of NoSQL databases,
     such as Cloudant,
@@ -321,7 +321,7 @@ The result is similar to the following example:
     }
 ]
 ```
-{:screen}
+{:codeblock}
 
 ## Calling a Cloudant API endpoint directly
 
@@ -397,7 +397,7 @@ The result is similar to the following _abbreviated_ example:
     "offset": 0
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Deleting the database
 

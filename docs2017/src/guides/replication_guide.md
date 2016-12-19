@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-14"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -85,7 +85,7 @@ _Example of defining source and target URLs for replication:_
     "target": "https://mysecondaccount.cloudant.com/b"
 }
 ```
-{:screen}
+{:codeblock}
 
 The source and target need not be on the same account.
 The source and target database names do not need to match.
@@ -120,23 +120,23 @@ Field           | Purpose
 
 _Example of starting a replication job, using HTTP:_
 
-```
+```http
 POST /_replicator HTTP/1.1
 Content-Type: application/json
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of starting a replication job, using the command line:_
 
-```
+```shell
 curl -X POST \
     -H 'Content-type: application/json' \
     'https://myuser:mypassword@myaccount.cloudant.com/_replicator' \
     -d '@replication.json'
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON document describing the required replication:_
 
@@ -148,7 +148,7 @@ _Example JSON document describing the required replication:_
     "create_target": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## How does replication affect the list of changes?
 
@@ -293,23 +293,23 @@ by setting the continuous flag accordingly.
 
 _Example of starting a continuous replication, using HTTP:_
 
-```
+```http
 POST /_replicator HTTP/1.1
 Content-Type: application/json
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of starting a continuous replication, using the command line:_
 
-```
+```shell
 curl -X POST \
     -H "Content-type: application/json" \
     https://myuser:mypassword@myaccount.cloudant.com/_replicator \
     -d @continuous-replication.json
 ```
-{:screen}
+{:codeblock}
 
 _Example of a JSON document defining a continuous replication:_
 
@@ -321,7 +321,7 @@ _Example of a JSON document defining a continuous replication:_
     "continuous": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Monitoring replication
 
@@ -337,19 +337,19 @@ More details are available [here](../api/active_tasks.html).
 
 _Example of monitoring a replication process, using HTTP:_
 
-```
+```http
 GET /_replicator/weekly_backup HTTP/1.1
 HOST: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of monitoring a replication process, using the command line:_
 
-```
+```shell
 curl 'https://myaccount.cloudant.com/_replicator/weekly_backup'
 ```
-{:screen}
+{:codeblock}
 
 _Example response to requesting the status of a replication:_
 
@@ -366,7 +366,7 @@ _Example response to requesting the status of a replication:_
     "_replication_id": "4514b08cb4c2ded7da9ab04a87182ceb"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Cancelling replication
 
@@ -376,19 +376,19 @@ using either the Dashboard or the API.
 
 _Example of cancelling a replication, using HTTP:_
 
-```
+```http
 DELETE /_replicator/weekly_backup?rev=22-c57c18f7e761f1a76fa977caa03cd098 HTTP/1.1
 Host: myaccount.cloudant.com
 Authorization:
 ```
-{:screen}
+{:codeblock}
 
 _Example of cancelling a replication, using the command line:_
 
-```
+```shell
 curl -X DELETE 'https://myaccount.cloudant.com/_replicator/weekly_backup?rev=22-c57c18f7e761f1a76fa977caa03cd098'
 ```
-{:screen}
+{:codeblock}
 
 ## Other replication use-cases
 
@@ -422,12 +422,12 @@ Setting up replication from the client side requires a few lines of Javascript.
 
 _Example Javascript to enable replication using PouchDB:_
 
-```
+```javascript
 var db = new PouchDB("myfirstdatabase");
 var URL = "https://u:p@username.cloudant.com/my_database");
 db.sync(URL, { live: true });
 ```
-{:screen}
+{:codeblock}
 
 ### CloudantSync
 
@@ -439,7 +439,7 @@ setting up replication requires a few lines of code.
 
 _Example Javascript to enable replication using CloudantSync:_
 
-```
+```javascript
 URI uri = new URI("https://u:p@username.cloudant.com/my_database");
 Datastore ds = manager.openDatastore("my_datastore");
 // Replicate from the local to remote database
@@ -447,7 +447,7 @@ Replicator replicator = ReplicatorFactory.oneway(ds, uri);
 // Fire-and-forget (there are easy ways to monitor the state too)
 replicator.start();
 ```
-{:screen}
+{:codeblock}
 
 CloudantSync is used widely in mobile applications,
 such as iPhone and Android games,
@@ -477,7 +477,7 @@ The following example is a filter function that only allows non-deleted document
 
 _Example filter function for replicating non-deleted documents:_
 
-```
+```javascript
 function(doc, req) {
     if (doc._deleted) {
         return false;
@@ -485,7 +485,7 @@ function(doc, req) {
     return true;
 }
 ```
-{:screen}
+{:codeblock}
 
 When starting a replication job,
 a filter function’s name can be specified in terms of the design document it resides in,
@@ -496,23 +496,23 @@ filter function in the `query` field of its second (`req`)argument.
 
 _Example of starting a filtered replication, using HTTP:_
 
-```
+```http
 POST /_replicator HTTP/1.1
 Content-Type: application/json
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of starting a filtered replication, using the command line:_
 
-```
+```shell
 curl -X POST \
     -H "Content-type: application/json" \
     https://myuser:mypassword@myaccount.cloudant.com/_replicator \
     -d @filtered-replication.json
 ```
-{:screen}
+{:codeblock}
 
 _Example of a JSON document defining a filtered replication:_
 
@@ -528,7 +528,7 @@ _Example of a JSON document defining a filtered replication:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Changes feed
 
@@ -544,19 +544,19 @@ every change that is required to get the latest version of every document in the
 
 _Example of querying the changes feed, using HTTP:_
 
-```
+```http
 GET /$db/_changes?feed=continuous HTTP/1.1
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of querying the changes feed, using the command line:_
 
-```
+```shell
 curl "https://myaccount.cloudant.com/$db/_changes?feed=continuous"
 ```
-{:screen}
+{:codeblock}
 
 The changes are described using one line per change.
 Each change consists of:
@@ -583,6 +583,7 @@ _Example `_changes` feed:_
     ]
 }
 ```
+{:codeblock}
 
 <div id="changes-feed-since"></div>
 
@@ -591,19 +592,19 @@ simply pass a [`since` argument](../api/database.html#the-since-argument) with t
 
 _Example (abbreviated) of supplying the `since` to join a `_changes` feed at a known position, using HTTP:_
 
-```
+```http
 GET /$db/_changes?feed=continuous&include_docs=true&since=11-g1A...c1Q HTTP/1.1
 HOST: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example (abbreviated) of supplying the `since` to join a `_changes` feed at a known position, using the command line:_
 
-```
+```shell
 curl "https://myaccount.cloudant.com/$db/_changes?feed=continuous&include_docs=true&since=11-g1A...c1Q"
 ```
-{:screen}
+{:codeblock}
 
 <div id="changes-feed-since-now"></div>
 
@@ -612,30 +613,30 @@ set `since=now`.
 
 _Example of supplying `since=now` to join a `_changes` feed at the current moment in time, using HTTP:_
 
-```
+```http
 GET /$db/_changes?feed=continuous&include_docs=true&since=now HTTP/1.1
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of supplying `since=now` to join a `_changes` feed at the current moment in time, using the command line:_
 
-```
+```shell
 curl "https://myaccount.cloudant.com/$db/_changes?feed=continuous&include_docs=true&since=now"
 ```
-{:screen}
+{:codeblock}
 
 _Example of supplying `since=now` to join a `_changes` feed at the current moment in time, using Javascript:_
 
-```
+```javascript
 var feed = db.follow({since: "now", include_docs: true})
 feed.on('change', function (change) {
     console.log("change: ", change);
 })
 feed.follow();
 ```
-{:screen}
+{:codeblock}
 
 Accessing the `_changes` data programmatically is straightforward.
 For example,
@@ -656,19 +657,19 @@ by using a similar technique to [filtering during replication](#filtered-replica
 
 _Example of filtering the changes feed, using HTTP:_
 
-```
+```http
 GET /$db/_changes?feed=continuous&include_docs=true&since=now&filter=mydesigndoc/myfilter HTTP/1.1
 Host: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of filtering the changes feed, using the command line:_
 
-```
+```shell
 curl "https://myaccount.cloudant.com/$db/_changes?feed=continuous&include_docs=true&since=now&filter=mydesigndoc/myfilter"
 ```
-{:screen}
+{:codeblock}
 
 >   **Note**: The ordering of documents within the `_changes` feed is not guaranteed.
     This means changes might not appear in strict time order.
@@ -706,10 +707,10 @@ Such a large document uses a lot of the available space and causes extra server 
 
 You can check the size of your `_replicator` database by sending a `GET` request to the `/_replicator` endpoint:
 
-```
+```http
 GET https://myaccount.cloudant.com/_replicator
 ```
-{:screen}
+{:codeblock}
 
 In the returned JSON,
 look for the `disk_size` value.
@@ -719,10 +720,10 @@ contact the [IBM Cloudant support team](mailto:support@cloudant.com){:new_window
 You can check an individual `_replicator` document for conflicts,
 as shown in the following example:
 
-```
+```http
 GET https://myaccount.cloudant.com/_replicator/<<docid>>?conflicts=true
 ```
-{:screen}
+{:codeblock}
 
 <div id="resetting-replicator-database"></div>
 
@@ -732,7 +733,7 @@ simply delete then recreate the `replicator` database.
 
 _Example of removing and recreating the `_replicator` database, using HTTP:_
 
-```
+```http
 DELETE /_replicator HTTP/1.1
 HOST: myaccount.cloudant.com
 Authorization: ...
@@ -741,15 +742,15 @@ PUT /_replicator HTTP/1.1
 HOST: myaccount.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example of removing and recreating the `_replicator` database, using the command line:_
 
-```
+```shell
 curl -X DELETE 'https://myaccount.cloudant.com/_replicator'
 curl -X PUT 'https://myaccount.cloudant.com/_replicator'
 ```
-{:screen}
+{:codeblock}
 
 ### Many simultaneous replications
 

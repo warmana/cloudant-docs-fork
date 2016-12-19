@@ -43,22 +43,22 @@ and contain only the following characters:
  
 _Example of creating a database, using HTTP:_
 
-```
+```http
 PUT /$DATABASE HTTP/1.1
 HOST: $ACCOUNT.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example of creating a database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$ACCOUNT.cloudant.com/$DATABASE -X PUT
 ```
-{:screen}
+{:codeblock}
 
 _Example of creating a database, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -68,7 +68,7 @@ account.db.create($DATABASE, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 <div id="response"></div>
 
@@ -85,14 +85,14 @@ Code | Description
 
 _Example response following successful creation of a database:_
 
-```
+```http
 HTTP/1.1 201 Created
 
 {
 	ok": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Database topology
 
@@ -119,22 +119,22 @@ such as how many documents it contains.
 
 _Example of getting database details, using HTTP:_
 
-```
+```http
 GET /$DATABASE HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of getting database details, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example of getting database details, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -144,6 +144,7 @@ account.db.get($DATABASE, function (err, body, headers) {
 	}
 });
 ```
+{:codeblock}
 
 The elements of the returned structure are shown in the following table:
 
@@ -184,7 +185,7 @@ _Example response containing (abbreviated) database details:_
 	"instance_start_time": "0"
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="get-databases"></div>
 
@@ -195,22 +196,22 @@ send a `GET` request to `https://$USERNAME.cloudant.com/_all_dbs`.
 
 _Example request to list all databases, using HTTP:_
 
-```
+```http
 GET /_all_dbs HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all databases, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_all_dbs \
      -u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all databases, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -220,7 +221,7 @@ account.db.list(function (err, body, headers) {
   }
 });
 ```
-{:screen}
+{:codeblock}
 
 The response is a JSON array with all the database names.
 
@@ -235,7 +236,7 @@ _Example response:_
 	"locations"
 ]
 ```
-{:screen}
+{:codeblock}
 
 ## Get Documents
 
@@ -269,21 +270,21 @@ it might be easier to use `POST` rather than `GET` if you require a large number
 
 _Example request to list all documents in a database, using HTTP:_
 
-```
+```http
 GET /_all_docs HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all documents in a database, using the command line:_
 
-```
+```shell
 curl https://%USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_all_docs
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all documents in a database, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -294,22 +295,22 @@ db.list(function (err, body, headers) {
   }
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all documents in a database that match at least one of the specified keys, using HTTP:_
 
-```
+```http
 GET /_all_docs?keys=["somekey","someotherkey"] HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all documents in a database that match at least one of the specified keys,
 using the command line:_
 
-```
+```shell
 curl https://%USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_all_docs?keys=["somekey","someotherkey"]
 ```
-{:screen}
+{:codeblock}
 
 The response is a JSON object containing all documents in the database matching the parameters.
 The following table describes the meaning of the individual fields:
@@ -352,7 +353,7 @@ _Example response after requesting all documents in a database:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Get Changes
 
@@ -387,22 +388,22 @@ Argument       | Description | Supported Values | Default
 
 _Example request to get list of changes made to documents in a database, using HTTP:_
 
-```
+```http
 GET /$DATABASE/_changes HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get list of changes made to documents in a database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_changes \
      -u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get list of changes made to documents in a database, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -412,7 +413,7 @@ account.db.changes($DATABASE, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 ### Changes in a distributed database
 
@@ -500,15 +501,9 @@ _Example (abbreviated) responses from a continuous changes feed:_
 	"deleted": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ### The `filter` argument
-
-The `filter` argument designates a pre-defined
-[filter function](design_documents.html#filter-functions) to apply to the changes feed.
-Additionally, there is a built-in filter available:
-
--	`_design`: The `_design` filter accepts only changes to design documents.
 
 The `filter` argument designates a pre-defined
 [filter function](design_documents.html#filter-functions) to apply to the changes feed.
@@ -597,7 +592,7 @@ _Example (abbreviated) response to a `_changes` request:_
 	"pending": 0
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Important notes about `_changes`
 
@@ -639,19 +634,19 @@ the same as using `GET`.
 
 _Example of `POST`ing to the `_changes` endpoint, using HTTP:_
 
-```
+```http
 POST /$DB/_changes?filter=_selector HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of `POST`ing to the `_changes` endpoint, using the command line:_
 
-```
+```shell
 curl -X POST "https://$USERNAME.cloudant.com/$DB/_changes?filter=_selector" -d @request.json
 ```
-{:screen}
+{:codeblock}
 
 _Example of a JSON object `POST`ed to the `_changes` endpoint:_
 
@@ -660,7 +655,7 @@ _Example of a JSON object `POST`ed to the `_changes` endpoint:_
 	"selector": {"z" : {"$gte" : 1}}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Deleting a database
 
@@ -671,24 +666,24 @@ send a `DELETE` request to `https://$USERNAME.cloudant.com/$DATABASE`.
 
 _Example request to delete a Cloudant database, using HTTP:_
 
-```
+```http
 DELETE /$DATABASE HTTP/1.1
 Host: $USERNAME.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example request to delete a Cloudant database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE \
 	-X DELETE \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to delete a Cloudant database, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 
@@ -698,7 +693,7 @@ account.db.destroy($DATABASE, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 The response confirms successful deletion of the database or describes any errors that occurred,
 for example if you try to delete a database that does not exist.
@@ -710,7 +705,7 @@ _Example response:_
 	"ok": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Backing up your data
 

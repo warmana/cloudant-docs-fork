@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -44,7 +44,7 @@ The possible values for the `_replication_state` are:
 
 _Example replication document, prior to being `PUT` into `_replicator`:_
 
-```
+```json
 {
 	"_id": "my_rep",
 	"source":  "https://username:password@myserver.com:5984/fromthis",
@@ -52,11 +52,11 @@ _Example replication document, prior to being `PUT` into `_replicator`:_
 	"create_target":  true
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of automatic update to replication document, updated once replication starts:_
 
-```
+```json
 {
 	"_id": "my_rep",
 	"source": "https://username:password@myserver.com:5984/fromthis",
@@ -67,7 +67,7 @@ _Example of automatic update to replication document, updated once replication s
 	"_replication_state_time": "2011-06-07T16:54:35+01:00"
 }
 ```
-{:screen}
+{:codeblock}
 
 When the replication finishes,
 it updates the `_replication_state` field with the value `completed`,
@@ -75,7 +75,7 @@ and the `_replication_state_time` field with the time that the completion status
 
 _Example of automatic update to replication document, updated once replication starts:_
 
-```
+```json
 {
 	"_id": "my_rep",
 	"source": "https://username:password@myserver.com:5984/fromthis",
@@ -86,7 +86,7 @@ _Example of automatic update to replication document, updated once replication s
 	"_replication_state_time": "2011-06-07T16:56:21+01:00"
 }
 ```
-{:screen}
+{:codeblock}
 
 A continuous replication can never have a `completed` state.
 
@@ -103,13 +103,13 @@ The replication process uses the supplied values for HTTP Basic Authentication.
 
 _Example of specifying username and password values for accessing source and target databases during replication:_
 
-```
+```json
 {
 	"source": "https://username:password@example.com/db", 
 	"target": "https://username:password@username.cloudant.com/db"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Filtered Replication
 
@@ -132,18 +132,18 @@ the document is replicated.
 
 _A simple example of a filter function:_
 
-```
+```javascript
 function(doc, req) {
 	return !!(doc.type && doc.type == "foo");
 }
 ```
-{:screen}
+{:codeblock}
 
 Filters are stored under the topmost `filters` key of the design document.
 
 _A simple example of storing a filter function in a design document:_
 
-```
+```json
 {
 	"_id": "_design/myddoc",
 	"filters": {
@@ -151,7 +151,7 @@ _A simple example of storing a filter function in a design document:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 A filtered replication is invoked by using a JSON statement that identifies:
 
@@ -161,21 +161,21 @@ A filtered replication is invoked by using a JSON statement that identifies:
 
 _Example JSON for invoking a filtered replication:_
 
-```
+```json
 {
 	"source": "http://username:password@example.org/example-database",
 	"target": "http://username:password@username.cloudant.com/example-database",
 	"filter": "myddoc/myfilter"
 }
 ```
-{:screen}
+{:codeblock}
 
 Arguments can be supplied to the filter function by
 including key:value pairs in the `query_params` field of the invocation.
 
 _Example JSON for invoking a filtered replication with supplied parameters:_
 
-```
+```json
 {
 	"source": "http://username:password@example.org/example-database",
 	"target": "http://username:password@username.cloudant.com/example-database",
@@ -185,7 +185,7 @@ _Example JSON for invoking a filtered replication with supplied parameters:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Named Document Replication
 
@@ -198,14 +198,14 @@ add the list of keys as an array in the `doc_ids` field.
 
 _Example replication of specific documents:_
 
-```
+```json
 {
 	"source": "http://username:password@example.org/example-database",
 	"target": "http://username:password@127.0.0.1:5984/example-database",
 	"doc_ids": ["foo", "bar", "baz"]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Replicating through a proxy
 
@@ -214,14 +214,14 @@ provide the proxy details in the `proxy` field of the replication data.
 
 _Example showing replication through a proxy:_
 
-```
+```json
 {
 	"source": "http://username:password@username.cloudant.com/example-database",
 	"target": "http://username:password@example.org/example-database",
 	"proxy": "http://my-proxy.com:8888"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## The `user_ctx` property and delegations
 
@@ -253,7 +253,8 @@ The same principle also applies for roles.
 
 _Example delegated replication document:_
 
-```{
+```json
+{
 	"_id": "my_rep",
 	"source":  "https://username:password@myserver.com:5984/foo",
 	"target":  "https://username:password@username.cloudant.com/bar",
@@ -264,7 +265,7 @@ _Example delegated replication document:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 For admins,
 the `user_ctx` property is optional.
@@ -280,7 +281,7 @@ for admins,
 the `user_ctx` property can be used to trigger a replication on behalf of another user.
 This user context is passed to local target database document validation functions.
 
-> **Note**: The `user_ctx` property only has an effect for local endpoints.
+>   **Note**: The `user_ctx` property only has an effect for local endpoints.
 
 In summary,
 for admins the `user_ctx` property is optional,
@@ -328,7 +329,7 @@ by including them in the replication document.
 
 _Example of including performance options in a replication document:_
 
-```
+```json
 {
 	"source": "https://username:password@example.com/example-database",
 	"target": "https://username:password@example.org/example-database",
@@ -337,7 +338,7 @@ _Example of including performance options in a replication document:_
 	"http_connections": 30
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Attachments
 

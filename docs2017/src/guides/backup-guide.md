@@ -236,36 +236,36 @@ You can specify the format used in the response by using the `format` parameter.
 _Example of requesting the backup task configuration for the user,
 returning results in a list format (default), using HTTP:_
 
-```
+```http
 GET /_api/v2/backup/task HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of requesting the backup task configuration for the user,
 returning results in a list format (default), using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/backup/task \
     -X GET
 ```
-{:screen}
+{:codeblock}
 
 _Example of requesting the backup task configuration for the user,
 returning results in a mapping format, using HTTP:_
 
-```
+```http
 GET /_api/v2/backup/task?format=mapping HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of requesting the backup task configuration for the user,
 returning results in a mapping format, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping \
      -X GET
 ```
-{:screen}
+{:codeblock}
 
 The default response format is a list.
 You can request this format directly by using the `...backup/task?format=list` parameter.
@@ -274,12 +274,12 @@ The response contains a simple list of the backup tasks defined for the user.
 For example,
 you might request a list format response using either of the following commands:
 
-```
+```http
 https://$USERNAME.cloudant.com/_api/v2/backup/task
 
 https://$USERNAME.cloudant.com/_api/v2/backup/task?format=list
 ```
-{:screen}
+{:codeblock}
 
 _Example response following a list format request:_
 
@@ -307,17 +307,17 @@ _Example response following a list format request:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 A more comprehensive response is available in the mapping format.
 You can request this format directly by using the `...backup/task?format=mapping` parameter.
 
 For example, you might request a mapping format response using the following command:
 
-```
+```http
 https://$USERNAME.cloudant.com/_api/v2/backup/task?format=mapping
 ```
-{:screen}
+{:codeblock}
 
 _Example response following a mapping format request:_
 
@@ -343,7 +343,7 @@ _Example response following a mapping format request:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Determining backup tasks for specific databases
 
@@ -356,18 +356,18 @@ such as the [database listing](#list-of-databases).
 
 _Example command to find backup tasks for the `backuptest` and `taskdb` database, using HTTP:_
 
-```
+```http
 GET /_api/v2/backup/task?databases=backuptest,taskdb HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example command to find backup tasks for the `backuptest` and `taskdb` database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/backup/task?databases=backuptest,taskdb \
     -X GET
 ```
-{:screen}
+{:codeblock}
 
 _Example response to finding backup tasks for specific databases:_
 
@@ -389,7 +389,7 @@ _Example response to finding backup tasks for specific databases:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 ### List of databases
 
@@ -403,18 +403,18 @@ the `monitor` request returns the full document content for each backup database
 
 _Retrieving the list of databases created by a backup task, that contain a specific document, using HTTP:_
 
-```
+```http
 GET /_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Retrieving the list of databases created by a backup task, that contain a specific document, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/backup/monitor/$TASKNAME/$DOCID?include_docs=true \
     -X GET
 ```
-{:screen}
+{:codeblock}
 
 ### Restore a document
 
@@ -436,21 +436,21 @@ The `$FREQUENCY` is one of the following four values:
 
 _Example of request to restore a document, using HTTP:_
 
-```
+```http
 POST /_api/v2/backup/restore/document --data=@RESTORE.json HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of request to restore a document from the most recent version held in a specific backup database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/backup/restore/document --data=@RESTORE.json \
     -X POS \
     -H "Content-Type: application/json" \
     -d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Example of a JSON document requesting that a document be restored
 from the most recent version held in a specific backup database:_
@@ -463,7 +463,7 @@ from the most recent version held in a specific backup database:_
     "frequency": $FREQUENCY
 }
 ```
-{:screen}
+{:codeblock}
 
 ## How backup using incremental replication works
 
@@ -511,18 +511,18 @@ of the replication document in the `_replicator` database.
 _Example request to get the checkpoint ID of the last incremental backup,
 for a database called `original`, using HTTP:_
 
-```
+```http
 GET /_replicator/original HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get the checkpoint ID of the last incremental backup,
 for a database called `original`, using the command line:_
 
+```shell
+replication_id=$(curl "${url}/_replicator/original" | jq -r '._replication_id')
 ```
-$ replication_id=$(curl "${url}/_replicator/original" | jq -r '._replication_id')
-```
-{:screen}
+{:pre}
 
 ### Get the `recorded_seq` value
 
@@ -532,17 +532,17 @@ the first element of the history array in the `/_local/${replication_id}` docume
 
 _Example of getting the `recorded_seq` value from a database called `original`, using HTTP:_
 
-```
+```http
 GET /original/_local/${replication_id} HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of getting the `recorded_seq` value from a database called `original`, using the command line:_
 
+```shell
+recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
 ```
-$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
-```
-{:screen}
+{:pre}
 
 ### Run an incremental backup
 
@@ -551,18 +551,18 @@ you can start the new incremental backup.
 
 _Example of starting a new incremental backup, to an incremental database called `newbackup`, using HTTP:_
 
-```
+```http
 PUT /_replicator/newbackup HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of starting a new incremental backup, to an incremental database called `newbackup`, using the command line:_
 
-```
+```shell
 curl -X PUT "${url}/_replicator/newbackup" -H "${ct}" -d @newbackup.json
 ```
-{:screen}
+{:codeblock}
 
 _Example of JSON file specifyin an incremental backup:_
 
@@ -574,7 +574,7 @@ _Example of JSON file specifyin an incremental backup:_
     "since_seq": "${recorded_seq}"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Known limitations
 

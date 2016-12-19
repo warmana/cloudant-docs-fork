@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -36,7 +36,7 @@ _Example design document defining a search index:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Index functions
 
@@ -56,29 +56,29 @@ and which is specified in the Lucene syntax portion of subsequent queries.
 For example,
 when using the query:
 
-```
+```text
 query=color:red
 ```
-{:screen}
+{:codeblock}
 
 `color` is the Lucene field name specified as the first parameter of the `index` function.
 
 The `query` parameter can be abbreviated to `q`,
 so another way of writing the query is as follows:
 
-```
+```text
 q=color:red
 ```
-{:screen}
+{:codeblock}
 
 If the special value `"default"` is used when defining the name,
 you do not have to specify a field name at query time.
 The effect is that the query can be simplified:
 
-```
+```text
 query=red
 ```
-{:screen}
+{:codeblock}
 
 The second parameter is the data to be indexed.
 
@@ -96,7 +96,7 @@ the index data for the document is not returned in response to a query.
 
 _Example search index function:_
 
-```
+```javascript
 function(doc) {
 	index("default", doc._id);
 	if (doc.min_length) {
@@ -113,7 +113,7 @@ function(doc) {
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Index Guard Clauses
 
@@ -127,12 +127,12 @@ _before_ attempting to create the corresponding index.
 
 _Example of failing to check if the index data field exists:_
 
-```
+```javascript
 if (doc.min_length) {
 	index("min_length", doc.min_length, {"store": true});
 }
 ```
-{:screen}
+{:codeblock}
 
 You might use the Javascript `typeof` function to perform the guard clause test.
 If the field exists _and_ has the expected type,
@@ -155,24 +155,24 @@ remember that Javascript considers a result to be false if one of the following 
 _Using a guard clause to check if the required data field exists, and holds a number,
 before attempting to index:_
 
-```
+```javascript
 if (typeof(doc.min_length) === 'number') {
 	index("min_length", doc.min_length, {"store": true});
 }
 ```
-{:screen}
+{:codeblock}
 
 A generic guard clause simply tests to ensure that the type of the candidate data field is defined.
 
 _Example of a 'generic' guard clause:_
 
-```
+```javascript
 if (typeof(doc.min_length) !== 'undefined') {
 	// The field exists, and does have a type, so we can proceed to index using it.
 	...
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Analyzers
 
@@ -203,7 +203,7 @@ _Example analyzer document:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Language-Specific Analyzers
 
@@ -276,7 +276,7 @@ _Example of defining different analyzers for different fields:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Stop Words
 
@@ -307,7 +307,7 @@ _Example of defining non-indexed ('stop') words:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Testing analyzer tokenization
 
@@ -315,21 +315,21 @@ You can test the results of analyzer tokenization by posting sample data to the 
 
 _Example test of the `keyword` analyzer, using HTTP:_
 
-```
+```http
 Host: <account>.cloudant.com
 POST /_search_analyze HTTP/1.1
 Content-Type: application/json
 {"analyzer":"keyword", "text":"ablanks@renovations.com"}
 ```
-{:screen}
+{:codeblock}
 
 _Example test of the `keyword` analyzer, using the command line:_
 
-```
+```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
 	-d '{"analyzer":"keyword", "text":"ablanks@renovations.com"}'
 ```
-{:screen}
+{:codeblock}
 
 _Result of testing the `keyword` analyzer:_
 
@@ -340,25 +340,25 @@ _Result of testing the `keyword` analyzer:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example test of the `standard` analyzer, using HTTP:_
 
-```
+```http
 Host: <account>.cloudant.com
 POST /_search_analyze HTTP/1.1
 Content-Type: application/json
 {"analyzer":"standard", "text":"ablanks@renovations.com"}
 ```
-{:screen}
+{:codeblock}
 
 _Example test of the `standard` analyzer, using the command line:_
 
-```
+```shell
 curl 'https://<account>.cloudant.com/_search_analyze' -H 'Content-Type: application/json'
 	-d '{"analyzer":"standard", "text":"ablanks@renovations.com"}'
 ```
-{:screen}
+{:codeblock}
 
 _Result of testing the `standard` analyzer:_
 
@@ -370,7 +370,7 @@ _Result of testing the `standard` analyzer:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Queries
 
@@ -381,24 +381,24 @@ Specify your search query in the `query` query parameter.
 
 _Example query of an index, using HTTP:_
 
-```
+```http
 GET /$DATABASE/_design/$DESIGN_DOC/_search/$INDEX_NAME?include_docs=true\&query="*:*"\&limit=1 HTTP/1.1
 Content-Type: application/json
 Host: account.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example query of an index, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGN_DOC/_search/$INDEX_NAME?include_docs=true\&query="*:*"\&limit=1 \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example query of an index, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -411,7 +411,7 @@ db.search($DESIGN_ID, $SEARCH_INDEX, {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 ### Query Parameters
 
@@ -460,19 +460,19 @@ Each parameter in the previous table corresponds to a field in the JSON object i
 
 _Example search request sending `POST`, using HTTP:_
 
-```
+```http
 POST /db/_design/ddoc/_search/searchname HTTP/1.1
 Content-Type: application/json
 Host: account.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example search request sending `POST`, using the command line:_
 
-```
+```shell
 curl 'https://account.cloudant.com/db/_design/ddoc/_search/searchname' -X POST -H 'Content-Type: application/json' -d @search.json
 ```
-{:screen}
+{:codeblock}
 
 _Example search request specified in JSON document:_
 
@@ -483,7 +483,7 @@ _Example search request specified in JSON document:_
     "limit": 3
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Query Syntax
 
@@ -495,7 +495,7 @@ as demonstrated in the following examples:
 
 > Example search query expressions:
 
-```
+```text
 // Birds
 class:bird
 
@@ -526,7 +526,7 @@ diet:(herbivore OR omnivore) AND class:mammal
 // Return all results
 *:*
 ```
-{:screen}
+{:codeblock}
 
 Queries over multiple fields can be logically combined,
 and groups and fields can be further grouped.
@@ -577,10 +577,10 @@ making it quick and easy to get the next set of results.
 
 The following characters require escaping if you want to search on them:
 
-```
+```text
 + - && || ! ( ) { } [ ] ^ " ~ * ? : \ /
 ```
-{:screen}
+{:codeblock}
 
 To escape one of these characters,
 use a preceding backslash character (`\`).
@@ -608,13 +608,13 @@ set `{"facet": true}` in its options.
 
 _Example of search query, specifying that faceted search is enabled:_
 
-```
+```javascript
 function(doc) {
     index("type", doc.type, {"facet": true});
     index("price", doc.price, {"facet": true});
 }
 ```
-{:screen}
+{:codeblock}
 
 >   **Note**: In order to use facets,
     all the documents in the index must include all the fields that have faceting enabled.
@@ -628,13 +628,13 @@ function(doc) {
 
 _Example `if` statement to verify that the required fields exist in each document:_
 
-```
+```javascript
 if (typeof doc.town == "string" && typeof doc.name == "string") {
         index("town", doc.town, {facet: true});
         index("town", doc.town, {facet: true});
     }
 ```
-{:screen}
+{:codeblock}
 
 ### Counts
 
@@ -652,10 +652,10 @@ and returns the number of query results for each unique value of each named fiel
 
 _Example query showing use of the `counts` facet syntax:_ 
 
-```
+```http
 ?q=*:*&counts=["type"]
 ```
-{:screen}
+{:codeblock}
 
 _Example response after requesting use of the `counts` facet syntax:_
 
@@ -673,7 +673,7 @@ _Example response after requesting use of the `counts` facet syntax:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Drilldown
 
@@ -706,10 +706,10 @@ Exclusive range queries are denoted by curly brackets (`{`, `}`).
 
 _Example of a request for matching `ranges`, using faceted search:_
 
-```
+```http
 ?q=*:*&ranges={"price":{"cheap":"[0 TO 100]","expensive":"{100 TO Infinity}"}}
 ```
-{:screen}
+{:codeblock}
 
 _Example results after performing a `ranges` check on a faceted search:_
 
@@ -726,7 +726,7 @@ _Example results after performing a `ranges` check on a faceted search:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Geographical searches
 
@@ -762,11 +762,11 @@ _Example geographical data:_
     "type":"city"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example of a design document containing a search index for the geographic data:_
 
-```
+```javascript
 function(doc) {
     if (doc.type && doc.type == 'city') {
         index('city', doc.name, {'store': true});
@@ -775,22 +775,22 @@ function(doc) {
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 _An example query that sorts cities in the northern hemisphere by their distance to New York, using HTTP:_
 
-```
+```http
 GET /examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>" HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _An example query that sorts cities in the northern hemisphere by their distance to New York, the command line:_
 
-```
+```shell
 curl 'https://$ACCOUNT.cloudant.com/examples/_design/cities-designdoc/_search/cities?q=lat:[0+TO+90]&sort="<distance,lon,lat,-74.0059,40.7127,km>"'
 ```
-{:screen}
+{:codeblock}
 
 _Example (abbreviated) response, containing a list of northern hemisphere cities sorted by distance to New York:_
 
@@ -838,6 +838,7 @@ _Example (abbreviated) response, containing a list of northern hemisphere cities
     ]
 }
 ```
+{:codeblock}
 
 ## Highlighting Search Terms
 
@@ -871,19 +872,19 @@ you receive an array of fragments with the search term highlighted.
 
 _Example search query with highlighting enabled, using HTTP:_
 
-```
+```http
 GET /movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=["movie_name"]&highlight_pre_tag="<b>"&highlight_post_tag="</b>"&highlights_size=30&highlights_number=2 HTTP/1.1
 HOST: <account>.cloudant.com
 Authorization: ...
 ```
-{:screen}
+{:codeblock}
 
 _Example search query with highlighting enabled, using the command line:_
 
-```
+```shell
 curl "https://$user:$password@$account.cloudant.com/movies/_design/searches/_search/movies?q=movie_name:Azazel&highlight_fields=\[\"movie_name\"\]&highlight_pre_tag=\"<b>\"&highlight_post_tag=\"</b>\"&highlights_size=30&highlights_number=2
 ```
-{:screen}
+{:codeblock}
 
 _Example of highlighted search results:_
 
@@ -897,7 +898,7 @@ _Example of highlighted search results:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Search index metadata
 
@@ -909,18 +910,18 @@ and `INDEX` is the name of the index.
 
 _Example request for search index metadata, using HTTP:_
 
-```
+```http
 GET /<DATABASE>/_design/<DDOC>/_search_info/<INDEX> HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request for search index metadata, using the command line:_
 
-```
+```shell
 curl "https://$ACCOUNT.cloudant.com/$DATABASE/_design/$DDOC/_search_info/$INDEX" \
      -X GET -u "$USERNAME:$PASSWORD"
 ```
-{:screen}
+{:codeblock}
 
 The response contains information about your index,
 such as the number of documents in the index and the size of the index on disk.
@@ -939,4 +940,4 @@ _Example response following a request for search index metadata:_
     }
 }
 ```
-{:screen}
+{:codeblock}

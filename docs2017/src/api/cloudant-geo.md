@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-14"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -55,10 +55,10 @@ defined by a series of points.
 
 _Example of a relationship using a geospatial polygon:_
 
-```
+```text
 relation=contains&g=POLYGON ((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
 ```
-{:screen}
+{:codeblock}
 
 The basic steps for working with geospatial data in Cloudant Geo are as follows:
 
@@ -143,7 +143,7 @@ It must contain two fields: `type` and `coordinates`, where:
 
 _An example GeoJSON document:_
 
-```
+```json
 {
 	"_id": "79f14b64c57461584b152123e38a6449",
 	"type": "Feature",
@@ -163,7 +163,7 @@ _An example GeoJSON document:_
 	..}
 }
 ```
-{:screen}
+{:codeblock}
 
 More information about GeoJSON,
 including the full specification,
@@ -188,7 +188,7 @@ and if found ensures that the document is included in the `st_index` Cloudant Ge
 
 _An example Cloudant Geo design document, containing an index:_
 
-```
+```json
 {
 	"_id": "_design/geodd",
 	"st_indexes": {
@@ -198,7 +198,7 @@ _An example Cloudant Geo design document, containing an index:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Geospatial indexing
 
@@ -222,19 +222,19 @@ held within the `geodd` design document of the `crimes` database.
 
 _Example request, using HTTP:_
 
-```
+```http
 GET /crimes/_design/geodd/_geo_info/geoidx HTTP/1.1
 Host: $USERNAME.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/crimes/_design/geodd/_geo_info/geoidx \
      -u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 The data returned within the `geo_index` portion of the JSON response includes
 the following fields:
@@ -247,7 +247,7 @@ Field | Description
 
 _Example response in JSON format:_
 
-```
+```json
 {
 	"name": "_design/geodd/geoidx",
 	"geo_index": {
@@ -257,7 +257,7 @@ _Example response in JSON format:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Querying a Cloudant Geo index
 
@@ -270,10 +270,10 @@ _	Result set.
 
 _Example format for a Cloudant Geo API call:_
 
-```
+```http
 /<database>/_design/<name>/_geo/<geoindexname>?<query-parameters>
 ```
-{:screen}
+{:codeblock}
 
 ### Query Geometry
 
@@ -289,38 +289,38 @@ Parameter | Description
 
 _Example of a `bbox` query:_
 
-```
+```http
 ?bbox=-11.05987446,12.28339928,-101.05987446,62.28339928
 ```
-{:screen}
+{:codeblock}
 
 _Example of an `ellipse` query:_
 
-```
+```http
 ?lat=-11.05987446&lon=12.28339928&rangex=200&rangey=100
 ```
-{:screen}
+{:codeblock}
 
 _Example of a `radius` query:_
 
-```
+```http
 ?lat=-11.05987446&lon=12.28339928&radius=100
 ```
-{:screen}
+{:codeblock}
 
 _Example of a `point` query:_
 
-```
+```http
 ?g=point(-71.0537124 42.3681995)
 ```
-{:screen}
+{:codeblock}
 
 _Example of a `polygon` query:_
 
-```
+```http
 ?g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
 ```
-{:screen}
+{:codeblock}
 
 >	**Note**: Cloudant Geo uses `intersects` as the default geometric relation
 when executing a query with query geometry only.
@@ -361,10 +361,10 @@ Relation                | Description
 
 _An example of returning all geometries which are contained by a `polygon`:_
 
-```
+```http
 ?relation=contains&g=polygon((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))
 ```
-{:screen}
+{:codeblock}
 
 ### Nearest neighbor search
 
@@ -381,10 +381,10 @@ by issuing the query in the following example.
 
 _Example query to find nearest five crimes against a given location:_
 
-```
+```http
 https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?g=POINT(-71.0537124 42.3681995)&nearest=true&limit=5
 ```
-{:screen}
+{:codeblock}
 
 >	**Note**: The `nearest=true` search can change the semantics of a Cloudant Geo search.
 For example,
@@ -415,14 +415,14 @@ These examples show the available results based on the options you specify for t
 
 _Example query to return results with `format=legacy`:_
 
-```
+```shell
 curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=legacy&lat=42.3397&lon=-71.07959&radius=10'
 ```
-{:screen}
+{:codeblock}
 
 _Example response to the query:_
 
-```
+```json
 {
 	"bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIzLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
 	"features": [
@@ -433,18 +433,18 @@ _Example response to the query:_
 	"type": "FeatureCollection"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example query to return results with `format=view`:_
 
-```
+```shell
 curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=view&lat=42.3397&lon=-71.07959&radius=10'
 ```
-{:screen}
+{:codeblock}
 
 _Example response to the query:_
 
-```
+```json
 {
 	"bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIxLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
 	"rows": [
@@ -461,18 +461,18 @@ _Example response to the query:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example query to return results with `format=geojson` or `format=application/vnd.geo+json`:_
 
-```
+```shell
 curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?format=geojson&lat=42.3397&lon=-71.07959&radius=10'
 ```
-{:screen}
+{:codeblock}
 
 _Example response to the query:_
 
-```
+```json
 {
 	"bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIyLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
 	"features": [
@@ -492,7 +492,7 @@ _Example response to the query:_
 	"type": "FeatureCollection"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Example: Querying a Cloudant Geo index
 
@@ -516,14 +516,14 @@ you use the `contains` relation.
 
 _Example query to find documents that have a geospatial position within a circle:_
 
-```
+```shell
 curl -X GET 'https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?lat=42.3397&lon=-71.07959&radius=10&relation=contains&format=geojson'
 ```
-{:screen}
+{:codeblock}
 
 _Example response to the query:_
 
-```
+```json
 {
 	"bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIyLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM4YThlOGJGPv4LlS19_ztq",
 	"features": [
@@ -543,7 +543,7 @@ _Example response to the query:_
 	"type": "FeatureCollection"
 }
 ```
-{:screen}
+{:codeblock}
 
 ### A polygon query
 
@@ -557,14 +557,14 @@ and then request that the query return details of documents within the database 
 
 _Example query to find documents that have a geospatial position within a polygon:
 
-```
+```http
 https://education.cloudant.com/crimes/_design/geodd/_geo/geoidx?g=POLYGON((-71.0537124 42.3681995,-71.054399 42.3675178,-71.0522962 42.3667409,-71.051631 42.3659324,-71.051631 42.3621431,-71.0502148 42.3618577,-71.0505152 42.3660275,-71.0511589 42.3670263,-71.0537124 42.3681995))&relation=contains&format=geojson
 ```
-{:screen}
+{:codeblock}
 
 _Example response to the query:_
 
-```
+```json
 {
 	"bookmark": "g2wAAAABaANkAB9kYmNvcmVAZGIzLmJpZ2JsdWUuY2xvdWRhbnQubmV0bAAAAAJuBAAAAADAbgQA_____2poAm0AAAAgNzlmMTRiNjRjNTc0NjE1ODRiMTUyMTIzZTM5MjQ1MTZGP1vW7X5qnWhq",
 	"features": [
@@ -596,4 +596,4 @@ _Example response to the query:_
 	"type": "FeatureCollection"
 }
 ```
-{:screen}
+{:codeblock}

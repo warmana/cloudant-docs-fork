@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-12"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -63,14 +63,14 @@ The list also includes metadata such as the number of key:value pairs returned.
 
 _Example of a simple view, using a map function:_
 
-```
+```javascript
 function(employee) {
 	if(employee.training) {
 		emit(employee.number, employee.training);
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Sample data for demonstrating the simple view example:_
 
@@ -92,7 +92,7 @@ _Sample data for demonstrating the simple view example:_
     }
 ]
 ```
-{:screen}
+{:codeblock}
 
 _Example response from running the simple view query:_
 
@@ -114,7 +114,7 @@ _Example response from running the simple view query:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Map function examples
 
@@ -126,14 +126,14 @@ This check allows you to query against the value of the `foo` field.
 
 _Example of indexing a field:_
 
-```
+```javascript
 function(doc) {
 	if (doc.foo) {
 		emit(doc._id, doc.foo);
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### An index for a one to many relationship
 
@@ -142,7 +142,7 @@ a view query with `include_docs` set to `true` contains the document with the gi
 
 _Example of indexing a one to many relationship:_
 
-```
+```javascript
 function(doc) {
 	if (doc.friends) {
 		for (friend in friends) {
@@ -151,7 +151,7 @@ function(doc) {
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Complex Keys
 
@@ -186,12 +186,12 @@ Reduce functions are passed three arguments in the following order:
 
 _Example of a reduce function:_
 
-```
+```javascript
 function (keys, values, rereduce) {
 	return sum(values);
 }
 ```
-{:screen}
+{:codeblock}
 
 Reduce functions must handle two cases:
 
@@ -259,20 +259,20 @@ and is available within the `views` field of the design document.
 _Example of `PUT`ting a view into a design document called `training`,
 using HTTP:_
 
-```
+```http
 PUT /$DATABASE/_design/training HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of `PUT`ting a view into a design document called `training`,
 using the command line:_
 
-```
+```shell
 curl -X PUT https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_design/training --data-binary @view.def
 	# where the design document is stored in the file `view.def`
 ```
-{:screen}
+{:codeblock}
 
 _Example view definition:_
 
@@ -285,4 +285,4 @@ _Example view definition:_
 	}
 }
 ```
-{:screen}
+{:codeblock}

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -55,25 +55,25 @@ that the `$ATTACHMENT` value for each attachment is unique within the document.
 
 _Example instruction for creating or updating an attachment, using HTTP:_
 
-```
+```HTTP
 PUT /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
 Content-Type: $$ATTACHMENT_MIME_TYPE
 ```
-{:screen}
+{:codeblock}
 
 _Example instruction for creating or updating an attachment, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
 	 -X PUT \
 	 -H "Content-Type: $ATTACHMENT_MIME_TYPE" \
 	 --data-binary @$ATTACHMENT_FILEPATH
 ```
-{:screen}
+{:codeblock}
 
 _Example instruction for creating or updating an attachment, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var fs = require('fs');
 var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
@@ -90,7 +90,7 @@ fs.readFile($FILEPATH, function (err, data) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 The response contains the document ID and the new document revision.
 
@@ -100,14 +100,14 @@ updating or creating an attachment changes the revision of the document it is at
 
 _Example response:_
 
-```
+```json
 {
 	"id" : "FishStew",
 	"ok" : true,
 	"rev" : "9-247bb19a41bfd9bfdaf5ee6e2e05be74"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Read
 
@@ -117,23 +117,23 @@ The body of the response is the raw content of the attachment.
 
 _Example of reading an attachment, using HTTP:_
 
-```
+```http
 GET /$DATABASE/$DOCUMENT_ID/$ATTACHMENT HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of reading an attachment, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT \
 	 -u $USERNAME >blob_content.dat
 # store the response content into a file for further processing.
 ```
-{:screen}
+{:codeblock}
 
 _Example of reading an attachment, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
 var db = account.use($DATABASE);
@@ -143,7 +143,7 @@ db.attachment.get($DOCUMENT_ID, $FILENAME, function (err, body) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 ## Delete
 
@@ -155,23 +155,23 @@ the response is a [409 error](http.html#409).
 
 _Example of deleting an attachment, using HTTP:_
 
-```
+```http
 DELETE /$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of deleting an attachment, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID/$ATTACHMENT?rev=$REV \
 	-u $USERNAME \
 	-X DELETE
 ```
-{:screen}
+{:codeblock}
 
 _Example of deleting an attachment, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
 var db = account.use($DATABASE);
@@ -181,7 +181,7 @@ db.attachment.destroy($DOCUMENT_ID, $FILENAME, $REV, function (err, body) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 If the deletion is successful,
 the response contains `"ok": true`,
@@ -189,14 +189,14 @@ and the ID and new revision of the document.
 
 _Example response after successfuly deleting an attachment:_
 
-```
+```json
 {
 	"ok": true,
 	"id": "DocID",
 	"rev": "3-aedfb06537c1d77a087eb295571f7fc9"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Inline
 
@@ -209,7 +209,7 @@ A full list of media types is available
 
 _Example JSON document that includes an inline attachment of a jpeg image:_
 
-```
+```json
 {
 	"_id":"document_with_attachment",
 	"_attachments":
@@ -221,7 +221,7 @@ _Example JSON document that includes an inline attachment of a jpeg image:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Performance considerations
 

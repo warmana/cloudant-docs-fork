@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 {:new_window: target="_blank"}
@@ -31,22 +31,22 @@ you might get a [503 'service unavailable' error](http.html#503).
 
 _Example of connecting to your Cloudant account, using HTTP:_
 
-```
+```HTTP
 GET / HTTP/1.1
 HOST: $USERNAME.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example of connecting to your Cloudant account, using the command line:_
 
-```
+```shell
 curl -u $USERNAME https://$USERNAME.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example of connecting to your Cloudant account, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
 account.request(function (err, body) {
@@ -55,18 +55,18 @@ account.request(function (err, body) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example of connecting to your Cloudant account, using Python:_
 
-```
+```python
 import cloudant
 account = cloudant.Account(USERNAME)
 ping = account.get()
 print ping.status_code
 # Expected return code: 200
 ```
-{:screen}
+{:codeblock}
 
 ## CORS
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -32,22 +32,22 @@ The `vendor.cloudant_build` field contains the build number of Cloudant's CouchD
 
 _Example request to get server meta information, using HTTP:_
 
-```
+```HTTP
 GET / HTTP/1.1
 HOST: $ACCOUNT.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get server meta information, using the command line:_
 
-```
+```shell
 curl https://$ACCOUNT.cloudant.com/
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get server meta information, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -58,11 +58,11 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON response:_
 
-```
+```json
 {
 	"couchdb": "Welcome",
 	"version": "2.0.0",
@@ -76,7 +76,7 @@ _Example JSON response:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /_db_updates`
 
@@ -105,22 +105,22 @@ timeout | Number of milliseconds to wait for data in a `longpoll` or `continuous
 
 _Example request to get a list of changes to the database, using HTTP:_
 
-```
+```HTTP
 GET /_db_updates HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get a list of changes to the database, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_db_updates \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to get a list of changes to the database, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -131,11 +131,11 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"results": [{
 		"dbname": "$DATABASE_NAME",
@@ -146,7 +146,7 @@ _Example response:_
 	"last_seq": "673-g1AAAAJAeJyN0Et..."
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /$DATABASE/_shards`
 
@@ -158,22 +158,22 @@ Each value is the array of nodes containing that a copy of that shard.
 
 _Example request, using HTTP:_
 
-```
+```HTTP
 GET /$DATABASE/_shards HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_shards \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -185,11 +185,11 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"shards": {
 		"00000000-3fffffff": [
@@ -215,7 +215,7 @@ _Example response:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /$DATABASE/_missing_revs`
 
@@ -225,7 +225,7 @@ the `/$DATABASE/_missing_revs` endpoint returns a list of the document revisions
 The list of document revisions is supplied in a JSON document,
 similar to the following example:
 
-```
+```json
 {
 	"$DOCUMENT_ID": [
 		"$REV_1",
@@ -233,30 +233,30 @@ similar to the following example:
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using HTTP:_
 
-```
+```HTTP
 GET /$DATABASE/_missing_revs HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_missing_revs \
 	 -X POST \
 	 -u "$USERNAME:$PASSWORD" \
 	 -H "Content-Type: application/json" \
 	 -d @request-body.json
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -271,11 +271,11 @@ function (err, body) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"missed_revs":{
 		"$DOCUMENT_ID": [
@@ -284,7 +284,7 @@ _Example response:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `POST /$DATABASE/_revs_diff`
 
@@ -294,7 +294,7 @@ the `/$DATABASE/_revs_diff` endpoint returns the subset of those that do not cor
 The list of document revision IDs is supplied in a JSON document,
 similar to the following example:
 
-```
+```json
 {
 	"190f721ca3411be7aa9477db5f948bbb": [
 		"3-bb72a7682290f94a985f7afac8b27137",
@@ -303,29 +303,29 @@ similar to the following example:
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using HTTP:_
 
-```
+```HTTP
 POST /$DATABASE/_revs_diff HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request, from the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_revs_diff \
 	-X POST \
 	-u $USERNAME \
 	-d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -339,11 +339,11 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"190f721ca3411be7aa9477db5f948bbb": {
 		"missing": [
@@ -356,7 +356,7 @@ _Example response:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /$DATABASE/_revs_limit`
 
@@ -369,23 +369,23 @@ Cloudant deletes the tombstones of the oldest revisions.
 
 _Example request, using HTTP:_
 
-```
+```HTTP
 GET /$DATABASE/_revs_limit HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_revs_limit \
 	-X GET \
 	-u "$USERNAME:$PASSWORD"
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -396,14 +396,14 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```text
 1000
 ```
-{:screen}
+{:codeblock}
 
 ## `PUT /$DATABASE/_revs_limit`
 
@@ -416,24 +416,24 @@ Cloudant deletes the tombstones of the oldest revisions.
 
 _Example request, using HTTP:_
 
-```
+```HTTP
 PUT /$DATABASE/_revs_limit HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_revs_limit \
 	-u $USERNAME \
 	-X PUT \
 	-d 500
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -446,16 +446,16 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"ok": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /_membership`
 
@@ -471,22 +471,22 @@ regardless of whether they are active or not.
 
 _Example request to list nodes in the cluster, using HTTP:_
 
-```
+```http
 GET /_membership HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list nodes in the cluster, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_membership \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list nodes in the cluster, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -497,7 +497,7 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 ### Response structure
 
@@ -508,7 +508,7 @@ Field name      | Description
 
 _Example response:_
 
-```
+```json
 {
 	"cluster_nodes": [
 		"dbcore@db1.testy004.cloudant.net",
@@ -522,7 +522,7 @@ _Example response:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## `GET /_uuids`
 
@@ -539,22 +539,22 @@ Argument | Description               | Optional | Type
 
 _Example request for a single UUID, using HTTP:_
 
-```
+```HTTP
 GET /_uuids HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request for a single UUID, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_uuids \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request for a single UUID, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -565,37 +565,37 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response to a request for a single UUID:_
 
-```
+```json
 {
 	"uuids" : [
 		"7e4b5a14b22ec1cf8e58b9cdd0000da3"
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example request for five UUIDs, using HTTP:_
 
-```
+```HTTP
 GET /_uuids?count=5 HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request for five UUIDs, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_uuids?count=5 \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request for five UUIDs, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -606,11 +606,11 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response to a request for five UUIDs:_
 
-```
+```json
 {
 	"uuids" : [
 		"c9df0cdf4442f993fc5570225b405a80",
@@ -621,4 +621,4 @@ _Example response to a request for five UUIDs:_
 	]
 }
 ```
-{:screen}
+{:codeblock}

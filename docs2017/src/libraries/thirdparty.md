@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -31,10 +31,10 @@ To install the library,
 open up the Package manager console,
 and invoke:
 
-```
+```text
 install-package mycouch.cloudant
 ```
-{:screen}
+{:codeblock}
 
 ### Libraries and Frameworks
 
@@ -59,10 +59,10 @@ To install,
 download `sag` from [https://github.com/sbisbee/sag](https://github.com/sbisbee/sag){:new_window},
 then include the library in your application:
 
-```
+```text
 require_once('./src/Sag.php');
 ```
-{:screen}
+{:codeblock}
 
 ### Libraries and Frameworks
 
@@ -121,10 +121,10 @@ with extensions for working with Rails using [CouchRest Model](https://github.co
 To install CouchRest,
 run the command:
 
-```
+```shell
 gem install couchrest
 ```
-{:screen}
+{:codeblock}
 
 ### Libraries and Frameworks
 
@@ -146,10 +146,10 @@ you must provide a URL for Meteor to connect
 to a running CouchDB or Cloudant server instance before you install Meteor.
 Add this package to your Meteor application:
 
-```
+```shell
 meteor add cloudant:couchdb
 ```
-{:screen}
+{:codeblock}
 
 The couchdb-meteor package provides:
 
@@ -166,10 +166,10 @@ The couchdb-meteor package provides:
 To configure the Apache CouchDB or Cloudant server connection information,
 pass its URL as the `COUCHDB_URL` environment variable to the Meteor server process:
 
-```
+```shell
 $ export COUCHDB_URL=https://username:password@username.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 See the [API Reference](../api/index.html) for more information about meteor-couchdb APIs. 
 

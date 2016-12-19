@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -124,12 +124,12 @@ This example shows how to:
 
 ### Constants used in this guide
 
-```
+```shell
 # save base URL and the content type in shell variables
 $ url='https://<username>:<password>@<username>.cloudant.com'
 $ ct='Content-Type: application-json'
 ```
-{:screen}
+{:codeblock}
 
 Assume you need to back up one database.
 You want to create a full backup on Monday,
@@ -152,22 +152,22 @@ you require three databases:
 
 _Example showing how to check you have three databases to use with this example, using HTTP:_
 
-```
+```http
 PUT /original HTTP/1.1
 PUT /backup-monday HTTP/1.1
 PUT /backup-tuesday HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example showing how to check you have three databases to use with this example,
 using the command line:_
 
-```
+```shell
 $ curl -X PUT "${url}/original"
 $ curl -X PUT "${url}/backup-monday"
 $ curl -X PUT "${url}/backup-tuesday"
 ```
-{:screen}
+{:codeblock}
 
 ### Step 2: Create the `_replicator` database
 
@@ -175,17 +175,17 @@ If it does not exist, create the `_replicator` database.
 
 _Creating the `_replicator` database, using HTTP:_
 
-```
+```http
 PUT /_replicator HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Creating the `_replicator` database, using the command line:_
 
+```shell
+curl -X PUT "${url}/_replicator"
 ```
-$ curl -X PUT "${url}/_replicator"
-```
-{:screen}
+{:pre}
 
 ### Step 3: Back up the entire (original) database
 
@@ -195,19 +195,19 @@ Do this by replicating everything from `original` to `backup-monday`.
 
 _Running a full backup on Monday, using HTTP:_
 
-```
+```http
 PUT /_replicator/full-backup-monday HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Running a full backup on Monday, using the command line:_
 
-```
+```shell
 $ curl -X PUT "${url}/_replicator/full-backup-monday" -H "$ct" -d @backup-monday.json
 # where backup-monday.json describes the required backup.
 ```
-{:screen}
+{:codeblock}
 
 _JSON document describing the required full backup:_
  
@@ -218,7 +218,7 @@ _JSON document describing the required full backup:_
     "target": "${url}/backup-monday"
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="step-4-get-checkpoint-id"></div>
 
@@ -244,18 +244,18 @@ within the `_replicator` database.
 
 _Getting the checkpoint ID to help find the `recorded_seq` value, using HTTP:_
 
-```
+```http
 GET /_replicator/backup-monday HTTP/1.1
 # Search for the value of _replication_id
 ```
-{:screen}
+{:codeblock}
 
 _Getting the checkpoint ID to help find the `recorded_seq` value, using the command line:_
 
+```shell
+replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
 ```
-$ replication_id=$(curl "${url}/_replicator/backup-monday" | jq -r '._replication_id')
-```
-{:screen}
+{:pre}
 
 <div id="step-5-get-recorded_seq-value"></div>
 
@@ -271,18 +271,18 @@ This tells you the last document replicated from the original database.
 
 _Getting the `recorded_seq` from original database, using HTTP:_
 
-```
+```http
 GET /original/_local/${replication_id} HTTP/1.1
 # Search for the first value of recorded_seq in the history array
 ```
-{:screen}
+{:codeblock}
 
 _Getting the `recorded_seq` from original database, using the command line:_
 
+```shell
+recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
 ```
-$ recorded_seq=$(curl "${url}/original/_local/${replication_id}" | jq -r '.history[0].recorded_seq')
-```
-{:screen}
+{:pre}
 
 ### Step 6: Run an incremental backup
 
@@ -297,18 +297,18 @@ and may be restored by retrieving the content of both the `backup-monday` _and_ 
 
 _Running Tuesday's incremental backup, using HTTP:_
 
-```
+```http
 PUT /_replicator/incr-backup-tuesday HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Running Tuesday's incremental backup, using the command line:_
 
+```shell
+curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
 ```
-$ curl -X PUT "${url}/_replicator/incr-backup-tuesday" -H "${ct}" -d @backup-tuesday.json
-```
-{:screen}
+{:pre}
 
 _JSON document describing Tuesday's incremental backup:_
  
@@ -320,7 +320,7 @@ _JSON document describing Tuesday's incremental backup:_
     "since_seq": "${recorded_seq}"
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Step 7: Restore the Monday backup
 
@@ -335,18 +335,18 @@ you would replicate from the `backup-monday` database.
 
 _Restoring from the `backup-monday` database, using HTTP:_
 
-```
+```shell
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Restoring from the `backup-monday` database, using the command line:_
 
+```shell
+curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
 ```
-$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
-```
-{:screen}
+{:pre}
 
 _JSON document describing the required restore:_
  
@@ -358,7 +358,7 @@ _JSON document describing the required restore:_
     "create-target": true  
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Step 8: Restore the Tuesday backup
 
@@ -375,18 +375,18 @@ older versions of the document stored in the Monday database are ignored.
 
 _Restoring Tuesday's backup, getting the latest changes first, using HTTP:_
 
-```
+```http
 PUT /_replicator/restore-tuesday HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Restoring Tuesday's backup, getting the latest changes first, using the command line:_
 
+```shell
+curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.json
 ```
-$ curl -X PUT "${url}/_replicator/restore-tuesday" -H "$ct" -d @restore-tuesday.json
-```
-{:screen}
+{:pre}
 
 _JSON document requesting restoration of the Tuesday backup:_
  
@@ -398,22 +398,22 @@ _JSON document requesting restoration of the Tuesday backup:_
     "create-target": true  
 }
 ```
-{:screen}
+{:codeblock}
 
 _Complete the recovery by restoring Monday's backup last, using HTTP:_
 
-```
+```http
 PUT /_replicator/restore-monday HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Complete the recovery by restoring Monday's backup last, using the command line:_
 
+```http
+curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
 ```
-$ curl -X PUT "${url}/_replicator/restore-monday" -H "$ct" -d @restore-monday.json
-```
-{:screen}
+{:pre}
 
 _JSON document requesting restoration of the Monday backup:_
  
@@ -424,7 +424,7 @@ _JSON document requesting restoration of the Monday backup:_
     "target": "${url}/restore"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Best practices
 
@@ -466,7 +466,7 @@ _Example of JSON document setting the IO priority:_
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="design-documents"></div>
 

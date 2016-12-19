@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -33,22 +33,22 @@ with each task being described with a single object.
 
 _Example request to retrieve list of active tasks using HTTP:_
 
-```
+```HTTP
 GET /_active_tasks HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to retrieve list of active tasks, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_active_tasks \
 	-u $USERNAME
 ```
-{:screen}
+{:codeblock}
 
 _Example request to retrieve list of active tasks using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano('https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com');
 account.request({
@@ -59,7 +59,7 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 The returned structure includes the following fields for each task:
 
@@ -88,7 +88,7 @@ The meaning of other fields in the JSON response depends on the type of the task
 _Example JSON response array,
 containing details of currently running tasks:_
 
-```
+```json
 [
 	{
 		"user": null,
@@ -162,7 +162,7 @@ containing details of currently running tasks:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### Specific response fields for compaction tasks
 

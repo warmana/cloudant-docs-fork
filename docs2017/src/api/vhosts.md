@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -34,18 +34,18 @@ and any virtual path associated with each host.
 
 _Example request to list all vhosts, using HTTP:_
 
-```
+```http
 GET /_api/v2/user/virtual_hosts HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example request to list all vhosts, using the command line:_
 
-```
+```shell
 curl "https://$ACCOUNT.cloudant.com/_api/v2/user/virtual_hosts"
 ```
-{:screen}
+{:codeblock}
 
 _Example response, list all vhosts:_
 
@@ -63,7 +63,7 @@ _Example response, list all vhosts:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Creating a virtual host
 
@@ -84,14 +84,14 @@ POST /_api/v2/user/virtual_hosts HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request for creating a vhost, using the command line:_
 
-```
+```shell
 curl "https://$ACCOUNT.cloudant.com/_api/v2/user/virtual_hosts" -X POST -d '@vhost.json' -H 'Content-Type: application/json'
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON describing the required vhost:_
 
@@ -101,7 +101,7 @@ _Example JSON describing the required vhost:_
     "path": "/_api/v2/user/virtual_hosts"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example response to request for a vhost:_
 
@@ -110,7 +110,7 @@ _Example response to request for a vhost:_
   "ok": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Deleting a virtual host
 
@@ -122,19 +122,19 @@ as shown in the following example.
 
 _Example request for deleting a vhost, using HTTP:_
 
-```
+```http
 DELETE /_api/v2/user/virtual_hosts HTTP/1.1
 Host: $ACCOUNT.cloudant.com
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request for deleting a vhost, using the command line:_
 
-```
+```shell
 curl "https://account.cloudant.com/_api/v2/user/virtual_hosts" -X DELETE -d '@vhost.json' -H 'Content-Type: application/json'
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON describing the vhost to delete:_
 
@@ -143,7 +143,7 @@ _Example JSON describing the vhost to delete:_
   "host": "www.example.com"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example response to vhost delete request:_
 
@@ -152,4 +152,4 @@ _Example response to vhost delete request:_
   "ok": true
 }
 ```
-{:screen}
+{:codeblock}

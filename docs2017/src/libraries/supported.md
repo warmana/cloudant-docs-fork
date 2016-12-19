@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -68,10 +68,10 @@ along with details and examples of how to use the library.
 is the official Cloudant library for Node.js.
 You can install it with npm:
 
-```
+```shell
 npm install cloudant
 ```
-{:screen}
+{:codeblock}
 
 ### Libraries and Frameworks
 
@@ -115,10 +115,10 @@ and is installed using `cocoapods`.
 
 The Podfile entry is:
 
-```
+```shell
 pod 'SwiftCloudant'
 ```
-{:screen}
+{:codeblock}
 
 More information about SwiftCloudant,
 including details of installation and how to use the library to store,

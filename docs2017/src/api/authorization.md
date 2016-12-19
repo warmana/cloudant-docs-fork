@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -46,21 +46,21 @@ send a `GET` request to `https://$USERNAME.cloudant.com/_api/v2/db/$DATABASE/_se
 
 _Example request to determine permissions, using HTTP:_
 
-```
+```http
 GET /_api/v2/db/$DATABASE/_security HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to determine permissions, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/_api/v2/db/$DATABASE/_security
 ```
-{:screen}
+{:codeblock}
 
 _Example request to determine permissions, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 account.request({
@@ -74,7 +74,7 @@ account.request({
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 The `cloudant` field in the response object contains an object with keys that are the usernames
 that have permission to interact with the database.
@@ -88,7 +88,7 @@ This means that the database is publicly readable.
 
 _Example response to request for permissions:_
 
-```
+```json
 {
 	"cloudant": {
 		"antsellseadespecteposene": [
@@ -108,7 +108,7 @@ _Example response to request for permissions:_
 	"_id": "_security"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Modifying Permissions
 
@@ -121,25 +121,25 @@ see [Roles](#roles).
 
 _Example of sending an authorization modification request, using HTTP:_
 
-```
+```http
 PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of sending an authorization modification request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/db/$DATABASE/_security \
 	-X PUT \
 	-H "Content-Type: application/json" \
 	-d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Example of sending an authorization modification request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 account.request(
@@ -156,7 +156,7 @@ account.request(
 	}
 );
 ```
-{:screen}
+{:codeblock}
 
 The request must provide a document in JSON format,
 describing a `cloudant` field.
@@ -170,7 +170,7 @@ This authorization makes the database publicly readable.
 
 _Example of an authorization modification request document:_
 
-```
+```json
 {
 	"cloudant": {
 		"antsellseadespecteposene": [
@@ -189,18 +189,18 @@ _Example of an authorization modification request document:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 The response tells you whether the update has been successful.
 
 _Example response following an authorization modification request:_
 
-```
+```json
 {
 	"ok" : true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Creating API Keys
 
@@ -237,21 +237,21 @@ as described in the [IBM Knowledge Center](http://www-01.ibm.com/support/knowled
 
 _Example request to create an API key, using HTTP:_
 
-```
+```http
 POST https://<username>.cloudant.com/_api/v2/api_keys HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example request to create an API key, using the command line:_
 
-```
+```shell
 curl -X POST https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/api_keys
 ```
-{:screen}
+{:codeblock}
 
 _Example request to create an API key, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://$USERNAME:$PASSWORD@cloudant.com");
 account.request(
@@ -267,20 +267,20 @@ account.request(
 	}
 );
 ```
-{:screen}
+{:codeblock}
 
 The response contains the generated key and password.
 
 _Example response to request for an API key:_
 
-```
+```json
 {
 	"password": "YPNCaIX1sJRX5upaL3eqvTfi",
 	"ok": true,
 	"key": "blentfortedsionstrindigl"
 }
 ```
-{:screen}
+{:codeblock}
 
 When you have generated an API key,
 you can assign the API key to a database by sending a `PUT` request to
@@ -326,25 +326,25 @@ For example, `https://<username>.cloudant.com/<database>/_security`.
 
 _Example submission of a modification request, using HTTP:_
 
-```
+```http
 PUT /$DATABASE/_security HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example submission of a modification request, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_security \
 	-X PUT \
 	-H "Content-Type: application/json" \
 	-d @request-body.json
 ```
-{:screen}
+{:codeblock}
 
 _Example modification request, in JSON format:_
 
-```
+```json
 {
 	"couchdb_auth_only": true,
 	"members": {
@@ -355,13 +355,13 @@ _Example modification request, in JSON format:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
-```
+```json
 {
 	"ok" : true
 }
 ```
-{:screen}
+{:codeblock}

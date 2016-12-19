@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -47,7 +47,7 @@ _Example of a simple data document:_
     "ts": 1422358827
 }
 ```
-{:screen}
+{:codeblock}
 
 Each data document includes a name,
 a body,
@@ -66,7 +66,7 @@ function(doc) {
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 The function emits the document's timestamp so that we can use it as the key to the index;
 as we are not interested in the value in the index,
@@ -94,7 +94,7 @@ _Example design document that defines a view using a map function:_
     "language": "javascript"
 }
 ```
-{:screen}
+{:codeblock}
 
 The result is that our map code has been turned into a JSON-compatible string,
 and included in a Design Document.
@@ -178,7 +178,7 @@ _Example design document that uses a reduce function:_
     "language": "javascript"
 }
 ```
-{:screen}
+{:codeblock}
 
 When this design document is saved,
 Cloudant completely invalidates the old index and begins building the new index from scratch,
@@ -255,30 +255,30 @@ It can be installed as follows.
 
 _Command to install the Node.js `couchmigrate` script:_
 
-```
+```shell
 npm install -g couchmigrate
 ```
-{:screen}
+{:codeblock}
 
 To use the `couchmigrate` script,
 first define the URL of the CouchDB/Cloudant instance by setting an environment variable called `COUCH_URL`.
 
 _Defining the URL of the a Cloudant instance:_
 
-```
+```shell
 export COUCH_URL=http://127.0.0.1:5984
 ```
-{:screen}
+{:codeblock}
 
 The URL can be HTTP or HTTPS,
 and can include authentication credentials.
 
 _Defining the URL of the Cloudant instance with authentication credentials:_
 
-```
+```shell
 export COUCH_URL=https://myusername:mypassword@myhost.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 Assuming we have a design document in JSON format,
 stored in a file,
@@ -290,10 +290,10 @@ and `dd` specifies the path to our Design Document file.
 
 _Running the `couchmigrate` command:_
 
-```
+```shell
 couchmigrate --db mydb --dd /path/to/my/dd.json
 ```
-{:screen}
+{:pre}
 
 The script coordinates the 'move and switch' procedure,
 waiting until the view is built before returning.

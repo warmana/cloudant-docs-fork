@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -90,7 +90,7 @@ _Example document describing a purchase:_
     "total": 26.46
 }
 ```
-{:screen}
+{:codeblock}
 
 This document provides enough data for a purchase record to render a summary of an order on a web page,
 or an email,
@@ -153,7 +153,7 @@ _Example of a payment record:_
     "payment_reference": "Q88775662377224"
 }
 ```
-{:screen}
+{:codeblock}
 
 In the previous example,
 the customer paid by supplying a credit card and redeeming a pre-paid voucher.
@@ -170,7 +170,7 @@ A map function could be used to identify the required values.
 
 _Example map function to find purchase total and payment values:_ 
 
-```
+```javascript
 function (doc) {
     if (doc.type === 'purchase') {
         emit(doc.order_id, doc.total);
@@ -181,7 +181,7 @@ function (doc) {
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 Using the built-in [`_sum` reducer](../api/creating_views.html#built-in-reduce-functions)
 enables you to produce output as a ledger of payment events.
@@ -209,7 +209,7 @@ _Example of using the built-in `_sum` reducer, queried with `?reduce=false`:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 Alternatively,
 you could produce totals grouped by `order_id`.
@@ -226,7 +226,7 @@ _Example of totals grouped by `order_id`, with `?group_level=1`:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 Since the view in previous example returns 0 for the order value,
 the result indicates that the order is fully paid.

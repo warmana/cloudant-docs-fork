@@ -45,7 +45,7 @@ _Example of JSON document attempting to create a topmost field with an underscor
 	"_top_level_field_name": "some data"
 }
 ```
-{:screen}
+{:codeblock}
 
 _Error message returned when attempting to create a topmost field with an underscore prefix:_
 
@@ -55,7 +55,7 @@ _Error message returned when attempting to create a topmost field with an unders
 	"reason": "Bad special document member: _top_level_field_name"
 }
 ```
-{:screen}
+{:codeblock}
 
 However,
 if the field name is for an object _nested within_ the document,
@@ -71,7 +71,7 @@ _Example of JSON document attempting to create a field with an underscore prefix
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example success message (abbreviated) returned when creating a nested field with an underscore prefix:_
 
@@ -82,7 +82,7 @@ _Example success message (abbreviated) returned when creating a nested field wit
 	"rev": "1-9ce...8d4"
 }
 ```
-{:screen}
+{:codeblock}
 
 Cloudant uses an [eventually consistent](../guides/cap_theorem.html#consistency) model for data.
 This means that under some conditions,
@@ -103,25 +103,25 @@ send a `POST` request with the document's JSON content to `https://$USERNAME.clo
 
 _Creating a document, using HTTP:_
 
-```
+```http
 POST /$DATABASE HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Creating a document, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE \
 	-X POST \
 	-H "Content-Type: application/json" \
 	-d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Creating a document, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -132,7 +132,7 @@ db.insert($JSON, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example document, specified using JSON:_
 
@@ -147,7 +147,7 @@ _Example document, specified using JSON:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 The response is a JSON document containing the ID of the created document,
 the revision string,
@@ -169,7 +169,7 @@ _Example response after successfully creating a document:_
 	"rev":"1-2902191555"
 }
 ```
-{:screen}
+{:codeblock}
 
 >	**Note**: If the write [quorum](#quorum) cannot be met when creating a document,
 a [`202` response](http.html#202) is returned.
@@ -198,21 +198,21 @@ This also applies to other read requests such as to map-reduce and search indexe
 
 _Example of retrieving a document, using HTTP:_
 
-```
+```http
 GET /$DATABASE/$DOCUMENT_ID HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of retrieving a document, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID
 ```
-{:screen}
+{:codeblock}
 
 _Example of retrieving a document, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -223,7 +223,7 @@ db.get($JSON._id, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 The response contains the document you requested or a description of the error if the document could not be retrieved.
 
@@ -241,7 +241,7 @@ _Example response:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Query Parameters
 
@@ -291,25 +291,25 @@ in which case you do not need to supply the latest `_rev` value.
 
 _Example of updating a document, using HTTP:_
 
-```
+```http
 PUT /$DATABASE/$DOCUMENT_ID HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of updating a document, using the command line:_
 
-```
-// make sure $JSON contains the correct `_rev` value!
+```shell
+# make sure $JSON contains the correct `_rev` value!
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID \
 	-X PUT \
 	-H "Content-Type: application/json" \
 	-d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Example of updating a document, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -323,7 +323,7 @@ db.insert($JSON, $JSON._id, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example of JSON data containing an updated document:_
 
@@ -340,7 +340,7 @@ _Example of JSON data containing an updated document:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 The response contains the ID and the new revision of the document,
 or an error message if the update failed.
@@ -354,7 +354,7 @@ _Example response following a successful update:_
 	"rev":"2-9176459034"
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="document-delete"></div>
 
@@ -384,22 +384,22 @@ which is used to look up documents by their ID.
 
 _Example of a delete request, using HTTP:_
 
-```
+```http
 DELETE /$DATABASE/$DOCUMENT_ID?rev=$REV HTTP/1.1
 ```
-{:screen}
+{:codeblock}
 
 _Example of a delete request, using the command line:_
 
-```
-// make sure $JSON contains the correct `_rev` value!
+```shell
+# make sure $JSON contains the correct `_rev` value!
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID?rev=$REV -X DELETE
 ```
-{:screen}
+{:codeblock}
 
 _Example of a delete request, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://"+$USERNAME+":"+$PASSWORD+"@"+$USERNAME+".cloudant.com");
 var db = account.use($DATABASE);
@@ -411,7 +411,7 @@ db.destroy($JSON._id, $REV, function (err, body, headers) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example response following a successful deletion request:_
 
@@ -422,7 +422,7 @@ _Example response following a successful deletion request:_
 	"rev" : "3-2719fd4118"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## 'Tombstone' documents
 
@@ -476,7 +476,7 @@ _Example filter to exclude deleted documents during a replication:_
 	}
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Advanced removal of tombstone documents
 
@@ -542,7 +542,7 @@ a suitable `validate_doc_update` function would work as follows:
 
 _Example `validate_doc_update` function to reject deleted documents not already present in the target database:_
 
-```
+```javascript
 function(newDoc, oldDoc, userCtx) {
 	// any update to an existing doc is OK
 	if(oldDoc) {
@@ -557,7 +557,7 @@ function(newDoc, oldDoc, userCtx) {
 	return; // Not strictly necessary, but clearer.
 }
 ```
-{:screen}
+{:codeblock}
 
 To use a `validate-doc-update` function to remove tombstone documents:
 
@@ -639,25 +639,25 @@ Field      | Description                             | Type    | Optional
 
 _Example request to create, update, or delete multiple documents, using HTTP:_
 
-```
+```http
 POST /$DATABASE/_bulk_docs HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request to create, update, or delete multiple documents, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DATABASE/_bulk_docs \
 	-X POST \
 	-H "Content-Type: application/json" \
 	-d "$JSON"
 ```
-{:screen}
+{:codeblock}
 
 _Example request to create, update, or delete multiple documents, using Javascript:_
 
-```
+```javascript
 var nano = require('nano');
 var account = nano("https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com");
 var db = account.use($DATABASE);
@@ -668,7 +668,7 @@ db.bulk($JSON, function (err, body) {
 	}
 });
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON describing the update, creation, and deletion of three documents in one bulk request:_
 
@@ -695,7 +695,7 @@ _Example JSON describing the update, creation, and deletion of three documents i
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="response"></div>
 
@@ -728,7 +728,7 @@ _Example response from a bulk request:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### Inserting documents in bulk
 
@@ -772,7 +772,7 @@ _Example JSON for a bulk insert of three documents:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 The return code from a successful bulk insertion is [`201`](http.html#201),
 with the content of the returned structure indicating specific success
@@ -780,7 +780,7 @@ or other information messages on a per-document basis.
 
 _Example response header after successful bulk insert of three documents:_
 
-```
+```http
 201 Created
 Cache-Control: must-revalidate
 Content-Length: 269
@@ -789,7 +789,7 @@ Date: Mon, 04 Mar 2013 14:06:20 GMT
 server: CouchDB/1.0.2 (Erlang OTP/R14B)
 x-couch-request-id: e8ff64d5
 ```
-{:screen}
+{:codeblock}
 
 The returned JSON contains a list of the documents created,
 including their revision and ID values.
@@ -817,7 +817,7 @@ _Example response content after successful bulk insert of three documents:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### Updating Documents in Bulk
 
@@ -830,19 +830,19 @@ to each affected document ID and revision combination within the request JSON st
 
 _Example request to perform bulk update, using HTTP:_
 
-```
+```http
 POST /test/_bulk_docs HTTP/1.1
 Accept: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request to perform bulk update, using the command line:_
 
-```
+```shell
 curl -X POST "https://$USERNAME.cloudant.com/$DATABASE/_bulk_docs" \
 	-d @request.json
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON structure to request bulk update of documents:_
 
@@ -882,7 +882,7 @@ _Example JSON structure to request bulk update of documents:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 The return JSON structure summarizes the updated documents,
 with the new revision and ID information.
@@ -905,7 +905,7 @@ _Example JSON structure returned after bulk update:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### Bulk Documents Transaction Semantics
 
@@ -945,7 +945,7 @@ _Example bulk update response with errors:_
 	}
 ]
 ```
-{:screen}
+{:codeblock}
 
 ### Bulk Document Validation and Conflict Errors
 
@@ -991,10 +991,10 @@ to the document during submission has returned an error.
 
 _Example javascript to produce `forbidden` error as part of a validation function:_
 
-```
+```javascript
 throw({forbidden: 'invalid recipe ingredient'});
 ```
-{:screen}
+{:codeblock}
 
 _Example error message from a validation function:_
 
@@ -1005,7 +1005,7 @@ _Example error message from a validation function:_
 	"reason" : "invalid recipe ingredient"
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="quorum"></div>
 

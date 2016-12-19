@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -46,10 +46,10 @@ The [API reference](../api/index.html) has more information about the options.
 
 _Example of obtaining and formatting a list of active tasks:_
 
-```
+```shell
 curl 'https://username:password@username.cloudant.com/_active_tasks' | jq '.'
 ```
-{:screen}
+{:codeblock}
 
 ## Monitoring view builds and search indexes
 
@@ -77,17 +77,17 @@ one for each of the active tasks found.
 
 _Example of finding all view indexing tasks by filtering for the `indexer` type:_
 
-```
+```shell
 curl -s 'https://username:password@username.cloudant.com/_active_tasks' | jq '.[] | select(.type=="indexer")'
 ```
-{:screen}
+{:codeblock}
 
 _Example of finding all search indexing tasks by filtering for the `search_indexer` type:_
 
-```
+```shell
 curl -s 'https://username:password@username.cloudant.com/_active_tasks' | jq '.[] | select(.type=="search_indexer")'
 ```
-{:screen}
+{:codeblock}
 
 _Example results after searching for view indexing tasks:_
 
@@ -105,7 +105,7 @@ _Example results after searching for view indexing tasks:_
     "design_document": "_design/ngrams"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Estimating the time to complete a task
 
@@ -132,10 +132,10 @@ or about 66 minutes,to complete.
 
 _Example of extracting the `changes_done` field using `jq`:_
 
-```
+```shell
 curl ... | jq '.[] | select(.type=="search_indexer") | .changes_done'
 ```
-{:screen}
+{:codeblock}
 
 ## Monitoring replication
 
@@ -149,24 +149,24 @@ and set its `_id` field to a known value.
 
 _Example of finding all replication tasks, by filtering for the `replication` type:_
 
-```
+```shell
 curl -s 'https://username:password@username.cloudant.com/_active_tasks' | jq '.[] | select(.type=="replication")'
 ```
-{:screen}
+{:codeblock}
 
 _Example of finding a specific replication task, by filtering for a known document identity:_
 
-```
+```shell
 curl ... | jq '.[] | select(.doc_id=="ID")'
 ```
-{:screen}
+{:codeblock}
 
 _Example of finding a specific replication task, by filtering for a known `replication_id`:_
 
-```
+```shell
 curl ... | jq '.[] | select(.replication_id=="ID")'
 ```
-{:screen}
+{:codeblock}
 
 _Example result after searching for a replication task:_
 
@@ -193,7 +193,7 @@ _Example result after searching for a replication task:_
     "replication_id": "asfksdlfkjsadkfjsdalkfjas+continuous+create_target"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Troubleshooting
 

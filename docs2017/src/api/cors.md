@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-08"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -98,22 +98,22 @@ The configuration applies to all databases and all account level endpoints in yo
 
 _Example request, using HTTP:_
 
-```
+```http
 PUT /_api/v2/user/config/cors HTTP/1.1
 Host: $USERNAME.cloudant.com
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request, using the command line:_ 
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/user/config/cors \
 	-H 'Content-Type: application/json' \
 	-X PUT \
 	-T cors.json
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON file for setting the CORS configuration:_
 
@@ -127,7 +127,7 @@ _Example JSON file for setting the CORS configuration:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 The response tells you whether the configuration has been updated successfully.
 
@@ -138,7 +138,7 @@ _Example response:_
 	"ok": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Reading the CORS configuration
 
@@ -146,18 +146,18 @@ You can find out the current CORS configuration by sending a `GET` to the `/_api
 
 _Example request to `GET` the current CORS configuration, using HTTP:_
 
-```
+```http
 GET /_api/v2/user/config/cors HTTP/1.1
 Host: username.cloudant.com
 ```
-{:screen}
+{:codeblock}
 
 _Example request to `GET` the current CORS configuration, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/_api/v2/user/config/cors
 ```
-{:screen}
+{:codeblock}
 
 The response is the current CORS configuration in a JSON document.
 
@@ -173,7 +173,7 @@ _Example response:_
 	]
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Dashboard
 

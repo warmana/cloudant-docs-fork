@@ -1,6 +1,6 @@
 copyright:
   years: 2015, 2016
-lastupdated: "2016-11-28"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -41,27 +41,27 @@ This gives us a base64 character sequence as output.
 
 The command to base64-encode some data is similar to the following example:
 
-```
+```python
 python -c 'import base64; print base64.urlsafe_b64encode("<username>:<password>")'
 ```
-{:screen}
+{:codeblock}
 
 We assume that the output is called `<OUTPUT-OF-BASE64>`.
 
 For example,
 if you use the command:
 
-```
+```python
 python -c 'import base64; print base64.urlsafe_b64encode("myusername:mypassword")'
 ```
-{:screen}
+{:codeblock}
 
 You then get the following output:
 
-```
+```text
 bXl1c2VybmFtZTpteXBhc3N3b3Jk
 ```
-{:screen}
+{:codeblock}
 
 >	**Note**: Remember that your password is still stored in plain text on your computer;
 	base64-encoding is _not_ encryption.
@@ -75,10 +75,10 @@ every time we write a `curl` command.
 
 Add the following line to your `~/.bashrc` or `~/.bash_profile`:
 
-```
+```shell
 alias acurl="curl -s --proto '=https' -g -H 'Authorization: Basic <OUTPUT-OF-BASE64>'"
 ```
-{:screen}
+{:codeblock}
 
 This alias adds an Authorization header instead of including the
 authorization credentials in the URL you enter on the command line.
@@ -94,10 +94,10 @@ Now start a new shell or run `source ~/.bash_profile` (or `~/.bashrc` if you use
 Now let's make sure everything is set up correctly.
 Go ahead and run:
 
-```
+```shell
 acurl https://<username>.cloudant.com/_all_dbs
 ```
-{:screen}
+{:codeblock}
 
 If you get the list of your databases back,
 awesome!

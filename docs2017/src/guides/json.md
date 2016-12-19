@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -57,10 +57,10 @@ Numbers can be integer or floating point values.
 
 _Example of a number in JSON format:_
 
-```
+```json
 123
 ```
-{:screen}
+{:codeblock}
 
 ## Strings
 
@@ -68,10 +68,10 @@ String should be enclosed by double-quotes. Strings support Unicode characters a
 
 _Example of a string in JSON format:_
 
-```
+```json
 "A String"
 ```
-{:screen}
+{:codeblock}
 
 ## Booleans
 
@@ -84,7 +84,7 @@ _Example of a boolean in JSON format:_
   "value": true
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Arrays
 
@@ -105,14 +105,14 @@ _Example of an array in JSON format:_
     }
 ]
 ```
-{:screen}
+{:codeblock}
 
 _Example of an array in JSON format (linear):_
 
 ```json
 [ "one", 2, "three", [], true, { "foo": "bar" } ]
 ```
-{:screen}
+{:codeblock}
 
 ## Objects
 
@@ -132,4 +132,4 @@ _Example of a JSON object:_
     "title" : "Chicken Coriander"
 }
 ```
-{:screen}
+{:codeblock}

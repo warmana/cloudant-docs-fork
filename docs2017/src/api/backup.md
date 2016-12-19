@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -32,7 +32,7 @@ having a complete copy of your database for each of the requirements can quickly
 An alternative is to use the IBM Cloudant Incremental Backup feature.
 Incremental backups are a good solution for storing only the documents that have changed since the last backup.
 
-<aside class="warning" role="complementary" aria-label="betaforenterprise">Daily incremental backup for Enterprise customers is currently a Beta capability.
-It is not enabled by default.</aside>
+>   **Note**: Daily incremental backup for Enterprise customers is currently a Beta capability.
+    It is not enabled by default.
 
 You can see more information about Incremental Backups at [Back up your data](../guides/backup-guide.html).

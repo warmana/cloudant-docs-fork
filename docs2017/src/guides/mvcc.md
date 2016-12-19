@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -78,14 +78,14 @@ The following map function is is an example that emits all conflicting revisions
 
 _Example of a map function to find documents with a conflict:_
 
-```
+```javascript
 function (doc) {
     if (doc._conflicts) {
         emit(null, [doc._rev].concat(doc._conflicts));
     }
 }
 ```
-{:screen}
+{:codeblock}
 
 You could regularly query this view and resolve conflicts as needed,
 or query the view after each replication.
@@ -113,7 +113,7 @@ The first version of a document might look like the following example:
     "price": 650
 }
 ```
-{:screen}
+{:codeblock}
 
 As the document doesn't have a description yet,
 someone might add one:
@@ -129,7 +129,7 @@ _Second version of the document, created by adding a description:_
     "price": 650
 }
 ```
-{:screen}
+{:codeblock}
 
 At the same time, someone else - working with a replicated database - reduces the price:
 
@@ -144,7 +144,7 @@ _A different revision, conflicting with the previous one, because of different `
     "price": 600
 }
 ```
-{:screen}
+{:codeblock}
 
 The two databases are then replicated.
 The difference in document versions results in a conflict.
@@ -155,10 +155,10 @@ You identify documents with with conflicts by using the `conflicts=true` option.
 
 _Example of finding documents with conflicts:_
 
-```
+```http
 http://$USERNAME.cloudant.com/products/$_ID?conflicts=true
 ```
-{:screen}
+{:codeblock}
 
 _Example response showing conflicting revisions affecting documents:_
 
@@ -172,7 +172,7 @@ _Example response showing conflicting revisions affecting documents:_
     "_conflicts":["2-61ae00e029d4f5edd2981841243ded13"]
 }
 ```
-{:screen}
+{:codeblock}
 
 The version with the changed price has been chosen arbitrarily as the latest version of the document
 and the conflict with another version is noted by providing the ID of that other version in the `_conflicts` array.
@@ -186,12 +186,12 @@ your application gets all of the versions from the database.
 
 _Example commands to retrieve all versions of a document from the database:_
 
-```
+```http
 http://$USERNAME.cloudant.com/products/$_ID
 http://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
 http://$USERNAME.cloudant.com/products/$_ID?rev=1-7438df87b632b312c53a08361a7c3299
 ```
-{:screen}
+{:codeblock}
 
 Since the conflicting changes are for different fields of the document,
 it is easy to merge them.
@@ -222,7 +222,7 @@ _An example document that merges changes from the two conflicting revisions:_
     "price": 600
 }
 ```
-{:screen}
+{:codeblock}
 
 ### Delete old revisions
 
@@ -231,17 +231,17 @@ you delete the old revisions by sending a `DELETE` request to the URLs with the 
 
 _Example request to delete an old document revision, using HTTP:_
 
-```
+```http
 DELETE https://$USERNAME.cloudant.com/products/$_ID?rev=2-61ae00e029d4f5edd2981841243ded13
 ```
-{:screen}
+{:codeblock}
 
 _Example request to delete an old document revision, using the command line:_
 
-```
+```shell
 curl "https://$USERNAME.cloudant.com/products/$_ID?rev=2-f796915a291b37254f6df8f6f3389121" -X DELETE
 ```
-{:screen}
+{:codeblock}
 
 At this point,
 conflicts affecting the document are resolved.

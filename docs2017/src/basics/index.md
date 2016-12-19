@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -102,7 +102,7 @@ _Example error message in response to an unsupported request:_
     "reason":"Only GET,HEAD allowed"
 }
 ```
-{:screen}
+{:codeblock}
 
 ## JSON
 

@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -58,20 +58,20 @@ Argument         | Description | Optional | Type | Default | Supported values
 
 _Example of retrieving a list of the first five documents from a database, applying the user-created `by_title` view, using HTTP:_
 
-```
+```http
 GET /<database>/_design/<design-doc>/_view/by_title?limit=5 HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of retrieving a list of the first five documents from a database, applying the user-created `by_title` view, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_title?limit=5 \
      -H "Content-Type: application/json"
 ```
-{:screen}
+{:codeblock}
 
 _Example response to request:_
 
@@ -123,7 +123,7 @@ _Example response to request:_
     "total_rows" : 2667
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Indexes
 
@@ -250,20 +250,20 @@ You can reverse the order of the returned view information by setting the `desce
 
 _Example of requesting the last five records in reversed sort order, using HTTP:_
 
-```
+```http
 GET /<database>/_design/<design-doc>/_view/by_title?limit=5&descending=true HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of requesting the last five records in reversed sort order, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_title?limit=5&descending=true \
      -H "Content-Type: application/json"
 ```
-{:screen}
+{:codeblock}
 
 _Example response of requesting the last five records in reversed sort order:_
 
@@ -315,7 +315,7 @@ _Example response of requesting the last five records in reversed sort order:_
     "total_rows" : 2667
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Specifying Start and End Keys
 
@@ -331,20 +331,20 @@ the sorting and filtering do not make sense in combination.
 
 _Example of query including `startkey` and `endkey` query arguments, using HTTP:_
 
-```
+```http
 GET /recipes/_design/recipes/_view/by_ingredient?startkey="alpha"&endkey="beta" HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of query including `startkey` and `endkey` query arguments, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_ingredient?startkey="alpha"&endkey="beta" \
      -H "Content-Type: application/json"
 ```
-{:screen}
+{:codeblock}
 
 For example,
 if you have a database that returns ten results when viewing with a `startkey` of "alpha" and an `endkey` of "beta",
@@ -353,21 +353,21 @@ The reason is that the entries in the view are reversed before the key filter is
 
 _Example illustrating why reversing the order of `startkey` and `endkey` might not yield any results, using HTTP:_
 
-```
+```http
 GET /recipes/_design/recipes/_view/by_ingredient?descending=true&startkey="beta"&endkey="alpha" HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example illustrating why reversing the order of `startkey` and `endkey` might not yield any results,
 using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_ingredient?descending=true&startkey="beta"&endkey="alpha" \
      -H "Content-Type: application/json"
 ```
-{:screen}
+{:codeblock}
 
 The `endkey` of "beta" is seen before the `startkey` of "alpha", resulting in an empty list.
 
@@ -382,7 +382,7 @@ therefore the returned result is empty:_
     "offset" : 21882
 }
 ```
-{:screen}
+{:codeblock}
 
 The solution is to reverse not just the sort order,
 but also the `startkey` and `endkey` parameter values.
@@ -393,20 +393,20 @@ and reversing the `startkey` and `endkey` query arguments.
 
 _Example, using HTTP:_
 
-```
+```http
 GET /recipes/_design/recipes/_view/by_ingredient?descending=true&startkey="egg"&endkey="carrots" HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example, using the command line:_
 
-```
+```shell
 curl https://$USERNAME.cloudant.com/$DATABASE/_design/$DESIGNDOCUMENT/_view/by_ingredient?descending=true&startkey="egg"&endkey="carrots" \
     -H "Content-Type: application/json"
 ```
-{:screen}
+{:codeblock}
 
 ## Querying a view using a list of keys
 
@@ -424,19 +424,19 @@ you can use any of its query parameters.
 _Example request returning all recipes,
 where the key for the view matches either `claret` or `clear apple juice`, using HTTP:_
 
-```
+```http
 POST /$DB/_design/$DDOC/_view/$VIEWNAME HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request returning all recipes,
 where the key for the view matches either `claret` or `clear apple juice`, using the command line:_
 
-```
+```shell
 curl -X POST "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view/$VIEWNAME" -d @request.json
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON document providing the list of keys to use in the query:_
 
@@ -448,7 +448,7 @@ _Example JSON document providing the list of keys to use in the query:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 The response contains the standard view information,
 but only documents where the keys match.
@@ -477,7 +477,7 @@ _Example response after performing a query using a list of keys:_
     "offset" : 6324
 }
 ```
-{:screen}
+{:codeblock}
 
 <div id="include_docs_caveat"></div>
 
@@ -508,20 +508,20 @@ For example,
 in your index function,
 you might use the following design specification:
 
-```
+```javascript
 index("name", doc.name, {"store": true, "index": false});
 ```
-{:screen}
+{:codeblock}
 
 You could use the same approach for view indexes.
 
 _Example request to obtain the full content of documents that match the listed keys, using HTTP:_
 
-```
+```http
 POST /recipes/_design/recipes/_view/by_ingredient?include_docs=true HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON document listing the keys to match:_
 
@@ -533,17 +533,17 @@ _Example JSON document listing the keys to match:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example request to obtain the full content of documents that match the listed keys, using the command line:_
 
-```
+```shell
 curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view/by_ingredient?include_docs=true"
     -X POST \
     -H "Content-Type: application/json" \
     -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
-{:screen}
+{:codeblock}
 
 _Example (abbreviated) response, returning the full document for each recipe that matches a provided key:_
 
@@ -633,7 +633,7 @@ _Example (abbreviated) response, returning the full document for each recipe tha
     "total_rows" : 26484
 }
 ```
-{:screen}
+{:codeblock}
 
 ## Sending several queries to a view
 
@@ -651,19 +651,19 @@ Each result object contains the same fields as the response to a regular view re
 
 _Example request containing several queries, using HTTP:_
 
-```
+```http
 POST /$DB/_design/$DESIGNDOC/_view/$VIEW HTTP/1.1
 Content-Type: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example request containing several queries, using the command line:_
 
-```
+```shell
 curl https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DESIGNDOC/_view/$VIEW -H 'Content-Type: application/json' -d @request-body.json
     # where request-body.json is a file containing JSON data describing the queries
 ```
-{:screen}
+{:codeblock}
 
 _Example JSON document containing several queries:_
 
@@ -680,7 +680,7 @@ _Example JSON document containing several queries:_
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 _Example response:_
 
@@ -752,5 +752,4 @@ _Example response:_
     ]
 }
 ```
-{:screen}
-
+{:codeblock}

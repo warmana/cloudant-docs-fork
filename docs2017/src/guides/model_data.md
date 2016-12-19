@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -148,13 +148,13 @@ For example, take a medical record containing a list of operations:
     ]
 }
 ```
-{:screen}
+{:codeblock}
 
 If Joe is unfortunate enough to be having a lot of operations at the same time, the many 
 concurrent updates to a document is likely to create conflicted documents, as described above. 
 Better to break the operations out into separate documents which refer to Joe's person document 
 and use a view to connect things together. To represent each operation, you’d upload documents 
-like the following:
+like the following two example:
 
 ```json
 {
@@ -163,7 +163,7 @@ like the following:
     "surgery": "heart bypass"
 }
 ```
-{:screen}
+{:codeblock}
 
 ```json
 {
@@ -172,7 +172,7 @@ like the following:
     "surgery": "lumbar puncture"
 }
 ```
-{:screen}
+{:codeblock}
 
 Emitting the `"patient"` field as the key in your view would then allow querying for all 
 operations for a given patient. Again, views are used to help knit together a full picture of 

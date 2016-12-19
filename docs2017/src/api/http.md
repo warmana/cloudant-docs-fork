@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -29,7 +29,7 @@ To reduce the likelihood of problems or unexpected behavior,
 you should be as specific as possible.
 
 ### Request headers
-
+{:screen}
 The supported HTTP request headers include:
 
 *	[`Accept`](#accept)
@@ -62,21 +62,21 @@ GET /recipes HTTP/1.1
 Host: username.cloudant.com
 Accept: */*
 ```
-{:screen}
+{:codeblock}
 
 _Example of a returned header when the client is assumed to accept all formats:_
 
 >	**Note**: The returned content type is `text/plain`
 even though the information returned by the request is in JSON format.
 
-```
+```text
 Server: CouchDB/1.0.2 (Erlang OTP/R14B)
 Date: Thu, 13 Jan 2011 13:39:34 GMT
 Content-Type: text/plain;charset=utf-8
 Content-Length: #7
 Cache-Control: must-revalidate
 ```
-{:screen}
+{:codeblock}
 
 The use of `Accept` in queries to Cloudant is not required,
 but is highly recommended as it helps to ensure that the data returned can be processed by the client.
@@ -89,23 +89,23 @@ the returned HTTP headers use this value in the returned `Content-type` field.
 
 _Example request that explicitly specifies the `Accept` header:_
 
-```
+```http
 GET /recipes HTTP/1.1
 Host: username.cloudant.com
 Accept: application/json
 ```
-{:screen}
+{:codeblock}
 
 _Example of the headers returned in response, including the `application/json` content type:_
 
-```
+```text
 Server: CouchDB/1.0.2 (Erlang OTP/R14B)
 Date: Thu, 13 Jan 2011 13:40:11 GMT
 Content-Type: application/json
 Content-Length: #7
 Cache-Control: must-revalidate
 ```
-{:screen}
+{:codeblock}
 
 #### Content-Type
 
@@ -131,11 +131,11 @@ the request body must be encoded using the corresponding format.
 
 _Example of creating a gzipped request body:_
 
-```
+```shell
 # create gzipped document
 echo '{"foo":"bar"}' | gzip >doc.gzip
 ```
-{:screen}
+{:codeblock}
 
 _Example of sending a gzip-encoded request body to create a document, using HTTP:_
 
@@ -144,17 +144,17 @@ PUT /db/doc HTTP/1.1
 HOST: example.cloudant.com
 Content-Encoding: gzip
 ```
-{:screen}
+{:codeblock}
 
 _Example of sending a gzip-encoded request body to create a document, using the command line:_
 
-```
+```shell
 curl https://example.cloudant.com/db/doc \
 	-X PUT \
 	-T doc.gzip \
 	-H 'Content-Encoding: gzip'
 ```
-{:screen}
+{:codeblock}
 
 #### If-None-Match
 
