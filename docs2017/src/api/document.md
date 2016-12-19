@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-09"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -189,7 +189,7 @@ In particular,
 data that has just been written,
 even by the same client,
 might not be returned from a read request immediately following the write request.
-To work around this behaviour,
+To work around this behavior,
 a client can cache state locally.
 Caching also helps to keep request counts down,
 increase application performance,
@@ -279,15 +279,15 @@ to `https://$USERNAME.cloudant.com/$DATABASE/$DOCUMENT_ID`.
 You can also use this `PUT` method to create a document,
 in which case you do not need to supply the latest `_rev` value.
 
->	**Note**: If you fail to provide the latest `_rev` when updating an existing document,
-Cloudant responds with a [409 error](http.html#409).
-This error prevents you overwriting data changed by other processes.
-If the write [quorum](#quorum) cannot be met, a [`202` response](http.html#202) is returned.
+>   **Note**: If you fail to provide the latest `_rev` when updating an existing document,
+    Cloudant responds with a [409 error](http.html#409).
+    This error prevents you overwriting data changed by other processes.
+    If the write [quorum](#quorum) cannot be met, a [`202` response](http.html#202) is returned.
 
->	**Note**: Any document update can lead to a conflict,
-espescially when replicating updated documents.
-More information about avoiding and resolving conflicts is in
-the [Document Versioning and MVCC guide](../guides/mvcc.html).
+>   **Note**: Any document update can lead to a conflict,
+    especially when replicating updated documents.
+    More information about avoiding and resolving conflicts is in
+    the [Document Versioning and MVCC guide](../guides/mvcc.html).
 
 _Example of updating a document, using HTTP:_
 

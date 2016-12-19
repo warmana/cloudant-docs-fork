@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2016
-lastupdated: "2016-12-12"
+lastupdated: "2016-12-19"
 
 ---
 
@@ -81,7 +81,7 @@ Code | Description
 201  | Database created successfully
 202  | The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
 403  | Invalid database name.
-412  | Database aleady exists.
+412  | Database already exists.
 
 _Example response following successful creation of a database:_
 
@@ -158,7 +158,7 @@ Field                 | Description
 `instance_start_time` | Always 0.
 `other`               | JSON object containing a `data_size` field.
 `purge_seq`           | The number of purge operations on the database.
-`sizes`               | JSON object containing file, external, and active sizes.
+`sizes`               | JSON object containing `file`, `external`, and `active` sizes. `active` is the size in bytes of data stored internally (excluding old revisions). `external` is the size in bytes of uncompressed user data. This is the billable data size. The `other/data_size` field is an alias for the `external` field. `file` is the size in bytes of data stored on the disk. Indexes are not included in the calculation. The `disk_size` field is an alias for the `file` field. Note that this size includes data pending compaction.
 `update_seq`          | An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
 
 _Example response containing (abbreviated) database details:_
@@ -254,8 +254,13 @@ Argument        | Description                                                   
 `key`           | Return only documents with IDs that match the specified key.                                    | yes      | string          |
 `keys`          | Return only documents with IDs that match one of the specified keys.                            | yes      | list of strings |
 `limit`         | Limit the number of returned documents to the specified number.                                 | yes      | numeric         |
+`meta`          | Short-hand combination of all three arguments: `conflicts`, `deleted_conflicts`, and `revs_info`. Using `meta=true` is the same as using `conflicts=true&deleted_conflicts=true&revs_info=true`. | yes | boolean | false
+`r`             | Specify the [read quorum](document.html#quorum---writing-and-reading-data) value.               | yes      | numeric         | 2
+`revs_info`     | Includes detailed information for all known document revisions.                                 | yes      | boolean         | false
 `skip`          | Skip this number of records before starting to return the results.                              | yes      | numeric         | 0
 `startkey`      | Return records starting with the specified key.                                                 | yes      | string          |
+
+
 
 >	**Note**: Using `include_docs=true` might have [performance implications](using_views.html#include_docs_caveat).
 
