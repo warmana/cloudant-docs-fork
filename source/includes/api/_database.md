@@ -182,11 +182,14 @@ The elements of the returned structure are shown in the following table.
 </tr>
 <tr class="odd">
 <td align="left"><code>sizes</code></td>
-<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are described here.
+<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are 
+described here.
 <ul>
 <li><code>file</code>: Size in bytes of data stored on the disk. Indexes are not included in the calculation. The <code>disk_size</code> field is an alias for the <code>file</code> field. Note that this size includes data pending compaction.</li> 
 <li><code>external</code>: Size in bytes of uncompressed user data. This is the billable data size. The <code>other/data_size</code> field is an alias for the <code>external</code> field.</li> 
-<li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li></ul> 
+<li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li>
+</ul>
+</td> 
 </tr>
 </tbody>
 </table>
@@ -275,11 +278,11 @@ The `_all_docs` endpoint accepts these query arguments:
 
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `deleted_conflicts` | Returns information about deleted conflicted revisions | yes | boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
-`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
 `inclusive_end` | Include rows whose key equals the endkey | yes | boolean | true
 `key` | Return only documents with IDs that match the specified key | yes | string |  
 `keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
@@ -364,8 +367,17 @@ updates,
 and deletions.
 
 When a `_changes` request is received,
-one replica of each shard of the database is asked to provide a list of changes.
+one replica for each shard of the database is asked to provide a list of changes.
 These responses are combined and returned to the original requesting client.
+
+<aside class="warning" role="complementary" aria-label="cloudantNotCouch">It is essential that any application using the <code>_changes</code> request should be able to process correctly a list of changes that might:
+<ul>
+<li>Have a different order for the changes listed in the response,
+when compared with an earlier request for the same information.</li>
+<li>Include changes that are considered to be prior to the change specified by the sequence identifier.</li>
+<ul></aside>
+
+`_changes` accepts several optional query arguments:
 
 `_changes` accepts these query arguments:
 
@@ -412,7 +424,7 @@ Additionally, there is a built-in filter available:
  * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
 -->
 
- * `_design`: The `_design` filter accepts only changes to design documents.
+    `_design`: The `_design` filter accepts only changes to design documents.
 
 <div id="changes_responses"></div>
 
