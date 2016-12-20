@@ -31,3 +31,10 @@ to work with the instance.
 create a {{site.data.keyword.cloudantfull}} database in your {{site.data.keyword.Bluemix_notm}} service instance,
 and populate the database with a simple collection of data.
 
+# Creating a simple Bluemix application to access a Cloudant database on Bluemix
+
+[This tutorial](create_bmxapp.html) shows you how to create a
+{{site.data.keyword.Bluemix_notm}} application that uses the
+Python programming language to access an {{site.data.keyword.cloudantfull}} database in your
+{{site.data.keyword.Bluemix_notm}} service instance.
+
