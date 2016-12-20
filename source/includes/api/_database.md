@@ -370,13 +370,6 @@ When a `_changes` request is received,
 one replica for each shard of the database is asked to provide a list of changes.
 These responses are combined and returned to the original requesting client.
 
-<aside class="warning" role="complementary" aria-label="cloudantNotCouch">It is essential that any application using the <code>_changes</code> request should be able to process correctly a list of changes that might:
-<ul>
-<li>Have a different order for the changes listed in the response,
-when compared with an earlier request for the same information.</li>
-<li>Include changes that are considered to be prior to the change specified by the sequence identifier.</li>
-<ul></aside>
-
 `_changes` accepts these query arguments:
 
 Argument&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description | Supported Values | Default 
