@@ -92,13 +92,86 @@ no attempt has been made to address all possible checks or error conditions.
 Some example checks are shown here,
 to illustrate the techniques,
 but you should apply normal best practices for checking and handling all
-warning or error conditions encountered by your own applications. 
+warning or error conditions encountered by your own applications.
 
-Creating
+## Task overview
+
+To create a working Python application on {{site.data.keyword.Bluemix_notm}},
+that can access a {{site.data.keyword.cloudant_short_notm}} database instance,
+you need to perform the following tasks:
+
+1.  [Create a Python application enviroment on {{site.data.keyword.Bluemix_notm}}.](#creating)
+2.  [Ensure that the Python application environment has a 'connection' to a {{site.data.keyword.cloudant_short_notm}} database instance.](#connecting)
+3.  [(One-off task) Download and install the Cloud Foundry and Bluemix command line toolkits.](#toolkits)
+4.  [Download the 'starter' application.](#starter)
+5.  [Customize the starter application to create your own application for accessing the {{site.data.keyword.cloudant_short_notm}} database instance.](#creating)
+6.  [Upload your application and test that it works.](#uploading)
+7.  [Perform basic application maintenance tasks.](#maintenance)
+8.  [Diagnose and resolve problems (troubleshooting).](#troubleshooting)
+
+<div id="creating"></div>
+
+## Creating {{site.data.keyword.Bluemix_notm}} application environment
+
+<div id="connecting"></div>
+
+## Connecting {{site.data.keyword.Bluemix_notm}} applications and services
+
+This section of the tutorial explains how you connect
+{{site.data.keyword.Bluemix_notm}} applications and services.
+
+<div id="toolkits"></div>
+
+## The Cloud Foundry and Bluemix command line toolkits
+
+This section of the tutorial describes the toolkits you require to work with
+your {{site.data.keyword.Bluemix_notm}} environment,
+applications,
+and services.
+
+<div id="starter"></div>
+
+## The 'starter' application
+
+This section of the tutorial describes a {{site.data.keyword.Bluemix_notm}}
+'starter' application,
+and explains how you customize it to access
+a {{site.data.keyword.cloudant_short_notm}} database instance.
+
+<div id="creating"></div>
+
+## Creating your application
+
+This section of the tutorial explains how to create a Python
+application that can access
+the {{site.data.keyword.cloudant_short_notm}} database instance.
+
+<div id="uploading"></div>
+
+## Uploading your application and testing that it works
+
+<div id="maintenance"></div>
+
+## Performing basic application maintenance tasks
+
+This section of the tutorial explains how to upload,
+start,
+and stop,
+your Python applications on {{site.data.keyword.Bluemix_notm}}.
+
+<div id="troubleshooting"></div>
+
+## Diagnosing and resolving problems
+
+This section of the tutorial provides some basic troubleshooting tips to help
+you identify,
+diagnose,
+and resolve some problems you might encounter when developing and deploying
+your first {{site.data.keyword.Bluemix_notm}} applications.
+
 
 ## Complete listing
 
 The following code is a complete Python program to access a
 {{site.data.keyword.cloudant_short_notm}} service instance on {{site.data.keyword.Bluemix_notm}},
 and perform a typical series of tasks:
-

@@ -35,4 +35,4 @@ Incremental backups are a good solution for storing only the documents that have
 >   **Note**: Daily incremental backup for Enterprise customers is currently a Beta capability.
     It is not enabled by default.
 
-You can see more information about Incremental Backups at [Back up your data](../guides/backup-guide.html).
+You can see more information about Incremental Backups in the topic [Back up your data](../guides/backup-guide.html).

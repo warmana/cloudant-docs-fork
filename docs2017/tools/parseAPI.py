@@ -15,6 +15,10 @@ def outputDatabase(dbName, default):
             posn = docLink
     if (dbName in wherePresent):
         shortName = dbName.replace(' ', '')
+        if (shortName == "CouchDB2.0"):
+            shortName = "CouchDB2"
+        if (shortName == "CouchDB1.6"):
+            shortName = "CouchDB1"
         outputLine += "[![small" + shortName + "](../images/small" + shortName + ".png)](" + posn + "){:new_window} | "
     else:
         outputLine += " | "
