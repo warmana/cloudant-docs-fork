@@ -12,14 +12,14 @@ def outputDatabase(dbName, default):
     posn = default
     for docLink in linkArray:
         if (default in docLink):
-            posn = docLink
+            posn = cleanText(docLink)
     if (dbName in wherePresent):
         shortName = dbName.replace(' ', '')
         if (shortName == "CouchDB2.0"):
             shortName = "CouchDB2"
         if (shortName == "CouchDB1.6"):
             shortName = "CouchDB1"
-        print "<a href='" + posn + "' target='_blank'><img src='../images/small" + shortName + ".png'/></a>"
+        print "<a href='" + posn + "' target='_blank'><img src='../images/verySmall" + shortName + ".png' alt='" + dbName + "'/></a>"
 
 def cleanText(content):
     tmp = content
@@ -56,13 +56,13 @@ for row in data:
     linkArray.append("")
     wherePresent = row["database"]
 
-    print "<tr>\n<td rowspan='2'><code>" + cleanText(row["endpoint"]) + "</code><p><code>" + cleanText(row["method"]) + "</code></p></td><td>"
+    print "<tr>\n<td><code>" + cleanText(row["method"]) + "&nbsp;" + cleanText(row["endpoint"]) + "</code><p>"
     outputDatabase("Cloudant", "https://docs.cloudant.com/")
     outputDatabase("CouchDB 2.0", "http://docs.couchdb.org/en/2.0.0/")
     outputDatabase("CouchDB 1.6", "http://docs.couchdb.org/en/1.6.0/")
-    outputLine = "</td>\n</tr>\n<tr>\n<td>" + cleanText(row['summary'])
+    outputLine = "</p></td><td>" + cleanText(row['summary'])
     if (row['comment'] != ""):
-        outputLine += "<br/>" + cleanText(row['comment'])
+        outputLine += "<p>" + cleanText(row['comment']) +"</p>"
     print outputLine + "</td>\n</tr>"
 
 print "</table>\n"
