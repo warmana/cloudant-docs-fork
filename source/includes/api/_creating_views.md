@@ -384,13 +384,7 @@ by using an existing version of the index.
 
 If you are prepared to accept a response that is quicker,
 but might not have the most current data,
-there are two options you can use:
-
-Option   | Purpose                                                                                                                      | Default value
----------|------------------------------------------------------------------------------------------------------------------------------|--------------
-`stable` | Should the view results be obtained from a consistent ('stable') set of shards? Possible values include `true`, and `false`. | `false`
-`stale`  | Allow the results from a stale view to be used. Possible values include `ok`, and `update_after`.                            | `false`
-`update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.              | `true`
+there are three options you can use.
 
 The `stale` option allows the results from a stale view to be used.
 This makes the request return immediately,
