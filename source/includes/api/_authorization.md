@@ -130,6 +130,29 @@ account.request({
 
 To modify who has permissions to read, write, and manage a database, make a PUT request against `https://$USERNAME.cloudant.com/_api/v2/db/$DB/_security`. To see what roles you can assign, see [Roles](#roles).
 
+<aside class="notice" role="complementary" aria-label="cookiesaregood">When 
+you want to add a new user, you must run the GET command first to retrieve 
+the security object. Then, you can modify that security object with the new 
+permissions. If you do not run the GET command to retrieve the security 
+object before you run an API call, the result will be disruptive to your 
+environment. For example, if you want to add a new user, `user1`, with 
+read only access and you make the following incorrect request, this request 
+removes all the other users with access to the database.
+
+```
+PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
+Content-Type: application/json
+
+{
+  "cloudant": {
+    "nobody": [
+      "_reader"
+    ]
+  }
+}
+```
+</aside>
+
 The request object's `cloudant` field contains an object whose keys are usernames with permissions to interact with the database. The `nobody` username indicates what rights are available to unauthenticated users -- that is, anybody. In the example request, for instance, `nobody` has `_reader` permissions, making the database publicly readable.
 
 <div></div>
@@ -144,53 +167,6 @@ The request object's `cloudant` field contains an object whose keys are username
 <div></div>
 
 The response tells you whether the update has been successful.
-
-> Example PUT request
-
-```
-PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
-Content-Type: application/json
-
-{
-  "cloudant": {
-    "antsellseadespecteposene": [
-      "_reader",
-      "_writer",
-      "_admin"
-    ],
-    "garbados": [
-      "_reader",
-      "_writer",
-      "_admin"
-    ],
-    "user1": [
-      "_reader"
-    ]
-  }
-}
-```
-
-You can add a new user with a PUT command, as in the following example. 
-
-<div></div>
-> Example incorrect PUT request
-
-```
-PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
-Content-Type: application/json
-
-{
-  "cloudant": {
-    "nobody": [
-      "_reader"
-    ]
-  }
-}
-```
-
-In addition, when you want to add a new user, you must run the GET command first to retrieve the security object. Then, you can modify that security object with the new permissions. If you do not run the GET command to retrieve the security object before you run an API call, the result will be disruptive to your environment. For example, if you want to add the new user, `user1`, with read only access and you make the following incorrect request, this request removes all the other users with access to the database.
-
-<div></div>
 
 ### Creating API Keys
 
