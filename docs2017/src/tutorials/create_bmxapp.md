@@ -221,6 +221,14 @@ your {{site.data.keyword.Bluemix_notm}} environment,
 applications,
 and services.
 
+The Cloud Foundry toolkit is a collection of tools for working with applications
+deployed in a Cloud Foundry-compatible environment.
+The tools enable you to perform tasks such as updating a deployed application,
+and start or stop a running application.
+
+The {{site.data.keyword.Bluemix_notm}} toolkit provides additional capabilities,
+required for working with appplications hosted and running within a {{site.data.keyword.Bluemix_notm}} environment.
+
 Downloading and installing the toolkits is a one-off task;
 if you have the toolkits installed and working on your system,
 you do not need to download them again,
@@ -229,7 +237,14 @@ unless they have been updated.
 More information about the toolkits is available
 [here](https://console.ng.bluemix.net/docs/cli/index.html){:new_window}.
 
-### The Cloud Foundry toolkit
+### Installing the Cloud Foundry toolkit
+
+Some operating system distributions have a version of the Cloud Foundry toolkit available already.
+If the version supported is 6.11 or better,
+this is compatible with {{site.data.keyword.Bluemix_notm}} and can be used.
+
+Alternatively,
+use the following steps to download and install the Cloud Foundry toolkit on your system: 
 
 1.  A link to download the Cloud Foundry toolkit is available on the `Getting started` panel of
     your application:<br/>
@@ -239,6 +254,57 @@ More information about the toolkits is available
     [download page on Github](https://github.com/cloudfoundry/cli/releases){:new_window}:<br/>
     ![The Cloud Foundry toolkit download page on Github](images/img0026.png)
 
+3.  Download and run the appropriate installer for your platform.
+
+To check that you have a working Cloud Foundry toolkit,
+run the following command at a prompt:
+
+```shell
+cf --version
+```
+{:pre}
+
+You should get a result similar to:
+
+```text
+cf version 6.20.0+25b1961-2016-06-29
+```
+{:codeblock}
+
+>   **Note**: The version must be 6.11 or more recent to be compatible with {{site.data.keyword.Bluemix_notm}}.
+
+### Installing the Bluemix toolkit
+
+Use the following steps to download and install the {{site.data.keyword.Bluemix_notm}} toolkit on your system: 
+
+1.  A link to download the {{site.data.keyword.Bluemix_notm}} toolkit is available
+    on the `Getting started` panel of your application:<br/>
+    ![A link to download the Cloud Foundry toolkit](images/img0027.png)
+
+2.  Clicking the link takes you to a
+    [download page](http://clis.ng.bluemix.net/ui/home.html){:new_window}:<br/>
+    ![The Bluemix toolkit download page](images/img0028.png)
+
+3.  Download and run the appropriate installer for your platform.
+
+    The installer checks to ensure that you have a suitable version of the Cloud Foundry toolkit installed.
+    If everything appears to be correct,
+    the {{site.data.keyword.Bluemix_notm}} toolkit is installed on your system.
+
+To check that you have a working {{site.data.keyword.Bluemix_notm}} toolkit,
+run the following command at a prompt:
+
+```shell
+bluemix --version
+```
+{:pre}
+
+You should get a result similar to:
+
+```text
+bluemix version 0.4.5+03c29de-2016-12-08T07:01:01+00:00
+```
+{:codeblock}
 
 <div id="starter"></div>
 
@@ -248,6 +314,114 @@ This section of the tutorial describes a {{site.data.keyword.Bluemix_notm}}
 'starter' application,
 and explains how you customize it to access
 a {{site.data.keyword.cloudant_short_notm}} database instance.
+
+A {{site.data.keyword.Bluemix_notm}} starter application is the minimum possible collection
+of source and configuration files,
+necessary to create a {{site.data.keyword.Bluemix_notm}} application.
+In some regards,
+it is similar to a 'Hello World' application;
+sufficient to show that the basic system and configuration is working correctly.
+
+A {{site.data.keyword.Bluemix_notm}} starter application is an archive containing files
+you must modify or extend as you develop your {{site.data.keyword.Bluemix_notm}} application.
+
+Three files in particular are essential:
+
+-   [`Procfile`](#procfile)
+-   [`manifest.yml`](#manifest)
+-   [`requirements.txt`](#requirements)
+
+<div id="procfile"></div>
+
+### The `Procfile` file
+
+The `Procfile` is the most important file,
+describing what {{site.data.keyword.Bluemix_notm}} should do to run your application.
+
+More specifically,
+a `Procfile` is a Cloud Foundry artefact that
+defines an application process type and the command line that launches the application.
+More information about `Procfile` is available
+[here](https://docs.cloudfoundry.org/buildpacks/prod-server.html#procfile){:new_window}
+
+The `Procfile` for a {{site.data.keyword.Bluemix_notm}} Python starter application looks similar to the following:
+
+```text
+web: python server.py
+```
+{:codeblock}
+
+This indicates that the application is a Python web application,
+and that it is started by running the command:
+
+```shell
+python server.py
+```
+{:codeblock}
+
+A 'starter' `server.py` Python source file is included in the starter application archive.
+The `server.py` file is modified for your application.
+Alternatively,
+create an entirely new Python source file,
+and update the `Procfile` accordingly so that the new file is used when your application launches.
+
+<div id="manifest"></div>
+
+### The `manifest.yml` file
+
+The `manifest.yml` file is a full description of the application and the environment it requires to run.
+
+The file for a {{site.data.keyword.Bluemix_notm}} Python starter application looks similar to the following:
+
+```text
+applications:
+- path: .
+  memory: 128M
+  instances: 1
+  domain: mybluemix.net
+  name: Cloudant Python
+  host: Cloudant-Python
+  disk_quota: 1024M
+  services:
+  - Cloudant Service 2017
+```
+{:codeblock}
+
+Three points are worth noting:
+
+-   The `domain`,
+    `name`,
+    and `host` values correspond to those you entered when
+    your {{site.data.keyword.Bluemix_notm}} application was [created](#creating).
+-   The `name` value is used by the Cloud Foundry toolkit to identify the application you are administering.
+-   The `services` value confirms that the `Cloudant Service 2017`
+    {{site.data.keyword.cloudant_short_notm}} database instance is connected to the application environment.
+
+You do not normally need to modify this file,
+however it is helpful to understand why it must be present for your application to work.
+
+<div id="requirements"></div>
+
+### The `requirements.txt` file
+
+The `requirements.txt` file enables you to specify any components that are required for your application to work.
+
+In the starter application,
+the file is empty.
+
+However,
+in this tutorial we are creating a Python application that accesses a
+{{site.data.keyword.cloudant_short_notm}} database instance.
+Therefore,
+the application must be able to use the
+[{{site.data.keyword.cloudant_short_notm}} client library for Python applications](../libraries/supported.html#python).
+
+1.  To enable the Python client library,
+    modify the `requirements.txt` file to read:
+    ```text
+    cloudant==2.3.1
+    ```
+    {:codeblock}
 
 <div id="creating"></div>
 
@@ -280,6 +454,21 @@ diagnose,
 and resolve some problems you might encounter when developing and deploying
 your first {{site.data.keyword.Bluemix_notm}} applications.
 
+A good source of advice on best practice for creating {{site.data.keyword.Bluemix_notm}} or
+Cloud Foundry applications is
+[here](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html){:new_window}.
+
+In particular,
+the advice on
+[avoiding writes to the local file system](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html#filesystem){:new_window}
+is prudent.
+
+>   **Note**: For reasons of simplicity,
+    this tutorial does write content to the local file system,
+    however,
+    the quantity of material is very small,
+    it is not expected to persist,
+    and it is not 'mission critical'.
 
 ## Complete listing
 
