@@ -1,5 +1,6 @@
 <div id="creating-views"></div>
 <div id="working-with-views"></div>
+
 ## Views (MapReduce)
 
 Views are used to obtain data stored within a database.
@@ -13,9 +14,9 @@ It can speed up searching for content.
 It can be used to 'pre-process' the results before they are returned to the client.
 
 Views are simply Javascript functions,
-defined within the view field of a design document.
+defined within the `view` field of a design document.
 When you use a view,
-or more accurately when make a query using your view,
+or more accurately when you perform a query using your view,
 the system applies the Javascript function to each and every document in the database.
 Views can be complex.
 You might choose to define a collection of Javascript functions to create the overall view required.
@@ -35,44 +36,42 @@ function(employee) {
 > Simplified example data:
 
 ```json
-{
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/05/21 10:00:00"
-}
-
-{
-  "_id":"10278947",
-  "number":"10278947"
-}
-
-{
-  "_id":"23598567",
-  "number":"23598567",
-  "training":"2014/07/30 12:00:00"
-}
+[
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/05/21 10:00:00"
+    },
+    {
+        "_id":"10278947",
+        "number":"10278947"
+    },
+    {
+        "_id":"23598567",
+        "number":"23598567",
+        "training":"2014/07/30 12:00:00"
+    }
+]
 ```
 
 > Example response from running the view query
 
 ```json
 {
-  "total_rows": 2,
-  "offset": 0,
-  "rows": [
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/05/21 10:00:00"
-    },
-
-    {
-      "id":"23598567",
-      "number":"23598567",
-      "training":"2014/07/30 12:00:00"
-    }
-
-  ]
+	"total_rows": 2,
+	"offset": 0,
+	"rows": [
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/05/21 10:00:00"
+		},
+		{
+			"id":"23598567",
+			"number":"23598567",
+			"training":"2014/07/30 12:00:00"
+		}
+	]
 }
 ```
 
@@ -436,8 +435,7 @@ if it exists,
 without waiting for an update.
 This would mean that a stale view index result might be different from different nodes in the cluster.
 
-<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively
-works to keep views up-to-date at all times.
+<aside class="notice" role="complementary" aria-label="staleredundant">Cloudant automatically and actively works to keep views up-to-date at all times.
 This means that the only time you might notice a difference when using `stable` or `update` options is when
 there is an indexing backlog.</aside>
 
@@ -680,7 +678,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
      -d "{ "keys" : [ "claret", "clear apple juice" ] }"
 ```
 
-> Example response, returning the full document for each recipe:
+> Example response (abbreviated), returning the full document for each recipe:
 
 ```json
 {
@@ -696,8 +694,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
                   "ingredient" : "onion",
                   "ingredtext" : "onion, peeled and chopped",
                   "meastext" : "1"
-               },
-            ...
+               }
             ],
             "keywords" : [
                "cook method.hob, oven, grill@hob",
@@ -733,7 +730,7 @@ curl "https://$USERNAME:$PASSWORD@$USERNAME.cloudant.com/$DB/_design/$DDOC/_view
             "_rev" : "1-bff6edf3ca2474a243023f2dad432a5a",
             "cooktime" : "92",
             "ingredients" : [
-...            ],
+            ],
             "keywords" : [
                "diet@dairy-free",
                "diet@peanut-free",
