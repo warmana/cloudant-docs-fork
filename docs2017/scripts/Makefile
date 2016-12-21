@@ -34,6 +34,12 @@ html:
 	mkdir $(BUILDDIR)
 	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --extension-file=$(CONFIGDIR)/headerFooterExt.js --conref-file=$(CONFIGDIR)/conref.yml --toc-xml
 
+.PHONY: pdf
+pdf:
+	make clean
+	mkdir $(BUILDDIR)
+	node $(BUILDTOOL) $(MAINSRCDIR) --output=$(BUILDDIR) --extension-file=$(CONFIGDIR)/headerFooterExt.js --conref-file=$(CONFIGDIR)/conref.yml --toc-xml --gen-pdf
+
 .PHONY: debughtml
 debughtml:
 	make clean

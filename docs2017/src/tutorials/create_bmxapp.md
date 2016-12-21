@@ -226,6 +226,9 @@ if you have the toolkits installed and working on your system,
 you do not need to download them again,
 unless they have been updated.
 
+More information about the toolkits is available
+[here](https://console.ng.bluemix.net/docs/cli/index.html){:new_window}.
+
 ### The Cloud Foundry toolkit
 
 1.  A link to download the Cloud Foundry toolkit is available on the `Getting started` panel of
