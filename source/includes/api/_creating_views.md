@@ -389,11 +389,21 @@ there are two options you can use:
 Option   | Purpose                                                                                                                      | Default value
 ---------|------------------------------------------------------------------------------------------------------------------------------|--------------
 `stable` | Should the view results be obtained from a consistent ('stable') set of shards? Possible values include `true`, and `false`. | `false`
+`stale`  | Allow the results from a stale view to be used. Possible values include `ok`, and `update_after`.                            | `false`
 `update` | Should the view be updated before the results are returned? Possible values include `true`, `false` and `lazy`.              | `true`
+
+The `stale` option allows the results from a stale view to be used.
+This makes the request return immediately,
+even if the view has not been completely built.
+If this parameter is not given,
+or the value `false` is supplied,
+a response is returned only after the view has been built.
+The value `true` or `ok` allows stale views.
+The value `update_after` allows stale views,
+but updates them immediately after a response to the request has been created processed.
 
 The `stable` option allows you to indicate whether you would prefer to get results from a single,
 consistent set of shards.
-
 The default value is `false`,
 meaning all available shard replicas are queried.
 The first response received is the one that is used.
