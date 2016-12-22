@@ -130,14 +130,33 @@ account.request({
 
 To modify who has permissions to read, write, and manage a database, make a PUT request against `https://$USERNAME.cloudant.com/_api/v2/db/$DB/_security`. To see what roles you can assign, see [Roles](#roles).
 
-<aside class="notice" role="complementary" aria-label="cookiesaregood">When 
-you want to add a new user, you must run the GET command first to retrieve 
-the security object. Then, you can modify that security object with the new 
-permissions. If you do not run the GET command to retrieve the security 
-object before you run an API call, the result will be disruptive to your 
-environment. For example, if you want to add a new user, `user1`, with 
-read only access and you make the following incorrect request, this request 
-removes all the other users with access to the database.
+<aside class="notice" role="complementary" aria-label="cookiesaregood">
+To add a new user, you also make a PUT request.
+
+```
+PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
+Content-Type: application/json
+
+{
+  "cloudant": {
+    "antsellseadespecteposene": [
+      "_reader",
+      "_writer",
+      "_admin"
+    ],
+    "garbados": [
+      "_reader",
+      "_writer",
+      "_admin"
+    ],
+    "user1": [
+      "_reader"
+    ]
+  }
+}
+```
+
+When you want to add a new user, you must run the GET command first to retrieve the security object. Then, you can modify that security object with new permissions. If you do not run the GET command and retrieve the security object before you run an API call, the result will be disruptive to your environment. For example, if you want to add a new user, user1, with read-only access, the following incorrect request removes all the other users with access to the database.
 
 ```
 PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
@@ -151,6 +170,7 @@ Content-Type: application/json
   }
 }
 ```
+
 </aside>
 
 The request object's `cloudant` field contains an object whose keys are usernames with permissions to interact with the database. The `nobody` username indicates what rights are available to unauthenticated users -- that is, anybody. In the example request, for instance, `nobody` has `_reader` permissions, making the database publicly readable.
