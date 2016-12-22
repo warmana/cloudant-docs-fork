@@ -47,6 +47,8 @@ Python 2.7.12
 ```
 {:codeblock}
 
+<div id="csi"></div>
+
 ### A Cloudant service instance on Bluemix
 
 A tutorial for creating a {{site.data.keyword.cloudant_short_notm}} service instance is available [here](create_service.html).
@@ -118,7 +120,7 @@ you need to perform the following tasks:
 2.  [Ensure that the Python application environment has a 'connection' to a {{site.data.keyword.cloudant_short_notm}} database instance.](#connecting)
 3.  [(One-off task) Download and install the Cloud Foundry and Bluemix command line toolkits.](#toolkits)
 4.  [Download the 'starter' application.](#starter)
-5.  [Customize the starter application to create your own application for accessing the {{site.data.keyword.cloudant_short_notm}} database instance.](#creating)
+5.  [Customize the starter application to create your own application for accessing the {{site.data.keyword.cloudant_short_notm}} database instance.](#theApp)
 6.  [Upload your application and test that it works.](#uploading)
 7.  [Perform basic application maintenance tasks.](#maintenance)
 8.  [Diagnose and resolve problems (troubleshooting).](#troubleshooting)
@@ -444,7 +446,7 @@ the application must be able to use the
     ```
     {:codeblock}
 
-<div id="creating"></div>
+<div id="theApp"></div>
 
 ## Creating your application
 
@@ -452,11 +454,169 @@ This section of the tutorial explains how to create a Python
 application within {{site.data.keyword.Bluemix_notm}} that can access
 the {{site.data.keyword.cloudant_short_notm}} database instance.
 
+We have the following essential components in place,
+ready to begin creating our application:
 
+-   [The Python programming language](#python).
+-   [A {{site.data.keyword.cloudant_short_notm}} database instance](#csi).
+-   [A {{site.data.keyword.Bluemix_notm}} application environment](#creating).
+-   A [connection](#connecting) between the {{site.data.keyword.cloudant_short_notm}} database instance
+    and the {{site.data.keyword.Bluemix_notm}} application environment.
+-   The [toolkits](#toolkits) for managing Cloud Foundry-based {{site.data.keyword.Bluemix_notm}} applications.
+-   A ['starter' application pack](#starter), containing initial configuration and code template files.
+
+### Essential files
+
+Your application requires three configuration files and one source file,
+all available in the ['starter' application pack](#starter):
+ 
+1.  [`Procfile`](#procfile)
+2.  [`manifest.yml`](#manifest)
+3.  [`requirements.txt`](#requirements)
+4.  The application source file, described in this section of the tutorial.
+
+Modify your configuration files as follows:
+
+1.  Edit the `Procfile` file so that it contains the following text:
+    ```text
+    web: python server.py
+    ```
+    {:codeblock}
+
+2.  Edit the `manifest.yml` file so that it contains the following text:
+    ```text
+    applications:
+    - path: .
+      memory: 128M
+      instances: 1
+      domain: <your domain>
+      name: <your application name>
+      host: <your application host>
+      disk_quota: 1024M
+      services:
+      - <your database instance>
+    ```
+    {:codeblock}
+    
+>   **Note**: Ensure that you modify the `domain`, `name`, `host`,
+and `services` values according to the values you chose when creating your
+[{{site.data.keyword.Bluemix_notm}} application environment](#creating) and
+your [{{site.data.keyword.cloudant_short_notm}} database instance](#csi).
+
+3.  Edit the `requirements.txt` file so that it contains the following text:
+    ```text
+    cloudant==2.3.1
+    ```
+    {:codeblock}
+
+### The application code
+
+We can now work on the application code.
 
 <div id="uploading"></div>
 
 ## Uploading your application and testing that it works
+
+```
+./bluemix api https://api.ng.bluemix.net
+Invoking 'cf api https://api.ng.bluemix.net'...
+
+Setting api endpoint to https://api.ng.bluemix.net...
+OK
+
+API endpoint:   https://api.ng.bluemix.net
+API version:    2.54.0
+Not logged in. Use './bluemix login' to log in.
+```
+
+```
+./bluemix login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev
+Invoking 'cf login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev'...
+
+API endpoint: https://api.ng.bluemix.net
+
+Password> 
+Authenticating...
+OK
+
+Targeted org Adrian.Warman@uk.ibm.com
+
+Targeted space dev
+
+
+                
+API endpoint:   https://api.ng.bluemix.net (API version: 2.54.0)
+User:           adrian.warman@uk.ibm.com
+Org:            Adrian.Warman@uk.ibm.com
+Space:          dev
+[warmana@localhost bin]$ 
+
+```
+
+```
+[warmana@localhost BMXDemo]$ cf push "Cloudant Python"
+Using manifest file /home/warmana/00host/Archive/Data/Customers/CDS/github/github.com/warmana/bluemixcode/BMXDemo/manifest.yml
+
+Updating app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
+OK
+
+Using route Cloudant-Python.mybluemix.net
+Uploading Cloudant Python...
+Uploading app files from: /home/warmana/00host/Archive/Data/Customers/CDS/github/github.com/warmana/bluemixcode/BMXDemo
+Uploading 1.5K, 3 files
+Done uploading               
+OK
+Binding service Cloudant Service 2017 to app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
+OK
+
+Starting app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
+-----> Downloaded app package (4.0K)
+-----> Downloaded app buildpack cache (29M)
+-------> Buildpack version 1.5.5
+     $ pip install -r requirements.txt
+DEPRECATION: --allow-all-external has been deprecated and will be removed in the future. Due to changes in the repository protocol, it no longer has any effect.
+       Collecting cloudant==2.3.1 (from -r requirements.txt (line 1))
+         Downloading cloudant-2.3.1-py2-none-any.whl (63kB)
+       Collecting requests<3.0.0,>=2.7.0 (from cloudant==2.3.1->-r requirements.txt (line 1))
+         Downloading requests-2.12.4-py2.py3-none-any.whl (576kB)
+       Installing collected packages: requests, cloudant
+       Successfully installed cloudant-2.3.1 requests-2.12.4
+You are using pip version 8.1.1, however version 9.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+You are using pip version 8.1.1, however version 9.0.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+-----> Uploading droplet (30M)
+
+0 of 1 instances running, 1 starting
+1 of 1 instances running
+
+App started
+
+
+OK
+
+App Cloudant Python was started using this command `python server.py`
+
+Showing health and status for app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
+OK
+
+requested state: started
+instances: 1/1
+usage: 128M x 1 instances
+urls: Cloudant-Python.mybluemix.net
+last uploaded: Thu Dec 22 15:58:18 UTC 2016
+stack: cflinuxfs2
+buildpack: python 1.5.5
+
+     state     since                    cpu    memory          disk           details
+#0   running   2016-12-22 03:59:21 PM   0.0%   49.9M of 128M   110.6M of 1G
+[warmana@localhost BMXDemo]
+```
+
+```
+
+```
+
 
 <div id="maintenance"></div>
 
