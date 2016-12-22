@@ -134,7 +134,6 @@ The request object's `cloudant` field contains an object whose keys are username
 
 <div></div>
 
-<aside class="notice" role="complementary" aria-label="cookiesaregood">
 > Add user PUT request
 
 ```http
@@ -160,7 +159,9 @@ Content-Type: application/json
 }
 ```
 To add the new user, `nobody`, you can make a PUT request.
+
 <div></div>
+
 > Example incorrect request 
 
 ```http
@@ -181,9 +182,8 @@ security object with new permissions. If you do not run the GET command and retr
 security object before you run an API call, the result will be disruptive to your 
 environment. For example, if you want to add a new user with read-only access, the 
 following incorrect request removes all the other users with access to the database.
-<div></div>
 
-</aside>
+<div></div>
 
 
 
