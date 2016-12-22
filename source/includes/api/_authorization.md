@@ -156,7 +156,7 @@ Content-Type: application/json
 }
 ```
 
-When you want to add a new user, you must run the GET command first to retrieve the security object. Then, you can modify that security object with new permissions. If you do not run the GET command and retrieve the security object before you run an API call, the result will be disruptive to your environment. For example, if you want to add a new user, user1, with read-only access, the following incorrect request removes all the other users with access to the database.
+You must run the GET command first to retrieve the security object. Then, you can modify that security object with new permissions. If you do not run the GET command and retrieve the security object before you run an API call, the result will be disruptive to your environment. For example, if you want to add a new user, user1, with read-only access, the following incorrect request removes all the other users with access to the database.
 
 ```
 PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
