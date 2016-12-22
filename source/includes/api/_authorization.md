@@ -134,6 +134,8 @@ The request object's `cloudant` field contains an object whose keys are username
 
 <div></div>
 
+The response tells you whether the update has been successful.
+
 > Add user PUT request
 
 ```http
@@ -196,7 +198,7 @@ following incorrect request removes all the other users with access to the datab
 ```
 <div></div>
 
-The response tells you whether the update has been successful.
+
 
 ### Creating API Keys
 
