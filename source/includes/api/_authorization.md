@@ -161,6 +161,7 @@ Content-Type: application/json
 ```
 To add the new user, `nobody`, you can make a PUT request.
 <div></div>
+> Example incorrect request 
 
 ```http
 PUT /_api/v2/db/$DATABASE/_security HTTP/1.1
