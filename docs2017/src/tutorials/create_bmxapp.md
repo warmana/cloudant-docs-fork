@@ -12,11 +12,12 @@ lastupdated: "2016-12-19"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
-# Creating a simple Bluemix application to access a Cloudant database on Bluemix
+# Creating a simple Bluemix application to access a Cloudant database
 
-This tutorial shows you how to create a {{site.data.keyword.Bluemix_notm}} application that uses the
+This tutorial shows you how to create an {{site.data.keyword.Bluemix}} application that uses the
 [Python programming language](https://www.python.org/){:new_window} to
-access an {{site.data.keyword.cloudantfull}} database in your {{site.data.keyword.Bluemix_notm}} service instance.
+access an {{site.data.keyword.cloudantfull}} database,
+hosted in your {{site.data.keyword.Bluemix_notm}} service instance.
 {:shortdesc}
 
 ## Pre-requisites
@@ -53,6 +54,15 @@ A tutorial for creating a {{site.data.keyword.cloudant_short_notm}} service inst
 In this tutorial,
 we assume that you have a service instance called
 `Cloudant Service 2017`.
+
+### A Cloudant database application
+
+A tutorial for creating a standalone Python application to work with a {{site.data.keyword.cloudant_short_notm}}
+service instance is available [here](create_database.html).
+It introduces a number of concepts that are helpful for understanding how to create and populate a
+{{site.data.keyword.cloudant_short_notm}} database.
+
+This tutorial assumes you are familiar with those concepts.
 
 ## Context
 
@@ -187,7 +197,7 @@ This is done from within the configuration and management area of your applicati
     This takes you to an area for configuring a connection between your application and any other services available within your account.
 
 3.  A [pre-requisite](#pre-requisites) for this tutorial is that you should already have a {{site.data.keyword.cloudant_short_notm}} database instance.
-    Click the `Connect existing` button to establish a connection between the database instance and your application:<br/>
+    Click the `Connect existing` button to establish a connection between that database instance and your application:<br/>
     ![Connect to an existing database instance](images/img0020.png)<br/>
     This takes you to a list of the existing service instances in your account.
 
@@ -212,29 +222,34 @@ This is done from within the configuration and management area of your applicati
     and now includes the newly connected database instance:<br/>
     ![The newly connected database instance](images/img0024.png)
 
+We have now connected the application environment and the database instance.
+The next step is to ensure we have the necessary tools to let us
+work with {{site.data.keyword.Bluemix_notm}} applications.
+
 <div id="toolkits"></div>
 
 ## The Cloud Foundry and Bluemix command line toolkits
 
-This section of the tutorial describes the toolkits you require to work with
+This section of the tutorial describes the toolkits you must have installed to work with
 your {{site.data.keyword.Bluemix_notm}} environment,
 applications,
 and services.
 
-The Cloud Foundry toolkit is a collection of tools for working with applications
+The [Cloud Foundry](https://en.wikipedia.org/wiki/Cloud_Foundry){:new_window}
+toolkit is a collection of tools for working with applications
 deployed in a Cloud Foundry-compatible environment.
 The tools enable you to perform tasks such as updating a deployed application,
 and start or stop a running application.
 
 The {{site.data.keyword.Bluemix_notm}} toolkit provides additional capabilities,
-required for working with appplications hosted and running within a {{site.data.keyword.Bluemix_notm}} environment.
+required for working with applications hosted and running within a {{site.data.keyword.Bluemix_notm}} environment.
 
 Downloading and installing the toolkits is a one-off task;
-if you have the toolkits installed and working on your system,
+if you already have the toolkits installed and working on your system,
 you do not need to download them again,
 unless they have been updated.
 
-More information about the toolkits is available
+General information about the toolkits is available
 [here](https://console.ng.bluemix.net/docs/cli/index.html){:new_window}.
 
 ### Installing the Cloud Foundry toolkit
@@ -242,6 +257,7 @@ More information about the toolkits is available
 Some operating system distributions have a version of the Cloud Foundry toolkit available already.
 If the version supported is 6.11 or better,
 this is compatible with {{site.data.keyword.Bluemix_notm}} and can be used.
+You can check what version you have installed by running the test described [here](#checkCFversion).
 
 Alternatively,
 use the following steps to download and install the Cloud Foundry toolkit on your system: 
@@ -256,22 +272,22 @@ use the following steps to download and install the Cloud Foundry toolkit on you
 
 3.  Download and run the appropriate installer for your platform.
 
-To check that you have a working Cloud Foundry toolkit,
-run the following command at a prompt:
+4.  <div id='checkCFversion'></div>To check that you have a working Cloud Foundry toolkit,
+    run the following command at a prompt:
 
-```shell
-cf --version
-```
-{:pre}
-
-You should get a result similar to:
-
-```text
-cf version 6.20.0+25b1961-2016-06-29
-```
-{:codeblock}
-
->   **Note**: The version must be 6.11 or more recent to be compatible with {{site.data.keyword.Bluemix_notm}}.
+    ```shell
+    cf --version
+    ```
+    {:pre}
+    
+    You should get a result similar to:
+    
+    ```text
+    cf version 6.20.0+25b1961-2016-06-29
+    ```
+    {:codeblock}
+    
+    >   **Note**: The version must be 6.11 or more recent to be compatible with {{site.data.keyword.Bluemix_notm}}.
 
 ### Installing the Bluemix toolkit
 
@@ -291,20 +307,25 @@ Use the following steps to download and install the {{site.data.keyword.Bluemix_
     If everything appears to be correct,
     the {{site.data.keyword.Bluemix_notm}} toolkit is installed on your system.
 
-To check that you have a working {{site.data.keyword.Bluemix_notm}} toolkit,
-run the following command at a prompt:
-
-```shell
-bluemix --version
-```
-{:pre}
-
-You should get a result similar to:
-
-```text
-bluemix version 0.4.5+03c29de-2016-12-08T07:01:01+00:00
-```
-{:codeblock}
+4.  To check that you have a working {{site.data.keyword.Bluemix_notm}} toolkit,
+    run the following command at a prompt:
+    
+    ```shell
+    bluemix --version
+    ```
+    {:pre}
+    
+    You should get a result similar to:
+    
+    ```text
+    bluemix version 0.4.5+03c29de-2016-12-08T07:01:01+00:00
+    ```
+    {:codeblock}
+    
+We now have the necessary tools to let us
+work with {{site.data.keyword.Bluemix_notm}} applications.
+The next step is to obtain the 'starter' materials to help us create
+a {{site.data.keyword.Bluemix_notm}} application.
 
 <div id="starter"></div>
 
@@ -428,8 +449,10 @@ the application must be able to use the
 ## Creating your application
 
 This section of the tutorial explains how to create a Python
-application that can access
+application within {{site.data.keyword.Bluemix_notm}} that can access
 the {{site.data.keyword.cloudant_short_notm}} database instance.
+
+
 
 <div id="uploading"></div>
 
