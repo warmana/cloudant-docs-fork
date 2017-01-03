@@ -392,9 +392,9 @@ even if the view has not been completely built.
 If this parameter is not given,
 or the value `false` is supplied,
 a response is returned only after the view has been built.
-The value `true` or `ok` allows stale views.
+The value `ok` allows stale views.
 The value `update_after` allows stale views,
-but updates them immediately after a response to the request has been created processed.
+but updates them immediately after a response to the request has been created and processed.
 
 The `stable` option allows you to indicate whether you would prefer to get results from a single,
 consistent set of shards.
