@@ -8,7 +8,8 @@ The following client libraries are formally [supported](libraries.html#supported
 -	[Java](libraries.html#java)
 -	[Node.js](libraries.html#node.js)
 -	[Python](libraries.html#python)
--	[Swift](libraries.html#swift)
+-	[Objective C and Swift](libraries.html#objective-c-and-swift)
+
 
 A supported library is one where you can contact Cloudant if you encounter a specific, reproducible problem in the latest version of the library.
 
