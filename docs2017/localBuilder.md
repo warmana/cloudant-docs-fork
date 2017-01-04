@@ -18,15 +18,17 @@ The main component is the Vagrant image 'docs2017builder'.
     [https://ibm.ent.box.com/folder/15060512246](https://ibm.ent.box.com/folder/15060512246)
     ... in a browser.
 
-2.  Download the `docs2017builder.box` file.
+2.  Download the newest `docs2017builder-YYYYMMDD.box` file.
 
-3.  Open a terminal, and browse to the location where you downloaded the `docs2017builder.box` file.
+3.  Open a terminal, and browse to the location where you downloaded the `docs2017builder-YYYYMMDD.box` file.
 
 4.  Run the following command:
 
     ```
-    vagrant box add --name mybuilder docs2017builder.box
+    vagrant box add --name mybuilder --force docs2017builder-YYYYMMDD.box
     ```
+    
+    (The `--force` option makes it easier to update the Vagrant image at a later date.)
 
 5.  <div id="newday"></div>Change to the directory with the documentation source.
     It should have a `Vagrantfile` present.
@@ -94,3 +96,30 @@ The main component is the Vagrant image 'docs2017builder'.
 
     When you want to start working again,
     simply bring up the Vagrant machine again ([step 5](#newday)).
+
+## Updating the Vagrant image
+
+From time-to-time,
+a fresh image is made available.
+This could be because the build tooling has been updated,
+or components updated within the Vagrant image itself.
+
+When a new image is available,
+update your build environment by doing the following steps:
+
+1.  'Switch off' any running Vagrant machine, by running the following command:
+
+    ```
+    vagrant halt
+    ```
+2.  Remove the old Vagrant machine, by running the following command:
+    
+    ```
+    vagrant destroy
+    ```
+    
+    This does _not_ damage your source files in any way.
+    It simply removes the old Vagrant machine from your system.
+
+3.  Proceed with [downloading and installing the new image](#obtaining-the-tool),
+    as if this is a fresh installation.

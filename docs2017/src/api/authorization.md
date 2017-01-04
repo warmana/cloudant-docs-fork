@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2015, 2016
-lastupdated: "2016-12-19"
+  years: 2015, 2017
+lastupdated: "2017-01-04"
 
 ---
 
@@ -193,11 +193,33 @@ _Example of an authorization modification request document:_
 
 The response tells you whether the update has been successful.
 
-_Example response following an authorization modification request:_
+_Example response following a successful authorization modification request:_
 
 ```json
 {
 	"ok" : true
+}
+```
+{:codeblock}
+
+You must run the `GET` command first to retrieve the security object.
+Then,
+you can modify that security object with new permissions.
+If you do not run the `GET` command and retrieve the security object before you run an API call,
+the result might disrupt your environment.
+For example,
+if you want to add a new `nobody` user with read-only access,
+the  following incorrect request removes _all_ the other users with access to the database.
+
+_Example of an incorrect authorization modification request document:_
+
+```json
+{
+    "cloudant": {
+        "nobody": [
+            "_reader"
+        ]
+    }
 }
 ```
 {:codeblock}
