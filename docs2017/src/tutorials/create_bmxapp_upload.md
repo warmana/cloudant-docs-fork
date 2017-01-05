@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2017
-lastupdated: "2017-01-04"
+lastupdated: "2017-01-05"
 
 ---
 
@@ -15,18 +15,33 @@ lastupdated: "2017-01-04"
 # Creating a simple Bluemix application to access a Cloudant database: uploading the application
 
 This section of the tutorial describes how to upload a
-{{site.data.keyword.Bluemix}} application that uses the
-[Python programming language](https://www.python.org/){:new_window} to
-access an {{site.data.keyword.cloudantfull}} database,
-hosted in your {{site.data.keyword.Bluemix_notm}} service instance.
+{{site.data.keyword.Bluemix}} application.
 {:shortdesc}
 
 <div id="uploading"></div>
 
-## Uploading your application and testing that it works
+## Connecting to Bluemix
 
+The first task is to connect to {{site.data.keyword.Bluemix_notm}}.
+
+The [{{site.data.keyword.Bluemix_notm}} toolkit](create_bmxapp_appenv.html#toolkits) helps you to make the connection.
+
+Cloud Foundry needs to know the URL to use for making API calls,
+for example when uploading an application.
+The {{site.data.keyword.Bluemix_notm}} toolkit uses the `cf api` command to manage the API endpoint.
+More information about the `cf api` command is
+[available](https://console.ng.bluemix.net/docs/cli/reference/cfcommands/index.html#cf_api){:new_window}.
+
+Use the following command to tell Cloud Foundry the URL to use:
+
+```shell
+bluemix api https://api.ng.bluemix.net
 ```
-./bluemix api https://api.ng.bluemix.net
+{:pre}
+
+Expect a result similar to the following output:
+
+```text
 Invoking 'cf api https://api.ng.bluemix.net'...
 
 Setting api endpoint to https://api.ng.bluemix.net...
@@ -34,11 +49,36 @@ OK
 
 API endpoint:   https://api.ng.bluemix.net
 API version:    2.54.0
-Not logged in. Use './bluemix login' to log in.
+Not logged in. Use 'bluemix login' to log in.
 ```
+{:codeblock}
 
+Cloud Foundry now knows where to send API calls for managing applications.
+
+The next step is to log in to your {{site.data.keyword.Bluemix_notm}} application environment.
+You must supply the following account details:
+
+-   Your user name, specified as the `-u` parameter.
+-   Your organization name, specified as the `-o` parameter.
+-   Your space, specified as the `-s` parameter.
+
+>   **Note**: The account details are available on your {{site.data.keyword.Bluemix_notm}} dashboard,
+    when you log in through a web browser,
+    as shown in the following example:<br/>
+    ![Finding your {{site.data.keyword.Bluemix_notm}} account details](images/img0035.png)
+
+Use a command similar to the following example to log in to your
+{{site.data.keyword.Bluemix_notm}} application environment.
+You are asked to enter your account password:
+
+```shell
+bluemix login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev
 ```
-./bluemix login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev
+{:pre}
+
+Expect a result similar to the following output:
+
+```text
 Invoking 'cf login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev'...
 
 API endpoint: https://api.ng.bluemix.net
@@ -57,9 +97,8 @@ API endpoint:   https://api.ng.bluemix.net (API version: 2.54.0)
 User:           adrian.warman@uk.ibm.com
 Org:            Adrian.Warman@uk.ibm.com
 Space:          dev
-[warmana@localhost bin]$ 
-
 ```
+{:codeblock}
 
 ```
 [warmana@localhost BMXDemo]$ cf push "Cloudant Python"
