@@ -111,12 +111,3 @@ The library is an early release version. As such, it does not currently have com
 <aside class="warning" role="complementary" aria-label="betaonly0">SwiftCloudant is not supported on iOS, and you cannot call it from Objective-C.</aside>
 
 
-### Apache Spark
-
-[spark-cloudant](https://github.com/cloudant-labs/spark-cloudant) is the official Cloudant library for Apache Spark.
-
-The spark-cloudant library is already loaded into the [IBM Bluemix Apache Spark-as-a-Service](https://console.ng.bluemix.net/catalog/services/apache-spark/) offering.
-It can be used with any stand-alone Spark cluster.
-
-See the [project information](https://github.com/cloudant-labs/spark-cloudant)
-and [Spark Packages](https://spark-packages.org/package/cloudant-labs/spark-cloudant) for more details.
