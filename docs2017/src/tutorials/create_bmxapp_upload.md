@@ -69,7 +69,7 @@ You must supply the following account details:
 
 Use a command similar to the following example to log in to your
 {{site.data.keyword.Bluemix_notm}} application environment.
-You are asked to enter your account password:
+Notice that you are asked to enter your account password.
 
 ```shell
 bluemix login -u Adrian.Warman@uk.ibm.com -o Adrian.Warman@uk.ibm.com -s dev
@@ -90,8 +90,6 @@ OK
 Targeted org Adrian.Warman@uk.ibm.com
 
 Targeted space dev
-
-
                 
 API endpoint:   https://api.ng.bluemix.net (API version: 2.54.0)
 User:           adrian.warman@uk.ibm.com
@@ -100,22 +98,55 @@ Space:          dev
 ```
 {:codeblock}
 
+## Uploading the application
+
+The Cloudant Foundry toolkit now knows how to connect to the {{site.data.keyword.Bluemix_notm}} environment.
+
+The next step is to upload the application itself.
+Details of a {{site.data.keyword.Bluemix_notm}} application
+are provided in the [manifest file](create_bmxapp_appenv.html#manifest).
+
+The manifest file for the tutorial application was updated
+as described [here](create_bmxapp_createapp.html#essential-files)
+
+Use a command similar to the following example to log in to upload your
+{{site.data.keyword.Bluemix_notm}} application.
+
+```shell
+cf push "Cloudant Python"
 ```
-[warmana@localhost BMXDemo]$ cf push "Cloudant Python"
-Using manifest file /home/warmana/00host/Archive/Data/Customers/CDS/github/github.com/warmana/bluemixcode/BMXDemo/manifest.yml
+{:pre}
+
+A sequence of result messages are displayed.
+
+```text
+Using manifest file /..../BMXDemo/manifest.yml
 
 Updating app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
 OK
+```
+{:codeblock}
 
+The Cloud Foundry toolkit has correctly located the manifest file,
+and is preparing to upload the application using the connection
+and identification details provided [earlier](#uploading).
+
+```text
 Using route Cloudant-Python.mybluemix.net
 Uploading Cloudant Python...
-Uploading app files from: /home/warmana/00host/Archive/Data/Customers/CDS/github/github.com/warmana/bluemixcode/BMXDemo
+Uploading app files from: /..../BMXDemo
 Uploading 1.5K, 3 files
 Done uploading               
 OK
 Binding service Cloudant Service 2017 to app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
 OK
+```
+{:codeblock}
 
+The application was uploaded successfully,
+and a connection made with the {{site.data.keyword.cloudant_short_notm}} database instance.
+
+```text
 Starting app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
 -----> Downloaded app package (4.0K)
 -----> Downloaded app buildpack cache (29M)
@@ -143,7 +174,17 @@ App started
 OK
 
 App Cloudant Python was started using this command `python server.py`
+```
+{:codeblock}
 
+The application starts automatically.
+As part of the startup,
+a check is made to ensure that all requirements are met,
+by evaluating the contents of the [requirements.txt file](create_bmxapp_appenv.html#requirements).
+The application requires the {{site.data.keyword.cloudant_short_notm}} library,
+which we [specified](create_bmxapp_createapp.html#essential-files) when creating the application.
+
+```text
 Showing health and status for app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
 OK
 
