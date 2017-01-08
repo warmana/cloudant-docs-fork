@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-06"
+lastupdated: "2017-01-08"
 
 ---
 
@@ -184,6 +184,10 @@ by evaluating the contents of the [requirements.txt file](create_bmxapp_appenv.h
 The application requires the {{site.data.keyword.cloudant_short_notm}} library,
 which we [specified](create_bmxapp_createapp.html#essential-files) when creating the application.
 
+After uploading and starting the application,
+some simple system checks are performed to confirm that the application is running correctly
+as far as {{site.data.keyword.Bluemix_notm}} is concerned.
+
 ```text
 Showing health and status for app Cloudant Python in org Adrian.Warman@uk.ibm.com / space dev as Adrian.Warman@uk.ibm.com...
 OK
@@ -198,46 +202,67 @@ buildpack: python 1.5.5
 
      state     since                    cpu    memory          disk           details
 #0   running   2016-12-22 03:59:21 PM   0.0%   49.9M of 128M   110.6M of 1G
-[warmana@localhost BMXDemo]
 ```
+{:codeblock}
 
-```
+## Testing the sample application
 
-```
+When we first created the {{site.data.keyword.Bluemix_notm}} Application environment,
+the dashboard included a link in the `Route` column for the application:<br/>
+![Screenshot showing dashboard for the application](images/img0017.png)
 
+Clicking on that link opens a browser window,
+requesting some data from the application listening at the corresponding port.
+Our running application responds by returning the contents of
+the log file generated as the application was starting:<br/>
+![Log file generated as the tutorial application started running](images/img0030.png)
 
-<div id="maintenance"></div>
+The contents of this log file are very interesting.
+Immediately,
+we can see the start and end times.
+In between,
+the log records each of the details as the connection information
+for the {{site.data.keyword.cloudant_short_notm}} was retrieved.
+The actual values of the connection are not important;
+what is important is that the tutorial application was able to locate,
+retrieve,
+and use those values to create a new document in the 
+{{site.data.keyword.cloudant_short_notm}} database.
 
-## Performing basic application maintenance tasks
+### Confirming the database details
 
-This section of the tutorial explains how to upload,
-start,
-and stop,
-your Python applications on {{site.data.keyword.Bluemix_notm}}.
+Start by opening the {{site.data.keyword.cloudant_short_notm}} Dashboard.
+Do this by clicking the `Launch` icon on the `Manage` tab of the 
+{{site.data.keyword.cloudant_short_notm}} service page:<br/>
+![Launch icon on the {{site.data.keyword.cloudant_short_notm}} service page](images/img0036.png)
 
-<div id="troubleshooting"></div>
+> **Note**: To find your {{site.data.keyword.cloudant_short_notm}} service page,
+  refer to the details in the
+  ['Creating a {{site.data.keyword.cloudant_short_notm}} instance' tutorial](create_service.html#locating-your-service-credentials).
 
-## Diagnosing and resolving problems
+When the dashboard opens,
+you can see that the application
+created the `databasedemo` database:<br/>
+![The {{site.data.keyword.cloudant_short_notm}} Dashboard showing the new database](images/img0031.png)
 
-This section of the tutorial provides some basic troubleshooting tips to help
-you identify,
-diagnose,
-and resolve some problems you might encounter when developing and deploying
-your first {{site.data.keyword.Bluemix_notm}} applications.
+The database should contain a single document,
+created by the application.
+To verify this,
+click on the database name within the dashboard.
+A list of options for the database appears.
+When you select the `All documents` tab,
+details for a single document appear:<br/>
+![A single document within the new database](images/img0032.png)
 
-A good source of advice on best practice for creating {{site.data.keyword.Bluemix_notm}} or
-Cloud Foundry applications is
-[here](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html){:new_window}.
+To see the contents of the document,
+click the `Edit` icon,
+which appears as an image of a pencil:<br/>
+![Details of the document](images/img0033.png)
 
+When the contents of the document appear,
+you can see each of the fields created by the tutorial application.<br/>
+![The fields within the document](images/img0034.png)<br/>
 In particular,
-the advice on
-[avoiding writes to the local file system](https://docs.cloudfoundry.org/devguide/deploy-apps/prepare-to-deploy.html#filesystem){:new_window}
-is prudent.
-
->   **Note**: For reasons of simplicity,
-    this tutorial does write content to the local file system,
-    however,
-    the quantity of material is very small,
-    it is not expected to persist,
-    and it is not 'mission critical'.
-
+the `rightNow` field has the date and time the document was created.
+This corresponds to the period of time recorded within the application
+log file [described previously](#testing-the-sample-application).
