@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-06"
+lastupdated: "2017-01-09"
 
 ---
 
@@ -29,7 +29,7 @@ for creating an {{site.data.keyword.Bluemix}} application.
     you are presented with the {{site.data.keyword.Bluemix_notm}} dashboard:<br/>
     ![{{site.data.keyword.Bluemix_notm}} dashboard](images/img0001.png)
 
-2.  Click the `Catalog` link:<br/>
+2.  Click the  '`Catalog`' link:<br/>
     ![{{site.data.keyword.Bluemix_notm}} catalog link](images/img0002.png)<br/>
     A list of the services available on {{site.data.keyword.Bluemix_notm}} appears.
 
@@ -215,8 +215,7 @@ Use the following steps to download and install the {{site.data.keyword.Bluemix_
     ```
     {:codeblock}
     
-We now have the necessary tools to
-work with {{site.data.keyword.Bluemix_notm}} applications.
+The tools to work with {{site.data.keyword.Bluemix_notm}} applications are now available.
 The next step is to obtain the 'starter' materials to help create
 a {{site.data.keyword.Bluemix_notm}} application.
 
@@ -241,24 +240,24 @@ you must modify or extend as you develop your {{site.data.keyword.Bluemix_notm}}
 
 Three files in particular are essential:
 
--   [`Procfile`](#procfile)
+-   [ '`Procfile`'](#procfile)
 -   [`manifest.yml`](#manifest)
 -   [`requirements.txt`](#requirements)
 
 <div id="procfile"></div>
 
-### The `Procfile` file
+### The  '`Procfile`' file
 
-The `Procfile` is the most important file.
+The  '`Procfile`' is the most important file.
 It contains the details that {{site.data.keyword.Bluemix_notm}} requires to run your application.
 
 More specifically,
-a `Procfile` is a Cloud Foundry artifact that
+a  '`Procfile`' is a Cloud Foundry artifact that
 defines an application process type and the command that starts the application.
-More information about `Procfile` is available
+More information about  '`Procfile`' is available
 [here](https://docs.cloudfoundry.org/buildpacks/prod-server.html#procfile){:new_window}
 
-The `Procfile` for a {{site.data.keyword.Bluemix_notm}} Python starter application looks similar to the following example:
+The  '`Procfile`' for a {{site.data.keyword.Bluemix_notm}} Python starter application looks similar to the following example:
 
 ```text
 web: python server.py
@@ -278,7 +277,7 @@ The `server.py` file is modified for your application.
 Alternatively,
 create an entirely new Python source file.
 Then,
-update the `Procfile` so that the new file is used when your application starts.
+update the  '`Procfile`' so that the new file is used when your application starts.
 
 <div id="manifest"></div>
 
