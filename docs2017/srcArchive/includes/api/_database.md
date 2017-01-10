@@ -182,11 +182,14 @@ The elements of the returned structure are shown in the following table.
 </tr>
 <tr class="odd">
 <td align="left"><code>sizes</code></td>
-<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are described here.
+<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are 
+described here.
 <ul>
 <li><code>file</code>: Size in bytes of data stored on the disk. Indexes are not included in the calculation. The <code>disk_size</code> field is an alias for the <code>file</code> field. Note that this size includes data pending compaction.</li> 
 <li><code>external</code>: Size in bytes of uncompressed user data. This is the billable data size. The <code>other/data_size</code> field is an alias for the <code>external</code> field.</li> 
-<li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li></ul> 
+<li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li>
+</ul>
+</td> 
 </tr>
 </tbody>
 </table>
@@ -275,6 +278,8 @@ The `_all_docs` endpoint accepts these query arguments:
 
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
+`conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
+`deleted_conflicts` | Returns information about deleted conflicted revisions | yes | boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
