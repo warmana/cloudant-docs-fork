@@ -421,64 +421,6 @@ If you set `feed=longpoll`,
 requests to the server remain open until changes are reported.
 This can help monitor changes specifically instead of continuously.
 
-If you set `feed=continuous`,
-new changes are reported without closing the connection.
-In this mode,
-the format of the report entries reflects the continuous nature of the changes,
-while ensuring validity of the JSON output.
-
-The `filter` parameter designates a pre-defined [filter function](design_documents.html#filter-functions) to apply to the changes feed.
-Additionally, there is a built-in filter available:
-
-<!--
- * `_doc_ids`: This filter accepts only changes for documents whose ID is specified in the `doc_ids` parameter.
--->
-
-    `_design`: The `_design` filter accepts only changes to design documents.
-
-<div id="changes_responses"></div>
-
-> Example response:
-
-```
-{
-  "results": [{
-    "seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-    "id": "foo",
-    "changes": [{
-      "rev": "1-967a00dff5e02add41819138abb3284d"
-    }]
-  }],
-  "last_seq": "1-g1AAAAI9eJyV0EsKwjAUBdD4Ad2FdQMlMW3TjOxONF9KqS1oHDjSnehOdCe6k5oQsNZBqZP3HiEcLrcEAMzziQSB5KLeq0zyJDTqYE4QJqEo66NklQkrZUr7c8wAXzRNU-T22tmHGVMUapR2Bdwj8MBOvu4gscQyUtghyw-CYJ-SOWXTUSJMkKQ_UWgfsnXIuYOkhCCN6PBGqqmd4GKXda4OGvk0VCcCweHFeOjmoXubiEREIyb-KMdLDy89W4nTVGkqhhfkoZeHvkrimMJYrYo31bKsIg",
-  "pending": 0
-}
-```
-
-The response is a JSON object containing a list of the changes made to documents within the database.
-The following table describes the meaning of the individual fields:
-
-Field | Description | Type
-------|-------------|------
-`changes` | Array, listing the changes made to the specific document. | Array
-`deleted` | Boolean indicating if the corresponding document was deleted. If present, it always has the value `true`. | Boolean
-`id` | Document identifier | String
-`last_seq` | Identifier of the last of the sequence identifiers. Currently this is the same as the sequence identifier of the last item in the `results`. | String
-`results` | Array of changes made to the database. | Array
-`seq` | Update sequence identifier | String
-
-When using `_changes`,
-you should be aware that:
-
--	If a `since` value is specified, only changes that have arrived in the specified replicas of the shards are returned in the response.
--	If the specified replicas of the shards in any given `since` value are unavailable, alternative replicas are selected, and the last known checkpoint between them is used. If this happens, you might see changes again that you have previously seen. Therefore, an application making use of the `_changes` feed should be '[idempotent](http://www.eaipatterns.com/IdempotentReceiver.html)', that is, able to receive the same data multiple times, safely.
--	The results returned by `_changes` are partially ordered. In other words, the order is not guaranteed to be preserved for multiple calls. You might decide to get a current list using `_changes` which includes the [`last_seq` value](database.html#changes_responses), then use this as the starting point for subsequent `_changes` lists by providing the `since` query argument.
--	Although shard copies of the same range contain the same data, their `_changes` history is often unique. This is a result of how writes have been applied to the shard. For example, they may have been applied in a different order. To be sure all changes are reported for your specified sequence, it might be necessary to go further back into the shard's history to find a suitable starting point from which to start reporting the changes. This might give the appearance of duplicate updates, or updates that seem to be 'before' the specified `since` value.
-
-`_changes` from each shard are always presented in order.
-But the ordering between all the contributing shards might appear to be different.
-For more information,
-see [this example](https://gist.github.com/smithsz/30fb97662c549061e581).
-
 <div></div>
 
 ##### Continuous feed
