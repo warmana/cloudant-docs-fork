@@ -421,9 +421,7 @@ If you set `feed=longpoll`,
 requests to the server remain open until changes are reported.
 This can help monitor changes specifically instead of continuously.
 
-<div></div>
-
-##### Continuous feed
+<div id="continuous-feed"></div>
 
 > Example response, continuous changes feed:
 
