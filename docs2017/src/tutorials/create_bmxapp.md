@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-06"
+lastupdated: "2017-01-10"
 
 ---
 
@@ -11,6 +11,8 @@ lastupdated: "2017-01-06"
 {:screen: .screen}
 {:codeblock: .codeblock}
 {:pre: .pre}
+
+<!-- Acrolinx: 2017-01-10 -->
 
 # Creating a simple Bluemix application to access a Cloudant database
 
@@ -37,12 +39,11 @@ Cloud Foundry offers a Platform-as-a-Service (PaaS) capability
 that simplifies the process of creating applications that can be deployed and run
 within a Cloud environment.
 
-[Another tutorial](create_database.html) showed you how to create a Python application
+[A separate tutorial](create_database.html) showed you how to create a stand-alone Python application
 that uses a {{site.data.keyword.cloudant_short_notm}}
 database instance within {{site.data.keyword.Bluemix_notm}}.
 In this tutorial,
-you can set up and create a simple Python application,
-hosted within {{site.data.keyword.Bluemix_notm}}.
+you set up and create a small Python application hosted within {{site.data.keyword.Bluemix_notm}}.
 The application connects to your {{site.data.keyword.cloudant_short_notm}} database instance,
 and creates a single,
 simple document.
@@ -50,7 +51,7 @@ simple document.
 Python code specific to each task is provided as part of this tutorial.
 A complete Python program,
 sufficient to demonstrate the concepts,
-is provided at the end of the tutorial,
+is provided in the tutorial,
 [here](create_bmxapp_createapp.html#complete-listing).
 
 No attempt was made to create _efficient_ Python code for this tutorial;
@@ -59,11 +60,9 @@ that you can learn from and apply for your own applications.
 
 Also,
 no attempt was made to address all possible checks or error conditions.
-Some example checks are shown here
-to illustrate the techniques,
+Some example checks are included to illustrate some of the techniques,
 but you should apply normal best practices for checking and handling all
-warning or error conditions that are encountered by your own applications.
-
+warnings or error conditions that are encountered by your own applications.
 
 ## Task overview
 
@@ -89,3 +88,8 @@ The tutorial consists of five sections:
 3.  [Creating your Application](create_bmxapp_createapp.html)
 4.  [Uploading and running your Application](create_bmxapp_upload.html)
 5.  [Maintaining and troubleshooting your Application](create_bmxapp_maintain.html)
+
+## The next step
+
+To begin the tutorial,
+start by [checking the Pre-requisites](create_bmxapp_prereq.html).

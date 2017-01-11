@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-09"
+lastupdated: "2017-01-11"
 
 ---
 
@@ -11,6 +11,8 @@ lastupdated: "2017-01-09"
 {:screen: .screen}
 {:codeblock: .codeblock}
 {:pre: .pre}
+
+<!-- Acrolinx: 2017-01-11 -->
 
 # Creating a simple Bluemix application to access a Cloudant database: maintaining and troubleshooting
 
@@ -28,7 +30,7 @@ start,
 and stop,
 your Python applications on {{site.data.keyword.Bluemix_notm}}.
 
-### Finding the current status of your application
+### Finding the status of your application
 
 The status of applications within your
 {{site.data.keyword.Bluemix_notm}} service instance is displayed on the dashboard.
@@ -36,38 +38,39 @@ The status of applications within your
 In the following example,
 The `Cloudant Python` application is not running,
 and has a `Stopped` state:<br/>
-![Screenshot showing dashboard for the application in a 'stopped' state](images/img0037.png)
+![Screen capture showing dashboard for the application in a 'stopped' state](images/img0037.png)
 
 ### Starting your application
 
 >   **Note**: If you attempt to start the tutorial application
     without first deleting the tutorial demonstration database,
-    the application enters a cycle of attempting to start,
-    failing because the database already exists,
+    the application cannot work correctly.
+    The application enters a cycle of attempting to start,
+    failing because the database exists,
     stopping,
     then attempting to start again.
     To solve the problem,
     [stop the application](#stopping-your-application),
     then delete the tutorial demonstration database.
-    You should then be able to start the application successfully.
+    The application can then start successfully.
 
 To start a stopped application,
-first click on the application menu icon on the dashboard:<br/>
-![Screenshot showing dashboard with application management icon](images/img0038.png)
+first click the application menu icon on the dashboard:<br/>
+![Screen capture showing dashboard with application management icon](images/img0038.png)
 
 Next,
 click the `Start App` option in the menu:<br/>
-![Screenshot showing 'Start App' option](images/img0039.png)
+![Screen capture showing 'Start App' option](images/img0039.png)
 
 ### Stopping your application
 
 To stop a running application,
-first click on the application menu icon on the dashboard:<br/>
-![Screenshot showing dashboard with application management icon](images/img0040.png)
+first click the application menu icon on the dashboard:<br/>
+![Screen capture showing dashboard with application management icon](images/img0040.png)
 
 Next,
 click the `Stop App` option in the menu:<br/>
-![Screenshot showing 'Stop App' option](images/img0041.png)
+![Screen capture showing 'Stop App' option](images/img0041.png)
 
 <div id="troubleshooting"></div>
 
@@ -85,7 +88,7 @@ The new version overwrites the older version of the application.
 This section of the tutorial provides some basic troubleshooting tips to help
 you identify,
 diagnose,
-and resolve some problems you might encounter when developing and deploying
+and resolve some problems that you might encounter when you develop and deploy
 your first {{site.data.keyword.Bluemix_notm}} applications.
 
 A good source of advice on best practice for creating {{site.data.keyword.Bluemix_notm}} or
@@ -98,10 +101,10 @@ the advice on
 is prudent.
 
 >   **Note**: For reasons of simplicity,
-    this tutorial does write content to the local file system,
-    however,
-    the quantity of material is very small,
-    it is not expected to persist,
+    this tutorial does write content to the local file system.
+    However,
+    the quantity of material is small.
+    It is not expected to persist,
     and it is not 'mission critical'.
 
 ### Using the application log
@@ -110,7 +113,7 @@ The most useful resource for diagnosing and resolving problems with
 {{site.data.keyword.Bluemix_notm}} application is the log file.
 
 The log file for a {{site.data.keyword.Bluemix_notm}} application can be found on the `Logs` information page:<br/>
-![Screenshot showing the link to access the 'Logs' information page](images/img0042.png)
+![Screen capture showing the link to access the 'Logs' information page](images/img0042.png)
 
 Like most log files,
 a {{site.data.keyword.Bluemix_notm}} application log contains details about what events occurred,
@@ -123,14 +126,14 @@ Component label | Component
 ----------------|----------
 `API`           | The Cloud Foundry system.
 `APP`           | Your application.
-`CELL`          | The container holding your application within {{site.data.keyword.Bluemix_notm}}.
+`CELL`          | The container that holds your application within {{site.data.keyword.Bluemix_notm}}.
 `RTR`           | The networking components carry messages to or from your application.
 
 For example,
-the following screenshot includes a number of typical events:<br/>
-![Screenshot showing indicative log information](images/img0043.png)
+the following screen capture includes a number of typical events:<br/>
+![Screen capture showing indicative log information](images/img0043.png)
 
-There are several points of interest:
+Note the events at the following times:
 
 -   At 1:56:56 PM, the application started successfully.
 -   At 1:58:43 PM, the network received a simple HTTP request, to `GET /`.
@@ -138,27 +141,30 @@ There are several points of interest:
 -   At 2:13:46 PM, a request was received to stop the application.
 -   At 2:13:48 PM, the application completed the process of halting.
 
-The application described in this tutorial is deliberately minimal.
+The application that is described in this tutorial is deliberately minimal.
 As a specific example,
-no attempt is made to determine if the target database already exists,
+no attempt is made to determine whether the target database exists,
 and,
 if it does exist,
-to act accordingly.
+to avoid attempting to create it again.
 The effect is that if you try to run the tutorial application more than once,
 without removing the database beforehand,
-the application will enter a cycle of failing,
-and attempting to restart again.
+the application repeatedly fails and restarts.
 
-You can see this effect in the following screenshot:<br/>
-![Screenshot showing error information within the log](images/img0044.png)
+You can see this effect in the following screen capture:<br/>
+![Screen capture showing error information within the log](images/img0044.png)
 
 At 2:31:23 PM,
 the application detected a problem:<br/>
 `"Database {0} already exists".format(dbname)`
 
-The remainder of the messages are what you expect from any Python application encountering a problem.
+The remaining messages are what you expect from any Python application that encounters a problem.
 
 In effect,
 the log shows you what component encountered a problem,
 and provides as much detail as possible.
 You must then apply normal application troubleshooting procedures to resolve the problem.
+
+## End of tutorial
+
+The tutorial is complete.

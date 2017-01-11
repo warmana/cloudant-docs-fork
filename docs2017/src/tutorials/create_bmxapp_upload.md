@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-08"
+lastupdated: "2017-01-11"
 
 ---
 
@@ -12,9 +12,11 @@ lastupdated: "2017-01-08"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
+<!-- Acrolinx: 2017-01-11 -->
+
 # Creating a simple Bluemix application to access a Cloudant database: uploading the application
 
-This section of the tutorial describes how to upload a
+This section of the tutorial describes how to upload an
 {{site.data.keyword.Bluemix}} application.
 {:shortdesc}
 
@@ -27,9 +29,9 @@ The first task is to connect to {{site.data.keyword.Bluemix_notm}}.
 The [{{site.data.keyword.Bluemix_notm}} toolkit](create_bmxapp_appenv.html#toolkits) helps you to make the connection.
 
 Cloud Foundry needs to know the URL to use for making API calls,
-for example when uploading an application.
-The {{site.data.keyword.Bluemix_notm}} toolkit uses the `cf api` command to manage the API endpoint.
-More information about the `cf api` command is
+for example when you upload an application.
+The {{site.data.keyword.Bluemix_notm}} toolkit uses the '`cf api`' command to manage the API endpoint.
+More information about the '`cf api`' command is
 [available](https://console.ng.bluemix.net/docs/cli/reference/cfcommands/index.html#cf_api){:new_window}.
 
 Use the following command to tell Cloud Foundry the URL to use:
@@ -58,9 +60,9 @@ Cloud Foundry now knows where to send API calls for managing applications.
 The next step is to log in to your {{site.data.keyword.Bluemix_notm}} application environment.
 You must supply the following account details:
 
--   Your user name, specified as the `-u` parameter.
--   Your organization name, specified as the `-o` parameter.
--   Your space, specified as the `-s` parameter.
+-   Your user name, which is specified as the '`-u`' parameter.
+-   Your organization name, which is specified as the '`-o`' parameter.
+-   Your space, which is specified as the '`-s`' parameter.
 
 >   **Note**: The account details are available on your {{site.data.keyword.Bluemix_notm}} dashboard,
     when you log in through a web browser,
@@ -117,7 +119,7 @@ cf push "Cloudant Python"
 ```
 {:pre}
 
-A sequence of result messages are displayed.
+A sequence of result messages is displayed.
 
 ```text
 Using manifest file /..../BMXDemo/manifest.yml
@@ -127,9 +129,9 @@ OK
 ```
 {:codeblock}
 
-The Cloud Foundry toolkit has correctly located the manifest file,
-and is preparing to upload the application using the connection
-and identification details provided [earlier](#uploading).
+The Cloud Foundry toolkit located the manifest file,
+and is preparing to upload the application by using the connection
+and identification details you provided [earlier](#uploading).
 
 ```text
 Using route Cloudant-Python.mybluemix.net
@@ -181,11 +183,11 @@ The application starts automatically.
 As part of the startup,
 a check is made to ensure that all requirements are met,
 by evaluating the contents of the [requirements.txt file](create_bmxapp_appenv.html#requirements).
-The application requires the {{site.data.keyword.cloudant_short_notm}} library,
-which we [specified](create_bmxapp_createapp.html#essential-files) when creating the application.
+The application requires access to the {{site.data.keyword.cloudant_short_notm}} library,
+which was [specified](create_bmxapp_createapp.html#essential-files) when the application was created.
 
-After uploading and starting the application,
-some simple system checks are performed to confirm that the application is running correctly
+After you upload and start the application,
+some simple system checks are run to confirm that the application is running correctly
 as far as {{site.data.keyword.Bluemix_notm}} is concerned.
 
 ```text
@@ -207,24 +209,23 @@ buildpack: python 1.5.5
 
 ## Testing the sample application
 
-When we first created the {{site.data.keyword.Bluemix_notm}} Application environment,
+When the {{site.data.keyword.Bluemix_notm}} Application environment was first created,
 the dashboard included a link in the `Route` column for the application:<br/>
 ![Screenshot showing dashboard for the application](images/img0017.png)
 
-Clicking on that link opens a browser window,
-requesting some data from the application listening at the corresponding port.
-Our running application responds by returning the contents of
-the log file generated as the application was starting:<br/>
+Clicking the link opens a browser window,
+requesting some data from the application that is listening at the corresponding port.
+The application responds by returning the contents of
+the log file that was generated as the application was starting:<br/>
 ![Log file generated as the tutorial application started running](images/img0030.png)
 
-The contents of this log file are very interesting.
-Immediately,
-we can see the start and end times.
+The contents of this log file are interesting.
+The start and end times are clearly displayed.
 In between,
 the log records each of the details as the connection information
 for the {{site.data.keyword.cloudant_short_notm}} was retrieved.
-The actual values of the connection are not important;
-what is important is that the tutorial application was able to locate,
+The actual values of the connection are not important.
+The log shows that the tutorial application was able to locate,
 retrieve,
 and use those values to create a new document in the 
 {{site.data.keyword.cloudant_short_notm}} database.
@@ -232,7 +233,7 @@ and use those values to create a new document in the
 ### Confirming the database details
 
 Start by opening the {{site.data.keyword.cloudant_short_notm}} Dashboard.
-Do this by clicking the `Launch` icon on the `Manage` tab of the 
+Click the `Launch` icon on the `Manage` tab of the 
 {{site.data.keyword.cloudant_short_notm}} service page:<br/>
 ![Launch icon on the {{site.data.keyword.cloudant_short_notm}} service page](images/img0036.png)
 
@@ -242,13 +243,13 @@ Do this by clicking the `Launch` icon on the `Manage` tab of the
 
 When the dashboard opens,
 you can see that the application
-created the `databasedemo` database:<br/>
+created the '`databasedemo`' database:<br/>
 ![The {{site.data.keyword.cloudant_short_notm}} Dashboard showing the new database](images/img0031.png)
 
-The database should contain a single document,
+The database contains a single document,
 created by the application.
-To verify this,
-click on the database name within the dashboard.
+To verify the presence of the document,
+click the database name within the dashboard.
 A list of options for the database appears.
 When you select the `All documents` tab,
 details for a single document appear:<br/>
@@ -260,9 +261,16 @@ which appears as an image of a pencil:<br/>
 ![Details of the document](images/img0033.png)
 
 When the contents of the document appear,
-you can see each of the fields created by the tutorial application.<br/>
+you can see each of the fields that were created by the tutorial application.<br/>
 ![The fields within the document](images/img0034.png)<br/>
 In particular,
 the `rightNow` field has the date and time the document was created.
-This corresponds to the period of time recorded within the application
-log file [described previously](#testing-the-sample-application).
+This value corresponds to the time that was recorded within the
+[application log file](#testing-the-sample-application).
+
+## The next step
+
+The next step in the tutorial is to [operate and maintain the application](create_bmxapp_maintain.html),
+for example when you start,
+stop,
+and debug the application.

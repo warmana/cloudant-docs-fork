@@ -2,7 +2,7 @@
 
 copyright:
   years: 2017
-lastupdated: "2017-01-06"
+lastupdated: "2017-01-10"
 
 ---
 
@@ -11,6 +11,8 @@ lastupdated: "2017-01-06"
 {:screen: .screen}
 {:codeblock: .codeblock}
 {:pre: .pre}
+
+<!-- Acrolinx: 2017-01-10 -->
 
 # Creating a simple Bluemix application to access a Cloudant database: Prerequisites
 
@@ -28,7 +30,7 @@ before you start working through the tutorial.
 For all but the simplest possible development work,
 it is much easier if you have a current installation of the
 [Python programming language](https://www.python.org/){:new_window}
-that is installed on your system.
+on your system.
 
 To check,
 run the following command at a prompt:
@@ -49,16 +51,22 @@ Python 2.7.12
 
 ### A Cloudant service instance on Bluemix
 
-A tutorial for creating a {{site.data.keyword.cloudant_short_notm}} service instance is available [here](create_service.html).
+A separate tutorial for creating a {{site.data.keyword.cloudant_short_notm}} service instance called
+'`Cloudant Service 2017`' is available [here](create_service.html).
 
-This tutorial assumes that you have a service instance called
-`Cloudant Service 2017`.
+This tutorial assumes that you have already created a service instance called
+'`Cloudant Service 2017`'.
 
 ### A Cloudant database application
 
-A tutorial for creating a stand-alone Python application to work with a {{site.data.keyword.cloudant_short_notm}}
+A separate tutorial for creating a stand-alone Python application
+to work with a {{site.data.keyword.cloudant_short_notm}}
 service instance is available [here](create_database.html).
 It introduces a number of concepts that are helpful for understanding how to create and populate a
 {{site.data.keyword.cloudant_short_notm}} database.
 
 This tutorial assumes that you are familiar with those concepts.
+
+## The next step
+
+The next step in the tutorial is to [create the application environment](create_bmxapp_appenv.html).

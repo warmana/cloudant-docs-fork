@@ -12,6 +12,8 @@ lastupdated: "2017-01-10"
 {:codeblock: .codeblock}
 {:pre: .pre}
 
+<!-- Acrolinx: 2017-01-10 -->
+
 # Databases
 
 Cloudant databases contain JSON objects.
