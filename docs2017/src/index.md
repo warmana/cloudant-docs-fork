@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2017
-lastupdated: "2017-01-06"
+lastupdated: "2017-01-11"
 
 ---
 
@@ -15,7 +15,8 @@ lastupdated: "2017-01-06"
 # Getting started with Cloudant
 {: #getting-started-with-cloudant}
 
-{{site.data.keyword.cloudant}} on Bluemix is a document database as a service (DBaaS) that stores data in JSON.
+{{site.data.keyword.cloudantfull}} is a document-oriented DataBase as a Service (DBaaS).
+It stores data as documents in JSON format.
 It's built with scalability,
 high availability,
 and durability in mind.
@@ -28,15 +29,60 @@ desktop PCs,
 and mobile devices.
 {:shortdesc}
 
-For more information on all the {{site.data.keyword.cloudant}} offerings,
-see the main [Cloudant](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/){:new_window} site.
-For more details on {{site.data.keyword.cloudant}} concepts,
+For more information on all the {{site.data.keyword.cloudant_short_notm}} offerings,
+see the main [{{site.data.keyword.cloudant_short_notm}}](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/){:new_window} site.
+For more details on {{site.data.keyword.cloudant_short_notm}} concepts,
 tasks and techniques,
-see the [Cloudant documentation](cloudant.html){:new_window}.
+see the [{{site.data.keyword.cloudant_short_notm}} documentation](cloudant.html).
 
-You can launch the {{site.data.keyword.cloudant}} on Bluemix console from the service launch page on the Bluemix dashboard.
+You can launch the {{site.data.keyword.cloudant_short_notm}} console from the service launch page on the
+[{{site.data.keyword.Bluemix_notm}} dashboard](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db/).
 
-To use the service, follow these steps:
+To use the service,
+follow these steps:
+
+1.  Create a service instance using the
+    [{{site.data.keyword.Bluemix_notm}} dashboard](https://console.ng.bluemix.net/catalog/services/cloudant-nosql-db/).
+2.  Review the service instance access credentials,
+    similar to the following example:
+    ```json
+    {
+        "cloudantNoSQLDB": {
+            "name": "Cloudant-3s",
+            "label": "cloudantNoSQLDB",
+            "plan": "shared",
+            "credentials": {
+                "username": "someusername",
+                "password": "secret",
+                "host": "myhost-bluemix.cloudant.com",
+                "port": 443,
+                "url": "https://someusername:secret@myhost-bluemix.cloudant.com"
+            }
+        }
+    }
+    ```
+    {:codeblock}
+3.  Create applications that connect to the service instance,
+    and which use the service credentials.
+    These applications can be created by using various environments,
+    including:
+    -   [Mobile platforms](libraries/supported.html#mobile)
+    -   [Java](libraries/supported.html#java)
+    -   [Node.js](libraries/supported.html#node-js)
+    -   [Python](libraries/supported.html#python)
+    -   [Swift](libraries/supported.html#swift)
+
+    For more information,
+    see the [Cloudant homepage](http://www.ibm.com/analytics/us/en/technology/cloud-data-services/cloudant/){:new_window}
+    and the list of [Client Libraries](libraries/index.html).
+
+Tutorials are [available](tutorials/index.html) that describe these tasks in more detail.
+More information about tasks such as authenticating with database instances,
+and querying data,
+is available in the [API reference](api/index.html).
+
+<!--
+
 <ol>
 <li>Create a service instance by using either the Bluemix dashboard,
 or the CloudFoundry command line interface.
@@ -147,22 +193,30 @@ use the command:<br/>
 </ol>
 
 More information about authenticating to the database and making requests is available
-in the [API reference](api/index.html){:new_window}.
+in the [API reference](api/index.html).
+
+-->
 
 # Related Links
 {: #rellinks}
 
-* [Cloudant website and dashboard](https://cloudant.com/){:new_window}
-* [Cloudant Blog](https://cloudant.com/blog){:new_window}
-
 ## Tutorials and Samples
 {: #samples}
 
-* [Cloudant client libraries](libraries/index.html){:new_window}
-* [Using Cloudant with Liberty on Bluemix](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/){:new_window}
-* [Cloudant Guides](guides/index.html){:new_window}
+*   [Tutorial overview](tutorials/index.html)
+*   [Creating a {{site.data.keyword.cloudant_short_notm}} instance on {{site.data.keyword.Bluemix_notm}}](tutorials/create_service.html)
+*   [Creating and populating a simple {{site.data.keyword.cloudant_short_notm}} database](tutorials/create_database.html)
+*   [Creating a {{site.data.keyword.Bluemix_notm}} application to access a {{site.data.keyword.cloudant_short_notm}} database](tutorials/create_bmxapp.html)
 
 ## API Reference
 {: #api}
 
-* [Cloudant API reference](api/index.html){:new_window}
+*   [{{site.data.keyword.cloudant_short_notm}} API reference](api/index.html)
+
+## Related Links
+{: #general}
+
+*   [{{site.data.keyword.cloudant_short_notm}} Guides](guides/index.html)
+*   [{{site.data.keyword.cloudant_short_notm}} website and dashboard](https://cloudant.com/){:new_window}
+*   [{{site.data.keyword.cloudant_short_notm}} Blog](https://cloudant.com/blog){:new_window}
+*   [Using {{site.data.keyword.cloudant_short_notm}} with Liberty on {{site.data.keyword.Bluemix_notm}}](https://developer.ibm.com/bluemix/2014/07/08/cloudant_on_bluemix/){:new_window}
