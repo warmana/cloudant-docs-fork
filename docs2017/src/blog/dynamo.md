@@ -17,6 +17,7 @@ lastupdated: "2017-01-16"
 _(This is a republication of a Blog article by Brad Anderson:
 "Dynamo and CouchDB Clusters",
 originally published August 13, 2010.)_
+{:shortdesc}
 
 For a while,
 CouchDB was described as a "distributed,

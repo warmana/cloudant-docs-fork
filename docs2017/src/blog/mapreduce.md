@@ -17,6 +17,7 @@ lastupdated: "2017-01-16"
 _(This is a republication of a Blog article by Mike Miller:
 "MapReduce: From the basics to the actually useful (in under 30 minutes)",
 originally published January 13, 2011.)_
+{:shortdesc}
 
 ## From the basics to the actually useful (in under 30 minutes)
 
