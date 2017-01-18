@@ -150,7 +150,7 @@ using Cloudant.
 If you want to follow along at home, you have two choices.
 
 1.  Use CouchDB replication to copy my db into yours via:
-    ```shell
+    ```sh
     curl 'http://<usr>:<pwd>@<usr>.cloudant.com/_replicate' -Hcontent-type:application/json -d '{"source":"http://mlmiller.cloudant.com/planes","target":"http://<usr>:<pwd>@<usr>.cloudant.com/planes","create_target":true}'
     ```
     {:pre}
@@ -196,7 +196,7 @@ I use the very handy `DictReader` class from Python's `csv` module to parse the 
 It's a one-liner to serialize that Python dictionary and push it into Cloudant.
 If you want to try this yourself the `README` file has instructions on installing
 the Couchdbkit module and executing the `upload.py` script, but it just boils down to:
-```shell
+```sh
 python upload.py AviationData.txt.gz 'http://<username>:<password>@<username>.cloudant.com' planes
 ```
 {:pre}
@@ -226,18 +226,18 @@ But the important thing to note is that we have data for nearly 70,000 domestic 
 spanning the range 1988–2010.
 If you want to look at a single document from your command line,
 you can via:
-```shell
+```sh
 curl -X GET 'http://<usr>:<pwd>@<usr>.cloudant.com/planes/_all_docs?limit=1&include_docs=true'
 ```
 {:pre}
 and if you want it pretty printed,
 my favorite is:
-```shell
+```sh
 curl -X GET 'http://<usr>:<pwd>@<usr>.cloudant.com/planes/_all_docs?limit=1&include_docs=true' | python -m json.tool
 ```
 {:pre}
 Since I've granted read permissions on mlmiller/planes, you can execute this yourself via:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_all_docs?limit=1&include_docs=true' | python -m json.tool
 {
     "offset": 0,
@@ -331,7 +331,7 @@ This gives me a design document with the name `example`;
 that contains two views,
 one called `date` and one called `make`.
 You can see the entire design document from the command line via:
-```shell
+```sh
 curl -X GET http://mlmiller.cloudant.com/planes/_design/example
 ```
 {:pre}
@@ -361,7 +361,7 @@ Let's find all of the documents ('rows') that have `doc.Make=="Cessna"`.
 Since we emitted `doc.Make` in our map code,
 `doc.Make` is therefore the 'key' for this index,
 and that means we get snappy responses to queries like:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?reduce=false&key="Cessna"&limit=10'
 {"total_rows":68387,"offset":13905,"rows":[
 {"id":"0fedbabcd21f15785750457f8300324c","key":"Cessna","value":1},
@@ -385,11 +385,11 @@ For this query,
 if you remove the `limit` argument you will get the entire list of crashes with a Cessna involved.
 If you want to do some fun statistics,
 you can try:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?reduce=false&key="Airbus"' | wc -l 15
 ```
 {:pre}
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?reduce=false&key="Boeing"' | wc -l 773
 ```
 {:pre}
@@ -426,14 +426,14 @@ So the `_sum` that we use here is simply going to add up the numbers
 that we emitted as the 2nd argument to `emit()` in the `map.js` function.
 Now we can answer the Boeing vs.
 Airbus question without any client side work via:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?key="Boeing"'
 {"rows":[
 {"key":null,"value":771}
 ]}
 ```
 {:pre}
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?key="Airbus"'
 {"rows":[
 {"key":null,"value":13}
@@ -444,7 +444,7 @@ Check that out!
 Hmm,
 now suppose I want to find the total number of accidents,
 I can then just do:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make'
 {"rows":[
 {"key":null,"value":68387}
@@ -453,7 +453,7 @@ curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make'
 {:pre}
 Very cool,
 and if I want to make a graph of how they plot out vs manufacture I can add the `group=true` option:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/make?group=true'
 {"rows":[
 {"key":"","value":53},
@@ -518,7 +518,7 @@ very handy.
 Now to query this index we get rows that are sorted by year,
 then month.
 The index looks like:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?group_level=2' | more
 {"rows":[
 {"key":[1982,0],"value":[207,185]},
@@ -544,7 +544,7 @@ e.g.,
 1982 month 0 (January) had 207 crashes and 185 fatalities.
 What was that group_level command?
 Let's try changing it:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?group_level=1' | more
 {"rows":[
 {"key":[1982],"value":[3593,1585]},
@@ -568,7 +568,7 @@ and the gory details are few:
 so in this case valid values are 0, 1, 2.
 If we specify `group_level=0`,
 we'll get sum statistics over the entire date range:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?group_level=0'
 {"rows":[
 {"key":null,"value":[68387,38652]}
@@ -584,7 +584,7 @@ all we really had to do was write 9 lines of javascript for the map method,
 and no original code for the reduce method.
 We can use this same exact index to query for a given date range,
 say 1994:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?group_level=2&startkey=\[1994\]&endkey=\[1995\]'
 {"rows":[
 {"key":[1994,0],"value":[116,60]},
@@ -603,7 +603,7 @@ curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?grou
 ```
 {:pre}
 or if we want to do can turn off the reduce in the query and get all of the crashes from a given year/month combo:
-```shell
+```sh
 curl -X GET 'http://mlmiller.cloudant.com/planes/_design/example/_view/date?key=\[1994,4\]&reduce=false' | more
 {"total_rows":68387,"offset":34959,"rows":[
 {"id":"88601d815897032516f87f0c510c7c60","key":[1994,4],"value":[1,1]},

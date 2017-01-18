@@ -59,7 +59,7 @@ When creating a database,
 users may provide Q,
 a constant that determines how many partitions the database will be spread across.
 Let's check out an example:
-```shell
+```sh
 curl -X PUT http://username.cloudant.com/dbname?q=10
 ```
 {:pre}
