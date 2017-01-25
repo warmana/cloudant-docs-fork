@@ -2,6 +2,11 @@
 
 ## Changelog
 
+### 2017-01-24
+
+Updated Vagrant image to latest Bluemix build tool.
+Updated Vagrant image with latest security patches.
+
 ### 2017-01-18
 
 Updated VirtualBox requirement to 5.1.14.
