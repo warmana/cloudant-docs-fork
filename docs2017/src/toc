@@ -45,6 +45,7 @@ index.md
         guides/backup-guide-using-replication.md
         guides/cap_theorem.md
         guides/couchapps.md
+        guides/warehousing.md
         guides/design_document_management.md
         guides/mvcc.md
         guides/transactions.md
@@ -52,4 +53,3 @@ index.md
         guides/managing_tasks.md
         guides/model_data.md
         guides/replication_guide.md
-        guides/warehousing.md
