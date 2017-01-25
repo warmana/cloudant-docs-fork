@@ -40,16 +40,16 @@ index.md
         api/monitoring.md
         api/backup.md
     guides/index.md
-        guides/json.md
         guides/acurl.md
-        guides/model_data.md
-        guides/replication_guide.md
-        guides/managing_tasks.md
-        guides/mvcc.md
-        guides/transactions.md
-        guides/cap_theorem.md
         guides/backup-guide.md
         guides/backup-guide-using-replication.md
+        guides/cap_theorem.md
         guides/couchapps.md
         guides/design_document_management.md
+        guides/mvcc.md
+        guides/transactions.md
+        guides/json.md
+        guides/managing_tasks.md
+        guides/model_data.md
+        guides/replication_guide.md
         guides/warehousing.md
