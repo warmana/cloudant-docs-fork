@@ -7,7 +7,7 @@ index.md
     libraries/index.md
         libraries/supported.md
         libraries/thirdparty.md
-    tutorials/index.md
+    [Tutorials](tutorials/index.html)
         tutorials/create_service.md
         tutorials/create_database.md
         tutorials/create_bmxapp.md
