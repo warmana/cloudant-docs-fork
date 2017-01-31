@@ -2,7 +2,7 @@
 
 copyright:
   years: 2015, 2017
-lastupdated: "2017-01-26"
+lastupdated: "2017-01-31"
 
 ---
 
@@ -74,6 +74,11 @@ The following table summarizes the performance measures for each of the plans.
 <td>50</td>
 <td>250</td>
 <td>1,000</td>
+</tr>
+<tr>
+<td>Maximum individual document size</td>
+<td>1 MB</td>
+<td colspan='4'>1 MB</td>
 </tr>
 <tr>
 <td>Disk Space Included</td>
@@ -190,6 +195,13 @@ for moving to a different plan configuration.
 
 In summary,
 you must ensure that your application is able to handle a [`429`](../api/http.html#429) response correctly.
+
+#### Maximum individual document size
+
+Data is stored within Cloudant as [JSON documents](../api/document.html).
+For documents in a Cloudant service on IBM Bluemix,
+the maximum size for an individual document is 1 MB.
+Exceeding this limit causes a [`413` error](../api/http.html#413).
 
 #### Disk Space Included
 
