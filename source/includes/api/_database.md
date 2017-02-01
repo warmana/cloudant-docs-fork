@@ -69,7 +69,7 @@ Code | Description
 201 |	Database created successfully
 202 |	The database has been successfully created on some nodes, but the number of nodes is less than the write quorum.
 403 |	Invalid database name.
-412 |	Database aleady exists.
+412 |	Database already exists.
 
 ### Read
 
@@ -124,21 +124,76 @@ such as how many documents it contains.
 }
 ```
 
-The elements of the returned structure are shown in the following table:
+The elements of the returned structure are shown in the following table. 
 
-Field |	Description
-------|------------
-compact_running |	Set to true if the database compaction routine is operating on this database.
-db_name |	The name of the database.
-disk_format_version |	The version of the physical format used for the data when it is stored on disk.
-disk_size |	Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.
-doc_count |	A count of the documents in the specified database.
-doc_del_count |	Number of deleted documents
-instance_start_time |	Always 0.
-purge_seq |	The number of purge operations on the database.
-update_seq |	An opaque string describing the state of the database. It should not be relied on for counting the number of updates.
-other |	JSON object containing a `data_size` field.
-sizes | JSON object containing file, external, and active sizes.
+<table>
+<colgroup>
+<col width="15%" />
+<col width="36%" />
+<col width="26%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Field</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>compact_running</code></td>
+<td align="left">Set to true if the database compaction routine is operating on this database.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>db_name</code></td>
+<td align="left">The name of the database.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>disk_format_version</code></td>
+<td align="left">The version of the physical format used for the data when it is stored on disk.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>disk_size</code></td>
+<td align="left">Size in bytes of the data as stored on the disk. Views indexes are not included in the calculation.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>doc_count</code></td>
+<td align="left">A count of the documents in the specified database.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>doc_del_count</code></td>
+<td align="left">Number of deleted documents.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>instance_start_time</code></td>
+<td align="left">Always 0.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>purge_seq</code></td>
+<td align="left">The number of purge operations on the database.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>update_seq</code></td>
+<td align="left">An opaque string describing the state of the database. It should not be relied on for counting the number of updates.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>other</code></td>
+<td align="left">JSON object containing a `data_size` field.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>sizes</code></td>
+<td align="left">JSON object containing <code>file</code>, <code>external</code>, and <code>active</code> fields which are 
+described here.
+<ul>
+<li><code>file</code>: Size in bytes of data stored on the disk. Indexes are not included in the calculation. The <code>disk_size</code> field is an alias for the <code>file</code> field. Note that this size includes data pending compaction.</li> 
+<li><code>external</code>: Size in bytes of uncompressed user data. This is the billable data size. The <code>other/data_size</code> field is an alias for the <code>external</code> field.</li> 
+<li><code>active</code>: Size in bytes of data stored internally (excluding old revisions). </li>
+</ul>
+</td> 
+</tr>
+</tbody>
+</table>
+
 
 ### Get Databases
 
@@ -224,6 +279,7 @@ The `_all_docs` endpoint accepts these query arguments:
 Argument | Description | Optional | Type | Default
 ---------|-------------|----------|------|--------
 `conflicts` | Can only be set if `include_docs` is `true`. Adds information about conflicts to each document. | yes | Boolean | false
+`deleted_conflicts` | Returns information about deleted conflicted revisions | yes | boolean | false
 `descending` | Return the documents in descending by key order | yes | boolean | false
 `endkey` | Stop returning records when the specified key is reached | yes | string |  
 `include_docs` | Include the full content of the documents in the return | yes | boolean | false
@@ -231,6 +287,9 @@ Argument | Description | Optional | Type | Default
 `key` | Return only documents with IDs that match the specified key | yes | string |  
 `keys` | Return only documents with IDs that match one of the specified keys | yes | list of strings |  
 `limit` | Limit the number of the returned documents to the specified number | yes | numeric | 
+`meta` | Short-hand combination of all three arguments: `conflicts`, `deleted_conflicts`, and `revs_info`. Using `meta=true` is the same as using `conflicts=true&deleted_conflicts=true&revs_info=true` | yes | boolean | false
+`r` | Specify the [read quorum](document.html#quorum---writing-and-reading-data) value | yes | numeric | 2
+`revs_info` | Includes detailed information for all known document revisions | yes | boolean | false
 `skip` | Skip this number of records before starting to return the results | yes | numeric | 0
 `startkey` | Return records starting with the specified key | yes | string |
 
@@ -572,6 +631,5 @@ To delete a databases and its contents, make a DELETE request to `https://$USERN
 }
 ```
 
-The response confirms successful deletion of the database
-or describes any errors that occurred,
-for example if you try to delete a database that does not exist.
+The response confirms successful deletion of the database or describes any errors that occurred, i.e. if you try to delete a database that does not exist.
+
