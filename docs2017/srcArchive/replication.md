@@ -1,5 +1,5 @@
 ---
-title: Cloudant Documentation - ACID
+title: Cloudant Documentation - Replication
 
 language_tabs:
   - http 
@@ -15,6 +15,9 @@ toc_footers:
   - <a href="https://github.com/cloudant-labs/slate">Documentation Source</a>
 
 includes:
-  - guides/acid
+  - api/replication
 
 ---
+
+
+
